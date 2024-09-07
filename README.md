@@ -1,4 +1,6 @@
-# Catalyst Starter Kit
+# <img src="src/app/icon.png" alt="Catalyst Starter Kit" width="28" height="28" /> Catalyst Starter Kit
+
+![GitHub Workflow Status](https://github.com/kovrichard/catalyst/actions/workflows/build.yml/badge.svg)
 
 This repository provides a powerful starter kit for building modern web applications using the following stack:
 
