@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "type-check": "tsc --noEmit",
@@ -19,10 +19,12 @@
   },
   "dependencies": {
     "@prisma/client": "5.19.1",
+    "@radix-ui/react-slot": "1.1.0",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
     "lucide-react": "0.424.0",
     "next": "14.2.5",
+    "next-auth": "5.0.0-beta.20",
     "prisma": "5.19.1",
     "react": "18",
     "react-dom": "18",
