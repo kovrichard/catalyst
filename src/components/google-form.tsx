@@ -2,7 +2,7 @@ import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export default function GoogleForm({ buttonText }: Readonly<{ buttonText: string }>) {
+export default function GoogleForm() {
   return (
     <form
       className="flex justify-center"
@@ -22,7 +22,7 @@ export default function GoogleForm({ buttonText }: Readonly<{ buttonText: string
           alt="Google"
           className="pointer-events-none"
         />
-        <span className="pointer-events-none">{buttonText}</span>
+        <span className="pointer-events-none">Google</span>
       </Button>
     </form>
   );

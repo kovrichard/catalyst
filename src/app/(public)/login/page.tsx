@@ -11,18 +11,21 @@ import Link from "next/link";
 
 export default function Login() {
   return (
-    <main className="flex flex-1 m-auto flex-col items-center">
-      <Card>
+    <main className="m-auto">
+      <Card className="w-80">
         <CardHeader className="text-center">
           <CardTitle>Welcome back!</CardTitle>
-          <CardDescription>Sign in to your account to continue.</CardDescription>
+          <CardDescription>Sign in to your account to continue</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
+        <CardContent className="flex flex-col gap-4">
           <LoginForm />
-          <p className="mx-auto">or</p>
-          <GoogleForm buttonText="Sign in with Google" />
+          <p className="mx-auto text-sm text-muted-foreground">or continue with</p>
+          <GoogleForm />
           <p className="mx-auto">
-            First time here? <Link href="/register">Sign up</Link>
+            <span className="text-muted-foreground">First time here?</span>{" "}
+            <Link href="/register" className="font-semibold">
+              Sign up
+            </Link>
           </p>
         </CardContent>
       </Card>

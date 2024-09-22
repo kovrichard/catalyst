@@ -38,18 +38,19 @@ export default function LoginForm() {
 
   return (
     <form className="flex flex-col gap-4" action={formAction}>
-      <Label htmlFor="email">
-        Email
+      <Label htmlFor="email" className="space-y-1">
+        <span>Email</span>
         <Input
           type="email"
           id="email"
           name="email"
           placeholder="johndoe@example.com"
           required
+          autoFocus
         />
       </Label>
-      <Label htmlFor="password">
-        Password
+      <Label htmlFor="password" className="space-y-1">
+        <span>Password</span>
         <Input
           type="password"
           id="password"
@@ -58,7 +59,7 @@ export default function LoginForm() {
           required
         />
       </Label>
-      <Button type="submit" className="w-full">
+      <Button type="submit" className="mt-[18px]">
         Sign in
       </Button>
     </form>
