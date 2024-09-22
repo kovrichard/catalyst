@@ -11,6 +11,7 @@ This repository provides a powerful starter kit for building modern web applicat
 - [shadcn/ui](https://ui.shadcn.com/): A collection of beautifully designed UI components built with Tailwind CSS.
 - [Husky](https://typicode.github.io/husky/): Git hooks that help to enforce coding standards by running scripts during the commit process.
 - [Biome](https://biomejs.dev/): A toolchain for linting, formatting, and other code quality tasks.
+- [Auth.js](https://authjs.dev): A simple and open-source authentication library for modern web applications.
 
 ## Getting Started
 
