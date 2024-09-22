@@ -1,5 +1,5 @@
 import GoogleForm from "@/components/google-form";
-import LoginForm from "@/components/login-form";
+import RegisterForm from "@/components/register-form";
 import {
   Card,
   CardContent,
@@ -14,15 +14,15 @@ export default function Login() {
     <main className="flex flex-1 m-auto flex-col items-center">
       <Card>
         <CardHeader className="text-center">
-          <CardTitle>Welcome back!</CardTitle>
-          <CardDescription>Sign in to your account to continue.</CardDescription>
+          <CardTitle>Let's get started!</CardTitle>
+          <CardDescription>Create an account to continue.</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <LoginForm />
+          <RegisterForm />
           <p className="mx-auto">or</p>
-          <GoogleForm buttonText="Sign in with Google" />
+          <GoogleForm buttonText="Sign up with Google" />
           <p className="mx-auto">
-            First time here? <Link href="/register">Sign up</Link>
+            Already have an account? <Link href="/login">Login</Link>
           </p>
         </CardContent>
       </Card>
