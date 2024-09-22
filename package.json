@@ -10,7 +10,9 @@
     "lint-staged": "lint-staged",
     "lint-check": "biome lint --write ./src",
     "format": "biome format --write ./src",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "prisma generate",
+    "migrate": "prisma migrate dev"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
