@@ -1,0 +1,21 @@
+services:
+  database:
+    image: postgres:16.4
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: dev
+      POSTGRES_USER: app_dev
+      POSTGRES_PASSWORD: dev_password
+      ALLOW_IP_RANGE: "172.0.0.0/8"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "app_dev", "-d", "dev"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+    command: ["postgres", "-c", "log_statement=none"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+
+volumes:
+  pgdata:
