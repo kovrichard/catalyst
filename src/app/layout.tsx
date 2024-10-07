@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 const title = "Catalyst - Next.js Starter Kit";
 const description =
   "Catalyst is a Next.js starter kit that helps you build modern web applications faster and easier than ever before.";
-const url = process.env.FRONTEND_URL || "";
+const url = process.env.FRONTEND_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
