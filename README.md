@@ -87,3 +87,11 @@ All of these environment variables have placeholders if you copied the [`.env.sa
 
 This project uses GitHub Actions for continuous integration and deployment. An example workflow is defined in [`.github/workflows/build.yml`](.github/workflows/build.yml).
 It installs the dependencies, lints the code, and builds the project.
+
+## SEO
+
+The project is configured to have a `robots.txt`, a `sitemap.xml`, and a `manifest.webmanifest` file. However, these files cannot be found directly in the repository. Instead, you can find TypeScript files with similar names in the [`src/app`](src/app) directory. Edit them to fit your app. These files use the [Metadata API from Next.js](https://nextjs.org/docs/app/api-reference/file-conventions/metadata).
+
+Set the `FRONTEND_URL` environment variable in the [`.env`](.env) file to the URL of your application. This variable is used in the `robots.txt` and `sitemap.xml` files.
+
+It also sets various SEO-related tags in the root [`layout.tsx`](src/app/layout.tsx) file. Modify and extend these tags to fit your application's needs.
