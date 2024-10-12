@@ -49,6 +49,20 @@ export default function RootLayout({
       <body className={cn(inter.className, "flex min-h-svh min-w-[360px]")}>
         {children}
         <Toaster />
+        <a
+          href="https://github.com/kovrichard/catalyst"
+          target="_blank"
+          className="fixed text-sm bottom-4 left-4 py-1 px-2 rounded flex items-center gap-1.5 shadow-lg hover:bg-slate-100 transition border border-slate-400 hover:border-slate-600"
+        >
+          <span>Made with</span>
+          <img
+            src="https://raw.githubusercontent.com/kovrichard/catalyst/refs/heads/main/src/app/icon.png"
+            alt="Catalyst"
+            width={20}
+            height={20}
+          />
+          <span className="font-semibold">Catalyst</span>
+        </a>
       </body>
     </html>
   );
