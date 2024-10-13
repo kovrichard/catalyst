@@ -12,6 +12,7 @@ This repository provides a powerful starter kit for building modern web applicat
 - [Husky](https://typicode.github.io/husky/): Git hooks that help to enforce coding standards by running scripts during the commit process.
 - [Biome](https://biomejs.dev/): A toolchain for linting, formatting, and other code quality tasks.
 - [Auth.js](https://authjs.dev): A simple and open-source authentication library for modern web applications.
+- [Stripe](https://stripe.com/): A payment processing platform for online businesses.
 - [Joi](https://joi.dev/): A schema description language and data validator for JavaScript.
 - [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
 
@@ -101,6 +102,14 @@ Set the `FRONTEND_URL` environment variable in the `.env` file to the URL of you
 It also sets various SEO-related tags in the root [`layout.tsx`](src/app/layout.tsx) file. Modify and extend these tags to fit your application's needs.
 
 If you don't set the `FRONTEND_URL` environment variable, it defaults to `http://localhost:3000`.
+
+## Payments
+
+The Catalyst starter kit uses Stripe for payment processing. The [`/api/stripe`](src/app/api/stripe/route.ts) endpoint is used to receive webhook events from Stripe. To enable this endpoint, set the `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` environment variables in the `.env` file.
+
+In Stripe, set the webhook URL to `https://your-app-url/api/stripe`.
+
+Configure the [endpoint](src/app/api/stripe/route.ts?plain=1#23) to listen for the events you need. To to this, extend the logic of the `switch` statement with the cases for the events you want to handle.
 
 ## Logging
 
