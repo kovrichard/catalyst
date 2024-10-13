@@ -125,6 +125,6 @@ As the example dashboard of Catalyst can be found at `/dashboard`, the return UR
 
 ## Logging
 
-Catalyst uses Winston as the default logger and the default log level is `info`. You can change this by setting the `LOG_LEVEL` environment variable in the `.env` file.
+Catalyst uses Winston as the default logger and the default log level is `info`. You can change this by setting the `LOG_LEVEL` environment variable in the [`.env`](.env.sample?plain=1#L2) file.
 
-If you want to configure a log drain, set the `LOG_DRAIN_URL` environment variable in the `.env` file. This will send the logs to the specified URL as well as to the console.
+If you want to configure a log drain, set the `LOG_DRAIN_URL` environment variable in the [`.env`](.env.sample?plain=1#L3) file. This will send the logs to the specified URL as well as to the console.
