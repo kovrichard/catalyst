@@ -12,6 +12,7 @@ This repository provides a powerful starter kit for building modern web applicat
 - [Husky](https://typicode.github.io/husky/): Git hooks that help to enforce coding standards by running scripts during the commit process.
 - [Biome](https://biomejs.dev/): A toolchain for linting, formatting, and other code quality tasks.
 - [Auth.js](https://authjs.dev): A simple and open-source authentication library for modern web applications.
+- [Joi](https://joi.dev/): A schema description language and data validator for JavaScript.
 - [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
 
 It also contains an example [GitHub Actions workflow](/.github/workflows/build.yml) for continuous integration and deployment. The workflow installs the dependencies, lints the code, and builds the project.

@@ -1,5 +1,6 @@
 import winston from "winston";
 import Transport from "winston-transport";
+import conf from "./config";
 
 // biome-ignore lint/correctness/noUnusedVariables: Used if log drain is enabled
 class CustomTransport extends Transport {
@@ -31,7 +32,7 @@ class CustomTransport extends Transport {
 }
 
 export const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL,
+  level: conf.logLevel,
   format: winston.format.json(),
   transports: [
     new winston.transports.Console({ format: winston.format.simple() }),
