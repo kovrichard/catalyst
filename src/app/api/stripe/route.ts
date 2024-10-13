@@ -1,5 +1,6 @@
 import conf from "@/lib/config";
 import { logger } from "@/lib/logger";
+import Stripe from "stripe";
 
 export async function POST(req: Request) {
   if (!conf.stripeSecretKey || !conf.stripeWebhookSecret) {
@@ -22,6 +23,11 @@ export async function POST(req: Request) {
 
   switch (event.type) {
     // Handle various event types
+    case "customer.subscription.updated": {
+      const subscription = event.data.object as Stripe.Subscription;
+      logger.info(`Subscription updated: ${subscription.id}`);
+      break;
+    }
     default: {
       logger.info(`Unhandled event type: ${event.type}`);
     }

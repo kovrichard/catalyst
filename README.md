@@ -109,7 +109,19 @@ The Catalyst starter kit uses Stripe for payment processing. The [`/api/stripe`]
 
 In Stripe, set the webhook URL to `https://your-app-url/api/stripe`.
 
-Configure the [endpoint](src/app/api/stripe/route.ts?plain=1#L24) to listen for the events you need. To to this, extend the logic of the `switch` statement with the cases for the events you want to handle.
+### Events
+
+An example event handler is already set up for the `customer.subscription.updated` event. This event is triggered when a subscription is updated and is used in most subscription-based applications.
+
+Configure the [endpoint](src/app/api/stripe/route.ts?plain=1#L25) to listen for the events you need. To to this, extend the logic of the `switch` statement with the cases for the events you want to handle.
+
+### Billing Portal
+
+For ease of use, we suggest not to reinvent the wheel and use the [Stripe Billing Portal](https://docs.stripe.com/customer-management) to allow your users to manage their subscriptions. The Catalyst starter kit already has a helper function defined in [`src/lib/stripe.ts`](src/lib/stripe.ts?plain=1#L9) to create a session for the billing portal.
+
+The helper function can only be used on the server side and ensures that the user is authenticated before creating the session. It has a single parameter: the Stripe `customerId` of the user.
+
+As the example dashboard of Catalyst can be found at `/dashboard`, the return URL of the billing portal is `http://localhost:3000/dashboard` by default. You can change this to any URL by setting the `STRIPE_PORTAL_RETURN_URL` environment variable in the `.env` file. 
 
 ## Logging
 

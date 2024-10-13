@@ -7,6 +7,7 @@ const schema = Joi.object({
   // Stripe
   stripeSecretKey: Joi.string().default(false),
   stripeWebhookSecret: Joi.string().default(false),
+  stripePortalReturnUrl: Joi.string().default("http://localhost:3000/dashboard"),
   // General
   frontendUrl: Joi.string().default("http://localhost:3000"),
 });
@@ -18,6 +19,7 @@ const envVars = {
   // Stripe
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+  stripePortalReturnUrl: process.env.STRIPE_PORTAL_RETURN_URL,
   // General
   frontendUrl: process.env.FRONTEND_URL,
 };
