@@ -109,7 +109,7 @@ The Catalyst starter kit uses Stripe for payment processing. The [`/api/stripe`]
 
 In Stripe, set the webhook URL to `https://your-app-url/api/stripe`.
 
-Configure the [endpoint](src/app/api/stripe/route.ts?plain=1#23) to listen for the events you need. To to this, extend the logic of the `switch` statement with the cases for the events you want to handle.
+Configure the [endpoint](src/app/api/stripe/route.ts?plain=1#L24) to listen for the events you need. To to this, extend the logic of the `switch` statement with the cases for the events you want to handle.
 
 ## Logging
 
