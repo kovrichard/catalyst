@@ -2,7 +2,6 @@ import winston from "winston";
 import Transport from "winston-transport";
 import conf from "./config";
 
-// biome-ignore lint/correctness/noUnusedVariables: Used if log drain is enabled
 class CustomTransport extends Transport {
   constructor(opts: Transport.TransportStreamOptions) {
     super(opts);
@@ -21,7 +20,7 @@ class CustomTransport extends Transport {
       stack: info.stack,
     };
 
-    await fetch("<LOG-DRAIN-URL-HERE>", {
+    await fetch(conf.logDrainUrl, {
       method: "POST",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },
@@ -31,11 +30,16 @@ class CustomTransport extends Transport {
   }
 }
 
+const transports: Transport[] = [
+  new winston.transports.Console({ format: winston.format.simple() }),
+];
+
+if (conf.logDrainUrl) {
+  transports.push(new CustomTransport({}));
+}
+
 export const logger = winston.createLogger({
   level: conf.logLevel,
   format: winston.format.json(),
-  transports: [
-    new winston.transports.Console({ format: winston.format.simple() }),
-    // new CustomTransport({}),
-  ],
+  transports: transports,
 });
