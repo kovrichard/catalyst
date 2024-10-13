@@ -83,7 +83,7 @@ The Catalyst starter kit uses Auth.js for authentication. You can find the authe
 
 By default, a development secret is already set in the [`.env.sample`](.env.sample) file called `AUTH_SECRET`. Set this secret to a more secure random string at the hosting provider of your choice when deploying the application.
 
-If you also need Google login, add your Google OAuth client ID and secret to the [`.env`](.env) file.
+If you also need Google login, add your Google OAuth client ID and secret to the `.env` file.
 
 All of these environment variables have placeholders if you copied the [`.env.sample`](.env.sample) file.
 
@@ -96,12 +96,12 @@ It installs the dependencies, lints the code, and builds the project.
 
 The project is configured to have a `robots.txt`, a `sitemap.xml`, and a `manifest.webmanifest` file. However, these files cannot be found directly in the repository. Instead, you can find TypeScript files with similar names in the [`src/app`](src/app) directory. Edit them to fit your app. These files use the [Metadata API from Next.js](https://nextjs.org/docs/app/api-reference/file-conventions/metadata).
 
-Set the `FRONTEND_URL` environment variable in the [`.env`](.env) file to the URL of your application. This variable is used in the `robots.txt` and `sitemap.xml` files.
+Set the `FRONTEND_URL` environment variable in the `.env` file to the URL of your application. This variable is used in the `robots.txt` and `sitemap.xml` files.
 
 It also sets various SEO-related tags in the root [`layout.tsx`](src/app/layout.tsx) file. Modify and extend these tags to fit your application's needs.
 
 ## Logging
 
-Catalyst uses Winston as the default logger and the default log level is `info`. You can change this by setting the `LOG_LEVEL` environment variable in the [`.env`](.env) file.
+Catalyst uses Winston as the default logger and the default log level is `info`. You can change this by setting the `LOG_LEVEL` environment variable in the `.env` file.
 
-If you want to configure a log drain, set the `LOG_DRAIN_URL` environment variable in the [`.env`](.env) file. This will send the logs to the specified URL as well as to the console.
+If you want to configure a log drain, set the `LOG_DRAIN_URL` environment variable in the `.env` file. This will send the logs to the specified URL as well as to the console.
