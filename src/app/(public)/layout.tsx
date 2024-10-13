@@ -12,7 +12,7 @@ export default function Layout({
         <a
           href="https://github.com/kovrichard/catalyst"
           target="_blank"
-          className="text-sm py-1 px-2 rounded flex items-center gap-1.5 shadow-lg bg-white hover:bg-slate-100 transition border border-slate-400 hover:border-slate-600"
+          className="text-sm py-1 px-2 rounded flex items-center gap-1.5 shadow-md bg-white hover:bg-slate-100 transition border border-slate-200 hover:border-slate-300"
         >
           <span>Made with</span>
           <img
