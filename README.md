@@ -100,6 +100,8 @@ Set the `FRONTEND_URL` environment variable in the `.env` file to the URL of you
 
 It also sets various SEO-related tags in the root [`layout.tsx`](src/app/layout.tsx) file. Modify and extend these tags to fit your application's needs.
 
+If you don't set the `FRONTEND_URL` environment variable, it defaults to `http://localhost:3000`.
+
 ## Logging
 
 Catalyst uses Winston as the default logger and the default log level is `info`. You can change this by setting the `LOG_LEVEL` environment variable in the `.env` file.

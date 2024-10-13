@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import conf from "@/lib/config";
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Toaster } from "sonner";
@@ -10,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 const title = "Catalyst - Next.js Starter Kit";
 const description =
   "Catalyst is a Next.js starter kit that helps you build modern web applications faster and easier than ever before.";
-const url = process.env.FRONTEND_URL || "http://localhost:3000";
+const url = conf.frontendUrl;
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
