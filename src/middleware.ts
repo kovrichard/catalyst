@@ -1,7 +1,14 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-const publicUrls = ["/", "/login", "/register"];
+const publicUrls = [
+  "/",
+  "/login",
+  "/register",
+  "/robots.txt",
+  "/sitemap.xml",
+  "/manifest.webmanifest",
+];
 
 export default auth((req) => {
   if (!req.auth && !publicUrls.includes(req.nextUrl.pathname)) {
@@ -11,5 +18,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|.*.svg|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|.*.svg|.*.png|favicon.ico).*)"],
 };
