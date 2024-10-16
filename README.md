@@ -72,7 +72,19 @@ docker compose up -d
 
 This command starts a PostgreSQL database in a Docker container and lets it run in the background.
 
-You can find the database connection URL in the [`.env.sample`](.env.sample) file.
+You can find the database connection URL in the [`.env.sample`](.env.sample?plain=1#L21) file.
+
+You can connect to the database with the following command:
+
+```bash
+docker compose exec database psql -U app_dev -d dev
+```
+
+Or, if you have `make` installed, you can use the following command:
+
+```bash
+make db
+```
 
 There is already a `User` model defined in [`prisma/schema.prisma`](prisma/schema.prisma). The correspondent migration file is located in [`prisma/migrations/`](prisma/migrations/). To create the database schema and generate the Prisma client, run:
 
@@ -86,7 +98,9 @@ The Catalyst starter kit uses Auth.js for authentication. You can find the authe
 
 By default, a development secret is already set in the [`.env.sample`](.env.sample) file called `AUTH_SECRET`. Set this secret to a more secure random string at the hosting provider of your choice when deploying the application.
 
-If you also need Google login, add your Google OAuth client ID and secret to the `.env` file.
+If you also need Google login, add your Google OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L17) file.
+
+GitHub login is also supported. Add your GitHub OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L15) file.
 
 All of these environment variables have placeholders if you copied the [`.env.sample`](.env.sample) file.
 
@@ -107,7 +121,7 @@ If you don't set the `FRONTEND_URL` environment variable, it defaults to `http:/
 
 ## Payments
 
-The Catalyst starter kit uses Stripe for payment processing. The [`/api/stripe`](src/app/api/stripe/route.ts) endpoint is used to receive webhook events from Stripe. To enable this endpoint, set the `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` environment variables in the `.env` file.
+The Catalyst starter kit uses Stripe for payment processing. The [`/api/stripe`](src/app/api/stripe/route.ts) endpoint is used to receive webhook events from Stripe. To enable this endpoint, set the `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` environment variables in the [`.env`](.env.sample?plain=1#L6) file.
 
 In Stripe, set the webhook URL to `https://your-app-url/api/stripe`.
 
@@ -123,7 +137,7 @@ For ease of use, we suggest not to reinvent the wheel and use the [Stripe Billin
 
 The helper function can only be used on the server side and ensures that the user is authenticated before creating the session. It has a single parameter: the Stripe `customerId` of the user.
 
-As the example dashboard of Catalyst can be found at `/dashboard`, the return URL of the billing portal is `http://localhost:3000/dashboard` by default. You can change this to any URL by setting the `STRIPE_PORTAL_RETURN_URL` environment variable in the `.env` file. 
+As the example dashboard of Catalyst can be found at `/dashboard`, the return URL of the billing portal is `http://localhost:3000/dashboard` by default. You can change this to any URL by setting the `STRIPE_PORTAL_RETURN_URL` environment variable in the [`.env`](.env.sample?plain=1#L8) file. 
 
 ## Logging
 
