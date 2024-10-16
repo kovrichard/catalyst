@@ -18,6 +18,11 @@ This repository provides a powerful starter kit for building modern web applicat
 
 It also contains an example [GitHub Actions workflow](/.github/workflows/build.yml) for continuous integration and deployment. The workflow installs the dependencies, lints the code, and builds the project.
 
+<video>
+	<source src="./landing-page.mp4" type="video/mp4">
+	Your browser does not support the video tag.
+</video>
+
 ## Getting Started
 
 ### Prerequisites
