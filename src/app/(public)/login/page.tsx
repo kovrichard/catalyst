@@ -1,5 +1,5 @@
-import GoogleForm from "@/components/google-form";
 import LoginForm from "@/components/login-form";
+import OAuthForm from "@/components/oauth-form";
 import {
   Card,
   CardContent,
@@ -10,6 +10,11 @@ import {
 import Link from "next/link";
 
 export default function Login() {
+  const hasGitHub =
+    Boolean(process.env.AUTH_GITHUB_ID) && Boolean(process.env.AUTH_GITHUB_SECRET);
+  const hasGoogle =
+    Boolean(process.env.AUTH_GOOGLE_ID) && Boolean(process.env.AUTH_GOOGLE_SECRET);
+
   return (
     <main className="m-auto">
       <Card className="w-80">
@@ -19,8 +24,11 @@ export default function Login() {
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <LoginForm />
-          <p className="mx-auto text-sm text-muted-foreground">or continue with</p>
-          <GoogleForm />
+          {(hasGitHub || hasGoogle) && (
+            <p className="mx-auto text-sm text-muted-foreground">or continue with</p>
+          )}
+          {hasGoogle && <OAuthForm provider="google" />}
+          {hasGitHub && <OAuthForm provider="github" />}
           <p className="mx-auto">
             <span className="text-muted-foreground">First time here?</span>{" "}
             <Link href="/register" className="font-semibold">

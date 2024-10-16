@@ -2,6 +2,7 @@ import { getUserByEmail, saveUser } from "@/lib/dao/users";
 import NextAuth from "next-auth";
 import { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
 export class InvalidLoginError extends CredentialsSignin {
@@ -10,6 +11,7 @@ export class InvalidLoginError extends CredentialsSignin {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
+    GitHub,
     Google,
     Credentials({
       credentials: {
@@ -56,7 +58,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    async signIn({ profile, user }) {
+    async signIn({ user }) {
       const email = user?.email;
       const name = user?.name;
       const picture = user?.image;
@@ -65,16 +67,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return false;
       }
 
-      if (profile?.iss === "https://accounts.google.com") {
-        const existingUser = await getUserByEmail(email || "");
+      const existingUser = await getUserByEmail(email || "");
 
-        if (!existingUser) {
-          await saveUser({
-            name: name,
-            email: email,
-            picture: picture || "",
-          });
-        }
+      if (!existingUser) {
+        await saveUser({
+          name: name,
+          email: email,
+          picture: picture || "",
+        });
       }
 
       return true;
