@@ -47,7 +47,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "flex flex-col min-h-svh min-w-[360px]")}>
+      <body
+        className={cn(inter.className, "flex flex-col min-h-svh min-w-80 justify-center")}
+      >
         {children}
         <Toaster />
       </body>
