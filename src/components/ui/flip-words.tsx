@@ -89,7 +89,9 @@ export const FlipWords = ({
                 {letter}
               </motion.span>
             ))}
-            <span className="inline-block">&nbsp;</span>
+            {wordIndex !== currentWord.split(" ").length - 1 && (
+              <span className="inline-block">&nbsp;</span>
+            )}
           </motion.span>
         ))}
       </motion.div>
