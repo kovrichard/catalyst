@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import conf from "@/lib/config";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "next-themes";
 import React from "react";
 import { Toaster } from "sonner";
 
@@ -50,8 +51,10 @@ export default function RootLayout({
       <body
         className={cn(inter.className, "flex flex-col min-h-svh min-w-80 justify-center")}
       >
-        {children}
-        <Toaster />
+        <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
+          {children}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

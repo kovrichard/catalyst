@@ -39,7 +39,7 @@ export default async function Layout({
         <a
           href="https://github.com/kovrichard/catalyst"
           target="_blank"
-          className="text-sm py-1 px-2 rounded flex items-center gap-1.5 shadow-md bg-white hover:bg-slate-100 transition border border-slate-200 hover:border-slate-300"
+          className="text-sm py-1 px-2 rounded flex items-center gap-1.5 shadow-md bg-card dark:bg-input border text-foreground hover:bg-input/50 transition-colors"
         >
           <span>Made with</span>
           <img
