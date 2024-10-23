@@ -12,7 +12,7 @@ export default async function Layout({
   const session = await auth();
 
   return (
-    <>
+    <div className="flex flex-col flex-1 mx-auto max-w-7xl w-full">
       <header className="flex w-full p-4 gap-4 justify-end items-center">
         <Link
           href="/"
@@ -51,6 +51,6 @@ export default async function Layout({
           <span className="font-semibold">Catalyst</span>
         </a>
       </footer>
-    </>
+    </div>
   );
 }
