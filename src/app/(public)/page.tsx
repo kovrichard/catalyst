@@ -21,9 +21,9 @@ export default function Home() {
   return (
     <main className="flex flex-1">
       <section className="flex flex-col items-center justify-center gap-8 max-w-7xl h-[80vh] mx-auto p-4">
-        <div className="text-6xl font-bold text-center text-neutral-600 space-y-2 text-[clamp(1.6rem,8vw,4rem)]">
+        <div className="relative leading-none font-bold text-center text-neutral-600 space-y-2 text-[clamp(1.6rem,7vw,4.5rem)]">
           <p>A Starter Kit with</p>
-          <FlipWords words={words} duration={2500} />
+          <FlipWords words={words} duration={2500} className="text-center w-[70vw]" />
           <p>Integration</p>
         </div>
         <div className="space-y-2 text-center text-xl text-balance max-w-2xl">
