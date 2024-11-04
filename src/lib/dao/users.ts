@@ -2,7 +2,9 @@ import "server-only";
 
 import { auth } from "@/auth";
 import DBClient from "@/lib/prisma";
+import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
 const prisma = DBClient.getInstance().prisma;
 
@@ -16,7 +18,7 @@ export async function getUserByEmail(email: string) {
   return user;
 }
 
-export async function getUserFromSession() {
+export const getUserFromSession = cache(async (): Promise<Partial<User>> => {
   const session = await auth();
 
   if (!session) {
@@ -33,8 +35,13 @@ export async function getUserFromSession() {
     return redirect("/login");
   }
 
-  return user;
-}
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    picture: user.picture,
+  };
+});
 
 export async function saveUser(profile: {
   name: string;
