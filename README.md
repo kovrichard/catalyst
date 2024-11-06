@@ -16,6 +16,8 @@ This repository provides a powerful starter kit for building modern web applicat
 - [Joi](https://joi.dev/): A schema description language and data validator for JavaScript.
 - [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
 - [Tabler Icons](https://tablericons.com/): A set of over 5,600 open-source SVG icons.
+- [Google Analytics](https://analytics.google.com/): You know what it is.
+- [Google Tag Manager](https://tagmanager.google.com/): For fine-grained tracking and analytics.
 
 It also contains an example [GitHub Actions workflow](/.github/workflows/build.yml) for continuous integration and deployment. The workflow installs the dependencies, lints the code, and builds the project.
 
@@ -73,7 +75,7 @@ docker compose up -d
 
 This command starts a PostgreSQL database in a Docker container and lets it run in the background.
 
-You can find the database connection URL in the [`.env.sample`](.env.sample?plain=1#L21) file.
+You can find the database connection URL in the [`.env.sample`](.env.sample?plain=1#L22) file.
 
 You can connect to the database with the following command:
 
@@ -99,9 +101,9 @@ The Catalyst starter kit uses Auth.js for authentication. You can find the authe
 
 By default, a development secret is already set in the [`.env.sample`](.env.sample) file called `AUTH_SECRET`. Set this secret to a more secure random string at the hosting provider of your choice when deploying the application.
 
-If you also need Google login, add your Google OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L17) file.
+If you also need Google login, add your Google OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L18) file.
 
-GitHub login is also supported. Add your GitHub OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L15) file.
+GitHub login is also supported. Add your GitHub OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L16) file.
 
 All of these environment variables have placeholders if you copied the [`.env.sample`](.env.sample) file.
 
@@ -130,7 +132,7 @@ In Stripe, set the webhook URL to `https://your-app-url/api/stripe`.
 
 An example event handler is already set up for the `customer.subscription.updated` event. This event is triggered when a subscription is updated and is used in most subscription-based applications.
 
-Configure the [endpoint](src/app/api/stripe/route.ts?plain=1#L25) to listen for the events you need. To to this, extend the logic of the `switch` statement with the cases for the events you want to handle.
+Configure the [endpoint](src/app/api/stripe/route.ts?plain=1#L26) to listen for the events you need. To to this, extend the logic of the `switch` statement with the cases for the events you want to handle.
 
 ### Billing Portal
 
@@ -145,3 +147,7 @@ As the example dashboard of Catalyst can be found at `/dashboard`, the return UR
 Catalyst uses Winston as the default logger and the default log level is `info`. You can change this by setting the `LOG_LEVEL` environment variable in the [`.env`](.env.sample?plain=1#L2) file.
 
 If you want to configure a log drain, set the `LOG_DRAIN_URL` environment variable in the [`.env`](.env.sample?plain=1#L3) file. This will send the logs to the specified URL as well as to the console.
+
+## Analytics
+
+Set the `NEXT_PUBLIC_GA_ID` and/or `NEXT_PUBLIC_GTM_ID` environment variables in the [`.env`](.env.sample?plain=1#L25) file to enable Google Analytics and/or Google Tag Manager.

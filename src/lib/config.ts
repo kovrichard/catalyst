@@ -10,6 +10,9 @@ const schema = Joi.object({
   stripePortalReturnUrl: Joi.string().default("http://localhost:3000/dashboard"),
   // General
   frontendUrl: Joi.string().default("http://localhost:3000"),
+  environment: Joi.string()
+    .valid("development", "stage", "production")
+    .default("development"),
 });
 
 const envVars = {
@@ -22,6 +25,7 @@ const envVars = {
   stripePortalReturnUrl: process.env.STRIPE_PORTAL_RETURN_URL,
   // General
   frontendUrl: process.env.FRONTEND_URL,
+  environment: process.env.ENVIRONMENT,
 };
 
 const { error, value: conf } = schema.validate(envVars);

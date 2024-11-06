@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Analytics from "@/components/analytics";
 import conf from "@/lib/config";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
@@ -48,6 +49,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Analytics />
+      </head>
       <body
         className={cn(inter.className, "flex flex-col min-h-svh min-w-80 justify-center")}
       >

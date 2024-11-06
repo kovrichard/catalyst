@@ -20,6 +20,7 @@
     ]
   },
   "dependencies": {
+    "@next/third-parties": "15.0.2",
     "@prisma/client": "5.19.1",
     "@radix-ui/react-label": "2.1.0",
     "@radix-ui/react-slot": "1.1.0",
