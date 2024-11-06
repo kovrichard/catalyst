@@ -3,38 +3,23 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import useToast from "@/hooks/use-toast";
 import { signInUser } from "@/lib/actions/users";
+import { FormState, initialState } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useFormState } from "react-dom";
-import { toast } from "sonner";
-
-const initialState = {
-  message: "",
-  description: "",
-};
 
 export default function LoginForm() {
   const [state, formAction] = useFormState(signInUser, initialState);
   const router = useRouter();
 
-  useEffect(() => {
-    if (!state.message) return;
-
-    toast(state.message, {
-      description: state.description,
-      action: {
-        label: "OK",
-        onClick: () => {
-          toast.dismiss();
-        },
-      },
-    });
-
+  const toastCallback = (state: FormState) => {
     if (state.message === "Signed in successfully") {
-      router.push(process.env.NEXT_PUBLIC_AUTH_REDIRECT_URL as string);
+      router.push(String(process.env.NEXT_PUBLIC_AUTH_REDIRECT_URL));
     }
-  }, [state]);
+  };
+
+  useToast(state, toastCallback);
 
   return (
     <form className="flex flex-col gap-4" action={formAction}>
