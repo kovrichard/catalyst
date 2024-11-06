@@ -15,6 +15,7 @@ This repository provides a powerful starter kit for building modern web applicat
 - [Stripe](https://stripe.com/): A payment processing platform for online businesses.
 - [Joi](https://joi.dev/): A schema description language and data validator for JavaScript.
 - [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
+- [Tabler Icons](https://tablericons.com/): A set of over 5,600 open-source SVG icons.
 
 It also contains an example [GitHub Actions workflow](/.github/workflows/build.yml) for continuous integration and deployment. The workflow installs the dependencies, lints the code, and builds the project.
 
