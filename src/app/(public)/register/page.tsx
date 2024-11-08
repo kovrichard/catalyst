@@ -7,7 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/register",
+  },
+};
 
 export default function Login() {
   const hasGitHub =
