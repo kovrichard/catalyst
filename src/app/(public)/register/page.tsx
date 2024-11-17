@@ -7,12 +7,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { openGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 import Link from "next/link";
 
+const path = "/register";
+
 export const metadata: Metadata = {
   alternates: {
-    canonical: "/register",
+    canonical: path,
+  },
+  openGraph: {
+    ...openGraph,
+    url: path,
   },
 };
 
