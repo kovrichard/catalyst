@@ -37,7 +37,7 @@ export default async function Layout({
       {children}
       <footer className="flex w-full p-4 justify-start">
         <a
-          href="https://github.com/kovrichard/catalyst"
+          href="https://catalyst.richardkovacs.dev"
           target="_blank"
           className="text-sm py-1 px-2 rounded flex items-center gap-1.5 shadow-md bg-card dark:bg-input border text-foreground hover:bg-input/50 transition-colors"
         >
