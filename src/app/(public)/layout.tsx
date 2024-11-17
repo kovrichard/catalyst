@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import CatalystBadge from "@/components/footer/catalyst-badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,20 +37,7 @@ export default async function Layout({
       </header>
       {children}
       <footer className="flex w-full p-4 justify-start">
-        <a
-          href="https://catalyst.richardkovacs.dev"
-          target="_blank"
-          className="text-sm py-1 px-2 rounded flex items-center gap-1.5 shadow-md bg-card dark:bg-input border text-foreground hover:bg-input/50 transition-colors"
-        >
-          <span>Made with</span>
-          <img
-            src="https://raw.githubusercontent.com/kovrichard/catalyst/refs/heads/main/src/app/icon.png"
-            alt="Catalyst"
-            width={20}
-            height={20}
-          />
-          <span className="font-semibold">Catalyst</span>
-        </a>
+        <CatalystBadge />
       </footer>
     </div>
   );
