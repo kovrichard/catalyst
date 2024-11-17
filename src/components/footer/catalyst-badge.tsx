@@ -12,7 +12,7 @@ export default function CatalystBadge() {
     >
       <span>Made with</span>
       <img
-        src="https://raw.githubusercontent.com/kovrichard/catalyst/refs/heads/main/src/app/icon.png"
+        src="https://catalyst.richardkovacs.dev/icon.png"
         alt="Catalyst"
         width={20}
         height={20}
