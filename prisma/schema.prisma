@@ -21,6 +21,23 @@ model User {
   email           String @unique
   password        String?
   picture         String
+  notifications   Notification[]
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
+}
+
+model Notification {
+  @@map("notifications")
+
+  id                Int      @id @default(autoincrement())
+  type              String
+  title             String
+  content           String
+  link              String?
+  read              Boolean @default(false)
+  archived          Boolean @default(false)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            Int      @map("user_id")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
 }
