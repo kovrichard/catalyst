@@ -2,11 +2,10 @@ import "server-only";
 
 import { auth } from "@/auth";
 import DBClient from "@/lib/prisma";
+import prisma from "@/lib/prisma";
 import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
-
-const prisma = DBClient.getInstance().prisma;
 
 export async function getUserByEmail(email: string) {
   const user = await prisma.user.findUnique({

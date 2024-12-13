@@ -1,18 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 
-class DBClient {
-  public prisma: PrismaClient;
-  private static instance: DBClient;
-  private constructor() {
-    this.prisma = new PrismaClient();
-  }
+const prismaClientSingleton = () => {
+  return new PrismaClient();
+};
 
-  public static getInstance = () => {
-    if (!DBClient.instance) {
-      DBClient.instance = new DBClient();
-    }
-    return DBClient.instance;
-  };
-}
+// biome-ignore lint/suspicious/noShadowRestrictedNames: This is recommended by Prisma
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
 
-export default DBClient;
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
+
+export default prisma;
+
+if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;
