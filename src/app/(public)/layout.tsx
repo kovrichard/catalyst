@@ -19,7 +19,7 @@ export default async function Layout({
           href="/"
           className="flex gap-2 items-center mr-auto font-medium text-lg whitespace-pre"
         >
-          <Image src="/icon.png" alt="Catalyst" width={30} height={30} />
+          <Image src="/icon.svg" alt="Catalyst" width={30} height={30} />
           Catalyst
         </Link>
         {session ? (

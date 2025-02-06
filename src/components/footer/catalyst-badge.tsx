@@ -19,7 +19,7 @@ export default function CatalystBadge() {
     >
       <span>Made with</span>
       <img
-        src="https://catalyst.richardkovacs.dev/icon.png"
+        src="https://catalyst.richardkovacs.dev/icon.svg"
         alt="Catalyst"
         width={20}
         height={20}

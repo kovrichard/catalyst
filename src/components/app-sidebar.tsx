@@ -15,7 +15,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="pl-[22px] py-3.5">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <Image src="/icon.png" alt="Catalyst" width={28} height={28} />
+          <Image src="/icon.svg" alt="Catalyst" width={28} height={28} />
           Catalyst
         </Link>
       </SidebarHeader>
