@@ -1,18 +1,18 @@
-import Joi from "joi";
+import { z } from "zod";
 
-const schema = Joi.object({
+const schema = z.object({
   // Logging
-  logDrainUrl: Joi.string().default(false),
-  logLevel: Joi.string().valid("error", "warn", "info", "debug").default("info"),
+  logDrainUrl: z.string().default(""),
+  logLevel: z.enum(["error", "warn", "info", "debug"]).default("info"),
+
   // Stripe
-  stripeSecretKey: Joi.string().default(false),
-  stripeWebhookSecret: Joi.string().default(false),
-  stripePortalReturnUrl: Joi.string().default("http://localhost:3000/dashboard"),
+  stripeSecretKey: z.string().default(""),
+  stripeWebhookSecret: z.string().default(""),
+  stripePortalReturnUrl: z.string().default("http://localhost:3000/dashboard"),
+
   // General
-  frontendUrl: Joi.string().default("http://localhost:3000"),
-  environment: Joi.string()
-    .valid("development", "stage", "production")
-    .default("development"),
+  frontendUrl: z.string().default("http://localhost:3000"),
+  environment: z.enum(["development", "stage", "production"]).default("development"),
 });
 
 const envVars = {
@@ -28,10 +28,6 @@ const envVars = {
   environment: process.env.ENVIRONMENT,
 };
 
-const { error, value: conf } = schema.validate(envVars);
-
-if (error) {
-  throw new Error(`Config validation error: ${error.message}`);
-}
+const conf = schema.parse(envVars);
 
 export default conf;

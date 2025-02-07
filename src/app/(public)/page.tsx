@@ -14,7 +14,7 @@ export default function Home() {
     "Husky",
     "Biome",
     "Bun.js",
-    "Joi",
+    "Zod",
     "Winston",
   ];
 

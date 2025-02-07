@@ -13,7 +13,7 @@ This repository provides a powerful starter kit for building modern web applicat
 - [Biome](https://biomejs.dev/): A toolchain for linting, formatting, and other code quality tasks.
 - [Auth.js](https://authjs.dev): A simple and open-source authentication library for modern web applications.
 - [Stripe](https://stripe.com/): A payment processing platform for online businesses.
-- [Joi](https://joi.dev/): A schema description language and data validator for JavaScript.
+- [Zod](https://zod.dev/): TypeScript-first schema validation with static type inference.
 - [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
 - [Tabler Icons](https://tablericons.com/): A set of over 5,600 open-source SVG icons.
 - [Google Analytics](https://analytics.google.com/): You know what it is.
