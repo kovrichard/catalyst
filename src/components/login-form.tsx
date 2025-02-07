@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
@@ -8,9 +7,10 @@ import { signInUser } from "@/lib/actions/users";
 import { FormState, initialState } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
+import PendingSubmitButton from "./pending-submit-button";
 
 export default function LoginForm() {
-  const [state, formAction] = useActionState(signInUser, initialState);
+  const [state, formAction, isPending] = useActionState(signInUser, initialState);
   const router = useRouter();
 
   const toastCallback = (state: FormState) => {
@@ -44,9 +44,7 @@ export default function LoginForm() {
           required
         />
       </Label>
-      <Button type="submit" className="mt-[18px]">
-        Sign in
-      </Button>
+      <PendingSubmitButton isPending={isPending} text="Sign in" className="mt-[18px]" />
     </form>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
@@ -8,9 +7,10 @@ import { registerUser } from "@/lib/actions/users";
 import { FormState, initialState } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
+import PendingSubmitButton from "./pending-submit-button";
 
 export default function RegisterForm() {
-  const [state, formAction] = useActionState(registerUser, initialState);
+  const [state, formAction, isPending] = useActionState(registerUser, initialState);
   const router = useRouter();
 
   const toastCallback = (state: FormState) => {
@@ -54,9 +54,7 @@ export default function RegisterForm() {
           required
         />
       </Label>
-      <Button type="submit" className="mt-[18px]">
-        Sign up
-      </Button>
+      <PendingSubmitButton isPending={isPending} text="Sign up" className="mt-[18px]" />
     </form>
   );
 }
