@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "analyze": "ANALYZE=true next build",
     "build": "next build",
     "start": "next start",
@@ -39,7 +39,7 @@
     "joi": "17.13.3",
     "lucide-react": "0.460.0",
     "next": "15.1.6",
-    "next-auth": "5.0.0-beta.20",
+    "next-auth": "5.0.0-beta.25",
     "next-themes": "0.3.0",
     "prisma": "5.19.1",
     "react": "19.0.0-rc-cae764ce-20241025",
