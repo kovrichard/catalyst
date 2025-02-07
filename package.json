@@ -37,7 +37,7 @@
     "javascript-time-ago": "2.5.11",
     "joi": "17.13.3",
     "lucide-react": "0.460.0",
-    "next": "14.2.16",
+    "next": "15.1.6",
     "next-auth": "5.0.0-beta.20",
     "next-themes": "0.3.0",
     "prisma": "5.19.1",

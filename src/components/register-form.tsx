@@ -7,10 +7,10 @@ import useToast from "@/hooks/use-toast";
 import { registerUser } from "@/lib/actions/users";
 import { FormState, initialState } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 
 export default function RegisterForm() {
-  const [state, formAction] = useFormState(registerUser, initialState);
+  const [state, formAction] = useActionState(registerUser, initialState);
   const router = useRouter();
 
   const toastCallback = (state: FormState) => {
