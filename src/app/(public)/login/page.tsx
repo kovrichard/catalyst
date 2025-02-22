@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import conf from "@/lib/config";
 import { openGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -24,10 +25,8 @@ export const metadata: Metadata = {
 };
 
 export default function Login() {
-  const hasGitHub =
-    Boolean(process.env.AUTH_GITHUB_ID) && Boolean(process.env.AUTH_GITHUB_SECRET);
-  const hasGoogle =
-    Boolean(process.env.AUTH_GOOGLE_ID) && Boolean(process.env.AUTH_GOOGLE_SECRET);
+  const hasGitHub = Boolean(conf.githubId) && Boolean(conf.githubSecret);
+  const hasGoogle = Boolean(conf.googleId) && Boolean(conf.googleSecret);
 
   return (
     <main className="m-auto">
