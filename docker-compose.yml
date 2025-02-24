@@ -1,4 +1,19 @@
 services:
+  app:
+    image: app
+    build:
+      context: ./
+      target: dev
+    working_dir: /usr/src/app/
+    environment:
+      DATABASE_URL: postgres://app_dev:dev_password@database:5432/dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app/
+      - /usr/src/app/node_modules/
+    command: bun run dev
+
   database:
     image: postgres:16.4
     ports:
