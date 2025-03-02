@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
 import { registerUser } from "@/lib/actions/users";
+import publicConf from "@/lib/public-config";
 import { FormState, initialState } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
@@ -15,7 +16,7 @@ export default function RegisterForm() {
 
   const toastCallback = (state: FormState) => {
     if (state.message === "Registered successfully") {
-      router.push(String(process.env.NEXT_PUBLIC_AUTH_REDIRECT_URL));
+      router.push(publicConf.redirectPath);
     }
   };
 

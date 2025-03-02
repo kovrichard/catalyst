@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Analytics from "@/components/analytics";
-import conf from "@/lib/config";
-import { metaDescription, metaTitle, openGraph } from "@/lib/metadata";
+import { canonicalUrl, metaDescription, metaTitle, openGraph } from "@/lib/metadata";
+import publicConf from "@/lib/public-config";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import React from "react";
@@ -11,20 +11,22 @@ import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const url = conf.frontendUrl;
-
 export const metadata: Metadata = {
-  metadataBase: new URL(url),
+  metadataBase: new URL(publicConf.host),
   alternates: {
-    canonical: url,
+    canonical: canonicalUrl,
   },
   title: metaTitle,
   description: metaDescription,
+  icons: {
+    icon: "/icon.svg",
+    apple: "/apple-icon.png",
+  },
   // creator: "",
   robots: "index, follow",
   openGraph: {
     ...openGraph,
-    url: url,
+    url: publicConf.host,
   },
   twitter: {
     // creator: "@",
@@ -32,7 +34,6 @@ export const metadata: Metadata = {
     title: metaTitle,
     description: metaDescription,
   },
-  icons: "/favicon.ico",
   category: "",
   keywords: [],
 };

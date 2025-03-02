@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import conf from "@/lib/config";
-import { openGraph } from "@/lib/metadata";
+import { canonicalUrl, openGraph } from "@/lib/metadata";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -16,7 +16,7 @@ const path = "/register";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: path,
+    canonical: `${canonicalUrl}${path}`,
   },
   openGraph: {
     ...openGraph,

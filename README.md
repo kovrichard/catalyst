@@ -75,7 +75,7 @@ docker compose up -d
 
 This command starts a PostgreSQL database in a Docker container and lets it run in the background.
 
-You can find the database connection URL in the [`.env.sample`](.env.sample?plain=1#L22) file.
+You can find the database connection URL in the [`.env.sample`](.env.sample?plain=1#L38) file.
 
 You can connect to the database with the following command:
 
@@ -99,11 +99,11 @@ bun run migrate
 
 The Catalyst starter kit uses Auth.js for authentication. You can find the authentication logic in [`src/auth.ts`](src/auth.ts).
 
-By default, a development secret is already set in the [`.env.sample`](.env.sample) file called `AUTH_SECRET`. Set this secret to a more secure random string at the hosting provider of your choice when deploying the application.
+By default, a development secret is already set in the [`.env.sample`](.env.sample?plain=1#L26) file called `AUTH_SECRET`. Set this secret to a more secure random string at the hosting provider of your choice when deploying the application.
 
-If you also need Google login, add your Google OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L18) file.
+If you also need Google login, add your Google OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L29) file.
 
-GitHub login is also supported. Add your GitHub OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L16) file.
+GitHub login is also supported. Add your GitHub OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L27) file.
 
 All of these environment variables have placeholders if you copied the [`.env.sample`](.env.sample) file.
 
@@ -116,15 +116,13 @@ It installs the dependencies, lints the code, and builds the project.
 
 The project is configured to have a `robots.txt`, a `sitemap.xml`, and a `manifest.webmanifest` file. However, these files cannot be found directly in the repository. Instead, you can find TypeScript files with similar names in the [`src/app`](src/app) directory. Edit them to fit your app. These files use the [Metadata API from Next.js](https://nextjs.org/docs/app/api-reference/file-conventions/metadata).
 
-Set the `FRONTEND_URL` environment variable in the `.env` file to the URL of your application. This variable is used in the `robots.txt` and `sitemap.xml` files.
+Set the `NEXT_PUBLIC_AUTHORITY` environment variable in the [`.env`](.env.sample?plain=1#L5) file to the domain of your application. This variable is used in the `robots.txt` and `sitemap.xml` files.
 
 It also sets various SEO-related tags in the root [`layout.tsx`](src/app/layout.tsx) file. Modify and extend these tags to fit your application's needs.
 
-If you don't set the `FRONTEND_URL` environment variable, it defaults to `http://localhost:3000`.
-
 ## Payments
 
-The Catalyst starter kit uses Stripe for payment processing. The [`/api/stripe`](src/app/api/stripe/route.ts) endpoint is used to receive webhook events from Stripe. To enable this endpoint, set the `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` environment variables in the [`.env`](.env.sample?plain=1#L6) file.
+The Catalyst starter kit uses Stripe for payment processing. The [`/api/stripe`](src/app/api/stripe/route.ts) endpoint is used to receive webhook events from Stripe. To enable this endpoint, set the `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` environment variables in the [`.env`](.env.sample?plain=1#L33) file.
 
 In Stripe, set the webhook URL to `https://your-app-url/api/stripe`.
 
@@ -140,14 +138,14 @@ For ease of use, we suggest not to reinvent the wheel and use the [Stripe Billin
 
 The helper function can only be used on the server side and ensures that the user is authenticated before creating the session. It has a single parameter: the Stripe `customerId` of the user.
 
-As the example dashboard of Catalyst can be found at `/dashboard`, the return URL of the billing portal is `http://localhost:3000/dashboard` by default. You can change this to any URL by setting the `STRIPE_PORTAL_RETURN_URL` environment variable in the [`.env`](.env.sample?plain=1#L8) file. 
+As the example dashboard of Catalyst can be found at `/dashboard`, the return URL of the billing portal is `http://localhost:3000/dashboard` by default. You can change this to any URL by setting the `STRIPE_PORTAL_RETURN_URL` environment variable in the [`.env`](.env.sample?plain=1#L35) file. 
 
 ## Logging
 
-Catalyst uses Winston as the default logger and the default log level is `info`. You can change this by setting the `LOG_LEVEL` environment variable in the [`.env`](.env.sample?plain=1#L2) file.
+Catalyst uses Winston as the default logger and the default log level is `info`. You can change this by setting the `LOG_LEVEL` environment variable in the [`.env`](.env.sample?plain=1#L22) file.
 
-If you want to configure a log drain, set the `LOG_DRAIN_URL` environment variable in the [`.env`](.env.sample?plain=1#L3) file. This will send the logs to the specified URL as well as to the console.
+If you want to configure a log drain, set the `LOG_DRAIN_URL` environment variable in the [`.env`](.env.sample?plain=1#L23) file. This will send the logs to the specified URL as well as to the console.
 
 ## Analytics
 
-Set the `NEXT_PUBLIC_GA_ID` and/or `NEXT_PUBLIC_GTM_ID` environment variables in the [`.env`](.env.sample?plain=1#L25) file to enable Google Analytics and/or Google Tag Manager.
+Set the `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` and/or `NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID` environment variables in the [`.env`](.env.sample?plain=1#L11) file to enable Google Analytics and/or Google Tag Manager.

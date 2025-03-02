@@ -1,5 +1,6 @@
 import { signIn } from "@/auth";
 import { Button } from "@/components/ui/button";
+import publicConf from "@/lib/public-config";
 import Image from "next/image";
 
 export default function OAuthForm({ provider }: { provider: string }) {
@@ -18,7 +19,7 @@ export default function OAuthForm({ provider }: { provider: string }) {
         "use server";
 
         await signIn(provider, {
-          redirectTo: process.env.NEXT_PUBLIC_AUTH_REDIRECT_URL,
+          redirectTo: publicConf.redirectPath,
         });
       }}
     >

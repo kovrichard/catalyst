@@ -1,9 +1,12 @@
+import "server-only";
+
 import { z } from "zod";
 
 const schema = z.object({
-  // Logging
-  logDrainUrl: z.string().default(""),
+  // General
+  environment: z.enum(["development", "stage", "production"]).default("development"),
   logLevel: z.enum(["error", "warn", "info", "debug"]).default("info"),
+  logDrainUrl: z.string().default(""),
 
   // Auth
   githubId: z.string().optional(),
@@ -15,16 +18,13 @@ const schema = z.object({
   stripeSecretKey: z.string().default(""),
   stripeWebhookSecret: z.string().default(""),
   stripePortalReturnUrl: z.string().default("http://localhost:3000/dashboard"),
-
-  // General
-  frontendUrl: z.string().default("http://localhost:3000"),
-  environment: z.enum(["development", "stage", "production"]).default("development"),
 });
 
 const envVars = {
-  // Logging
-  logDrainUrl: process.env.LOG_DRAIN_URL,
+  // General
+  environment: process.env.ENVIRONMENT,
   logLevel: process.env.LOG_LEVEL,
+  logDrainUrl: process.env.LOG_DRAIN_URL,
 
   // Auth
   githubId: process.env.AUTH_GITHUB_ID,
@@ -36,10 +36,6 @@ const envVars = {
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
   stripePortalReturnUrl: process.env.STRIPE_PORTAL_RETURN_URL,
-
-  // General
-  frontendUrl: process.env.FRONTEND_URL,
-  environment: process.env.ENVIRONMENT,
 };
 
 const conf = schema.parse(envVars);

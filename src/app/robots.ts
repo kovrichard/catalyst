@@ -1,4 +1,4 @@
-import conf from "@/lib/config";
+import publicConf from "@/lib/public-config";
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: `${conf.frontendUrl}/sitemap.xml`,
+    sitemap: `${publicConf.host}/sitemap.xml`,
   };
 }
