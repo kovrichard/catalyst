@@ -16,6 +16,8 @@ export default function Home() {
     "Bun.js",
     "Zod",
     "Winston",
+    "Amazon SES",
+    "React Email",
   ];
 
   return (

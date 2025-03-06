@@ -4,20 +4,24 @@
 
 This repository provides a powerful starter kit for building modern web applications using the following stack:
 
-- [Bun.js](https://bun.sh/): A fast JavaScript runtime for modern web applications.
-- [Prisma](https://www.prisma.io/): A next-generation ORM for TypeScript and JavaScript that simplifies database access.
-- [Next.js](https://nextjs.org/): A full-stack React framework for building server-side rendered applications.
-- [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for building responsive designs.
-- [shadcn/ui](https://ui.shadcn.com/): A collection of beautifully designed UI components built with Tailwind CSS.
+- [Bun.js](https://bun.sh): A fast JavaScript runtime for modern web applications.
+- [Prisma](https://www.prisma.io): A next-generation ORM for TypeScript and JavaScript that simplifies database access.
+- [Next.js](https://nextjs.org): A full-stack React framework for building server-side rendered applications.
+- [Tailwind CSS](https://tailwindcss.com): A utility-first CSS framework for building responsive designs.
+- [shadcn/ui](https://ui.shadcn.com): A collection of beautifully designed UI components built with Tailwind CSS.
 - [Husky](https://typicode.github.io/husky/): Git hooks that help to enforce coding standards by running scripts during the commit process.
-- [Biome](https://biomejs.dev/): A toolchain for linting, formatting, and other code quality tasks.
+- [Biome](https://biomejs.dev): A toolchain for linting, formatting, and other code quality tasks.
 - [Auth.js](https://authjs.dev): A simple and open-source authentication library for modern web applications.
-- [Stripe](https://stripe.com/): A payment processing platform for online businesses.
-- [Zod](https://zod.dev/): TypeScript-first schema validation with static type inference.
+- [Stripe](https://stripe.com): A payment processing platform for online businesses.
+- [Zod](https://zod.dev): TypeScript-first schema validation with static type inference.
 - [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
-- [Tabler Icons](https://tablericons.com/): A set of over 5,600 open-source SVG icons.
-- [Google Analytics](https://analytics.google.com/): You know what it is.
-- [Google Tag Manager](https://tagmanager.google.com/): For fine-grained tracking and analytics.
+- [Tabler Icons](https://tablericons.com): A set of over 5,600 open-source SVG icons.
+- [Amazon SES](https://aws.amazon.com/ses/): A reliable, scalable, and cost-effective email service.
+- [React Email](https://react.email): A library for building responsive HTML emails using React.
+- [Google Analytics](https://analytics.google.com): You know what it is.
+- [Google Tag Manager](https://tagmanager.google.com): For fine-grained tracking and analytics.
+- [Docker](https://www.docker.com): In case you need to containerize your application.
+- [GitHub Actions](https://github.com/features/actions): For continuous integration and deployment.
 
 It also contains an example [GitHub Actions workflow](/.github/workflows/build.yml) for continuous integration and deployment. The workflow installs the dependencies, lints the code, and builds the project.
 
