@@ -1,10 +1,13 @@
-.PHONY: build dev start-db stop db
+.PHONY: build dev sh start-db stop db
 
 build:
 	docker compose build
 
 dev:
 	docker compose up -d
+
+sh:
+	docker compose exec app /bin/bash
 
 start-db:
 	docker compose up -d database
