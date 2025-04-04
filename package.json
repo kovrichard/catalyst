@@ -37,7 +37,7 @@
     "bcrypt": "5.1.1",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
-    "framer-motion": "12.5.0",
+    "motion": "12.6.3",
     "javascript-time-ago": "2.5.11",
     "lucide-react": "0.460.0",
     "next": "15.2.3",
