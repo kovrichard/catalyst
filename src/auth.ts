@@ -1,3 +1,4 @@
+import { randomBytes, scryptSync } from "crypto";
 import { getUserByEmail, saveUser } from "@/lib/dao/users";
 import NextAuth from "next-auth";
 import { CredentialsSignin } from "next-auth";
@@ -82,26 +83,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 });
 
-const saltRounds = 10;
-
 async function hashPassword(plainPassword: string) {
-  const bcrypt = require("bcrypt");
-
   try {
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(plainPassword, salt);
-    return hashedPassword;
+    const salt = randomBytes(32).toString("hex");
+    const hash = scryptSync(plainPassword, salt, 64).toString("hex");
+    return `${salt}:${hash}`;
   } catch (error) {
     console.error(error);
   }
 }
 
 async function verifyPassword(plainPassword: string, hashedPassword: string) {
-  const bcrypt = require("bcrypt");
-
   try {
-    const match = await bcrypt.compare(plainPassword, hashedPassword);
-    return match;
+    const [salt, hash] = hashedPassword.split(":");
+    const hashBuffer = Buffer.from(hash, "hex");
+    const key = scryptSync(plainPassword, salt, 64);
+    return hashBuffer.toString("hex") === key.toString("hex");
   } catch (error) {
     console.error(error);
   }

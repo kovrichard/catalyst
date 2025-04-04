@@ -1,12 +1,7 @@
 import NextBundleAnalyzer from '@next/bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    webpack: (config) => {
-        config.externals = [...config.externals, "bcrypt"];
-        return config;
-    },
-};
+const nextConfig = {};
 
 const withBundleAnalyzer = NextBundleAnalyzer({
     enabled: process.env.ANALYZE === 'true',

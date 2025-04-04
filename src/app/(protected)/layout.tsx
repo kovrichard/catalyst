@@ -1,6 +1,7 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import TopMenu from "@/components/top-menu";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { getUserFromSession } from "@/lib/dao/users";
 import { cookies } from "next/headers";
 import React from "react";
 
@@ -9,6 +10,7 @@ export default async function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await getUserFromSession();
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar:state")?.value === "true";
 
