@@ -16,6 +16,7 @@ export default function RegisterForm() {
 
   const toastCallback = (state: FormState) => {
     if (state.message === "Registered successfully") {
+      localStorage.setItem("catalyst-auth-method", "password");
       router.push(publicConf.redirectPath);
     }
   };

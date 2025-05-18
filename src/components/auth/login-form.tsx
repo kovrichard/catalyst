@@ -16,6 +16,7 @@ export default function LoginForm() {
 
   const toastCallback = (state: FormState) => {
     if (state.message === "Signed in successfully") {
+      localStorage.setItem("catalyst-auth-method", "password");
       router.push(publicConf.redirectPath);
     }
   };

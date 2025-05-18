@@ -1,7 +1,6 @@
 import { signIn } from "@/auth";
-import { Button } from "@/components/ui/button";
 import publicConf from "@/lib/public-config";
-import Image from "next/image";
+import OAuthButton from "./oauth-button";
 
 export default function OAuthForm({ provider }: { provider: string }) {
   let config: { title: string } = { title: "" };
@@ -23,16 +22,7 @@ export default function OAuthForm({ provider }: { provider: string }) {
         });
       }}
     >
-      <Button type="submit" className="flex gap-2 w-full">
-        <Image
-          src={`/${provider}.svg`}
-          width="20"
-          height="20"
-          alt="Google"
-          className="pointer-events-none"
-        />
-        <span className="pointer-events-none">{config.title}</span>
-      </Button>
+      <OAuthButton provider={provider} title={config.title} />
     </form>
   );
 }
