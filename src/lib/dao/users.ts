@@ -6,6 +6,8 @@ import { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 
+const unauthenticatedRedirect = "/login";
+
 export async function getUserByEmail(email: string) {
   const user = await prisma.user.findUnique({
     where: {
@@ -16,11 +18,21 @@ export async function getUserByEmail(email: string) {
   return user;
 }
 
+export const getUserIdFromSession = cache(async (): Promise<number> => {
+  const session = await auth();
+
+  if (!session || !session.user || !session.user.id) {
+    return redirect(unauthenticatedRedirect);
+  }
+
+  return parseInt(session.user.id);
+});
+
 export const getUserFromSession = cache(async (): Promise<Partial<User>> => {
   const session = await auth();
 
   if (!session) {
-    return redirect("/login");
+    return redirect(unauthenticatedRedirect);
   }
 
   const user = await prisma.user.findUnique({
@@ -30,7 +42,7 @@ export const getUserFromSession = cache(async (): Promise<Partial<User>> => {
   });
 
   if (!user) {
-    return redirect("/login");
+    return redirect(unauthenticatedRedirect);
   }
 
   return {

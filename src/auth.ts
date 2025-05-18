@@ -1,4 +1,5 @@
 import { randomBytes, scryptSync } from "crypto";
+import conf from "@/lib/config";
 import { getUserByEmail, saveUser } from "@/lib/dao/users";
 import NextAuth from "next-auth";
 import { CredentialsSignin } from "next-auth";
@@ -29,14 +30,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             throw new Error("User already exists");
           }
 
-          const passwordHash = await hashPassword(credentials.password as string);
+          const passwordHash = hashPassword(credentials.password as string);
 
-          const newUser = await saveUser({
-            name: credentials.name as string,
-            email: credentials.email as string,
-            password: passwordHash,
-            picture: "",
-          });
+          const newUser = await createNewUser(
+            credentials.name as string,
+            credentials.email as string,
+            "",
+            passwordHash
+          );
 
           return newUser as any;
         } else {
@@ -71,19 +72,52 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const existingUser = await getUserByEmail(email || "");
 
       if (!existingUser) {
-        await saveUser({
-          name: name,
-          email: email,
-          picture: picture || "",
-        });
+        await createNewUser(name, email, picture || "");
       }
 
       return true;
     },
+    async jwt({ token, trigger }) {
+      if (trigger === "signIn") {
+        const user = await getUserByEmail(token.email as string);
+        token.userId = user?.id;
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.id = token.userId as string;
+
+      return session;
+    },
   },
 });
 
-async function hashPassword(plainPassword: string) {
+async function createNewUser(
+  name: string,
+  email: string,
+  picture: string,
+  password?: string
+) {
+  const user = await saveUser({
+    name: name,
+    email: email,
+    password: password,
+    picture: picture,
+  });
+
+  const stripeConfigured = conf.stripeSecretKey && conf.stripeWebhookSecret;
+
+  if (stripeConfigured) {
+    // const customer = await createStripeCustomer(user);
+    // await updateUserWithStripeCustomerId(user.id, customer.id);
+    // await createStripeTrialSubscription(user.id, customer.id);
+  }
+
+  return user;
+}
+
+export function hashPassword(plainPassword: string) {
   try {
     const salt = randomBytes(32).toString("hex");
     const hash = scryptSync(plainPassword, salt, 64).toString("hex");
@@ -93,7 +127,7 @@ async function hashPassword(plainPassword: string) {
   }
 }
 
-async function verifyPassword(plainPassword: string, hashedPassword: string) {
+export async function verifyPassword(plainPassword: string, hashedPassword: string) {
   try {
     const [salt, hash] = hashedPassword.split(":");
     const hashBuffer = Buffer.from(hash, "hex");
