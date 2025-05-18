@@ -3,7 +3,7 @@
 import "server-only";
 
 import { getUserFromSession } from "@/lib/dao/users";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/prisma/prisma";
 
 export async function readNotification(notificationId: number): Promise<void> {
   const user = await getUserFromSession();

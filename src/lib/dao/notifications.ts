@@ -1,5 +1,5 @@
 import { getUserFromSession } from "@/lib/dao/users";
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/prisma/prisma";
 
 export async function getNotifications() {
   const user = await getUserFromSession();
