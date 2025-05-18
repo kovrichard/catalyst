@@ -27,7 +27,7 @@ export default function OAuthButton({
         className="pointer-events-none"
       />
       <span className="pointer-events-none">{title}</span>
-      <LastUsedIndicator provider={provider} />
+      <LastUsedIndicator provider={provider} className="text-black sm:text-foreground" />
     </Button>
   );
 }

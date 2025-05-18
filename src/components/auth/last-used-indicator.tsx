@@ -7,7 +7,13 @@ import { useEffect, useState } from "react";
 
 const lobster = Lobster({ subsets: ["latin"], weight: "400" });
 
-export default function LastUsedIndicator({ provider }: { provider: string }) {
+export default function LastUsedIndicator({
+  provider,
+  className,
+}: {
+  provider: string;
+  className?: string;
+}) {
   const [isLastUsed, setIsLastUsed] = useState(false);
 
   useEffect(() => {
@@ -19,11 +25,12 @@ export default function LastUsedIndicator({ provider }: { provider: string }) {
     isLastUsed && (
       <div
         className={cn(
-          "hidden sm:flex absolute top-0 bottom-0 -right-28 items-center justify-center gap-2 text-foreground text-lg",
-          lobster.className
+          "flex absolute top-0 bottom-0 right-4 sm:-right-28 items-center justify-center gap-2 text-foreground text-sm sm:text-lg",
+          lobster.className,
+          className
         )}
       >
-        <ArrowLeft size={24} />
+        <ArrowLeft size={24} className="hidden sm:block" />
         <span>Last used</span>
       </div>
     )

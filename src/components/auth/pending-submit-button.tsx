@@ -17,7 +17,7 @@ export default function PendingSubmitButton({
   return (
     <Button disabled={isPending} className={cn("relative", className)} {...props}>
       {isPending ? <LoaderCircle className="animate-spin" size={18} /> : text}
-      <LastUsedIndicator provider="password" />
+      <LastUsedIndicator provider="password" className="text-white sm:text-foreground" />
     </Button>
   );
 }
