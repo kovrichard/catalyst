@@ -18,6 +18,7 @@
         "@radix-ui/react-tooltip": "1.1.4",
         "@react-email/components": "0.0.33",
         "@tabler/icons-react": "3.21.0",
+        "@tanstack/react-query": "5.76.1",
         "class-variance-authority": "0.7.0",
         "clsx": "2.1.1",
         "javascript-time-ago": "2.5.11",
@@ -525,6 +526,10 @@
     "@tabler/icons": ["@tabler/icons@3.21.0", "", {}, "sha512-5+GkkmWCr1wgMor5cOF1/YYflTQdc15y10FUikJ3HW8hDiFjfbuoAHJi17FT1vwsr1sA78rkJMn+fDoOOjnnPA=="],
 
     "@tabler/icons-react": ["@tabler/icons-react@3.21.0", "", { "dependencies": { "@tabler/icons": "3.21.0" }, "peerDependencies": { "react": ">= 16" } }, "sha512-Qq0GnZzzccbv/zuMyXAUUPlogNAqx9KsF8cr/ev3bxs+GMObqNEjXv1eZl9GFzxyQTS435siJNU8A1BaIYhX8g=="],
+
+    "@tanstack/query-core": ["@tanstack/query-core@5.76.0", "", {}, "sha512-FN375hb8ctzfNAlex5gHI6+WDXTNpe0nbxp/d2YJtnP+IBM6OUm7zcaoCW6T63BawGOYZBbKC0iPvr41TteNVg=="],
+
+    "@tanstack/react-query": ["@tanstack/react-query@5.76.1", "", { "dependencies": { "@tanstack/query-core": "5.76.0" }, "peerDependencies": { "react": "^18 || ^19" } }, "sha512-YxdLZVGN4QkT5YT1HKZQWiIlcgauIXEIsMOTSjvyD5wLYK8YVvKZUPAysMqossFJJfDpJW3pFn7WNZuPOqq+fw=="],
 
     "@types/cookie": ["@types/cookie@0.6.0", "", {}, "sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA=="],
 
