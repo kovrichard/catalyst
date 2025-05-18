@@ -1,21 +1,21 @@
 "use client";
 
+import PendingSubmitButton from "@/components/auth/pending-submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
-import { signInUser } from "@/lib/actions/users";
+import { registerUser } from "@/lib/actions/users";
 import publicConf from "@/lib/public-config";
 import { FormState, initialState } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
-import PendingSubmitButton from "./pending-submit-button";
 
-export default function LoginForm() {
-  const [state, formAction, isPending] = useActionState(signInUser, initialState);
+export default function RegisterForm() {
+  const [state, formAction, isPending] = useActionState(registerUser, initialState);
   const router = useRouter();
 
   const toastCallback = (state: FormState) => {
-    if (state.message === "Signed in successfully") {
+    if (state.message === "Registered successfully") {
       router.push(publicConf.redirectPath);
     }
   };
@@ -24,6 +24,17 @@ export default function LoginForm() {
 
   return (
     <form className="flex flex-col gap-4" action={formAction}>
+      <Label htmlFor="name" className="space-y-1">
+        <span>Name</span>
+        <Input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="John Doe"
+          required
+          autoFocus
+        />
+      </Label>
       <Label htmlFor="email" className="space-y-1">
         <span>Email</span>
         <Input
@@ -32,7 +43,6 @@ export default function LoginForm() {
           name="email"
           placeholder="johndoe@example.com"
           required
-          autoFocus
         />
       </Label>
       <Label htmlFor="password" className="space-y-1">
@@ -45,7 +55,7 @@ export default function LoginForm() {
           required
         />
       </Label>
-      <PendingSubmitButton isPending={isPending} text="Sign in" className="mt-[18px]" />
+      <PendingSubmitButton isPending={isPending} text="Sign up" className="mt-[18px]" />
     </form>
   );
 }

@@ -1,5 +1,5 @@
+import { Button, ButtonProps } from "@/components/ui/button";
 import { IconLoader2 } from "@tabler/icons-react";
-import { Button, ButtonProps } from "./ui/button";
 
 export default function PendingSubmitButton({
   isPending,
