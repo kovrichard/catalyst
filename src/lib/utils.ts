@@ -23,3 +23,9 @@ const timeAgo = new TimeAgo("en-US");
 export function formatTimeAgo(date: Date) {
   return timeAgo.format(date);
 }
+
+export function ensure(condition: any, message: string): asserts condition {
+  if (!condition) {
+    throw new Error(message);
+  }
+}
