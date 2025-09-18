@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Analytics from "@/components/analytics";
+import CookiePopup from "@/components/cookie-popup";
 import { Providers } from "@/components/providers";
 import { canonicalUrl, metaDescription, metaTitle, openGraph } from "@/lib/metadata";
 import publicConf from "@/lib/public-config";
@@ -55,6 +56,7 @@ export default function RootLayout({
           {children}
           <Toaster />
         </Providers>
+        <CookiePopup />
       </body>
     </html>
   );

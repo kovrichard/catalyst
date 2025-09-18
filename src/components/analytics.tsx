@@ -23,7 +23,29 @@ export default function Analytics() {
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
 
-              gtag('config', '${analytics}');`}
+              gtag('config', '${analytics}', {
+                'allow_google_signals': false,
+                'allow_ad_personalization_signals': false
+              });
+
+              gtag('consent', 'default', {
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'analytics_storage': 'denied'
+              });
+              
+              // Check for existing consent
+              const consent = localStorage.getItem('ga-consent');
+              if (consent === 'granted') {
+                gtag('consent', 'update', {
+                  'ad_storage': 'granted',
+                  'ad_user_data': 'granted',
+                  'ad_personalization': 'granted',
+                  'analytics_storage': 'granted'
+                });
+              }
+            `}
           </Script>
         </>
       )}
@@ -57,12 +79,15 @@ export default function Analytics() {
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
 
-              gtag('config', '${ads}');`}
+              gtag('config', '${ads}', {
+                'allow_google_signals': false,
+                'allow_ad_personalization_signals': false
+              });`}
           </Script>
         </>
       )}
       {clarity && (
-        <Script id="clarity" strategy="beforeInteractive">
+        <Script id="clarity-init" strategy="beforeInteractive">
           {`
             (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
