@@ -83,3 +83,36 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* Cookie Popup Animations */
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToBottom {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Utility classes for different positions */
+.cookie-popup-bottom {
+  animation: slideInFromBottom 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.cookie-popup-bottom.exiting {
+  animation: slideOutToBottom 0.3s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+}
