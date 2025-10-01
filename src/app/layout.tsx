@@ -37,6 +37,7 @@ export const metadata: Metadata = {
   },
   category: "",
   keywords: [],
+  generator: "Catalyst",
 };
 
 export default function RootLayout({
