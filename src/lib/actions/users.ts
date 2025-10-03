@@ -5,9 +5,13 @@ import "server-only";
 import { InvalidLoginError, hashPassword, signIn, verifyPassword } from "@/auth";
 import { getUserIdFromSession } from "@/lib/dao/users";
 import prisma from "@/lib/prisma/prisma";
+import { FormState } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
-export async function signInUser(_prevState: any, formData: FormData) {
+export async function signInUser(
+  _prevState: any,
+  formData: FormData
+): Promise<FormState> {
   const options = {
     email: formData.get("email"),
     password: formData.get("password"),
@@ -21,23 +25,29 @@ export async function signInUser(_prevState: any, formData: FormData) {
     return {
       message: "Signed in successfully",
       description: "You have been successfully signed in.",
+      success: true,
     };
   } catch (error: any) {
     if (error.cause.err instanceof InvalidLoginError) {
       return {
         message: "Something went wrong",
         description: "Please try again.",
+        success: false,
       };
     } else {
       return {
         message: "Failed to sign in",
         description: "Email or password is incorrect.",
+        success: false,
       };
     }
   }
 }
 
-export async function registerUser(_prevState: any, formData: FormData) {
+export async function registerUser(
+  _prevState: any,
+  formData: FormData
+): Promise<FormState> {
   const options = {
     name: formData.get("name"),
     email: formData.get("email"),
@@ -53,23 +63,29 @@ export async function registerUser(_prevState: any, formData: FormData) {
     return {
       message: "Registered successfully",
       description: "You have been successfully registered.",
+      success: true,
     };
   } catch (error: any) {
     if (error.cause.err instanceof InvalidLoginError) {
       return {
         message: "Something went wrong",
         description: "It's on us. Please try again.",
+        success: false,
       };
     } else {
       return {
         message: "Registration failed",
         description: "User already exists.",
+        success: false,
       };
     }
   }
 }
 
-export async function updateUserPassword(_prevState: any, formData: FormData) {
+export async function updateUserPassword(
+  _prevState: any,
+  formData: FormData
+): Promise<FormState> {
   const userId = await getUserIdFromSession();
   const user = await prisma.user.findUnique({
     where: {
@@ -85,6 +101,7 @@ export async function updateUserPassword(_prevState: any, formData: FormData) {
     return {
       message: "User not found",
       description: "Please try again.",
+      success: false,
     };
   }
 
@@ -99,6 +116,7 @@ export async function updateUserPassword(_prevState: any, formData: FormData) {
       return {
         message: "Invalid password",
         description: "Please try again.",
+        success: false,
       };
     }
   }
@@ -107,6 +125,7 @@ export async function updateUserPassword(_prevState: any, formData: FormData) {
     return {
       message: "Password too short",
       description: "Please try again.",
+      success: false,
     };
   }
 
@@ -114,6 +133,7 @@ export async function updateUserPassword(_prevState: any, formData: FormData) {
     return {
       message: "Password mismatch",
       description: "Please try again.",
+      success: false,
     };
   }
 
@@ -133,10 +153,11 @@ export async function updateUserPassword(_prevState: any, formData: FormData) {
   return {
     message: "Password updated",
     description: "Your password has been updated.",
+    success: true,
   };
 }
 
-export async function deleteUser() {
+export async function deleteUser(): Promise<FormState> {
   const userId = await getUserIdFromSession();
 
   await prisma.user.delete({
@@ -148,5 +169,6 @@ export async function deleteUser() {
   return {
     message: "User deleted",
     description: "Your account has been deleted.",
+    success: true,
   };
 }

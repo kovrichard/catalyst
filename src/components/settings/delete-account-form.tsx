@@ -23,7 +23,7 @@ export default function DeleteAccountForm() {
   const [open, setOpen] = useState(false);
 
   const successCallback = async (state: FormState) => {
-    if (state.message === "User deleted") {
+    if (state.success) {
       setOpen(false);
       setTimeout(() => {
         signOut();

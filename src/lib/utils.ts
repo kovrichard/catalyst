@@ -10,11 +10,13 @@ export function cn(...inputs: ClassValue[]) {
 export type FormState = {
   message: string;
   description: string;
+  success?: boolean;
 };
 
 export const initialState: FormState = {
   message: "",
   description: "",
+  success: undefined,
 };
 
 TimeAgo.addDefaultLocale(en);
