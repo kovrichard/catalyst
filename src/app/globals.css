@@ -215,3 +215,20 @@
 .cookie-popup-bottom.exiting {
   animation: slideOutToBottom 0.3s cubic-bezier(0.5, 0, 0.75, 0) forwards;
 }
+
+/* Shine animation for text */
+@keyframes shine {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@utility animate-shine {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 8s linear infinite;
+}

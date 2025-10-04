@@ -70,7 +70,11 @@ export default function Home() {
           Production Ready
         </Badge>
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-          Ship Faster With
+          Ship{" "}
+          <span className="inline-block bg-gradient-to-r from-slate-500 via-white to-slate-500 bg-[length:200%_auto] animate-shine [text-shadow:0_0.5px_1px_rgba(0,0,0,0.2)]">
+            Faster
+          </span>{" "}
+          With
           <span className="block text-primary mt-2">Catalyst</span>
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl">
