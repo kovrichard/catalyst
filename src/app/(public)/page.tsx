@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DiagonalEdge } from "@/components/ui/diagonal-edge";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ShinyBorder } from "@/components/ui/shiny-border";
 import { logger } from "@/lib/logger";
 
@@ -147,34 +148,41 @@ export default function Home() {
       {/* Features Section */}
       <section className="w-full max-w-7xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="flex flex-col items-center text-center gap-3">
-            <div className="p-3 rounded-full bg-primary/10">
-              <Code2 className="w-6 h-6 text-primary" />
+          <ScrollReveal delay={0}>
+            <div className="flex flex-col items-center text-center gap-3">
+              <div className="p-3 rounded-full bg-primary/10">
+                <Code2 className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold">Type-Safe</h3>
+              <p className="text-muted-foreground text-sm">
+                End-to-end type safety with TypeScript, tRPC, Zod validation, and Prisma
+                ORM.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold">Type-Safe</h3>
-            <p className="text-muted-foreground text-sm">
-              End-to-end type safety with TypeScript, tRPC, Zod validation, and Prisma
-              ORM.
-            </p>
-          </div>
-          <div className="flex flex-col items-center text-center gap-3">
-            <div className="p-3 rounded-full bg-primary/10">
-              <Zap className="w-6 h-6 text-primary" />
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <div className="flex flex-col items-center text-center gap-3">
+              <div className="p-3 rounded-full bg-primary/10">
+                <Zap className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold">Lightning Fast</h3>
+              <p className="text-muted-foreground text-sm">
+                Built on Next.js 15 with React Server Components and powered by Bun.js.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold">Lightning Fast</h3>
-            <p className="text-muted-foreground text-sm">
-              Built on Next.js 15 with React Server Components and powered by Bun.js.
-            </p>
-          </div>
-          <div className="flex flex-col items-center text-center gap-3">
-            <div className="p-3 rounded-full bg-primary/10">
-              <FileCode className="w-6 h-6 text-primary" />
+          </ScrollReveal>
+          <ScrollReveal delay={0.2}>
+            <div className="flex flex-col items-center text-center gap-3">
+              <div className="p-3 rounded-full bg-primary/10">
+                <FileCode className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold">Developer Experience</h3>
+              <p className="text-muted-foreground text-sm">
+                Pre-configured tooling with Biome, Husky, and best practices out of the
+                box.
+              </p>
             </div>
-            <h3 className="text-xl font-semibold">Developer Experience</h3>
-            <p className="text-muted-foreground text-sm">
-              Pre-configured tooling with Biome, Husky, and best practices out of the box.
-            </p>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
     </main>
