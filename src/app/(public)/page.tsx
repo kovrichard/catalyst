@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DiagonalEdge } from "@/components/ui/diagonal-edge";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { ScrollRotate } from "@/components/ui/scroll-rotate";
 import { ShinyBorder } from "@/components/ui/shiny-border";
 import { logger } from "@/lib/logger";
 
@@ -114,27 +115,31 @@ export default function Home() {
             {integrations.map((integration) => {
               const Icon = integration.icon;
               return (
-                <ShinyBorder key={integration.category}>
-                  <Card className="border-0">
-                    <CardHeader>
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-primary/10">
-                          <Icon className="w-5 h-5 text-primary" />
+                <ScrollRotate key={integration.category}>
+                  <ShinyBorder>
+                    <Card className="border-0">
+                      <CardHeader>
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 rounded-lg bg-primary/10">
+                            <Icon className="w-5 h-5 text-primary" />
+                          </div>
+                          <CardTitle className="text-lg">
+                            {integration.category}
+                          </CardTitle>
                         </div>
-                        <CardTitle className="text-lg">{integration.category}</CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2">
-                        {integration.tools.map((tool) => (
-                          <Badge key={tool} variant="secondary">
-                            {tool}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </ShinyBorder>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex flex-wrap gap-2">
+                          {integration.tools.map((tool) => (
+                            <Badge key={tool} variant="secondary">
+                              {tool}
+                            </Badge>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </ShinyBorder>
+                </ScrollRotate>
               );
             })}
           </div>
