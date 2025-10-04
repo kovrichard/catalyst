@@ -57,7 +57,7 @@ export default function Home() {
     {
       category: "Code Quality",
       icon: GitBranch,
-      tools: ["Biome", "Husky", "TypeScript"],
+      tools: ["Biome", "Husky", "TypeScript", "tRPC"],
     },
   ];
 
@@ -80,6 +80,9 @@ export default function Home() {
         <div className="flex gap-3 mt-4">
           <Badge variant="secondary" className="text-sm px-3 py-1">
             TypeScript
+          </Badge>
+          <Badge variant="secondary" className="text-sm px-3 py-1">
+            tRPC
           </Badge>
           <Badge variant="secondary" className="text-sm px-3 py-1">
             Server Components
@@ -139,7 +142,8 @@ export default function Home() {
             </div>
             <h3 className="text-xl font-semibold">Type-Safe</h3>
             <p className="text-muted-foreground text-sm">
-              End-to-end type safety with TypeScript, Zod validation, and Prisma ORM.
+              End-to-end type safety with TypeScript, tRPC, Zod validation, and Prisma
+              ORM.
             </p>
           </div>
           <div className="flex flex-col items-center text-center gap-3">
