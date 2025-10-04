@@ -6,15 +6,16 @@ import { InvalidLoginError, hashPassword, signIn, verifyPassword } from "@/auth"
 import { getUserIdFromSession } from "@/lib/dao/users";
 import prisma from "@/lib/prisma/prisma";
 import { FormState } from "@/lib/utils";
+import { LoginFormData, RegisterFormData } from "@/types/auth";
 import { revalidatePath } from "next/cache";
 
 export async function signInUser(
   _prevState: any,
-  formData: FormData
+  formData: LoginFormData
 ): Promise<FormState> {
   const options = {
-    email: formData.get("email"),
-    password: formData.get("password"),
+    email: formData.email,
+    password: formData.password,
     callbackUrl: "/",
     redirect: false,
   };
@@ -46,12 +47,12 @@ export async function signInUser(
 
 export async function registerUser(
   _prevState: any,
-  formData: FormData
+  formData: RegisterFormData
 ): Promise<FormState> {
   const options = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    password: formData.get("password"),
+    name: formData.name,
+    email: formData.email,
+    password: formData.password,
     callbackUrl: "/",
     redirect: false,
     register: true,
