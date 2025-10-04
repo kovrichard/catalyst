@@ -26,6 +26,7 @@ export function formatTimeAgo(date: Date) {
   return timeAgo.format(date);
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
 export function ensure(condition: any, message: string): asserts condition {
   if (!condition) {
     throw new Error(message);

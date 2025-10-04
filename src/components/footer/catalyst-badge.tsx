@@ -18,6 +18,7 @@ export default function CatalystBadge() {
       className="text-sm py-1 px-2 rounded flex items-center gap-1.5 shadow-md bg-card dark:bg-input border text-foreground hover:bg-input/50 transition-colors"
     >
       <span>Made with</span>
+      {/** biome-ignore lint/performance/noImgElement: Vercel bypass */}
       <img
         src="https://catalyst.richardkovacs.dev/icon.svg"
         alt="Catalyst"

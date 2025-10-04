@@ -3,10 +3,7 @@ import Transport from "winston-transport";
 import conf from "./config";
 
 class CustomTransport extends Transport {
-  constructor(opts: Transport.TransportStreamOptions) {
-    super(opts);
-  }
-
+  // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   async log(info: any, callback: () => void) {
     setImmediate(() => {
       this.emit("logged", info);

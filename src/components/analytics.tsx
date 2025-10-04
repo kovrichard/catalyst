@@ -1,6 +1,6 @@
+import Script from "next/script";
 import conf from "@/lib/config";
 import publicConf from "@/lib/public-config";
-import Script from "next/script";
 
 export default function Analytics() {
   const isProd = conf.environment === "production";
@@ -60,6 +60,7 @@ export default function Analytics() {
           </Script>
           <noscript>
             <iframe
+              title="Tag Manager"
               src={`https://www.googletagmanager.com/ns.html?id=${tagManager}`}
               height="0"
               width="0"

@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import LastUsedIndicator from "@/components/auth/last-used-indicator";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
 export default function OAuthButton({
   provider,

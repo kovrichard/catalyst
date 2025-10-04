@@ -1,13 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { Cookie } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 declare global {
   interface Window {
+    // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
     gtag?: (...args: any[]) => void;
   }
 }

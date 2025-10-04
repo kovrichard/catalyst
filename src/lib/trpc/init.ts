@@ -1,7 +1,7 @@
-import { getUserFromSession } from "@/lib/dao/users";
-import { TRPCError, initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import { cache } from "react";
 import superjson from "superjson";
+import { getUserFromSession } from "@/lib/dao/users";
 
 export const createTRPCContext = cache(async () => {
   const user = await getUserFromSession();

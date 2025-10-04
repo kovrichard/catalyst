@@ -1,11 +1,11 @@
+// biome-ignore lint/style/useNodejsImportProtocol: TODO: Need further investigation
 import { randomBytes, scryptSync } from "crypto";
-import conf from "@/lib/config";
-import { getUserByEmail, saveUser } from "@/lib/dao/users";
-import NextAuth from "next-auth";
-import { CredentialsSignin } from "next-auth";
+import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import conf from "@/lib/config";
+import { getUserByEmail, saveUser } from "@/lib/dao/users";
 
 export class InvalidLoginError extends CredentialsSignin {
   code = "invalid_credentials";
@@ -39,6 +39,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             passwordHash
           );
 
+          // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
           return newUser as any;
         } else {
           if (!user) {
@@ -54,6 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             throw new Error("Email or password is incorrect");
           }
 
+          // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
           return user as any;
         }
       },

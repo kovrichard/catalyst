@@ -1,18 +1,14 @@
 "use client";
 
+import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
 import { updateUserPassword } from "@/lib/actions/users";
 import { initialState } from "@/lib/utils";
-import { useActionState } from "react";
 
-export default function PasswordForm({
-  hasPassword,
-}: {
-  hasPassword: boolean;
-}) {
+export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
   const [state, formAction, isPending] = useActionState(updateUserPassword, initialState);
 
   useToast(state);

@@ -1,11 +1,11 @@
 "use client";
 
-import { useSidebar } from "@/components/ui/sidebar";
-import { useTRPC } from "@/lib/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { CreditCard, FileText, Settings } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useSidebar } from "@/components/ui/sidebar";
+import { useTRPC } from "@/lib/trpc/client";
 import { SignOut } from "../signout-button";
 import {
   DropdownMenuItem,
@@ -59,6 +59,7 @@ export default function ProfileMenu() {
           target="_blank"
           className="flex items-center gap-2 size-full px-2 py-1.5"
           onClick={() => isMobile && setOpenMobile(false)}
+          rel="noopener"
         >
           <FileText className="shrink-0" />
           <span>Privacy Policy</span>

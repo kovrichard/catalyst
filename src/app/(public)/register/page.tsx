@@ -1,7 +1,7 @@
+import type { Metadata } from "next";
 import AuthCard from "@/components/auth/auth-card";
 import RegisterForm from "@/components/auth/register-form";
 import { canonicalUrl, openGraph } from "@/lib/metadata";
-import { Metadata } from "next";
 
 const path = "/register";
 

@@ -1,11 +1,11 @@
 "use client";
 
-import { readNotification } from "@/lib/actions/notifications";
-import { formatTimeAgo } from "@/lib/utils";
-import { Notification } from "@prisma/client";
+import type { Notification } from "@prisma/client";
 import { Ellipsis } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import type React from "react";
+import { readNotification } from "@/lib/actions/notifications";
+import { formatTimeAgo } from "@/lib/utils";
 import { Button } from "./ui/button";
 
 export function NotificationItem({

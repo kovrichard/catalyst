@@ -1,8 +1,8 @@
 "use client";
 
-import { TRPCReactProvider } from "@/lib/trpc/client";
 import { ThemeProvider } from "next-themes";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+import { TRPCReactProvider } from "@/lib/trpc/client";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (

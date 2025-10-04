@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metaTitle = "Catalyst - Next.js Starter Kit";
 export const metaDescription =

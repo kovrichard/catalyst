@@ -1,21 +1,24 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
+/* biome-ignore lint/suspicious/noUnknownAtRules: TODO: Need further investigation*/
 @custom-variant dark (&:is(.dark *));
 
+/* biome-ignore lint/suspicious/noUnknownAtRules: TODO: Need further investigation*/
 @utility container {
   margin-inline: auto;
   padding-inline: 2rem;
 
-  @media (width >=--theme(--breakpoint-sm)) {
+  @media (width >= --theme(--breakpoint-sm)) {
     max-width: none;
   }
 
-  @media (width >=1280px) {
+  @media (width >= 1280px) {
     max-width: 1280px;
   }
 }
 
+/* biome-ignore lint/suspicious/noUnknownAtRules: TODO: Need further investigation*/
 @theme inline {
   --color-border: var(--border);
   --color-input: var(--input);
@@ -90,7 +93,6 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
-
   *,
   ::after,
   ::before,
@@ -173,14 +175,15 @@
 
 @layer base {
   * {
+    /* biome-ignore lint/suspicious/noUnknownAtRules: TODO: Need further investigation */
     @apply border-border;
   }
 
   body {
+    /* biome-ignore lint/suspicious/noUnknownAtRules: TODO: Need further investigation */
     @apply bg-background text-foreground;
   }
 }
-
 
 /* Cookie Popup Animations */
 @keyframes slideInFromBottom {
@@ -226,6 +229,7 @@
   }
 }
 
+/* biome-ignore lint/suspicious/noUnknownAtRules: TODO: Need further investigation */
 @utility animate-shine {
   background-clip: text;
   -webkit-background-clip: text;

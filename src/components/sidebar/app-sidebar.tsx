@@ -1,3 +1,5 @@
+import Image from "next/image";
+import Link from "next/link";
 import ProfileMenu from "@/components/sidebar/profile-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -15,8 +17,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { getUserFromSession } from "@/lib/dao/users";
-import Image from "next/image";
-import Link from "next/link";
 
 export async function AppSidebar() {
   const user = await getUserFromSession();

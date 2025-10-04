@@ -1,9 +1,9 @@
+import Image from "next/image";
+import Link from "next/link";
+import type React from "react";
 import { auth } from "@/auth";
 import CatalystBadge from "@/components/footer/catalyst-badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
 
 export default async function Layout({
   children,

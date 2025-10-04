@@ -1,12 +1,11 @@
 "use client";
 
+import { signOut } from "next-auth/react";
+import { useActionState, useState } from "react";
 import { Button } from "@/components/ui/button";
 import useToast from "@/hooks/use-toast";
 import { deleteUser } from "@/lib/actions/users";
-import { FormState, initialState } from "@/lib/utils";
-import { signOut } from "next-auth/react";
-import { useActionState } from "react";
-import { useState } from "react";
+import { type FormState, initialState } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogCancel,

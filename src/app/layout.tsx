@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import type React from "react";
+import { Toaster } from "sonner";
 import Analytics from "@/components/analytics";
 import CookiePopup from "@/components/cookie-popup";
 import { Providers } from "@/components/providers";
 import { canonicalUrl, metaDescription, metaTitle, openGraph } from "@/lib/metadata";
 import publicConf from "@/lib/public-config";
 import { cn } from "@/lib/utils";
-import React from "react";
-import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 

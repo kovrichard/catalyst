@@ -1,8 +1,8 @@
 "use client";
 
-import { FormState } from "@/lib/utils";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import type { FormState } from "@/lib/utils";
 
 const useToast = (
   state: FormState,
@@ -24,7 +24,7 @@ const useToast = (
     if (callback) {
       callback(state);
     }
-  }, [state]);
+  }, [state, callback]);
 };
 
 export default useToast;

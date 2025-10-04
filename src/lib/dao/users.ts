@@ -1,10 +1,10 @@
 import "server-only";
 
-import { auth } from "@/auth";
-import prisma from "@/lib/prisma/prisma";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
+import { auth } from "@/auth";
+import prisma from "@/lib/prisma/prisma";
 
 const unauthenticatedRedirect = "/login";
 
@@ -25,6 +25,7 @@ export const getUserIdFromSession = cache(async (): Promise<number> => {
     return redirect(unauthenticatedRedirect);
   }
 
+  // biome-ignore lint/correctness/useParseIntRadix: TODO: Need further investigation
   return parseInt(session.user.id);
 });
 

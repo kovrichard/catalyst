@@ -3,7 +3,7 @@ import publicConf from "@/lib/public-config";
 import OAuthButton from "./oauth-button";
 
 export default function OAuthForm({ provider }: { provider: string }) {
-  let config: { title: string } = { title: "" };
+  const config: { title: string } = { title: "" };
 
   if (provider === "google") {
     config.title = "Google";

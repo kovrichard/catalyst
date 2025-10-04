@@ -1,16 +1,16 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useActionState, useTransition } from "react";
+import { useForm } from "react-hook-form";
 import PendingSubmitButton from "@/components/auth/pending-submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
 import { registerUser } from "@/lib/actions/users";
 import publicConf from "@/lib/public-config";
-import { FormState, initialState } from "@/lib/utils";
-import { RegisterFormData } from "@/types/auth";
-import { useRouter } from "next/navigation";
-import { useActionState, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { type FormState, initialState } from "@/lib/utils";
+import type { RegisterFormData } from "@/types/auth";
 
 export default function RegisterForm() {
   const [state, formAction, isPending] = useActionState(registerUser, initialState);

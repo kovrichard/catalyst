@@ -1,6 +1,6 @@
+import type Stripe from "stripe";
 import conf from "@/lib/config";
 import { logger } from "@/lib/logger";
-import Stripe from "stripe";
 
 export async function POST(req: Request) {
   if (!conf.stripeSecretKey || !conf.stripeWebhookSecret) {
@@ -9,6 +9,8 @@ export async function POST(req: Request) {
   const stripe = (await import("@/lib/stripe")).stripe;
 
   const sig = req.headers.get("stripe-signature") || "";
+
+  // biome-ignore lint/suspicious/noImplicitAnyLet: TODO: Need further investigation
   let event;
 
   try {
@@ -17,6 +19,7 @@ export async function POST(req: Request) {
       sig,
       conf.stripeWebhookSecret
     );
+    // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   } catch (err: any) {
     return new Response(`Webhook Error: ${err.message}`, { status: 400 });
   }

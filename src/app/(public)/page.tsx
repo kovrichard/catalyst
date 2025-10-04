@@ -1,14 +1,3 @@
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { DiagonalEdge } from "@/components/ui/diagonal-edge";
-import { ShinyBorder } from "@/components/ui/shiny-border";
-import { logger } from "@/lib/logger";
 import {
   Code2,
   Database,
@@ -21,6 +10,11 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DiagonalEdge } from "@/components/ui/diagonal-edge";
+import { ShinyBorder } from "@/components/ui/shiny-border";
+import { logger } from "@/lib/logger";
 
 export default function Home() {
   logger.info("Hello, Catalyst!");

@@ -2,14 +2,15 @@
 
 import "server-only";
 
-import { InvalidLoginError, hashPassword, signIn, verifyPassword } from "@/auth";
+import { revalidatePath } from "next/cache";
+import { hashPassword, InvalidLoginError, signIn, verifyPassword } from "@/auth";
 import { getUserIdFromSession } from "@/lib/dao/users";
 import prisma from "@/lib/prisma/prisma";
-import { FormState } from "@/lib/utils";
-import { LoginFormData, RegisterFormData } from "@/types/auth";
-import { revalidatePath } from "next/cache";
+import type { FormState } from "@/lib/utils";
+import type { LoginFormData, RegisterFormData } from "@/types/auth";
 
 export async function signInUser(
+  // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   _prevState: any,
   formData: LoginFormData
 ): Promise<FormState> {
@@ -28,6 +29,7 @@ export async function signInUser(
       description: "You have been successfully signed in.",
       success: true,
     };
+    // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   } catch (error: any) {
     if (error.cause.err instanceof InvalidLoginError) {
       return {
@@ -46,6 +48,7 @@ export async function signInUser(
 }
 
 export async function registerUser(
+  // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   _prevState: any,
   formData: RegisterFormData
 ): Promise<FormState> {
@@ -66,6 +69,7 @@ export async function registerUser(
       description: "You have been successfully registered.",
       success: true,
     };
+    // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   } catch (error: any) {
     if (error.cause.err instanceof InvalidLoginError) {
       return {
@@ -84,6 +88,7 @@ export async function registerUser(
 }
 
 export async function updateUserPassword(
+  // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   _prevState: any,
   formData: FormData
 ): Promise<FormState> {

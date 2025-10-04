@@ -1,5 +1,5 @@
-import conf from "@/lib/config";
 import Stripe from "stripe";
+import conf from "@/lib/config";
 import { getUserFromSession } from "./dao/users";
 
 export const stripe = new Stripe(conf.stripeSecretKey, {

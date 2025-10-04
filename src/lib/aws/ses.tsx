@@ -44,6 +44,8 @@ export async function sendEmail(from: string, to: string, name: string) {
     const data = await client.send(command);
 
     return data;
+
+    // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   } catch (error: any) {
     console.error(error);
     throw new EmailError("Failed to send email.");

@@ -1,5 +1,5 @@
+import type { Metadata } from "next";
 import { canonicalUrl, openGraph } from "@/lib/metadata";
-import { Metadata } from "next";
 
 const path = "/privacy-policy";
 // TODO: change to the actual company

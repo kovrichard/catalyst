@@ -1,6 +1,6 @@
-import conf from "@/lib/config";
 import Link from "next/link";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+import conf from "@/lib/config";
 import {
   Card,
   CardContent,
