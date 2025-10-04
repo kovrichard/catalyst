@@ -56,7 +56,7 @@
     "react-dom": "19.1.1",
     "react-hook-form": "7.64.0",
     "server-only": "0.0.1",
-    "sonner": "1.5.0",
+    "sonner": "2.0.7",
     "stripe": "17.2.0",
     "superjson": "2.2.2",
     "tailwind-merge": "3.3.1",
