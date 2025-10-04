@@ -3,7 +3,7 @@
 import { readNotification } from "@/lib/actions/notifications";
 import { formatTimeAgo } from "@/lib/utils";
 import { Notification } from "@prisma/client";
-import { IconDots } from "@tabler/icons-react";
+import { Ellipsis } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
@@ -38,7 +38,7 @@ export function NotificationItem({
           className="ml-auto hover:bg-muted/50 shrink-0 rounded-full"
           onClick={handleNotificationClick}
         >
-          <IconDots size={20} />
+          <Ellipsis size={20} />
         </Button>
       </Link>
     </li>

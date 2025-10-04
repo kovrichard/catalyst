@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { getNotifications } from "@/lib/dao/notifications";
 import { Notification } from "@prisma/client";
-import { IconBell } from "@tabler/icons-react";
+import { Bell } from "lucide-react";
 import MarkAllAsReadButton from "./mark-all-as-read-button";
 import { NotificationItem } from "./notification-item";
 
@@ -16,7 +16,7 @@ export default async function NotificationMenu() {
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="ghost" size="icon" className="relative rounded-full">
-          <IconBell size={22} />
+          <Bell size={22} />
           {notifications.length > 0 && (
             <Badge
               variant="destructive"
