@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0 cursor-pointer",
   {
     variants: {
       variant: {
@@ -49,27 +49,4 @@ function Button({ className, variant, size, asChild = false, ...props }: ButtonP
   );
 }
 
-export interface LinkButtonProps
-  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">,
-    LinkProps,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
-
-function LinkButton({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: LinkButtonProps) {
-  return (
-    <Link
-      data-slot="link-button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  );
-}
-
-export { Button, LinkButton, buttonVariants };
+export { Button, buttonVariants };
