@@ -49,7 +49,7 @@ export async function AppSidebar() {
                   <p>{user?.name || "Anonymous"}</p>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-64 md:w-[15rem]">
+              <DropdownMenuContent className="w-64 md:w-60">
                 <ProfileMenu hasCustomerId={false} />
               </DropdownMenuContent>
             </DropdownMenu>
