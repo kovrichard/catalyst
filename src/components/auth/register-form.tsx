@@ -93,6 +93,18 @@ export default function RegisterForm() {
           placeholder="****************"
           {...register("password", {
             required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters",
+            },
+            validate: {
+              hasUpperCase: (value) => /[A-Z]/.test(value) || "Add an uppercase letter",
+              hasLowerCase: (value) => /[a-z]/.test(value) || "Add a lowercase letter",
+              hasNumber: (value) => /[0-9]/.test(value) || "Add a number",
+              hasSpecialChar: (value) =>
+                /[!@#$%^&*(),.?":{}|<>+\-=_~`[\]\\;'/]/.test(value) ||
+                "Add a special character",
+            },
           })}
         />
         {errors.password && (
