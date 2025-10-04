@@ -1,9 +1,11 @@
 "use client";
 
 import { useSidebar } from "@/components/ui/sidebar";
+import { useTRPC } from "@/lib/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { CreditCard, FileText, Settings } from "lucide-react";
 import Link from "next/link";
+import { useEffect } from "react";
 import { SignOut } from "../signout-button";
 import {
   DropdownMenuItem,
@@ -11,30 +13,24 @@ import {
   DropdownMenuSeparator,
 } from "../ui/dropdown-menu";
 
-export default function ProfileMenu({
-  hasCustomerId,
-}: {
-  hasCustomerId: boolean;
-}) {
+export default function ProfileMenu() {
   const { isMobile, setOpenMobile } = useSidebar();
-  const { data: billingPortalUrl } = useQuery({
-    queryKey: ["billing-portal-url"],
-    queryFn: async () => {
-      if (!hasCustomerId) {
-        return null;
-      }
+  const trpc = useTRPC();
+  const { data: billingPortalUrl, refetch } = useQuery(
+    trpc.billingPortal.queryOptions(undefined, {
+      meta: { persist: false },
+    })
+  );
 
-      const response = await fetch("/api/subscription/billing-portal");
-      const data = await response.json();
-      return data.url;
-    },
-  });
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <>
       <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      {hasCustomerId && (
+      {billingPortalUrl && (
         <DropdownMenuItem className="p-0 h-10">
           <a
             href={billingPortalUrl}

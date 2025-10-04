@@ -1,17 +1,15 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TRPCReactProvider } from "@/lib/trpc/client";
 import { ThemeProvider } from "next-themes";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 
 export function Providers({ children }: { children: ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient());
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <TRPCReactProvider>
       <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
         {children}
       </ThemeProvider>
-    </QueryClientProvider>
+    </TRPCReactProvider>
   );
 }
