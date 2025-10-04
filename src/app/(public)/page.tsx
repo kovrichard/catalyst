@@ -58,7 +58,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="flex flex-col items-center flex-1">
+    <main className="flex flex-col items-center flex-1 overflow-x-hidden">
       {/* Hero Section */}
       <section className="w-full">
         <div className="flex flex-col items-center justify-center gap-6 min-h-[60vh] mx-auto px-6 py-20 text-center container">
