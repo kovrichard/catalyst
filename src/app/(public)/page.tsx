@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DiagonalEdge } from "@/components/ui/diagonal-edge";
 import { ShinyBorder } from "@/components/ui/shiny-border";
 import { logger } from "@/lib/logger";
 import {
@@ -100,12 +101,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Top diagonal edge */}
+      <DiagonalEdge corner="bl" size={64} color="muted" />
       {/* Integrations section with diagonal borders */}
-      <section className="w-full bg-muted relative py-24">
-        {/* Top diagonal edge */}
-        <div className="absolute top-0 left-0 w-0 h-0 border-b-[64px] border-t-0 border-l-0 border-r-[100vw] border-t-transparent border-b-transparent border-r-background"></div>
-
-        <div className="container relative z-10">
+      <section className="w-full bg-muted">
+        <div className="container relative z-10 py-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-3">Built with the best tools</h2>
             <p className="text-muted-foreground">
@@ -142,15 +142,9 @@ export default function Home() {
             })}
           </div>
         </div>
-
-        {/* Bottom diagonal edge */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-16 bg-background"
-          style={{
-            clipPath: "polygon(0 100%, 100% 0, 100% 100%, 0 100%)",
-          }}
-        />
       </section>
+      {/* Bottom diagonal edge */}
+      <DiagonalEdge corner="tl" size={64} color="muted" />
 
       {/* Features Section */}
       <section className="w-full max-w-7xl mx-auto px-6 py-24">
