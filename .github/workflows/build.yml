@@ -3,7 +3,7 @@ name: build
 on:
   push:
     branches:
-      - main
+    - main
 
 jobs:
   build:
@@ -19,17 +19,17 @@ jobs:
       NEXT_PUBLIC_AUTH_REDIRECT_URL: /dashboard
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Setup Bun.js
-        uses: oven-sh/setup-bun@v2
+    - name: Setup Bun.js
+      uses: oven-sh/setup-bun@v2
 
-      - name: Install dependencies
-        run: bun install
-      
-      - name: Lint project
-        run: bun run lint-check && bun run type-check
-      
-      - name: Build project
-        run: bun run build
+    - name: Install dependencies
+      run: bun install
+
+    - name: Lint project
+      run: bun run check && bun run type-check
+
+    - name: Build project
+      run: bun run build
