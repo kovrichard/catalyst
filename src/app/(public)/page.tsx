@@ -61,7 +61,7 @@ export default function Home() {
     <main className="flex flex-col items-center flex-1 overflow-x-hidden">
       {/* Hero Section */}
       <section className="w-full">
-        <div className="flex flex-col items-center justify-center gap-6 min-h-[60vh] mx-auto px-6 py-20 text-center container">
+        <div className="flex flex-col items-center justify-center gap-6 min-h-[60vh] lg:min-h-[40rem] mx-auto px-6 py-20 text-center container">
           <Badge variant="outline" className="mb-2">
             <Sparkles className="w-3 h-3 mr-1" />
             Production Ready
