@@ -76,5 +76,17 @@ export function DiagonalEdge({
     }
   };
 
-  return <div className={cn("w-0 h-0", className)} style={getBorderStyles()} />;
+  const positionClasses = {
+    tl: "top-0 left-0",
+    tr: "top-0 right-0",
+    bl: "bottom-0 left-0",
+    br: "bottom-0 right-0",
+  };
+
+  return (
+    <div
+      className={cn("absolute w-0 h-0", positionClasses[corner], className)}
+      style={getBorderStyles()}
+    />
+  );
 }

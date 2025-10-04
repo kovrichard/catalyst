@@ -102,7 +102,9 @@ export default function Home() {
       </section>
 
       {/* Top diagonal edge */}
-      <DiagonalEdge corner="bl" size={64} color="muted" />
+      <div className="relative w-full">
+        <DiagonalEdge corner="bl" size={64} color="muted" />
+      </div>
       {/* Integrations section with diagonal borders */}
       <section className="w-full bg-muted">
         <div className="container relative z-10 py-6">
@@ -144,7 +146,9 @@ export default function Home() {
         </div>
       </section>
       {/* Bottom diagonal edge */}
-      <DiagonalEdge corner="tl" size={64} color="muted" />
+      <div className="relative w-full">
+        <DiagonalEdge corner="tl" size={64} color="muted" />
+      </div>
 
       {/* Features Section */}
       <section className="w-full max-w-7xl mx-auto px-6 py-24">
