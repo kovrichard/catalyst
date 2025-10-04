@@ -4,20 +4,26 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "dev-email": "email dev --port 3001",
+    "dev:email": "email dev --port 3001",
     "analyze": "ANALYZE=true next build",
     "build": "next build",
     "start": "next start",
     "type-check": "tsc --noEmit",
     "lint-staged": "lint-staged",
-    "lint-check": "biome lint --write ./src",
-    "format": "biome format --write ./src",
+    "format": "bunx biome format ./src",
+    "format-write": "bunx biome format --write ./src",
+    "lint": "bunx biome lint ./src",
+    "lint-write": "bunx biome lint --write ./src",
+    "check": "bunx biome check ./src",
+    "check-write": "bunx biome check --write ./src",
     "prepare": "husky",
     "postinstall": "prisma generate",
     "migrate": "prisma migrate dev"
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["biome check --write --no-errors-on-unmatched ./src"]
+    "*.{ts,tsx}": [
+      "bun run check"
+    ]
   },
   "dependencies": {
     "@aws-sdk/client-ses": "3.758.0",
@@ -66,7 +72,7 @@
     "zod": "4.1.11"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "2.2.5",
     "@next/bundle-analyzer": "15.5.4",
     "@react-email/preview-server": "4.2.12",
     "@tailwindcss/postcss": "4.1.14",
