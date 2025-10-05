@@ -27,37 +27,59 @@ export default function Home() {
     {
       category: "Framework & Runtime",
       icon: Zap,
-      tools: ["Next.js", "Bun.js", "React"],
+      tools: [
+        { name: "Next.js", color: "bg-black text-white" },
+        { name: "Bun.js", color: "bg-[#FBF1DF] text-black" },
+        { name: "React", color: "bg-[#58C4DC] text-black" },
+      ],
     },
     {
       category: "Styling",
       icon: Palette,
-      tools: ["Tailwind CSS", "shadcn/ui"],
+      tools: [
+        { name: "Tailwind CSS", color: "bg-[#00BCFF] text-white" },
+        { name: "shadcn/ui", color: "bg-black text-white" },
+      ],
     },
     {
       category: "Authentication & Security",
       icon: Lock,
-      tools: ["Auth.js", "Zod"],
+      tools: [
+        { name: "Auth.js", color: "bg-black text-white" },
+        { name: "Zod", color: "bg-[#428EFF] text-white" },
+      ],
     },
     {
       category: "Database & ORM",
       icon: Database,
-      tools: ["Prisma", "PostgreSQL"],
+      tools: [
+        { name: "Prisma", color: "bg-[#090A15] text-white" },
+        { name: "PostgreSQL", color: "bg-[#336792] text-white" },
+      ],
     },
     {
       category: "Payments",
       icon: ShieldCheck,
-      tools: ["Stripe"],
+      tools: [{ name: "Stripe", color: "bg-[#635CFF] text-white" }],
     },
     {
       category: "Email & Logging",
       icon: Mail,
-      tools: ["Amazon SES", "React Email", "Winston"],
+      tools: [
+        { name: "Amazon SES", color: "bg-[#FF6301] text-white" },
+        { name: "React Email", color: "bg-[#010103] text-white" },
+        { name: "Winston", color: "bg-blue-500 text-white" },
+      ],
     },
     {
       category: "Code Quality",
       icon: GitBranch,
-      tools: ["Biome", "Husky", "TypeScript", "tRPC"],
+      tools: [
+        { name: "Biome", color: "bg-[#61A6FB] text-white" },
+        { name: "Husky", color: "bg-[#161618] text-white" },
+        { name: "TypeScript", color: "bg-[#3279C6] text-white" },
+        { name: "tRPC", color: "bg-[#398CCB] text-white" },
+      ],
     },
   ];
 
@@ -133,8 +155,8 @@ export default function Home() {
                       <CardContent>
                         <div className="flex flex-wrap gap-2">
                           {integration.tools.map((tool) => (
-                            <Badge key={tool} variant="secondary">
-                              {tool}
+                            <Badge key={tool.name} className={tool.color}>
+                              {tool.name}
                             </Badge>
                           ))}
                         </div>
