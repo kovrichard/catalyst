@@ -10,11 +10,11 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { ScrollReveal } from "@/components/animations/scroll-reveal";
+import { ScrollRotate } from "@/components/animations/scroll-rotate";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DiagonalEdge } from "@/components/ui/diagonal-edge";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { ScrollRotate } from "@/components/ui/scroll-rotate";
 import { ShinyBorder } from "@/components/ui/shiny-border";
 import { logger } from "@/lib/logger";
 
