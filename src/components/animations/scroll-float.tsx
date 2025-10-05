@@ -26,7 +26,7 @@ export function ScrollFloat({
   startX = 0,
   startY = 0,
   stopPercentage = 100,
-  lag = 0.03,
+  lag = 1,
 }: ScrollFloatProps) {
   const [translateX, setTranslateX] = useState(startX);
   const [translateY, setTranslateY] = useState(startY);
@@ -45,6 +45,11 @@ export function ScrollFloat({
     distanceX ?? (direction === "x" || direction === "both" ? distance : 0);
   const finalDistanceY =
     distanceY ?? (direction === "y" || direction === "both" ? distance : 0);
+
+  // Convert lag in seconds to easing multiplier
+  // Formula: multiplier = 1 - (0.05)^(1/(lag * 60))
+  // This makes the animation reach ~95% completion in 'lag' seconds at 60fps
+  const easingMultiplier = 1 - 0.05 ** (1 / (lag * 60));
 
   // Calculate translation based on current scroll position
   const calculateTranslation = useCallback(() => {
@@ -90,8 +95,8 @@ export function ScrollFloat({
       // Ease-out for smooth deceleration (like momentum/inertia)
       const differenceX = targetX - currentX;
       const differenceY = targetY - currentY;
-      const incrementX = differenceX * lag;
-      const incrementY = differenceY * lag;
+      const incrementX = differenceX * easingMultiplier;
+      const incrementY = differenceY * easingMultiplier;
 
       if (Math.abs(differenceX) > 0.01 || Math.abs(differenceY) > 0.01) {
         currentXRef.current += incrementX;
@@ -116,7 +121,7 @@ export function ScrollFloat({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [lag]);
+  }, [easingMultiplier]);
 
   useEffect(() => {
     const handleScroll = () => {

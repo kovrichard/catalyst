@@ -156,7 +156,7 @@ export default function Home() {
       <section className="w-full max-w-7xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <ScrollReveal delay={0}>
-            <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={0.01}>
+            <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={3}>
               <div className="flex flex-col items-center text-center gap-3">
                 <CursorFloat radius={30} lag={2} intensity={0.3}>
                   <div className="p-3 rounded-full bg-primary/10">
@@ -172,7 +172,7 @@ export default function Home() {
             </ScrollFloat>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={0.01}>
+            <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={3}>
               <div className="flex flex-col items-center text-center gap-3">
                 <CursorFloat radius={30} lag={2} intensity={0.3}>
                   <div className="p-3 rounded-full bg-primary/10">
@@ -187,7 +187,7 @@ export default function Home() {
             </ScrollFloat>
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
-            <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={0.01}>
+            <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={3}>
               <div className="flex flex-col items-center text-center gap-3">
                 <CursorFloat radius={30} lag={2} intensity={0.3}>
                   <div className="p-3 rounded-full bg-primary/10">
