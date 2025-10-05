@@ -20,6 +20,44 @@ export function ScrollRotate({
 }: ScrollRotateProps) {
   const [rotation, setRotation] = useState(startRotation);
   const elementRef = useRef<HTMLDivElement>(null);
+  const targetRotationRef = useRef(startRotation);
+  const currentRotationRef = useRef(startRotation);
+  const animationFrameRef = useRef<number | undefined>(undefined);
+
+  // Smooth animation loop with easing
+  useEffect(() => {
+    let isRunning = true;
+
+    const animate = () => {
+      if (!isRunning) return;
+
+      const target = targetRotationRef.current;
+      const current = currentRotationRef.current;
+
+      // Ease-out for smooth deceleration (like momentum/inertia)
+      const difference = target - current;
+      const increment = difference * 0.08; // Adjust this for more/less lag (lower = more lag)
+
+      if (Math.abs(difference) > 0.01) {
+        currentRotationRef.current += increment;
+        setRotation(currentRotationRef.current);
+      } else {
+        currentRotationRef.current = target;
+        setRotation(target);
+      }
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      isRunning = false;
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,8 +89,10 @@ export function ScrollRotate({
 
       // Scale progress to 0-1 range based on stopPoint, then map to rotation
       const scaledProgress = progress / stopPoint;
-      const currentRotation = startRotation + scaledProgress * degrees;
-      setRotation(currentRotation);
+      const targetRotation = startRotation + scaledProgress * degrees;
+
+      // Update target instead of setting rotation directly
+      targetRotationRef.current = targetRotation;
     };
 
     // Initial calculation
@@ -73,7 +113,6 @@ export function ScrollRotate({
       className={cn("scroll-rotate", className)}
       style={{
         transform: `rotate(${rotation}deg)`,
-        transition: "transform 0.05s linear",
       }}
     >
       {children}
