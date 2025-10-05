@@ -10,6 +10,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import { ScrollFloat } from "@/components/animations/scroll-float";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { ScrollRotate } from "@/components/animations/scroll-rotate";
 import { Badge } from "@/components/ui/badge";
@@ -154,39 +155,45 @@ export default function Home() {
       <section className="w-full max-w-7xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <ScrollReveal delay={0}>
-            <div className="flex flex-col items-center text-center gap-3">
-              <div className="p-3 rounded-full bg-primary/10">
-                <Code2 className="w-6 h-6 text-primary" />
+            <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={0.01}>
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 rounded-full bg-primary/10">
+                  <Code2 className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Type-Safe</h3>
+                <p className="text-muted-foreground text-sm">
+                  End-to-end type safety with TypeScript, tRPC, Zod validation, and Prisma
+                  ORM.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold">Type-Safe</h3>
-              <p className="text-muted-foreground text-sm">
-                End-to-end type safety with TypeScript, tRPC, Zod validation, and Prisma
-                ORM.
-              </p>
-            </div>
+            </ScrollFloat>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <div className="flex flex-col items-center text-center gap-3">
-              <div className="p-3 rounded-full bg-primary/10">
-                <Zap className="w-6 h-6 text-primary" />
+            <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={0.01}>
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 rounded-full bg-primary/10">
+                  <Zap className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Lightning Fast</h3>
+                <p className="text-muted-foreground text-sm">
+                  Built on Next.js 15 with React Server Components and powered by Bun.js.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold">Lightning Fast</h3>
-              <p className="text-muted-foreground text-sm">
-                Built on Next.js 15 with React Server Components and powered by Bun.js.
-              </p>
-            </div>
+            </ScrollFloat>
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
-            <div className="flex flex-col items-center text-center gap-3">
-              <div className="p-3 rounded-full bg-primary/10">
-                <FileCode className="w-6 h-6 text-primary" />
+            <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={0.01}>
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 rounded-full bg-primary/10">
+                  <FileCode className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Developer Experience</h3>
+                <p className="text-muted-foreground text-sm">
+                  Pre-configured tooling with Biome, Husky, and best practices out of the
+                  box.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold">Developer Experience</h3>
-              <p className="text-muted-foreground text-sm">
-                Pre-configured tooling with Biome, Husky, and best practices out of the
-                box.
-              </p>
-            </div>
+            </ScrollFloat>
           </ScrollReveal>
         </div>
       </section>
