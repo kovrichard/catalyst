@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-ses": "3.758.0",
+    "@hookform/resolvers": "5.2.2",
     "@next/third-parties": "15.5.4",
     "@prisma/client": "6.16.3",
     "@radix-ui/react-alert-dialog": "1.1.15",
