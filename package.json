@@ -2,9 +2,13 @@
   "name": "catalyst",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.20.0",
+    "bun": ">=1.2.23"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
-    "dev:email": "email dev --port 3001",
+    "dev-email": "email dev --port 3001",
     "analyze": "ANALYZE=true next build",
     "build": "next build",
     "start": "next start",
@@ -28,7 +32,7 @@
   "dependencies": {
     "@aws-sdk/client-ses": "3.758.0",
     "@next/third-parties": "15.5.4",
-    "@prisma/client": "5.19.1",
+    "@prisma/client": "6.16.3",
     "@radix-ui/react-alert-dialog": "1.1.15",
     "@radix-ui/react-avatar": "1.1.10",
     "@radix-ui/react-dialog": "1.1.15",
@@ -57,7 +61,7 @@
     "next": "15.5.4",
     "next-auth": "5.0.0-beta.29",
     "next-themes": "0.4.6",
-    "prisma": "5.19.1",
+    "prisma": "6.16.3",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "react-hook-form": "7.64.0",
