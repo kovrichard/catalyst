@@ -7,16 +7,36 @@ import { hashPassword, InvalidLoginError, signIn, verifyPassword } from "@/auth"
 import { getUserIdFromSession } from "@/lib/dao/users";
 import prisma from "@/lib/prisma/prisma";
 import type { FormState } from "@/lib/utils";
-import type { LoginFormData, RegisterFormData } from "@/types/auth";
+import {
+  type LoginFormData,
+  loginSchema,
+  type RegisterFormData,
+  registerSchema,
+  type UpdatePasswordFormData,
+  updatePasswordSchema,
+} from "@/types/auth";
 
 export async function signInUser(
   // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   _prevState: any,
   formData: LoginFormData
 ): Promise<FormState> {
+  const parsed = loginSchema.safeParse(formData);
+
+  if (!parsed.success) {
+    const firstError = parsed.error.issues[0];
+    return {
+      message: "Validation failed",
+      description: firstError?.message ?? "Invalid input. Please check your data.",
+      success: false,
+    };
+  }
+
+  const parsedData = parsed.data;
+
   const options = {
-    email: formData.email,
-    password: formData.password,
+    email: parsedData.email,
+    password: parsedData.password,
     callbackUrl: "/",
     redirect: false,
   };
@@ -52,10 +72,23 @@ export async function registerUser(
   _prevState: any,
   formData: RegisterFormData
 ): Promise<FormState> {
+  const parsed = registerSchema.safeParse(formData);
+
+  if (!parsed.success) {
+    const firstError = parsed.error.issues[0];
+    return {
+      message: "Validation failed",
+      description: firstError?.message ?? "Invalid input. Please check your data.",
+      success: false,
+    };
+  }
+
+  const parsedData = parsed.data;
+
   const options = {
-    name: formData.name,
-    email: formData.email,
-    password: formData.password,
+    name: parsedData.name,
+    email: parsedData.email,
+    password: parsedData.password,
     callbackUrl: "/",
     redirect: false,
     register: true,
@@ -80,7 +113,7 @@ export async function registerUser(
     } else {
       return {
         message: "Registration failed",
-        description: "User already exists.",
+        description: "Unable to complete registration. Please try again.",
         success: false,
       };
     }
@@ -90,8 +123,19 @@ export async function registerUser(
 export async function updateUserPassword(
   // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   _prevState: any,
-  formData: FormData
+  formData: UpdatePasswordFormData
 ): Promise<FormState> {
+  const parsed = updatePasswordSchema.safeParse(formData);
+
+  if (!parsed.success) {
+    const firstError = parsed.error.issues[0];
+    return {
+      message: "Validation failed",
+      description: firstError?.message ?? "Invalid input. Please check your data.",
+      success: false,
+    };
+  }
+
   const userId = await getUserIdFromSession();
   const user = await prisma.user.findUnique({
     where: {
@@ -111,11 +155,18 @@ export async function updateUserPassword(
     };
   }
 
-  const currentPassword = formData.get("current-password") as string;
-  const newPassword = formData.get("new-password") as string;
-  const confirmPassword = formData.get("confirm-password") as string;
+  const currentPassword = parsed.data.currentPassword?.trim() ?? "";
+  const newPassword = parsed.data.newPassword.trim();
 
   if (user.password) {
+    if (!currentPassword) {
+      return {
+        message: "Current password required",
+        description: "Enter your current password to continue.",
+        success: false,
+      };
+    }
+
     const passwordConfirmed = await verifyPassword(currentPassword, user.password);
 
     if (!passwordConfirmed) {
@@ -125,22 +176,6 @@ export async function updateUserPassword(
         success: false,
       };
     }
-  }
-
-  if (newPassword.length < 1 || confirmPassword.length < 1) {
-    return {
-      message: "Password too short",
-      description: "Please try again.",
-      success: false,
-    };
-  }
-
-  if (newPassword !== confirmPassword) {
-    return {
-      message: "Password mismatch",
-      description: "Please try again.",
-      success: false,
-    };
   }
 
   const hashedPassword = hashPassword(newPassword);

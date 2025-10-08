@@ -1,5 +1,6 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useActionState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -10,7 +11,7 @@ import useToast from "@/hooks/use-toast";
 import { signInUser } from "@/lib/actions/users";
 import publicConf from "@/lib/public-config";
 import { type FormState, initialState } from "@/lib/utils";
-import type { LoginFormData } from "@/types/auth";
+import { type LoginFormData, loginSchema } from "@/types/auth";
 
 export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(signInUser, initialState);
@@ -22,6 +23,7 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -54,13 +56,7 @@ export default function LoginForm() {
           id="email"
           placeholder="johndoe@example.com"
           autoFocus
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Invalid email address",
-            },
-          })}
+          {...register("email")}
         />
         {errors.email && (
           <span className="text-xs text-destructive">{errors.email.message}</span>
@@ -72,9 +68,7 @@ export default function LoginForm() {
           type="password"
           id="password"
           placeholder="****************"
-          {...register("password", {
-            required: "Password is required",
-          })}
+          {...register("password")}
         />
         {errors.password && (
           <span className="text-xs text-destructive">{errors.password.message}</span>

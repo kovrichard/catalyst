@@ -1,5 +1,6 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useActionState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -10,7 +11,7 @@ import useToast from "@/hooks/use-toast";
 import { registerUser } from "@/lib/actions/users";
 import publicConf from "@/lib/public-config";
 import { type FormState, initialState } from "@/lib/utils";
-import type { RegisterFormData } from "@/types/auth";
+import { type RegisterFormData, registerSchema } from "@/types/auth";
 
 export default function RegisterForm() {
   const [state, formAction, isPending] = useActionState(registerUser, initialState);
@@ -22,6 +23,7 @@ export default function RegisterForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -55,13 +57,7 @@ export default function RegisterForm() {
           id="name"
           placeholder="John Doe"
           autoFocus
-          {...register("name", {
-            required: "Name is required",
-            minLength: {
-              value: 2,
-              message: "Name must be at least 2 characters",
-            },
-          })}
+          {...register("name")}
         />
         {errors.name && (
           <span className="text-xs text-destructive">{errors.name.message}</span>
@@ -73,13 +69,7 @@ export default function RegisterForm() {
           type="email"
           id="email"
           placeholder="johndoe@example.com"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Invalid email address",
-            },
-          })}
+          {...register("email")}
         />
         {errors.email && (
           <span className="text-xs text-destructive">{errors.email.message}</span>
@@ -91,21 +81,7 @@ export default function RegisterForm() {
           type="password"
           id="password"
           placeholder="****************"
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 8,
-              message: "Password must be at least 8 characters",
-            },
-            validate: {
-              hasUpperCase: (value) => /[A-Z]/.test(value) || "Add an uppercase letter",
-              hasLowerCase: (value) => /[a-z]/.test(value) || "Add a lowercase letter",
-              hasNumber: (value) => /[0-9]/.test(value) || "Add a number",
-              hasSpecialChar: (value) =>
-                /[!@#$%^&*(),.?":{}|<>+\-=_~`[\]\\;'/]/.test(value) ||
-                "Add a special character",
-            },
-          })}
+          {...register("password")}
         />
         {errors.password && (
           <span className="text-xs text-destructive">{errors.password.message}</span>
