@@ -1,4 +1,10 @@
 {
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "files.eol": "\n",
+  "editor.defaultFormatter": "biomejs.biome",
+  "notebook.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.codeActionsOnSave": {
