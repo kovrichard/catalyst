@@ -10,7 +10,7 @@ sh:
 	docker compose exec app /bin/bash
 
 start-db:
-	docker compose up -d database
+	docker compose up -d database pg_bouncer
 
 stop:
 	docker compose down
@@ -19,4 +19,4 @@ db:
 	docker compose exec database psql -U app_dev -d dev
 
 logs:
-	docker compose logs -f app
+	docker compose logs -f

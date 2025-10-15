@@ -6,31 +6,56 @@ services:
       target: dev
     working_dir: /usr/src/app/
     environment:
-      DATABASE_URL: postgres://app_dev:dev_password@database:5432/dev
+      DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@pg_bouncer:5432/${DB_NAME}
+      DIRECT_DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@database:5432/${DB_NAME}
     ports:
       - 3000:3000
     volumes:
       - ./:/usr/src/app/
       - /usr/src/app/node_modules/
     command: bun run dev
+    depends_on:
+      pg_bouncer:
+        condition: service_healthy
 
   database:
     image: postgres:16.4
     ports:
       - 5433:5432
     environment:
-      POSTGRES_DB: dev
-      POSTGRES_USER: app_dev
-      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
       ALLOW_IP_RANGE: "172.0.0.0/8"
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "app_dev", "-d", "dev"]
+      test: ["CMD", "pg_isready", "-U", "${DB_USER}", "-d", "${DB_NAME}"]
       interval: 3s
       timeout: 3s
       retries: 5
     command: ["postgres", "-c", "log_statement=none"]
     volumes:
       - pgdata:/var/lib/postgresql/data/
+
+  pg_bouncer:
+    image: edoburu/pgbouncer:v1.24.1-p1
+    environment:
+      MAX_CLIENT_CONN: 100
+      POOL_MODE: transaction
+      AUTH_TYPE: scram-sha-256
+      DB_NAME: ${DB_NAME}
+      DB_HOST: database
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASS}
+    ports:
+      - 5434:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "localhost"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+    depends_on:
+      database:
+        condition: service_healthy
 
 volumes:
   pgdata:
