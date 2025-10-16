@@ -1,5 +1,6 @@
 import "server-only";
 
+import type { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { auth } from "@/auth";
@@ -8,14 +9,18 @@ import type { SessionUser } from "@/types/user";
 
 const unauthenticatedRedirect = "/login";
 
-export async function getUserByEmail(email: string) {
-  const user = await prisma.user.findUnique({
+export async function getUserById(id: number): Promise<User | null> {
+  return prisma.user.findUnique({
+    where: { id },
+  });
+}
+
+export async function getUserByEmail(email: string): Promise<User | null> {
+  return prisma.user.findUnique({
     where: {
       email,
     },
   });
-
-  return user;
 }
 
 export const getUserIdFromSession = cache(async (): Promise<number> => {
@@ -25,8 +30,7 @@ export const getUserIdFromSession = cache(async (): Promise<number> => {
     return redirect(unauthenticatedRedirect);
   }
 
-  // biome-ignore lint/correctness/useParseIntRadix: TODO: Need further investigation
-  return parseInt(session.user.id);
+  return parseInt(session.user.id, 10);
 });
 
 export const getUserFromSession = cache(async (): Promise<SessionUser> => {
@@ -59,8 +63,8 @@ export async function saveUser(profile: {
   email: string;
   password?: string;
   picture: string;
-}) {
-  const user = await prisma.user.create({
+}): Promise<User> {
+  return prisma.user.create({
     data: {
       name: profile.name,
       email: profile.email,
@@ -68,6 +72,20 @@ export async function saveUser(profile: {
       picture: profile.picture,
     },
   });
+}
 
-  return user;
+export async function updateUserById(
+  id: number,
+  data: Partial<Pick<User, "name" | "email" | "picture" | "password">>
+): Promise<User> {
+  return prisma.user.update({
+    where: { id },
+    data,
+  });
+}
+
+export async function deleteUserById(id: number): Promise<User> {
+  return prisma.user.delete({
+    where: { id },
+  });
 }

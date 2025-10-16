@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 import { useActionState, useState } from "react";
 import { Button } from "@/components/ui/button";
 import useToast from "@/hooks/use-toast";
-import { deleteUser } from "@/lib/actions/users";
+import { deleteUserAction } from "@/lib/actions/users";
 import { type FormState, initialState } from "@/lib/utils";
 import {
   AlertDialog,
@@ -18,7 +18,7 @@ import {
 } from "../ui/alert-dialog";
 
 export default function DeleteAccountForm() {
-  const [state, formAction] = useActionState(deleteUser, initialState);
+  const [state, formAction] = useActionState(deleteUserAction, initialState);
   const [open, setOpen] = useState(false);
 
   const successCallback = async (state: FormState) => {

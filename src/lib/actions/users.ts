@@ -5,7 +5,9 @@ import "server-only";
 import { revalidatePath } from "next/cache";
 import { hashPassword, InvalidLoginError, signIn, verifyPassword } from "@/auth";
 import { getUserIdFromSession } from "@/lib/dao/users";
+import { logger } from "@/lib/logger";
 import prisma from "@/lib/prisma/prisma";
+import { deleteUser, updateUser } from "@/lib/services/user.service";
 import type { FormState } from "@/lib/utils";
 import {
   type LoginFormData,
@@ -180,13 +182,8 @@ export async function updateUserPassword(
 
   const hashedPassword = hashPassword(newPassword);
 
-  await prisma.user.update({
-    where: {
-      id: userId,
-    },
-    data: {
-      password: hashedPassword,
-    },
+  await updateUser(userId, {
+    password: hashedPassword,
   });
 
   revalidatePath("/settings");
@@ -198,14 +195,21 @@ export async function updateUserPassword(
   };
 }
 
-export async function deleteUser(): Promise<FormState> {
+export async function deleteUserAction(): Promise<FormState> {
   const userId = await getUserIdFromSession();
 
-  await prisma.user.delete({
-    where: {
-      id: userId,
-    },
-  });
+  try {
+    await deleteUser(userId);
+  } catch (error) {
+    const message = "Failed to delete user";
+    logger.error(`${message}: ${error}`);
+
+    return {
+      message,
+      description: "Please try again.",
+      success: false,
+    };
+  }
 
   return {
     message: "User deleted",
