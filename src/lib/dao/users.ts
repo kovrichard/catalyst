@@ -1,10 +1,10 @@
 import "server-only";
 
-import type { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma/prisma";
+import type { SessionUser } from "@/types/user";
 
 const unauthenticatedRedirect = "/login";
 
@@ -29,7 +29,7 @@ export const getUserIdFromSession = cache(async (): Promise<number> => {
   return parseInt(session.user.id);
 });
 
-export const getUserFromSession = cache(async (): Promise<Partial<User>> => {
+export const getUserFromSession = cache(async (): Promise<SessionUser> => {
   const session = await auth();
 
   if (!session) {
