@@ -10,7 +10,7 @@ sh:
 	docker compose exec app /bin/bash
 
 start-db:
-	docker compose up -d database pg_bouncer
+	docker compose up -d database pg_bouncer redis
 
 stop:
 	docker compose down
