@@ -161,6 +161,10 @@ export async function invalidateNotificationCache(
   await invalidateCache(keys);
 }
 
+export async function invalidateNotificationsCache(userId: number): Promise<void> {
+  await invalidateCache([CacheKeys.notification.byUserId(userId)]);
+}
+
 // Health check
 export async function isRedisHealthy(): Promise<boolean> {
   try {

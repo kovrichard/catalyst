@@ -2,11 +2,19 @@ import "server-only";
 
 import type { Notification } from "@prisma/client";
 import {
+  CacheKeys,
+  CacheTTL,
+  getCached,
+  invalidateNotificationCache,
+  invalidateNotificationsCache,
+} from "@/lib/cache/redis";
+import {
   getNotifications,
   markMultipleNotificationsAsRead,
   markNotificationAsRead,
 } from "@/lib/dao/notifications";
 import { getUserFromSession } from "@/lib/dao/users";
+import { logger } from "@/lib/logger";
 import { ensure } from "@/lib/utils";
 
 export async function getUserNotifications(): Promise<Notification[]> {
@@ -14,7 +22,18 @@ export async function getUserNotifications(): Promise<Notification[]> {
 
   ensure(user.id, "User ID not found");
 
-  return getNotifications(user.id);
+  try {
+    return await getCached(
+      CacheKeys.notification.byUserId(user.id),
+      () => getNotifications(user.id),
+      CacheTTL.notification
+    );
+  } catch (error) {
+    const message = "Failed to get user notifications";
+    logger.error(`${message}: ${error}`);
+
+    throw new Error(message);
+  }
 }
 
 export async function markAsRead(notificationId: number): Promise<void> {
@@ -22,7 +41,16 @@ export async function markAsRead(notificationId: number): Promise<void> {
 
   ensure(user.id, "User ID not found");
 
-  return markNotificationAsRead(notificationId, user.id);
+  try {
+    await markNotificationAsRead(notificationId, user.id);
+
+    await invalidateNotificationCache(user.id, notificationId);
+  } catch (error) {
+    const message = "Failed to mark notification as read";
+    logger.error(`${message}: ${error}`);
+
+    throw new Error(message);
+  }
 }
 
 export async function markMultipleAsRead(notificationIds: number[]): Promise<void> {
@@ -30,5 +58,14 @@ export async function markMultipleAsRead(notificationIds: number[]): Promise<voi
 
   ensure(user.id, "User ID not found");
 
-  return markMultipleNotificationsAsRead(notificationIds, user.id);
+  try {
+    await markMultipleNotificationsAsRead(notificationIds, user.id);
+
+    await invalidateNotificationsCache(user.id);
+  } catch (error) {
+    const message = "Failed to mark multiple notifications as read";
+    logger.error(`${message}: ${error}`);
+
+    throw new Error(message);
+  }
 }
