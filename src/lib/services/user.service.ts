@@ -18,6 +18,16 @@ import type { SessionUser } from "@/types/user";
 
 const unauthenticatedRedirect = "/login";
 
+export const getUserIdFromSession = cache(async (): Promise<number> => {
+  const session = await auth();
+
+  if (!session || !session.user || !session.user.id) {
+    return redirect(unauthenticatedRedirect);
+  }
+
+  return parseInt(session.user.id, 10);
+});
+
 export const getUserFromSession = cache(async (): Promise<SessionUser> => {
   const session = await auth();
 

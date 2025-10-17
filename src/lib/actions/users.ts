@@ -4,10 +4,13 @@ import "server-only";
 
 import { revalidatePath } from "next/cache";
 import { hashPassword, InvalidLoginError, signIn, verifyPassword } from "@/auth";
-import { getUserIdFromSession } from "@/lib/dao/users";
 import { logger } from "@/lib/logger";
 import prisma from "@/lib/prisma/prisma";
-import { deleteUser, updateUser } from "@/lib/services/user.service";
+import {
+  deleteUser,
+  getUserIdFromSession,
+  updateUser,
+} from "@/lib/services/user.service";
 import type { FormState } from "@/lib/utils";
 import {
   type LoginFormData,

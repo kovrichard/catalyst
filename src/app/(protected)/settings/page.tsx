@@ -7,8 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getUserIdFromSession } from "@/lib/dao/users";
 import prisma from "@/lib/prisma/prisma";
+import { getUserIdFromSession } from "@/lib/services/user.service";
 
 export default async function SettingsPage() {
   const userId = await getUserIdFromSession();
