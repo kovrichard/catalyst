@@ -66,10 +66,10 @@ export async function getCached<T>(
   try {
     const cached = await client.get(key);
     if (cached) {
-      logger.info(`Redis cache HIT for key: ${key}`);
+      logger.debug(`Redis cache HIT for key: ${key}`);
       return JSON.parse(cached) as T;
     } else {
-      logger.info(`Redis cache MISS for key: ${key}`);
+      logger.debug(`Redis cache MISS for key: ${key}`);
     }
   } catch (error) {
     logger.error("Redis get error:", error);
