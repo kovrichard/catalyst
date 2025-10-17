@@ -9,19 +9,21 @@ This repository provides a powerful starter kit for building modern web applicat
 - [Next.js](https://nextjs.org): A full-stack React framework for building server-side rendered applications.
 - [Tailwind CSS](https://tailwindcss.com): A utility-first CSS framework for building responsive designs.
 - [shadcn/ui](https://ui.shadcn.com): A collection of beautifully designed UI components built with Tailwind CSS.
+- [tRPC](https://trpc.io): End-to-end typesafe APIs written in TypeScript.
 - [Husky](https://typicode.github.io/husky/): Git hooks that help to enforce coding standards by running scripts during the commit process.
 - [Biome](https://biomejs.dev): A toolchain for linting, formatting, and other code quality tasks.
 - [Auth.js](https://authjs.dev): A simple and open-source authentication library for modern web applications.
 - [Stripe](https://stripe.com): A payment processing platform for online businesses.
 - [Zod](https://zod.dev): TypeScript-first schema validation with static type inference.
 - [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
-- [Tabler Icons](https://tablericons.com): A set of over 5,600 open-source SVG icons.
 - [Amazon SES](https://aws.amazon.com/ses/): A reliable, scalable, and cost-effective email service.
 - [React Email](https://react.email): A library for building responsive HTML emails using React.
 - [Google Analytics](https://analytics.google.com): You know what it is.
 - [Google Tag Manager](https://tagmanager.google.com): For fine-grained tracking and analytics.
 - [Docker](https://www.docker.com): In case you need to containerize your application.
 - [GitHub Actions](https://github.com/features/actions): For continuous integration and deployment.
+- [Redis](https://redis.io): A fast, open-source, in-memory data structure store.
+- [pgBouncer](https://www.pgbouncer.org): A lightweight connection pooler for PostgreSQL.
 
 It also contains an example [GitHub Actions workflow](/.github/workflows/build.yml) for continuous integration and deployment. The workflow installs the dependencies, lints the code, and builds the project.
 
@@ -142,7 +144,7 @@ For ease of use, we suggest not to reinvent the wheel and use the [Stripe Billin
 
 The helper function can only be used on the server side and ensures that the user is authenticated before creating the session. It has a single parameter: the Stripe `customerId` of the user.
 
-As the example dashboard of Catalyst can be found at `/dashboard`, the return URL of the billing portal is `http://localhost:3000/dashboard` by default. You can change this to any URL by setting the `STRIPE_PORTAL_RETURN_URL` environment variable in the [`.env`](.env.sample?plain=1#L35) file. 
+As the example dashboard of Catalyst can be found at `/dashboard`, the return URL of the billing portal is `http://localhost:3000/dashboard` by default. You can change this to any URL by setting the `STRIPE_PORTAL_RETURN_URL` environment variable in the [`.env`](.env.sample?plain=1#L35) file.
 
 ## Logging
 
