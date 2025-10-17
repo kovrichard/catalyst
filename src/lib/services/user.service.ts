@@ -2,9 +2,22 @@ import "server-only";
 
 import type { User } from "@prisma/client";
 import { invalidateUserCache } from "@/lib/cache/redis";
-import { deleteUserById, getUserById, updateUserById } from "@/lib/dao/users";
+import { createUser, deleteUserById, getUserById, updateUserById } from "@/lib/dao/users";
 import { logger } from "@/lib/logger";
 import { ensure } from "@/lib/utils";
+
+export async function saveUser(profile: {
+  name: string;
+  email: string;
+  password?: string;
+  picture: string;
+}): Promise<User> {
+  const user = await createUser(profile);
+
+  await invalidateUserCache(user.id, user.email);
+
+  return user;
+}
 
 export async function updateUser(
   userId: number,

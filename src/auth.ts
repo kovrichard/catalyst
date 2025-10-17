@@ -5,7 +5,8 @@ import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import conf from "@/lib/config";
-import { getUserByEmail, saveUser } from "@/lib/dao/users";
+import { getUserByEmail } from "@/lib/dao/users";
+import { saveUser } from "@/lib/services/user.service";
 
 export class InvalidLoginError extends CredentialsSignin {
   code = "invalid_credentials";

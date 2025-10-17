@@ -58,7 +58,7 @@ export const getUserFromSession = cache(async (): Promise<SessionUser> => {
   };
 });
 
-export async function saveUser(profile: {
+export async function createUser(profile: {
   name: string;
   email: string;
   password?: string;
