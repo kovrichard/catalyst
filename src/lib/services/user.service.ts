@@ -18,6 +18,14 @@ import type { SessionUser } from "@/types/user";
 
 const unauthenticatedRedirect = "/login";
 
+export const getUser = cache(async (email: string): Promise<User | null> => {
+  return getCached(
+    CacheKeys.user.byEmail(email),
+    () => getUserByEmail(email),
+    CacheTTL.user
+  );
+});
+
 export const getUserIdFromSession = cache(async (): Promise<number> => {
   const session = await auth();
 
