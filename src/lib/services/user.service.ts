@@ -4,7 +4,7 @@ import type { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { auth } from "@/auth";
-import { invalidateUserCache } from "@/lib/cache/redis";
+import { CacheKeys, CacheTTL, getCached, invalidateUserCache } from "@/lib/cache/redis";
 import {
   createUser,
   deleteUserById,
@@ -35,7 +35,11 @@ export const getUserFromSession = cache(async (): Promise<SessionUser> => {
     return redirect(unauthenticatedRedirect);
   }
 
-  const user = await getUserByEmail(session.user?.email || "");
+  const user = await getCached(
+    CacheKeys.user.byEmail(session.user?.email || ""),
+    () => getUserByEmail(session.user?.email || ""),
+    CacheTTL.user
+  );
 
   if (!user) {
     return redirect(unauthenticatedRedirect);
