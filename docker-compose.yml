@@ -5,9 +5,14 @@ services:
       context: ./
       target: dev
     working_dir: /usr/src/app/
+    env_file:
+      - .env
     environment:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@pg_bouncer:5432/${DB_NAME}
       DIRECT_DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@database:5432/${DB_NAME}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASS: ${REDIS_PASS}
     ports:
       - 3000:3000
     volumes:
@@ -16,6 +21,8 @@ services:
     command: bun run dev
     depends_on:
       pg_bouncer:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   database:
