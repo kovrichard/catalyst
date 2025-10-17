@@ -13,8 +13,8 @@ import {
   markMultipleNotificationsAsRead,
   markNotificationAsRead,
 } from "@/lib/dao/notifications";
-import { getUserFromSession } from "@/lib/dao/users";
 import { logger } from "@/lib/logger";
+import { getUserFromSession } from "@/lib/services/user.service";
 import { ensure } from "@/lib/utils";
 
 export async function getUserNotifications(): Promise<Notification[]> {

@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import conf from "@/lib/config";
-import { getUserFromSession } from "./dao/users";
+import { getUserFromSession } from "@/lib/services/user.service";
 
 export const stripe = new Stripe(conf.stripeSecretKey, {
   apiVersion: "2024-09-30.acacia",

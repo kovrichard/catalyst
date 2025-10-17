@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { cache } from "react";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma/prisma";
-import type { SessionUser } from "@/types/user";
 
 const unauthenticatedRedirect = "/login";
 
@@ -31,31 +30,6 @@ export const getUserIdFromSession = cache(async (): Promise<number> => {
   }
 
   return parseInt(session.user.id, 10);
-});
-
-export const getUserFromSession = cache(async (): Promise<SessionUser> => {
-  const session = await auth();
-
-  if (!session) {
-    return redirect(unauthenticatedRedirect);
-  }
-
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session.user?.email || "",
-    },
-  });
-
-  if (!user) {
-    return redirect(unauthenticatedRedirect);
-  }
-
-  return {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    picture: user.picture,
-  };
 });
 
 export async function createUser(profile: {

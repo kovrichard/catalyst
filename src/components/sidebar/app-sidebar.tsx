@@ -16,7 +16,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { getUserFromSession } from "@/lib/dao/users";
+import { getUserFromSession } from "@/lib/services/user.service";
 
 export async function AppSidebar() {
   const user = await getUserFromSession();
