@@ -56,7 +56,17 @@ services:
     ports:
       - 5434:5432
     healthcheck:
-      test: ["CMD", "pg_isready", "-h", "localhost"]
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-h",
+          "localhost",
+          "-U",
+          "${DB_USER}",
+          "-d",
+          "${DB_NAME}",
+        ]
       interval: 3s
       timeout: 3s
       retries: 5
