@@ -78,7 +78,7 @@
     "zod": "4.1.11"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.5",
+    "@biomejs/biome": "2.2.6",
     "@next/bundle-analyzer": "15.5.6",
     "@react-email/preview-server": "4.2.12",
     "@tailwindcss/postcss": "4.1.14",
@@ -86,7 +86,7 @@
     "@types/react": "19.1.17",
     "@types/react-dom": "19.1.11",
     "husky": "9.1.7",
-    "lint-staged": "16.2.3",
+    "lint-staged": "16.2.4",
     "postcss": "8.5.6",
     "react-email": "4.2.12",
     "tailwindcss": "4.1.14",
