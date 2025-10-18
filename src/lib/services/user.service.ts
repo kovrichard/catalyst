@@ -33,7 +33,14 @@ export const getUserIdFromSession = cache(async (): Promise<number> => {
     return redirect(unauthenticatedRedirect);
   }
 
-  return parseInt(session.user.id, 10);
+  const userId = parseInt(session.user.id, 10);
+
+  if (Number.isNaN(userId)) {
+    logger.error(`Invalid user ID in session: ${session.user.id}`);
+    return redirect(unauthenticatedRedirect);
+  }
+
+  return userId;
 });
 
 export const getUserFromSession = cache(async (): Promise<SessionUser> => {
@@ -99,7 +106,7 @@ export async function deleteUser(userId: number): Promise<void> {
   try {
     await deleteUserById(userId);
 
-    await invalidateUserCache(userId);
+    await invalidateUserCache(userId, user.email);
   } catch (error) {
     const message = "Failed to delete user";
     logger.error(`${message}: ${error}`);
