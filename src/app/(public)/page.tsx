@@ -84,37 +84,37 @@ export default function Home() {
   ];
 
   return (
-    <main className="flex flex-col items-center flex-1 overflow-x-hidden">
+    <main className="flex flex-1 flex-col items-center overflow-x-hidden">
       {/* Hero Section */}
       <section className="w-full">
-        <div className="flex flex-col items-center justify-center gap-6 min-h-[60vh] lg:min-h-[40rem] mx-auto px-6 py-20 text-center container">
+        <div className="container mx-auto flex min-h-[60vh] flex-col items-center justify-center gap-6 px-6 py-20 text-center lg:min-h-[40rem]">
           <Badge variant="outline" className="mb-2">
-            <Sparkles className="w-3 h-3 mr-1" />
+            <Sparkles className="mr-1 h-3 w-3" />
             Production Ready
           </Badge>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
+          <h1 className="font-bold text-5xl tracking-tight md:text-6xl lg:text-7xl">
             Ship{" "}
-            <span className="inline-block bg-gradient-to-r from-slate-500 via-white to-slate-500 bg-[length:200%_auto] animate-shine [text-shadow:0_0.5px_1px_rgba(0,0,0,0.2)]">
+            <span className="inline-block animate-shine bg-[length:200%_auto] bg-gradient-to-r from-slate-500 via-white to-slate-500 [text-shadow:0_0.5px_1px_rgba(0,0,0,0.2)]">
               Faster
             </span>{" "}
             With
-            <span className="block text-primary mt-2">Catalyst</span>
+            <span className="mt-2 block text-primary">Catalyst</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl">
+          <p className="max-w-2xl text-muted-foreground text-xl">
             A modern, full-stack Next.js starter kit with authentication, payments,
             database, and everything you need to build your next project.
           </p>
-          <div className="flex gap-3 mt-4">
-            <Badge variant="secondary" className="text-sm px-3 py-1">
+          <div className="mt-4 flex gap-3">
+            <Badge variant="secondary" className="px-3 py-1 text-sm">
               TypeScript
             </Badge>
-            <Badge variant="secondary" className="text-sm px-3 py-1">
+            <Badge variant="secondary" className="px-3 py-1 text-sm">
               tRPC
             </Badge>
-            <Badge variant="secondary" className="text-sm px-3 py-1">
+            <Badge variant="secondary" className="px-3 py-1 text-sm">
               Server Components
             </Badge>
-            <Badge variant="secondary" className="text-sm px-3 py-1">
+            <Badge variant="secondary" className="px-3 py-1 text-sm">
               Server Actions
             </Badge>
           </div>
@@ -128,14 +128,14 @@ export default function Home() {
       {/* Integrations section with diagonal borders */}
       <section className="w-full bg-muted">
         <div className="container relative z-10 py-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3">Built with the best tools</h2>
+          <div className="mb-12 text-center">
+            <h2 className="mb-3 font-bold text-3xl">Built with the best tools</h2>
             <p className="text-muted-foreground">
               Pre-configured and ready to use. Spend less time on setup, more on shipping.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {integrations.map((integration) => {
               const Icon = integration.icon;
               return (
@@ -144,8 +144,8 @@ export default function Home() {
                     <Card className="border-0">
                       <CardHeader>
                         <div className="flex items-center gap-3">
-                          <div className="p-2 rounded-lg bg-primary/10">
-                            <Icon className="w-5 h-5 text-primary" />
+                          <div className="rounded-lg bg-primary/10 p-2">
+                            <Icon className="h-5 w-5 text-primary" />
                           </div>
                           <CardTitle className="text-lg">
                             {integration.category}
@@ -175,17 +175,17 @@ export default function Home() {
       </div>
 
       {/* Features Section */}
-      <section className="w-full max-w-7xl mx-auto px-6 py-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="mx-auto w-full max-w-7xl px-6 py-24">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <ScrollReveal delay={0}>
             <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={3}>
-              <div className="flex flex-col items-center text-center gap-3">
+              <div className="flex flex-col items-center gap-3 text-center">
                 <CursorFloat radius={30} lag={2} intensity={0.3}>
-                  <div className="p-3 rounded-full bg-primary/10">
-                    <Code2 className="w-6 h-6 text-primary" />
+                  <div className="rounded-full bg-primary/10 p-3">
+                    <Code2 className="h-6 w-6 text-primary" />
                   </div>
                 </CursorFloat>
-                <h3 className="text-xl font-semibold">Type-Safe</h3>
+                <h3 className="font-semibold text-xl">Type-Safe</h3>
                 <p className="text-muted-foreground text-sm">
                   End-to-end type safety with TypeScript, tRPC, Zod validation, and Prisma
                   ORM.
@@ -195,13 +195,13 @@ export default function Home() {
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
             <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={3}>
-              <div className="flex flex-col items-center text-center gap-3">
+              <div className="flex flex-col items-center gap-3 text-center">
                 <CursorFloat radius={30} lag={2} intensity={0.3}>
-                  <div className="p-3 rounded-full bg-primary/10">
-                    <Zap className="w-6 h-6 text-primary" />
+                  <div className="rounded-full bg-primary/10 p-3">
+                    <Zap className="h-6 w-6 text-primary" />
                   </div>
                 </CursorFloat>
-                <h3 className="text-xl font-semibold">Lightning Fast</h3>
+                <h3 className="font-semibold text-xl">Lightning Fast</h3>
                 <p className="text-muted-foreground text-sm">
                   Built on Next.js 15 with React Server Components and powered by Bun.js.
                 </p>
@@ -210,13 +210,13 @@ export default function Home() {
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
             <ScrollFloat direction="y" distance={-30} stopPercentage={50} lag={3}>
-              <div className="flex flex-col items-center text-center gap-3">
+              <div className="flex flex-col items-center gap-3 text-center">
                 <CursorFloat radius={30} lag={2} intensity={0.3}>
-                  <div className="p-3 rounded-full bg-primary/10">
-                    <FileCode className="w-6 h-6 text-primary" />
+                  <div className="rounded-full bg-primary/10 p-3">
+                    <FileCode className="h-6 w-6 text-primary" />
                   </div>
                 </CursorFloat>
-                <h3 className="text-xl font-semibold">Developer Experience</h3>
+                <h3 className="font-semibold text-xl">Developer Experience</h3>
                 <p className="text-muted-foreground text-sm">
                   Pre-configured tooling with Biome, Husky, and best practices out of the
                   box.

@@ -23,7 +23,7 @@ export default async function SettingsPage() {
   const hasPassword = Boolean(user?.password);
 
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-center min-w-[320px] max-h-svh bg-background md:rounded-[20px]">
+    <div className="relative flex max-h-svh min-w-[320px] flex-1 flex-col items-center justify-center bg-background md:rounded-[20px]">
       <Card className="w-full max-w-md p-4">
         <CardHeader>
           <CardTitle>Settings</CardTitle>

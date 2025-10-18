@@ -31,21 +31,22 @@ export default function ProfileMenu() {
       <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       {billingPortalUrl && (
-        <DropdownMenuItem className="p-0 h-10">
+        <DropdownMenuItem className="h-10 p-0">
           <a
             href={billingPortalUrl}
             target="_blank"
-            className="flex items-center gap-2 size-full px-2 py-1.5"
+            rel="noopener noreferrer"
+            className="flex size-full items-center gap-2 px-2 py-1.5"
           >
             <CreditCard className="shrink-0" />
             <span>Billing</span>
           </a>
         </DropdownMenuItem>
       )}
-      <DropdownMenuItem className="p-0 h-10">
+      <DropdownMenuItem className="h-10 p-0">
         <Link
           href="/settings"
-          className="flex items-center gap-2 size-full px-2 py-1.5"
+          className="flex size-full items-center gap-2 px-2 py-1.5"
           onClick={() => isMobile && setOpenMobile(false)}
         >
           <Settings className="shrink-0" />
@@ -53,11 +54,11 @@ export default function ProfileMenu() {
         </Link>
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem className="p-0 h-10">
+      <DropdownMenuItem className="h-10 p-0">
         <a
           href="/privacy-policy"
           target="_blank"
-          className="flex items-center gap-2 size-full px-2 py-1.5"
+          className="flex size-full items-center gap-2 px-2 py-1.5"
           onClick={() => isMobile && setOpenMobile(false)}
           rel="noopener"
         >

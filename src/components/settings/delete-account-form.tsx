@@ -34,8 +34,8 @@ export default function DeleteAccountForm() {
 
   return (
     <div className="flex flex-col gap-2">
-      <h4 className="text-lg font-semibold">Delete Account</h4>
-      <p className="text-sm text-muted-foreground">
+      <h4 className="font-semibold text-lg">Delete Account</h4>
+      <p className="text-muted-foreground text-sm">
         This action is irreversible. All your data will be permanently deleted.
       </p>
       <AlertDialog open={open} onOpenChange={setOpen}>

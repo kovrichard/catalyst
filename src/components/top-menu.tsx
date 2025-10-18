@@ -3,7 +3,7 @@ import NotificationMenu from "./notification-menu";
 
 export default function TopMenu() {
   return (
-    <div className="flex justify-between items-center px-4 py-2 bg-sidebar">
+    <div className="flex items-center justify-between bg-sidebar px-4 py-2">
       <SidebarTrigger />
       <NotificationMenu />
     </div>

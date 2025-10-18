@@ -59,7 +59,7 @@ export default function LoginForm() {
           {...register("email")}
         />
         {errors.email && (
-          <span className="text-xs text-destructive">{errors.email.message}</span>
+          <span className="text-destructive text-xs">{errors.email.message}</span>
         )}
       </Label>
       <Label htmlFor="password" className="flex flex-col gap-1">
@@ -71,7 +71,7 @@ export default function LoginForm() {
           {...register("password")}
         />
         {errors.password && (
-          <span className="text-xs text-destructive">{errors.password.message}</span>
+          <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
       </Label>
       <PendingSubmitButton isPending={isLoading} text="Sign in" className="mt-[18px]" />

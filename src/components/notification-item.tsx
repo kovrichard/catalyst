@@ -19,23 +19,23 @@ export function NotificationItem({
     <li>
       <Link
         href={notification.link || "#"}
-        className="flex gap-2 p-2 items-start rounded hover:bg-accent transition-colors duration-200"
+        className="flex items-start gap-2 rounded p-2 transition-colors duration-200 hover:bg-accent"
         onClick={() => readNotification(notification.id)}
       >
-        <span className="relative inline-flex shrink-0 rounded-full size-2 bg-green-500 mt-2"></span>
+        <span className="relative mt-2 inline-flex size-2 shrink-0 rounded-full bg-green-500"></span>
         <div className="flex flex-col gap-1">
           <p>{notification.title}</p>
-          <p className="text-sm text-muted-foreground text-pretty">
+          <p className="text-pretty text-muted-foreground text-sm">
             {notification.content}
           </p>
-          <span className="text-xs text-muted-foreground">
+          <span className="text-muted-foreground text-xs">
             {formatTimeAgo(notification.createdAt)}
           </span>
         </div>
         <Button
           variant="ghost"
           size="icon"
-          className="ml-auto hover:bg-muted/50 shrink-0 rounded-full"
+          className="ml-auto shrink-0 rounded-full hover:bg-muted/50"
           onClick={handleNotificationClick}
         >
           <Ellipsis size={20} />

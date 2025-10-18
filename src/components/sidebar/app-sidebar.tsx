@@ -23,7 +23,7 @@ export async function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader className="pl-[22px] py-3.5">
+      <SidebarHeader className="py-3.5 pl-[22px]">
         <Link href="/dashboard" className="flex items-center gap-2">
           <Image src="/icon.svg" alt="Catalyst" width={28} height={28} />
           Catalyst

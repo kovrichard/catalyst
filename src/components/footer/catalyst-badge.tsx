@@ -11,11 +11,14 @@ export default function CatalystBadge() {
     setSource(`utm_source=${window.location.hostname}`);
   }, []);
 
+  const queryParams = [source, medium, campaign].filter(Boolean).join("&");
+
   return (
     <a
-      href={`https://catalyst.richardkovacs.dev/?${source}&${medium}&${campaign}`}
+      href={`https://catalyst.richardkovacs.dev/?${queryParams}`}
       target="_blank"
-      className="text-sm py-1 px-2 rounded flex items-center gap-1.5 shadow-md bg-card dark:bg-input border text-foreground hover:bg-input/50 transition-colors"
+      rel="noopener noreferrer"
+      className="flex items-center gap-1.5 rounded border bg-card px-2 py-1 text-foreground text-sm shadow-md transition-colors hover:bg-input/50 dark:bg-input"
     >
       <span>Made with</span>
       {/** biome-ignore lint/performance/noImgElement: Vercel bypass */}
