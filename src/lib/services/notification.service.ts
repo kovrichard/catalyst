@@ -44,7 +44,10 @@ export async function markAsRead(notificationId: number): Promise<void> {
   try {
     await markNotificationAsRead(notificationId, user.id);
 
-    await invalidateNotificationCache(user.id, notificationId);
+    await Promise.all([
+      invalidateNotificationCache(user.id, notificationId),
+      invalidateNotificationsCache(user.id),
+    ]);
   } catch (error) {
     const message = "Failed to mark notification as read";
     logger.error(`${message}: ${error}`);
