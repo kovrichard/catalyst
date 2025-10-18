@@ -1,12 +1,39 @@
-import { getUserFromSession } from "@/lib/dao/users";
+import type { Notification } from "@prisma/client";
 import prisma from "@/lib/prisma/prisma";
 
-export async function getNotifications() {
-  const user = await getUserFromSession();
-
+export async function getNotifications(userId: number): Promise<Notification[]> {
   return prisma.notification.findMany({
     where: {
-      userId: user.id,
+      userId,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
+export async function markNotificationAsRead(
+  notificationId: number,
+  userId: number
+): Promise<void> {
+  await prisma.notification.update({
+    where: {
+      id: notificationId,
+      userId,
+    },
+    data: { read: true },
+  });
+}
+
+export async function markMultipleNotificationsAsRead(
+  notificationIds: number[],
+  userId: number
+): Promise<void> {
+  await prisma.notification.updateMany({
+    where: {
+      id: { in: notificationIds },
+      userId,
+    },
+    data: { read: true },
   });
 }

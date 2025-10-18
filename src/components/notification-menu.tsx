@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { getNotifications } from "@/lib/dao/notifications";
+import { getUserNotifications } from "@/lib/services/notification.service";
 import MarkAllAsReadButton from "./mark-all-as-read-button";
 import { NotificationItem } from "./notification-item";
 
 export default async function NotificationMenu() {
-  const notifications = await getNotifications();
+  const notifications = await getUserNotifications();
 
   return (
     <Popover>

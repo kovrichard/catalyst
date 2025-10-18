@@ -5,7 +5,7 @@ import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import conf from "@/lib/config";
-import { getUserByEmail, saveUser } from "@/lib/dao/users";
+import { getUser, saveUser } from "@/lib/services/user.service";
 
 export class InvalidLoginError extends CredentialsSignin {
   code = "invalid_credentials";
@@ -23,7 +23,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         register: {},
       },
       authorize: async (credentials) => {
-        const user = await getUserByEmail(credentials.email as string);
+        const user = await getUser(credentials.email as string);
 
         if (credentials.register) {
           if (user) {
@@ -71,7 +71,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return false;
       }
 
-      const existingUser = await getUserByEmail(email || "");
+      const existingUser = await getUser(email || "");
 
       if (!existingUser) {
         await createNewUser(name, email, picture || "");
@@ -81,7 +81,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, trigger }) {
       if (trigger === "signIn") {
-        const user = await getUserByEmail(token.email as string);
+        const user = await getUser(token.email as string);
         token.userId = user?.id;
       }
 

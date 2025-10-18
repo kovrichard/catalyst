@@ -18,6 +18,12 @@ const schema = z.object({
   stripeSecretKey: z.string().default(""),
   stripeWebhookSecret: z.string().default(""),
   stripePortalReturnUrl: z.string().default("http://localhost:3000/dashboard"),
+
+  // Redis
+  redisHost: z.string().default("localhost"),
+  redisPort: z.number().int().positive().default(6379),
+  redisPassword: z.string().min(20).optional(),
+  redisConfigured: z.boolean().default(false),
 });
 
 const envVars = {
@@ -36,6 +42,14 @@ const envVars = {
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
   stripePortalReturnUrl: process.env.STRIPE_PORTAL_RETURN_URL,
+
+  // Redis
+  redisHost: process.env.REDIS_HOST,
+  redisPort: parseInt(process.env.REDIS_PORT || "6379", 10),
+  redisPassword: process.env.REDIS_PASS,
+  redisConfigured: Boolean(
+    process.env.REDIS_HOST && process.env.REDIS_PORT && process.env.REDIS_PASS
+  ),
 };
 
 const conf = schema.parse(envVars);

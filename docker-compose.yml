@@ -5,9 +5,14 @@ services:
       context: ./
       target: dev
     working_dir: /usr/src/app/
+    env_file:
+      - .env
     environment:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@pg_bouncer:5432/${DB_NAME}
       DIRECT_DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@database:5432/${DB_NAME}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASS: ${REDIS_PASS}
     ports:
       - 3000:3000
     volumes:
@@ -16,6 +21,8 @@ services:
     command: bun run dev
     depends_on:
       pg_bouncer:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   database:
@@ -49,7 +56,17 @@ services:
     ports:
       - 5434:5432
     healthcheck:
-      test: ["CMD", "pg_isready", "-h", "localhost"]
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-h",
+          "localhost",
+          "-U",
+          "${DB_USER}",
+          "-d",
+          "${DB_NAME}",
+        ]
       interval: 3s
       timeout: 3s
       retries: 5
@@ -57,5 +74,27 @@ services:
       database:
         condition: service_healthy
 
+  redis:
+    image: redis:8.2.2
+    ports:
+      - 6379:6379
+    volumes:
+      - redisdata:/data
+    command: >
+      --requirepass ${REDIS_PASS}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "redis-cli",
+          "-u",
+          "redis://:${REDIS_PASS}@localhost:6379",
+          "ping",
+        ]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
 volumes:
   pgdata:
+  redisdata:
