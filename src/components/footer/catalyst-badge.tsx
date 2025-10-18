@@ -13,8 +13,9 @@ export default function CatalystBadge() {
 
   return (
     <a
-      href={`https://catalyst.richardkovacs.dev/?${source}&${medium}&${campaign}`}
+      href={`https://catalyst.richardkovacs.dev/?${source ? `${source}&` : ""}${medium}&${campaign}`}
       target="_blank"
+      rel="noopener noreferrer"
       className="flex items-center gap-1.5 rounded border bg-card px-2 py-1 text-foreground text-sm shadow-md transition-colors hover:bg-input/50 dark:bg-input"
     >
       <span>Made with</span>

@@ -35,6 +35,7 @@ export default function ProfileMenu() {
           <a
             href={billingPortalUrl}
             target="_blank"
+            rel="noopener noreferrer"
             className="flex size-full items-center gap-2 px-2 py-1.5"
           >
             <CreditCard className="shrink-0" />
