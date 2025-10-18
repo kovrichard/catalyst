@@ -35,7 +35,7 @@ export function getRedisClient(): Redis | null {
 
 export const CacheKeys = {
   user: {
-    byEmail: (email: string) => `user:email:${email}`,
+    byEmail: (email: string) => `user:email:${encodeURIComponent(email)}`,
     byId: (id: number) => `user:id:${id}`,
     session: (userId: number) => `user:session:${userId}`,
   },
