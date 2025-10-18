@@ -32,7 +32,7 @@
   "dependencies": {
     "@aws-sdk/client-ses": "3.758.0",
     "@hookform/resolvers": "5.2.2",
-    "@next/third-parties": "15.5.4",
+    "@next/third-parties": "15.5.6",
     "@prisma/client": "6.16.3",
     "@radix-ui/react-alert-dialog": "1.1.15",
     "@radix-ui/react-avatar": "1.1.10",
@@ -60,7 +60,7 @@
     "javascript-time-ago": "2.5.12",
     "lucide-react": "0.544.0",
     "motion": "12.6.3",
-    "next": "15.5.4",
+    "next": "15.5.6",
     "next-auth": "5.0.0-beta.29",
     "next-themes": "0.4.6",
     "prisma": "6.16.3",
@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.5",
-    "@next/bundle-analyzer": "15.5.4",
+    "@next/bundle-analyzer": "15.5.6",
     "@react-email/preview-server": "4.2.12",
     "@tailwindcss/postcss": "4.1.14",
     "@types/node": "24.6.2",
