@@ -18,8 +18,8 @@ export default async function Layout({
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <main className="relative flex flex-1 min-h-screen bg-gray-100">
-        <div className="flex-1 flex flex-col">
+      <main className="relative flex min-h-screen flex-1 bg-gray-100">
+        <div className="flex flex-1 flex-col">
           <TopMenu />
           {children}
         </div>

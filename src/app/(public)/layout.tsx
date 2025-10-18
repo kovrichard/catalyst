@@ -13,11 +13,11 @@ export default async function Layout({
   const session = await auth();
 
   return (
-    <div className="flex flex-col flex-1 w-full">
-      <header className="flex w-full py-4 gap-4 justify-end items-center container">
+    <div className="flex w-full flex-1 flex-col">
+      <header className="container flex w-full items-center justify-end gap-4 py-4">
         <Link
           href="/"
-          className="flex gap-2 items-center mr-auto font-medium text-lg whitespace-pre"
+          className="mr-auto flex items-center gap-2 whitespace-pre font-medium text-lg"
         >
           <Image src="/icon.svg" alt="Catalyst" width={30} height={30} />
           Catalyst
@@ -36,7 +36,7 @@ export default async function Layout({
         )}
       </header>
       {children}
-      <footer className="flex w-full py-4 justify-start container">
+      <footer className="container flex w-full justify-start py-4">
         <CatalystBadge />
       </footer>
     </div>

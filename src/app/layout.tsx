@@ -51,7 +51,7 @@ export default function RootLayout({
         <Analytics />
       </head>
       <body
-        className={cn(inter.className, "flex flex-col min-h-svh min-w-80 justify-center")}
+        className={cn(inter.className, "flex min-h-svh min-w-80 flex-col justify-center")}
       >
         <Providers>
           {children}

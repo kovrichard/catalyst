@@ -11,7 +11,7 @@ export default function MarkAllAsReadButton({
     <Button
       variant="ghost"
       size="sm"
-      className="text-sm text-muted-foreground"
+      className="text-muted-foreground text-sm"
       onClick={() => readNotifications(notifications.map((n: Notification) => n.id))}
     >
       Mark all as read

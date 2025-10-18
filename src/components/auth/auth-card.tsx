@@ -38,7 +38,7 @@ export default function AuthCard({
       <CardContent className="flex flex-col gap-4">
         {children}
         {(hasGitHub || hasGoogle) && (
-          <p className="mx-auto text-sm text-muted-foreground">or continue with</p>
+          <p className="mx-auto text-muted-foreground text-sm">or continue with</p>
         )}
         {hasGoogle && <OAuthForm provider="google" />}
         {hasGitHub && <OAuthForm provider="github" />}

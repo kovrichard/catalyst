@@ -14,7 +14,7 @@ export default function OAuthButton({
   return (
     <Button
       type="submit"
-      className="relative flex gap-2 w-full bg-white text-black hover:bg-gray-100 border"
+      className="relative flex w-full gap-2 border bg-white text-black hover:bg-gray-100"
       onClick={() => {
         localStorage.setItem("catalyst-auth-method", provider);
       }}

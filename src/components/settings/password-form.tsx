@@ -69,7 +69,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) 
           <Label htmlFor="current-password">Current Password</Label>
           <Input type="password" id="current-password" {...register("currentPassword")} />
           {errors.currentPassword && (
-            <span className="text-xs text-destructive">
+            <span className="text-destructive text-xs">
               {errors.currentPassword.message}
             </span>
           )}
@@ -79,14 +79,14 @@ export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) 
         <Label htmlFor="new-password">New Password</Label>
         <Input type="password" id="new-password" {...register("newPassword")} />
         {errors.newPassword && (
-          <span className="text-xs text-destructive">{errors.newPassword.message}</span>
+          <span className="text-destructive text-xs">{errors.newPassword.message}</span>
         )}
       </div>
       <div>
         <Label htmlFor="confirm-password">Confirm Password</Label>
         <Input type="password" id="confirm-password" {...register("confirmPassword")} />
         {errors.confirmPassword && (
-          <span className="text-xs text-destructive">
+          <span className="text-destructive text-xs">
             {errors.confirmPassword.message}
           </span>
         )}

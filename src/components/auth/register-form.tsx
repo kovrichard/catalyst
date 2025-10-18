@@ -60,7 +60,7 @@ export default function RegisterForm() {
           {...register("name")}
         />
         {errors.name && (
-          <span className="text-xs text-destructive">{errors.name.message}</span>
+          <span className="text-destructive text-xs">{errors.name.message}</span>
         )}
       </Label>
       <Label htmlFor="email" className="flex flex-col gap-1">
@@ -72,7 +72,7 @@ export default function RegisterForm() {
           {...register("email")}
         />
         {errors.email && (
-          <span className="text-xs text-destructive">{errors.email.message}</span>
+          <span className="text-destructive text-xs">{errors.email.message}</span>
         )}
       </Label>
       <Label htmlFor="password" className="flex flex-col gap-1">
@@ -84,7 +84,7 @@ export default function RegisterForm() {
           {...register("password")}
         />
         {errors.password && (
-          <span className="text-xs text-destructive">{errors.password.message}</span>
+          <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
       </Label>
       <PendingSubmitButton isPending={isLoading} text="Sign up" className="mt-[18px]" />
