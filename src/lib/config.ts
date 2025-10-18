@@ -22,7 +22,7 @@ const schema = z.object({
   // Redis
   redisHost: z.string().default("localhost"),
   redisPort: z.number().int().positive().default(6379),
-  redisPassword: z.string().optional(),
+  redisPassword: z.string().min(20).optional(),
   redisConfigured: z.boolean().default(false),
 });
 
