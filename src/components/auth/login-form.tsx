@@ -13,6 +13,15 @@ import publicConf from "@/lib/public-config";
 import { type FormState, initialState } from "@/lib/utils";
 import { type LoginFormData, loginSchema } from "@/types/auth";
 
+/**
+ * Render a login form that validates credentials, performs a password sign-in action, and redirects on success.
+ *
+ * The form validates email and password using the configured schema, shows field-specific validation messages,
+ * triggers the sign-in action within a React transition, and displays a pending state while submitting.
+ * On successful sign-in, it stores "catalyst-auth-method" set to "password" in localStorage and navigates to the configured redirect path.
+ *
+ * @returns The React element for the login form.
+ */
 export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(signInUser, initialState);
   const [isTransitionPending, startTransition] = useTransition();

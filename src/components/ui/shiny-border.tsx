@@ -3,6 +3,13 @@
 import type React from "react";
 import { cn } from "@/lib/utils";
 
+/**
+ * Renders a rounded container that reveals a blurred, rotating conic-gradient border on hover.
+ *
+ * @param children - Content to be rendered inside the bordered container
+ * @param className - Optional additional class names applied to the outer wrapper
+ * @returns A React element that wraps `children` with a rounded background, a subtle always-visible border, and a hover-activated blurred rotating gradient layer
+ */
 export function ShinyBorder({
   children,
   className,

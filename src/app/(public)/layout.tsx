@@ -5,6 +5,14 @@ import { auth } from "@/auth";
 import CatalystBadge from "@/components/footer/catalyst-badge";
 import { Button } from "@/components/ui/button";
 
+/**
+ * Root layout component that renders a header with navigation, the page content, and a footer.
+ *
+ * Displays a Dashboard button when a user session exists; otherwise shows Login and Register links.
+ *
+ * @param children - Content to render between the header and footer
+ * @returns The rendered layout node containing header, the provided children, and footer
+ */
 export default async function Layout({
   children,
 }: Readonly<{

@@ -5,6 +5,16 @@ import TopMenu from "@/components/top-menu";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { getUserFromSession } from "@/lib/services/user.service";
 
+/**
+ * Application layout wrapper that provides sidebar state, top navigation, and page content.
+ *
+ * Ensures the user's session is loaded before rendering, reads the "sidebar:state" cookie to determine
+ * the SidebarProvider's `defaultOpen` (open when the cookie is missing or its value is `"true"`),
+ * and renders the AppSidebar, TopMenu, and the supplied children within the main layout.
+ *
+ * @param children - The page content to render inside the layout
+ * @returns The React element containing the SidebarProvider, AppSidebar, top navigation, and provided children
+ */
 export default async function Layout({
   children,
 }: Readonly<{

@@ -40,6 +40,14 @@ export const metadata: Metadata = {
   generator: "Catalyst",
 };
 
+/**
+ * Wraps page content with application-wide layout, providers, and global UI (analytics, toasts, cookie consent).
+ *
+ * Renders the root HTML structure (<html>, <head>, <body>) and composes global components: Analytics in the head, Providers around page content and the Toaster, and a CookiePopup outside Providers.
+ *
+ * @param children - The page content to render inside the layout
+ * @returns The root HTML element tree for the application including global providers and UI components
+ */
 export default function RootLayout({
   children,
 }: Readonly<{

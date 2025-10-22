@@ -7,6 +7,16 @@ import { cn } from "@/lib/utils";
 
 const lobster = Lobster({ subsets: ["latin"], weight: "400" });
 
+/**
+ * Displays a "Last used" indicator when the specified auth provider was the last-used method.
+ *
+ * The component reads the "catalyst-auth-method" value from localStorage and shows a small badge
+ * (including an arrow icon and the text "Last used") if that value equals `provider`.
+ *
+ * @param provider - The authentication provider identifier to compare with the stored last-used method.
+ * @param className - Optional additional CSS classes to apply to the indicator container.
+ * @returns A JSX element showing the "Last used" indicator when `provider` matches the stored value, or `null` otherwise.
+ */
 export default function LastUsedIndicator({
   provider,
   className,

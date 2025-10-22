@@ -9,6 +9,14 @@ const Popover = PopoverPrimitive.Root;
 
 const PopoverTrigger = PopoverPrimitive.Trigger;
 
+/**
+ * Render popover content wrapped in a portal with preset styling, animation hooks, and alignment support.
+ *
+ * @param className - Additional class names appended to the component's default styling.
+ * @param align - Alignment of the content relative to the trigger ("center" | "start" | "end" | "inner"); defaults to "center".
+ * @param sideOffset - Distance in pixels between the trigger and the content; defaults to 4.
+ * @returns The rendered popover content element.
+ */
 function PopoverContent({
   className,
   align = "center",

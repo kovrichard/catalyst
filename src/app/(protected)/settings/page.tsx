@@ -10,6 +10,15 @@ import {
 import prisma from "@/lib/prisma/prisma";
 import { getUserIdFromSession } from "@/lib/services/user.service";
 
+/**
+ * Render the Settings page with account management controls.
+ *
+ * Retrieves the current user session to determine whether the user has a password,
+ * and renders a settings card containing a PasswordForm (passed `hasPassword`)
+ * and a DeleteAccountForm.
+ *
+ * @returns A JSX element containing the settings UI; `PasswordForm` receives `hasPassword` indicating whether the current user has a password.
+ */
 export default async function SettingsPage() {
   const userId = await getUserIdFromSession();
   const user = await prisma.user.findUnique({

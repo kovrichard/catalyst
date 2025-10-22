@@ -18,6 +18,13 @@ import {
 } from "@/components/ui/sidebar";
 import { getUserFromSession } from "@/lib/services/user.service";
 
+/**
+ * Render the application sidebar with header, main content area, and a footer that exposes the current user's profile menu.
+ *
+ * The header links to the dashboard and displays the app icon and name. The footer shows the user's avatar (or initials/default) and name as a dropdown trigger; the dropdown contains the profile menu. User data is loaded from the current session.
+ *
+ * @returns The JSX element for the application's sidebar including header, content, and footer with the user avatar and profile dropdown.
+ */
 export async function AppSidebar() {
   const user = await getUserFromSession();
 

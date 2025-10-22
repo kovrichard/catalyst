@@ -11,6 +11,17 @@ import {
 } from "../ui/card";
 import OAuthForm from "./oauth-form";
 
+/**
+ * Render an authentication card with optional Google/GitHub OAuth buttons and a call-to-action link.
+ *
+ * @param title - Heading text displayed at the top of the card
+ * @param description - Supporting description displayed under the title
+ * @param children - Form elements or other content rendered within the card body
+ * @param ctaQuestion - Muted prompt shown before the call-to-action link
+ * @param ctaText - Text of the call-to-action link
+ * @param ctaLink - Href target for the call-to-action link
+ * @returns A JSX element representing the composed authentication card
+ */
 export default function AuthCard({
   title,
   description,

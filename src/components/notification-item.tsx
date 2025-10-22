@@ -8,6 +8,14 @@ import { readNotification } from "@/lib/actions/notifications";
 import { formatTimeAgo } from "@/lib/utils";
 import { Button } from "./ui/button";
 
+/**
+ * Render a notification list item that displays a title, content, relative timestamp, and an action button.
+ *
+ * Clicking the main item marks the notification as read; the trailing action button prevents navigation when clicked.
+ *
+ * @param notification - The notification to display (title, content, link, createdAt, and id used for marking read)
+ * @returns A list item JSX element representing the notification entry
+ */
 export function NotificationItem({
   notification,
 }: Readonly<{ notification: Notification }>) {

@@ -4,6 +4,16 @@ import Image from "next/image";
 import LastUsedIndicator from "@/components/auth/last-used-indicator";
 import { Button } from "@/components/ui/button";
 
+/**
+ * Render a sign-in button for the given OAuth provider.
+ *
+ * The button displays the provider icon and title, and records the chosen provider to
+ * localStorage when clicked.
+ *
+ * @param provider - Provider identifier used for the icon filename (e.g., `google`) and for persisting the selected auth method under the `catalyst-auth-method` key
+ * @param title - Visible label for the button and the image alt text
+ * @returns The button element that initiates provider selection and updates localStorage when activated
+ */
 export default function OAuthButton({
   provider,
   title,

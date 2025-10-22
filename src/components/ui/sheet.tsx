@@ -15,6 +15,12 @@ const SheetClose = SheetPrimitive.Close;
 
 const SheetPortal = SheetPrimitive.Portal;
 
+/**
+ * Renders the sheet overlay element with built-in backdrop and entry/exit animation classes.
+ *
+ * @param props - All props are forwarded to the underlying SheetPrimitive.Overlay; when `className` is provided it is merged with the component's default classes.
+ * @returns The rendered SheetPrimitive.Overlay element with a `data-slot="sheet-overlay"` attribute and composed animation/visibility classes.
+ */
 function SheetOverlay({
   className,
   ...props
@@ -54,6 +60,14 @@ interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {}
 
+/**
+ * Renders the sheet's content container inside a portal with an overlay and a built-in close control.
+ *
+ * @param side - Which edge the sheet should slide in from. One of `"top" | "bottom" | "left" | "right"`. Defaults to `"right"`.
+ * @param className - Additional CSS classes to apply to the content container.
+ * @param children - Content to render inside the sheet.
+ * @returns A JSX element that contains the sheet content, overlay, and close button rendered in a portal.
+ */
 function SheetContent({
   side = "right",
   className,
@@ -101,6 +115,11 @@ function SheetFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
   );
 }
 
+/**
+ * Renders a styled sheet title.
+ *
+ * @returns The sheet title element with applied styling and forwarded props.
+ */
 function SheetTitle({
   className,
   ...props
@@ -114,6 +133,11 @@ function SheetTitle({
   );
 }
 
+/**
+ * Renders the sheet description with a consistent data-slot and styling.
+ *
+ * @returns The SheetPrimitive.Description element with `data-slot="sheet-description"` and merged class names including muted foreground text and small size.
+ */
 function SheetDescription({
   className,
   ...props

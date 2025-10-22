@@ -13,6 +13,13 @@ import publicConf from "@/lib/public-config";
 import { type FormState, initialState } from "@/lib/utils";
 import { type RegisterFormData, registerSchema } from "@/types/auth";
 
+/**
+ * Renders a registration form with name, email, and password fields, validates input, and handles submission and loading state.
+ *
+ * On successful registration, stores the chosen auth method in localStorage and navigates to the configured redirect path.
+ *
+ * @returns The registration form React element.
+ */
 export default function RegisterForm() {
   const [state, formAction, isPending] = useActionState(registerUser, initialState);
   const [isTransitionPending, startTransition] = useTransition();

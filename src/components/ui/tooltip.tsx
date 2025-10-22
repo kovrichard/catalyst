@@ -11,6 +11,15 @@ const Tooltip = TooltipPrimitive.Root;
 
 const TooltipTrigger = TooltipPrimitive.Trigger;
 
+/**
+ * Renders styled tooltip content for use inside a Tooltip.
+ *
+ * Merges the provided `className` with the component's default styling, applies `sideOffset`, and forwards remaining props to the underlying TooltipPrimitive.Content.
+ *
+ * @param className - Additional CSS class names to apply to the content
+ * @param sideOffset - Distance in pixels between the trigger and the tooltip content (default: 4)
+ * @returns The rendered TooltipPrimitive.Content element
+ */
 function TooltipContent({
   className,
   sideOffset = 4,

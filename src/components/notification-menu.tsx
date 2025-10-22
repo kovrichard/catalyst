@@ -9,6 +9,13 @@ import { getUserNotifications } from "@/lib/services/notification.service";
 import MarkAllAsReadButton from "./mark-all-as-read-button";
 import { NotificationItem } from "./notification-item";
 
+/**
+ * Renders a popover notification menu showing the user's notifications, a numeric badge, and related actions.
+ *
+ * The popover trigger displays a bell icon with a badge when there is at least one notification (count capped at "9+"). The popover content shows a header, a scrollable list of notification items with a "mark all as read" action when notifications exist, or a centered "No notifications" message when none are present.
+ *
+ * @returns A React element representing the notification popover UI
+ */
 export default async function NotificationMenu() {
   const notifications = await getUserNotifications();
 
