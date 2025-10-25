@@ -16,6 +16,7 @@ export const loginSchema = z.object({
   password: z.string().min(1, {
     message: "Password is required",
   }),
+  "cf-turnstile-response": z.string().optional(),
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;
@@ -24,6 +25,7 @@ export const registerSchema = z.object({
   name: z.string().trim().min(2, { message: "Name must be at least 2 characters" }),
   email: z.email("Enter a valid email address"),
   password: PasswordSchema,
+  "cf-turnstile-response": z.string().optional(),
 });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;

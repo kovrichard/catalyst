@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { useRouter } from "next/navigation";
 import { useActionState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -21,6 +22,7 @@ export default function RegisterForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -28,6 +30,7 @@ export default function RegisterForm() {
       name: "",
       email: "",
       password: "",
+      "cf-turnstile-response": "",
     },
   });
 
@@ -49,7 +52,7 @@ export default function RegisterForm() {
   const isLoading = isPending || isSubmitting || isTransitionPending;
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
       <Label htmlFor="name" className="flex flex-col gap-1">
         <span>Name</span>
         <Input
@@ -87,7 +90,16 @@ export default function RegisterForm() {
           <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
       </Label>
-      <PendingSubmitButton isPending={isLoading} text="Sign up" className="mt-[18px]" />
+      {publicConf.turnstileSiteKey && (
+        <Turnstile
+          className="mx-auto"
+          siteKey={publicConf.turnstileSiteKey}
+          onSuccess={(token: string) => {
+            setValue("cf-turnstile-response", token);
+          }}
+        />
+      )}
+      <PendingSubmitButton isPending={isLoading} text="Sign up" />
     </form>
   );
 }

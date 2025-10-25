@@ -24,6 +24,9 @@ const schema = z.object({
   redisPort: z.number().int().positive().default(6379),
   redisPassword: z.string().min(20).optional(),
   redisConfigured: z.boolean().default(false),
+
+  // Turnstile
+  turnstileSecretKey: z.string().optional(),
 });
 
 const envVars = {
@@ -50,6 +53,9 @@ const envVars = {
   redisConfigured: Boolean(
     process.env.REDIS_HOST && process.env.REDIS_PORT && process.env.REDIS_PASS
   ),
+
+  // Turnstile
+  turnstileSecretKey: process.env.TURNSTILE_SECRET_KEY,
 };
 
 const conf = schema.parse(envVars);
