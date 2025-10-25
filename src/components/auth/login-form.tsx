@@ -1,11 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Turnstile } from "@marsidev/react-turnstile";
 import { useRouter } from "next/navigation";
 import { useActionState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import PendingSubmitButton from "@/components/auth/pending-submit-button";
+import TurnstileComponent from "@/components/auth/turnstile";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
@@ -48,6 +48,10 @@ export default function LoginForm() {
     });
   };
 
+  function onTurnstileSuccess(token: string) {
+    setValue("cf-turnstile-response", token);
+  }
+
   const isLoading = isPending || isSubmitting || isTransitionPending;
 
   return (
@@ -77,15 +81,7 @@ export default function LoginForm() {
           <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
       </Label>
-      {publicConf.turnstileSiteKey && (
-        <Turnstile
-          className="mx-auto"
-          siteKey={publicConf.turnstileSiteKey}
-          onSuccess={(token: string) => {
-            setValue("cf-turnstile-response", token);
-          }}
-        />
-      )}
+      <TurnstileComponent onSuccess={onTurnstileSuccess} />
       <PendingSubmitButton isPending={isLoading} text="Sign in" />
     </form>
   );
