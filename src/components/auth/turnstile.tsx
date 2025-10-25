@@ -3,9 +3,9 @@ import publicConf from "@/lib/public-config";
 
 export default function TurnstileComponent({
   onSuccess,
-}: {
+}: Readonly<{
   onSuccess: (token: string) => void;
-}) {
+}>) {
   if (!publicConf.turnstileSiteKey) {
     return null;
   }
