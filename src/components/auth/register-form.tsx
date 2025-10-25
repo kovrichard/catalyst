@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useActionState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import PendingSubmitButton from "@/components/auth/pending-submit-button";
+import TurnstileComponent from "@/components/auth/turnstile";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
@@ -21,6 +22,7 @@ export default function RegisterForm() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -28,6 +30,7 @@ export default function RegisterForm() {
       name: "",
       email: "",
       password: "",
+      "cf-turnstile-response": "",
     },
   });
 
@@ -46,10 +49,14 @@ export default function RegisterForm() {
     });
   };
 
+  function setTurnstileValue(token: string) {
+    setValue("cf-turnstile-response", token);
+  }
+
   const isLoading = isPending || isSubmitting || isTransitionPending;
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
       <Label htmlFor="name" className="flex flex-col gap-1">
         <span>Name</span>
         <Input
@@ -87,7 +94,8 @@ export default function RegisterForm() {
           <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
       </Label>
-      <PendingSubmitButton isPending={isLoading} text="Sign up" className="mt-[18px]" />
+      <TurnstileComponent setValue={setTurnstileValue} />
+      <PendingSubmitButton isPending={isLoading} text="Sign up" />
     </form>
   );
 }

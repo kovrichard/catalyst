@@ -6,6 +6,7 @@
       "dependencies": {
         "@aws-sdk/client-ses": "3.758.0",
         "@hookform/resolvers": "5.2.2",
+        "@marsidev/react-turnstile": "1.3.1",
         "@next/third-parties": "15.5.6",
         "@prisma/client": "6.17.1",
         "@radix-ui/react-alert-dialog": "1.1.15",
@@ -320,6 +321,8 @@
     "@lottiefiles/dotlottie-react": ["@lottiefiles/dotlottie-react@0.13.3", "", { "dependencies": { "@lottiefiles/dotlottie-web": "0.42.0" }, "peerDependencies": { "react": "^17 || ^18 || ^19" } }, "sha512-V4FfdYlqzjBUX7f0KV6vfQOOI0Cp+3XeG/ZqSDFSEVg5P7fpROpDv5/I9aTM8sOCESK1SWT96Fem+QVUnBV1wQ=="],
 
     "@lottiefiles/dotlottie-web": ["@lottiefiles/dotlottie-web@0.42.0", "", {}, "sha512-Zr2LCaOAoPCsdAQgeLyCSiQ1+xrAJtRCyuEYDj0qR5heUwpc+Pxbb88JyTVumcXFfKOBMOMmrlsTScLz2mrvQQ=="],
+
+    "@marsidev/react-turnstile": ["@marsidev/react-turnstile@1.3.1", "", { "peerDependencies": { "react": "^17.0.2 || ^18.0.0 || ^19.0", "react-dom": "^17.0.2 || ^18.0.0 || ^19.0" } }, "sha512-h2THG/75k4Y049hgjSGPIcajxXnh+IZAiXVbryQyVmagkboN7pJtBgR16g8akjwUBSfRrg6jw6KvPDjscQflog=="],
 
     "@next/bundle-analyzer": ["@next/bundle-analyzer@15.5.6", "", { "dependencies": { "webpack-bundle-analyzer": "4.10.1" } }, "sha512-IHeyk2s9/fVDAGDLNbBkCSG8XBabhuMajiaJggjsg4GyFIswh78DzLo5Nl5th8QTs3U/teYeczvfeV9w1Tx3qA=="],
 

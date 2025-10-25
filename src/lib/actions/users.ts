@@ -11,6 +11,7 @@ import {
   getUserIdFromSession,
   updateUser,
 } from "@/lib/services/user.service";
+import { turnstileFailedResponse, verifyTurnstile } from "@/lib/turnstile";
 import type { FormState } from "@/lib/utils";
 import {
   type LoginFormData,
@@ -38,6 +39,13 @@ export async function signInUser(
   }
 
   const parsedData = parsed.data;
+
+  const turnstileResponse = parsedData["cf-turnstile-response"];
+  const turnstileVerified = await verifyTurnstile(turnstileResponse);
+
+  if (!turnstileVerified) {
+    return turnstileFailedResponse;
+  }
 
   const options = {
     email: parsedData.email,
@@ -89,6 +97,13 @@ export async function registerUser(
   }
 
   const parsedData = parsed.data;
+
+  const turnstileResponse = parsedData["cf-turnstile-response"];
+  const turnstileVerified = await verifyTurnstile(turnstileResponse);
+
+  if (!turnstileVerified) {
+    return turnstileFailedResponse;
+  }
 
   const options = {
     name: parsedData.name,

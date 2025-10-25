@@ -14,6 +14,9 @@ const schema = z.object({
   gtmId: z.string().optional(),
   googleAdsId: z.string().optional(),
   clarityId: z.string().optional(),
+
+  // Turnstile
+  turnstileSiteKey: z.string().optional(),
 });
 
 const envVars = {
@@ -30,6 +33,9 @@ const envVars = {
   gtmId: process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
   googleAdsId: process.env.NEXT_PUBLIC_GOOGLE_ADS_ID,
   clarityId: process.env.NEXT_PUBLIC_CLARITY_ID,
+
+  // Turnstile
+  turnstileSiteKey: process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY,
 };
 
 const publicConf = schema.parse(envVars);
