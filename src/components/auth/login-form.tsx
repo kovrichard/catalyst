@@ -48,7 +48,7 @@ export default function LoginForm() {
     });
   };
 
-  function onTurnstileSuccess(token: string) {
+  function setTurnstileValue(token: string) {
     setValue("cf-turnstile-response", token);
   }
 
@@ -81,7 +81,7 @@ export default function LoginForm() {
           <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
       </Label>
-      <TurnstileComponent onSuccess={onTurnstileSuccess} />
+      <TurnstileComponent setValue={setTurnstileValue} />
       <PendingSubmitButton isPending={isLoading} text="Sign in" />
     </form>
   );

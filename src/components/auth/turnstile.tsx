@@ -2,9 +2,9 @@ import { Turnstile } from "@marsidev/react-turnstile";
 import publicConf from "@/lib/public-config";
 
 export default function TurnstileComponent({
-  onSuccess,
+  setValue,
 }: Readonly<{
-  onSuccess: (token: string) => void;
+  setValue: (token: string) => void;
 }>) {
   if (!publicConf.turnstileSiteKey) {
     return null;
@@ -15,7 +15,16 @@ export default function TurnstileComponent({
       className="mx-auto"
       siteKey={publicConf.turnstileSiteKey}
       onSuccess={(token: string) => {
-        onSuccess(token);
+        setValue(token);
+      }}
+      onError={() => {
+        setValue("");
+      }}
+      onExpire={() => {
+        setValue("");
+      }}
+      onTimeout={() => {
+        setValue("");
       }}
     />
   );
