@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { User } from "@/lib/prisma/client";
 
 export type SessionUser = Omit<
   User,

@@ -1,10 +1,15 @@
-.PHONY: build dev sh start-db stop db
+.PHONY: build dev prod sh start-db stop db logs
 
 build:
 	docker compose build
 
 dev:
-	docker compose up -d
+	docker compose down prodapp
+	docker compose up -d app database pg_bouncer redis
+
+prod:
+	docker compose down app
+	docker compose up -d prodapp database pg_bouncer redis
 
 sh:
 	docker compose exec app /bin/bash

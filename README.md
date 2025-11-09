@@ -69,6 +69,23 @@ You can start editing the page by modifying [`src/app/(public)/page.tsx`](<src/a
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+### Docker
+
+To start the development server using Docker, run:
+
+```bash
+make build
+make dev
+```
+
+If you'd like to start the production server using Docker:
+
+1. Set `output` to `standalone` in the [next.config.mjs](next.config.mjs) file.
+2. Set the `AUTH_TRUST_HOST` environment variable to `true` in the [`.env.sample`](.env.sample?plain=1#L31) file.
+3. Set the `AUTH_URL` environment variable to the URL of your application in the [`.env.sample`](.env.sample?plain=1#L32) file.
+4. Build the project: `make build`
+5. Start the production server: `make prod`
+
 ## Database
 
 The Catalyst starter kit uses Prisma to interact with the database. By default, it uses PostgreSQL as the database engine.

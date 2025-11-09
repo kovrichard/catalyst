@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { User } from "@prisma/client";
+import type { User } from "@/lib/prisma/client";
 import prisma from "@/lib/prisma/prisma";
 
 export async function getUserById(id: number): Promise<User | null> {
