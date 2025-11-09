@@ -4,7 +4,7 @@ services:
     build:
       context: ./
       target: dev
-    working_dir: /usr/src/app/
+    working_dir: /app/
     env_file:
       - .env
     environment:
@@ -16,8 +16,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./:/usr/src/app/
-      - /usr/src/app/node_modules/
+      - ./:/app/
+      - /app/node_modules/
     command: bun run dev
     depends_on:
       pg_bouncer:
