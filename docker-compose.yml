@@ -18,6 +18,7 @@ services:
     volumes:
       - ./:/app/
       - /app/node_modules/
+      - /app/src/lib/prisma/client/
     command: bun run dev
     depends_on:
       pg_bouncer:

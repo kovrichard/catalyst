@@ -22,3 +22,4 @@ FROM base AS dev
 
 # copy the installed dependencies from the install stage
 COPY --from=install /temp/dev/node_modules node_modules
+COPY --from=install /temp/dev/src/lib/prisma/client ./src/lib/prisma/client
