@@ -6,7 +6,8 @@
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": ["**", "!src/lib/prisma/client"]
   },
   "formatter": {
     "enabled": true,
@@ -27,7 +28,8 @@
       "suspicious": {
         "noUnknownAtRules": "warn",
         "noExplicitAny": "error",
-        "noEmptyBlockStatements": "error"
+        "noEmptyBlockStatements": "error",
+        "useBiomeIgnoreFolder": "error"
       },
       "correctness": {
         "noUnusedImports": "error",

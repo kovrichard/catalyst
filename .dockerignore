@@ -1,0 +1,4 @@
+.github
+.next
+node_modules
+src/lib/prisma/client

@@ -1,6 +1,5 @@
 import "server-only";
 
-import type { User } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { auth } from "@/auth";
@@ -13,6 +12,7 @@ import {
   updateUserById,
 } from "@/lib/dao/users";
 import { logger } from "@/lib/logger";
+import type { User } from "@/lib/prisma/client";
 import { ensure } from "@/lib/utils";
 import type { SessionUser } from "@/types/user";
 
