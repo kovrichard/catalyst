@@ -12,6 +12,11 @@ const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
 const AlertDialogPortal = AlertDialogPrimitive.Portal;
 
+/**
+ * Renders the alert dialog backdrop with built-in backdrop styling, visibility-state animations, and a data-slot for layout slots.
+ *
+ * @returns The overlay element used as the alert dialog backdrop
+ */
 function AlertDialogOverlay({
   className,
   ...props
@@ -28,6 +33,12 @@ function AlertDialogOverlay({
   );
 }
 
+/**
+ * Renders the alert dialog content inside a portal alongside its overlay, applying composed layout and animation classes.
+ *
+ * @param className - Additional CSS class names to merge with the component's default styling
+ * @returns The alert dialog content element wrapped in a portal with its overlay
+ */
 function AlertDialogContent({
   className,
   ...props
@@ -76,6 +87,13 @@ function AlertDialogFooter({
   );
 }
 
+/**
+ * Render the alert dialog's title with consistent typography and a data-slot for layout.
+ *
+ * @param className - Additional CSS class names to merge with the component's default typography classes
+ * @param props - Additional props forwarded to the underlying AlertDialog primitive Title element
+ * @returns The rendered AlertDialog title element
+ */
 function AlertDialogTitle({
   className,
   ...props
@@ -89,6 +107,11 @@ function AlertDialogTitle({
   );
 }
 
+/**
+ * Renders the alert dialog's description with muted foreground and small text, forwarding additional props and class names.
+ *
+ * @returns The alert dialog description element.
+ */
 function AlertDialogDescription({
   className,
   ...props

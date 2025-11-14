@@ -13,6 +13,13 @@ import {
   DropdownMenuSeparator,
 } from "../ui/dropdown-menu";
 
+/**
+ * Renders the profile dropdown menu with account actions.
+ *
+ * The menu includes a conditional "Billing" link (shown when a billing portal URL is available), "Settings", "Privacy Policy", and a "Sign Out" action. The component obtains and refreshes the billing portal URL and will close the mobile sidebar when navigation items are activated on mobile.
+ *
+ * @returns The React element for the account dropdown menu.
+ */
 export default function ProfileMenu() {
   const { isMobile, setOpenMobile } = useSidebar();
   const trpc = useTRPC();

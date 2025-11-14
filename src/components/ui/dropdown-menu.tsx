@@ -42,6 +42,12 @@ function DropdownMenuSubTrigger({
   );
 }
 
+/**
+ * Renders the content panel for a dropdown submenu with styling and a `data-slot` attribute.
+ *
+ * @param props - Props forwarded to Radix UI's `SubContent` component; `className` is merged with the component's default styling.
+ * @returns The `SubContent` React element configured for submenu content.
+ */
 function DropdownMenuSubContent({
   className,
   ...props
@@ -58,6 +64,13 @@ function DropdownMenuSubContent({
   );
 }
 
+/**
+ * Render the dropdown menu content panel inside a Portal with built-in styling and side offset.
+ *
+ * @param className - Additional CSS class names to merge with the component's default classes.
+ * @param sideOffset - Distance in pixels between the trigger and the content; defaults to `4`.
+ * @returns The rendered dropdown menu content element.
+ */
 function DropdownMenuContent({
   className,
   sideOffset = 4,
@@ -98,6 +111,14 @@ function DropdownMenuItem({
   );
 }
 
+/**
+ * Renders a styled checkbox item for a dropdown menu.
+ *
+ * Applies layout, spacing, and focus/disabled styles and includes a positioned check indicator.
+ *
+ * @param checked - Whether the checkbox item is checked
+ * @returns A DropdownMenuPrimitive.CheckboxItem element with styling and an ItemIndicator containing a check icon
+ */
 function DropdownMenuCheckboxItem({
   className,
   children,
@@ -124,6 +145,13 @@ function DropdownMenuCheckboxItem({
   );
 }
 
+/**
+ * Render a styled radio item for the dropdown menu.
+ *
+ * Renders a `DropdownMenuPrimitive.RadioItem` with a left-aligned circular indicator and merges the provided `className` and props.
+ *
+ * @returns The rendered `DropdownMenuPrimitive.RadioItem` element
+ */
 function DropdownMenuRadioItem({
   className,
   children,
@@ -148,6 +176,15 @@ function DropdownMenuRadioItem({
   );
 }
 
+/**
+ * Render a styled label element for grouping items inside a dropdown menu.
+ *
+ * Applies base padding, font weight, and text size, and optionally adds left
+ * inset padding when `inset` is true.
+ *
+ * @param inset - When true, adds additional left padding to align with inset items.
+ * @returns A DropdownMenu label element with applied styling and forwarded props.
+ */
 function DropdownMenuLabel({
   className,
   inset,

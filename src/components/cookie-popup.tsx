@@ -15,6 +15,14 @@ declare global {
 
 type Consent = "granted" | "denied";
 
+/**
+ * Cookie consent popup component that prompts users to accept or reject tracking cookies.
+ *
+ * Displays a dismissible UI after a short delay when the user has not previously responded.
+ * Accepting or rejecting stores "cookie-popup-accepted" = "true" in localStorage, updates Google Analytics consent ("ga-consent") in localStorage, and—if available—calls `window.gtag("consent", "update", ...)` with the chosen consent values. The component uses entry and exit animations and waits for the exit animation to complete before hiding.
+ *
+ * @returns A React element rendering the cookie consent UI, or `null` when the popup is hidden.
+ */
 export default function CookiePopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [isExiting, setIsExiting] = useState(false);

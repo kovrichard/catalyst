@@ -25,6 +25,13 @@ function CardHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement
   );
 }
 
+/**
+ * Renders the card's title as an `h3` element with standardized typography and optional extra classes.
+ *
+ * @param className - Additional CSS classes to merge with the component's default classes
+ * @param props - Additional HTML attributes forwarded to the `h3` element
+ * @returns The `h3` element configured as the card title
+ */
 function CardTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h3
@@ -35,6 +42,11 @@ function CardTitle({ className, ...props }: React.HTMLAttributes<HTMLHeadingElem
   );
 }
 
+/**
+ * Renders a paragraph element styled as the card's description.
+ *
+ * @returns The paragraph element used as the card description, including its data-slot attribute and styling classes.
+ */
 function CardDescription({
   className,
   ...props

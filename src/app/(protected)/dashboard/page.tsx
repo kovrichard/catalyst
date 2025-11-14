@@ -1,3 +1,8 @@
+/**
+ * Dashboard component that renders a centered welcome screen.
+ *
+ * @returns A JSX element containing a vertically centered heading and subheading with a welcome message and an authentication confirmation.
+ */
 export default function Dashboard() {
   return (
     <div className="flex w-full flex-1 flex-col items-center justify-center gap-4 bg-gray-100">

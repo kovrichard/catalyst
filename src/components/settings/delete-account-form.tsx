@@ -17,6 +17,13 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 
+/**
+ * Renders a "Delete Account" form with a confirmation dialog and server-backed delete action.
+ *
+ * On successful deletion the dialog is closed and the user is signed out after a 2-second delay.
+ *
+ * @returns A React element containing the delete-account UI and confirmation dialog
+ */
 export default function DeleteAccountForm() {
   const [state, formAction] = useActionState(deleteUserAction, initialState);
   const [open, setOpen] = useState(false);

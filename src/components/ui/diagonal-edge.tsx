@@ -7,6 +7,17 @@ interface DiagonalEdgeProps {
   className?: string;
 }
 
+/**
+ * Renders a zero-size absolutely positioned element that visually produces a diagonal corner edge.
+ *
+ * Renders CSS borders sized and colored to form a diagonal triangle at the specified corner.
+ *
+ * @param corner - Which corner to place the diagonal edge in: "tl", "tr", "bl", or "br"
+ * @param size - Depth of the diagonal edge in pixels (default: 64)
+ * @param color - CSS variable name (without `--`) used for the edge color (default: "background")
+ * @param className - Additional class names applied to the container element
+ * @returns A React element that creates a diagonal corner edge using CSS borders
+ */
 export function DiagonalEdge({
   corner,
   size = 64,

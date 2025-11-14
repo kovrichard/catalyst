@@ -20,6 +20,14 @@ import { DiagonalEdge } from "@/components/ui/diagonal-edge";
 import { ShinyBorder } from "@/components/ui/shiny-border";
 import { logger } from "@/lib/logger";
 
+/**
+ * Render the Catalyst landing page that showcases included integrations, features, and animated UI elements.
+ *
+ * The component logs "Hello, Catalyst!" when rendered and returns the page's JSX structure including hero,
+ * integrations grid, and feature sections with decorative diagonal edges and animations.
+ *
+ * @returns The React element for the landing page.
+ */
 export default function Home() {
   logger.info("Hello, Catalyst!");
 

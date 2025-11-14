@@ -11,6 +11,14 @@ import { updateUserPassword } from "@/lib/actions/users";
 import { initialState } from "@/lib/utils";
 import { type UpdatePasswordFormData, updatePasswordSchema } from "@/types/auth";
 
+/**
+ * Renders a password update form for the user.
+ *
+ * The form includes fields for new password and confirmation, and—when `hasPassword` is true—an additional required current password field. Validation is applied via the component's schema, submission triggers the update action, and the submit button is disabled while the update is in progress.
+ *
+ * @param hasPassword - Whether the user already has a password; when true, the current password field is shown and required.
+ * @returns A React form element for updating the user's password.
+ */
 export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
   const [state, formAction, isPending] = useActionState(updateUserPassword, initialState);
   const [isTransitionPending, startTransition] = useTransition();

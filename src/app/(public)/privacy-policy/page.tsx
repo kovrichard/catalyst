@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Render the Privacy Policy page content.
+ *
+ * @returns JSX element containing the full Privacy Policy content and structure
+ */
 export default function PrivacyPolicy() {
   return (
     <main className="container my-8 max-w-6xl space-y-4">
