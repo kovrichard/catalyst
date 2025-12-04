@@ -12,7 +12,7 @@ import {
   updateUserById,
 } from "@/lib/dao/users";
 import { logger } from "@/lib/logger";
-import type { User } from "@/lib/prisma/client";
+import type { User } from "@/lib/prisma/generated/client";
 import { ensure } from "@/lib/utils";
 import type { SessionUser } from "@/types/user";
 

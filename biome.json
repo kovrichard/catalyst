@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!src/lib/prisma/client"]
+    "includes": ["**", "!src/lib/prisma/generated"]
   },
   "formatter": {
     "enabled": true,

@@ -13,7 +13,7 @@ import {
   markNotificationAsRead,
 } from "@/lib/dao/notifications";
 import { logger } from "@/lib/logger";
-import type { Notification } from "@/lib/prisma/client";
+import type { Notification } from "@/lib/prisma/generated/client";
 import { getUserFromSession } from "@/lib/services/user.service";
 import { ensure } from "@/lib/utils";
 

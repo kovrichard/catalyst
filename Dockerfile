@@ -27,7 +27,7 @@ RUN cd /temp/prod && bun run postinstall
 FROM base AS prerelease
 
 COPY --from=install /temp/dev/node_modules node_modules
-COPY --from=install /temp/dev/src/lib/prisma/client ./src/lib/prisma/client
+COPY --from=install /temp/dev/src/lib/prisma/generated ./src/lib/prisma/generated
 COPY . .
 
 ENV NODE_ENV=production
@@ -45,4 +45,4 @@ FROM base AS dev
 
 # copy the installed dependencies from the install stage
 COPY --from=install /temp/dev/node_modules node_modules
-COPY --from=install /temp/dev/src/lib/prisma/client ./src/lib/prisma/client
+COPY --from=install /temp/dev/src/lib/prisma/generated ./src/lib/prisma/generated

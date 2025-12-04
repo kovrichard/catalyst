@@ -37,4 +37,4 @@ next-env.d.ts
 
 .env
 
-src/lib/prisma/client
+src/lib/prisma/generated
