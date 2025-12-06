@@ -2,13 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-        "name": "Debug Next.js",
-        "type": "node",
-        "request": "launch",
-        // "program": "${workspaceFolder}/node_modules/.bin/next",
-        "args": ["dev"],
-        "cwd": "${workspaceFolder}",
-        "runtimeExecutable": "bun",
-    },
-  ],
-} 
+      "name": "Debug Next.js",
+      "type": "node",
+      "request": "launch",
+      // "program": "${workspaceFolder}/node_modules/.bin/next",
+      "args": ["dev"],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "bun"
+    }
+  ]
+}
