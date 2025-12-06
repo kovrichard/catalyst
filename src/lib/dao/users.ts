@@ -22,7 +22,7 @@ export const getUserIdFromSession = cache(async (): Promise<string> => {
     headers: await headers(),
   });
 
-  if (!session || !session.user || !session.user.id) {
+  if (!session?.user?.id) {
     return redirect(unauthenticatedRedirect);
   }
 
