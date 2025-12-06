@@ -156,7 +156,9 @@ export async function requestPasswordReset(email: string): Promise<FormState> {
 
     return {
       message: "Password reset email sent",
-      description: response.message,
+      description:
+        response.message ||
+        "If an account exists with this email, you will receive a password reset link.",
       success: true,
     };
   } catch (e) {
