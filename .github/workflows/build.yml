@@ -27,6 +27,8 @@ jobs:
 
     - name: Install dependencies
       run: bun install
+      env:
+        DIRECT_DATABASE_URL: https://dummy:dummy@localhost:5432/dummy
 
     - name: Lint project
       run: bun run check && bun run type-check
