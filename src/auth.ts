@@ -13,7 +13,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url }, _request) => {
-      logger.info(`Sending reset password email to ${user.email}`);
+      logger.info(`Sending reset password email to user ${user.id}`);
       await sendResetPasswordEmail({
         to: user.email,
         name: user.name,
@@ -21,7 +21,7 @@ export const auth = betterAuth({
       });
     },
     onPasswordReset: async ({ user }, _request) => {
-      logger.info(`Password for user ${user.email} has been reset`);
+      logger.info(`Password for user ${user.id} has been reset`);
     },
   },
   socialProviders: {
@@ -56,7 +56,7 @@ export const auth = betterAuth({
     user: {
       create: {
         before: async (user) => {
-          logger.info(`Creating user with email ${user.email}`);
+          logger.info(`Creating user with id ${user.id}`);
 
           // let customer: Stripe.Customer | null = null;
 
