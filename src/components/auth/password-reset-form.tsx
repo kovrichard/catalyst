@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useTransition } from "react";
+import { type FormEvent, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { resetPassword } from "@/lib/auth-client";
 
 export default function PasswordResetForm({ token }: { token: string }) {
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,22 +20,22 @@ export default function PasswordResetForm({ token }: { token: string }) {
       return;
     }
 
-    startTransition(async () => {
+    setIsPending(true);
+    try {
       await resetPassword(
-        {
-          newPassword: password,
-          token,
-        },
+        { newPassword: password, token },
         {
           onSuccess: () => {
             toast.success("Password reset successfully");
           },
           onError: (error) => {
-            toast.error(error.error.message);
+            toast.error(error.error.message || "Failed to reset password");
           },
         }
       );
-    });
+    } finally {
+      setIsPending(false);
+    }
   }
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { type FormEvent, useTransition } from "react";
+import { type FormEvent, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,14 +9,15 @@ import { Label } from "@/components/ui/label";
 import { requestPasswordReset } from "@/lib/actions/users";
 
 export default function RequestPasswordResetForm() {
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const email = formData.get("email") as string;
 
-    startTransition(async () => {
+    setIsPending(true);
+    try {
       const result = await requestPasswordReset(email);
       if (result.success) {
         toast.success(result.message, {
@@ -27,7 +28,9 @@ export default function RequestPasswordResetForm() {
           description: result.description,
         });
       }
-    });
+    } finally {
+      setIsPending(false);
+    }
   }
 
   return (
