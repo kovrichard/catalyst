@@ -1,4 +1,14 @@
 .github
+.husky
 .next
+.vscode
 node_modules
 src/lib/prisma/generated
+.env*
+.gitattributes
+.gitignore
+biome.json
+docker-compose.yml
+Dockerfile
+Makefile
+README.md
