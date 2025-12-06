@@ -1,7 +1,7 @@
 import type { Notification } from "@/lib/prisma/generated/client";
 import prisma from "@/lib/prisma/prisma";
 
-export async function getNotifications(userId: number): Promise<Notification[]> {
+export async function getNotifications(userId: string): Promise<Notification[]> {
   return prisma.notification.findMany({
     where: {
       userId,
@@ -13,8 +13,8 @@ export async function getNotifications(userId: number): Promise<Notification[]> 
 }
 
 export async function markNotificationAsRead(
-  notificationId: number,
-  userId: number
+  notificationId: string,
+  userId: string
 ): Promise<void> {
   await prisma.notification.update({
     where: {
@@ -26,8 +26,8 @@ export async function markNotificationAsRead(
 }
 
 export async function markMultipleNotificationsAsRead(
-  notificationIds: number[],
-  userId: number
+  notificationIds: string[],
+  userId: string
 ): Promise<void> {
   await prisma.notification.updateMany({
     where: {

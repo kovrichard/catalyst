@@ -1,22 +1,22 @@
 import type { MetadataRoute } from "next";
-import publicConf from "@/lib/public-config";
+import conf from "@/lib/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: `${publicConf.host}/`,
+      url: `${conf.host}/`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 1,
     },
     {
-      url: `${publicConf.host}/login`,
+      url: `${conf.host}/login`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.8,
     },
     {
-      url: `${publicConf.host}/register`,
+      url: `${conf.host}/register`,
       lastModified: new Date(),
       changeFrequency: "yearly",
       priority: 0.8,

@@ -1,141 +1,79 @@
-// biome-ignore lint/style/useNodejsImportProtocol: TODO: Need further investigation
-import { randomBytes, scryptSync } from "crypto";
-import NextAuth, { CredentialsSignin } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { nextCookies } from "better-auth/next-js";
+import { sendResetPasswordEmail } from "@/lib/aws/ses";
 import conf from "@/lib/config";
-import { getUser, saveUser } from "@/lib/services/user.service";
+import { logger } from "@/lib/logger";
+import prisma from "@/lib/prisma/prisma";
 
-export class InvalidLoginError extends CredentialsSignin {
-  code = "invalid_credentials";
-}
-
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
-    GitHub,
-    Google,
-    Credentials({
-      credentials: {
-        name: {},
-        email: {},
-        password: {},
-        register: {},
-      },
-      authorize: async (credentials) => {
-        const user = await getUser(credentials.email as string);
-
-        if (credentials.register) {
-          if (user) {
-            throw new Error("User already exists");
-          }
-
-          const passwordHash = hashPassword(credentials.password as string);
-
-          const newUser = await createNewUser(
-            credentials.name as string,
-            credentials.email as string,
-            "",
-            passwordHash
-          );
-
-          // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
-          return newUser as any;
-        } else {
-          if (!user) {
-            throw new Error("Email or password is incorrect");
-          }
-
-          const passwordMatch = await verifyPassword(
-            credentials.password as string,
-            user.password || ""
-          );
-
-          if (!passwordMatch) {
-            throw new Error("Email or password is incorrect");
-          }
-
-          // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
-          return user as any;
-        }
-      },
-    }),
-  ],
-  callbacks: {
-    async signIn({ user }) {
-      const email = user?.email;
-      const name = user?.name;
-      const picture = user?.image;
-
-      if (!email || !name) {
-        return false;
-      }
-
-      const existingUser = await getUser(email || "");
-
-      if (!existingUser) {
-        await createNewUser(name, email, picture || "");
-      }
-
-      return true;
+export const auth = betterAuth({
+  database: prismaAdapter(prisma, {
+    provider: "postgresql",
+  }),
+  emailAndPassword: {
+    enabled: true,
+    sendResetPassword: async ({ user, url }, _request) => {
+      logger.info(`Sending reset password email to ${user.email}`);
+      await sendResetPasswordEmail({
+        to: user.email,
+        name: user.name,
+        url: url,
+      });
     },
-    async jwt({ token, trigger }) {
-      if (trigger === "signIn") {
-        const user = await getUser(token.email as string);
-        token.userId = user?.id;
-      }
-
-      return token;
+    onPasswordReset: async ({ user }, _request) => {
+      logger.info(`Password for user ${user.email} has been reset`);
     },
-    async session({ session, token }) {
-      session.user.id = token.userId as string;
+  },
+  socialProviders: {
+    github: {
+      enabled: Boolean(conf.githubId) && Boolean(conf.githubSecret),
+      clientId: conf.githubId || "",
+      clientSecret: conf.githubSecret,
+    },
+    google: {
+      enabled: Boolean(conf.googleId) && Boolean(conf.googleSecret),
+      clientId: conf.googleId || "",
+      clientSecret: conf.googleSecret,
+    },
+  },
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "github"],
+    },
+  },
+  plugins: [nextCookies()],
+  user: {
+    additionalFields: {
+      // Add extra fields to the user here, e.g.
+      // customerId: {
+      //   type: "string",
+      //   required: false,
+      // },
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          logger.info(`Creating user with email ${user.email}`);
 
-      return session;
+          // let customer: Stripe.Customer | null = null;
+
+          // if (stripeConfigured) {
+          //   customer = await createStripeCustomer(user);
+          //   await createStripeTrialSubscription(user.id, customer.id);
+          // }
+
+          // Add custom fields to the user here
+          return {
+            data: {
+              ...user,
+              // customerId: customer?.id,
+            },
+          };
+        },
+      },
     },
   },
 });
-
-async function createNewUser(
-  name: string,
-  email: string,
-  picture: string,
-  password?: string
-) {
-  const user = await saveUser({
-    name: name,
-    email: email,
-    password: password,
-    picture: picture,
-  });
-
-  const stripeConfigured = conf.stripeSecretKey && conf.stripeWebhookSecret;
-
-  if (stripeConfigured) {
-    // const customer = await createStripeCustomer(user);
-    // await updateUserWithStripeCustomerId(user.id, customer.id);
-    // await createStripeTrialSubscription(user.id, customer.id);
-  }
-
-  return user;
-}
-
-export function hashPassword(plainPassword: string) {
-  try {
-    const salt = randomBytes(32).toString("hex");
-    const hash = scryptSync(plainPassword, salt, 64).toString("hex");
-    return `${salt}:${hash}`;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export async function verifyPassword(plainPassword: string, hashedPassword: string) {
-  try {
-    const [salt, hash] = hashedPassword.split(":");
-    const hashBuffer = Buffer.from(hash, "hex");
-    const key = scryptSync(plainPassword, salt, 64);
-    return hashBuffer.toString("hex") === key.toString("hex");
-  } catch (error) {
-    console.error(error);
-  }
-}

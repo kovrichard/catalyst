@@ -36,7 +36,7 @@ export async function getUserNotifications(): Promise<Notification[]> {
   }
 }
 
-export async function markAsRead(notificationId: number): Promise<void> {
+export async function markAsRead(notificationId: string): Promise<void> {
   const user = await getUserFromSession();
 
   ensure(user.id, "User ID not found");
@@ -56,7 +56,7 @@ export async function markAsRead(notificationId: number): Promise<void> {
   }
 }
 
-export async function markMultipleAsRead(notificationIds: number[]): Promise<void> {
+export async function markMultipleAsRead(notificationIds: string[]): Promise<void> {
   const user = await getUserFromSession();
 
   ensure(user.id, "User ID not found");

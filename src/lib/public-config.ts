@@ -1,11 +1,6 @@
 import { z } from "zod";
 
 const schema = z.object({
-  // General
-  scheme: z.string().default("https"),
-  authority: z.string(),
-  host: z.string().url(),
-
   // Auth
   redirectPath: z.string(),
 

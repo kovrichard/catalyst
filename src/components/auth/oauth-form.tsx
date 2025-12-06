@@ -1,6 +1,8 @@
-import { signIn } from "@/auth";
+"use client";
+
+import OAuthButton from "@/components/auth/oauth-button";
+import { signIn } from "@/lib/auth-client";
 import publicConf from "@/lib/public-config";
-import OAuthButton from "./oauth-button";
 
 export default function OAuthForm({ provider }: { provider: string }) {
   const config: { title: string } = { title: "" };
@@ -11,17 +13,15 @@ export default function OAuthForm({ provider }: { provider: string }) {
     config.title = "GitHub";
   }
 
-  return (
-    <form
-      className="flex justify-center"
-      action={async () => {
-        "use server";
+  async function handleSubmit() {
+    await signIn.social({
+      provider,
+      callbackURL: publicConf.redirectPath,
+    });
+  }
 
-        await signIn(provider, {
-          redirectTo: publicConf.redirectPath,
-        });
-      }}
-    >
+  return (
+    <form className="flex justify-center" onSubmit={handleSubmit}>
       <OAuthButton provider={provider} title={config.title} />
     </form>
   );

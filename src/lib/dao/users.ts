@@ -1,13 +1,13 @@
 import "server-only";
 
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { cache } from "react";
+import { auth } from "@/auth";
 import type { User } from "@/lib/prisma/generated/client";
 import prisma from "@/lib/prisma/prisma";
 
-export async function getUserById(id: number): Promise<User | null> {
-  return prisma.user.findUnique({
-    where: { id },
-  });
-}
+const unauthenticatedRedirect = "/login";
 
 export async function getUserByEmail(email: string): Promise<User | null> {
   return prisma.user.findUnique({
@@ -17,34 +17,14 @@ export async function getUserByEmail(email: string): Promise<User | null> {
   });
 }
 
-export async function createUser(profile: {
-  name: string;
-  email: string;
-  password?: string;
-  picture: string;
-}): Promise<User> {
-  return prisma.user.create({
-    data: {
-      name: profile.name,
-      email: profile.email,
-      password: profile.password,
-      picture: profile.picture,
-    },
+export const getUserIdFromSession = cache(async (): Promise<string> => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
   });
-}
 
-export async function updateUserById(
-  id: number,
-  data: Partial<Pick<User, "name" | "email" | "picture" | "password">>
-): Promise<User> {
-  return prisma.user.update({
-    where: { id },
-    data,
-  });
-}
+  if (!session || !session.user || !session.user.id) {
+    return redirect(unauthenticatedRedirect);
+  }
 
-export async function deleteUserById(id: number): Promise<User> {
-  return prisma.user.delete({
-    where: { id },
-  });
-}
+  return session.user.id;
+});
