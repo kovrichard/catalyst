@@ -1,5 +1,6 @@
 "use client";
 
+import type { FormEvent } from "react";
 import OAuthButton from "@/components/auth/oauth-button";
 import { signIn } from "@/lib/auth-client";
 import publicConf from "@/lib/public-config";
@@ -13,7 +14,9 @@ export default function OAuthForm({ provider }: { provider: string }) {
     config.title = "GitHub";
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     await signIn.social({
       provider,
       callbackURL: publicConf.redirectPath,
