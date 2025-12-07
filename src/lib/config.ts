@@ -19,6 +19,7 @@ const schema = z.object({
 
   // AWS
   awsRegion: z.string().default("eu-central-1"),
+  fromEmailAddress: z.string().optional(),
   awsConfigured: z.boolean().default(false),
 
   // Stripe
@@ -53,10 +54,12 @@ const envVars = {
 
   // AWS
   awsRegion: process.env.AWS_REGION,
+  fromEmailAddress: process.env.FROM_EMAIL_ADDRESS,
   awsConfigured:
     process.env.AWS_ACCESS_KEY_ID !== undefined &&
     process.env.AWS_SECRET_ACCESS_KEY !== undefined &&
-    process.env.AWS_REGION !== undefined,
+    process.env.AWS_REGION !== undefined &&
+    process.env.FROM_EMAIL_ADDRESS !== undefined,
 
   // Stripe
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
