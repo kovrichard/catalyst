@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
+import { after } from "next/server";
 import { sendResetPasswordEmail } from "@/lib/aws/ses";
 import conf from "@/lib/config";
 import { logger } from "@/lib/logger";
@@ -13,12 +14,13 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url }, _request) => {
-      logger.info(`Sending reset password email to user ${user.id}`);
-      await sendResetPasswordEmail({
-        to: user.email,
-        name: user.name,
-        url: url,
-      });
+      after(
+        sendResetPasswordEmail({
+          to: user.email,
+          name: user.name,
+          url: url,
+        })
+      );
     },
     onPasswordReset: async ({ user }, _request) => {
       logger.info(`Password for user ${user.id} has been reset`);
