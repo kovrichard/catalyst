@@ -2,6 +2,9 @@
 
 import { Command } from "commander";
 import prompts from "prompts";
+import { removeAWS } from "./removers/aws";
+import { removeRedis } from "./removers/redis";
+import { removeStripe } from "./removers/stripe";
 
 interface ConfigOptions {
   removeStripe?: boolean;
@@ -36,21 +39,6 @@ const features: Feature[] = [
     enabled: true,
   },
 ];
-
-async function removeStripe(): Promise<void> {
-  console.log("Removing Stripe integration...");
-  console.log("(Placeholder - no files modified yet)\n");
-}
-
-async function removeRedis(): Promise<void> {
-  console.log("Removing Redis integration...");
-  console.log("(Placeholder - not implemented yet)\n");
-}
-
-async function removeAWS(): Promise<void> {
-  console.log("Removing AWS SES integration...");
-  console.log("(Placeholder - not implemented yet)\n");
-}
 
 async function showSummary(options: ConfigOptions): Promise<void> {
   const removals: string[] = [];
