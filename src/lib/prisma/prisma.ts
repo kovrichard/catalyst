@@ -12,12 +12,17 @@ const prismaClientSingleton = () => {
     connectionString: process.env.DATABASE_URL,
   });
 
-  return new PrismaClient({ adapter }).$extends(
-    withRedisCache({
-      ttlSeconds: 300,
-      shouldCache: ({ result }) =>
-        Array.isArray(result) ? result.length > 0 : result !== null,
-    })
+  return (
+    new PrismaClient({ adapter })
+      // @catalyst:redis-start
+      .$extends(
+        withRedisCache({
+          ttlSeconds: 300,
+          shouldCache: ({ result }) =>
+            Array.isArray(result) ? result.length > 0 : result !== null,
+        })
+      )
+    // @catalyst:redis-end
   );
 };
 

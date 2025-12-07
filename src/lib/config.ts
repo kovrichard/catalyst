@@ -30,11 +30,13 @@ const schema = z.object({
   stripeConfigured: z.boolean().default(false),
   // @catalyst:stripe-end
 
+  // @catalyst:redis-start
   // Redis
   redisHost: z.string().default("localhost"),
   redisPort: z.number().int().positive().default(6379),
   redisPassword: z.string().min(20).optional(),
   redisConfigured: z.boolean().default(false),
+  // @catalyst:redis-end
 
   // Turnstile
   turnstileSecretKey: z.string().optional(),
@@ -75,6 +77,7 @@ const envVars = {
     process.env.STRIPE_PORTAL_RETURN_URL !== undefined,
   // @catalyst:stripe-end
 
+  // @catalyst:redis-start
   // Redis
   redisHost: process.env.REDIS_HOST,
   redisPort: parseInt(process.env.REDIS_PORT || "6379", 10),
@@ -82,6 +85,7 @@ const envVars = {
   redisConfigured: Boolean(
     process.env.REDIS_HOST && process.env.REDIS_PORT && process.env.REDIS_PASS
   ),
+  // @catalyst:redis-end
 
   // Turnstile
   turnstileSecretKey: process.env.TURNSTILE_SECRET_KEY,
