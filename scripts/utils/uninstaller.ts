@@ -10,10 +10,14 @@ export function uninstallPackage(packageName: string, dryRun = false): Operation
     };
   }
 
-  const result = spawnSync("bun", ["remove", packageName], {
-    stdio: "inherit",
-    encoding: "utf-8",
-  });
+  const result = spawnSync(
+    "bun", // NOSONAR: executed only locally
+    ["remove", packageName],
+    {
+      stdio: "inherit",
+      encoding: "utf-8",
+    }
+  );
 
   if (result.error) {
     const errorMessage = result.error.message || String(result.error);
