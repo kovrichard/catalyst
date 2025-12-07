@@ -17,9 +17,7 @@ function removeCodeBetweenMarkers(
   let insideMarker = false;
   let markerFound = false;
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-
+  for (const line of lines) {
     if (line.includes(startMarker)) {
       insideMarker = true;
       markerFound = true;
