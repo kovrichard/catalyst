@@ -29,8 +29,7 @@ export function uninstallPackage(packageName: string, dryRun = false): Operation
   }
 
   if (result.status !== 0) {
-    const errorMessage =
-      result.stderr?.toString() || `Process exited with code ${result.status}`;
+    const errorMessage = `Process exited with code ${result.status}`;
     console.error(`Failed to uninstall ${packageName}: ${errorMessage}`);
     return {
       success: false,
