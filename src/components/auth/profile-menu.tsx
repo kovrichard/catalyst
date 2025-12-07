@@ -2,7 +2,7 @@
 
 import { FileText, Settings } from "lucide-react";
 import Link from "next/link";
-import { SignOut } from "@/components/signout-button";
+import { SignOut } from "@/components/auth/signout-button";
 import {
   DropdownMenuItem,
   DropdownMenuLabel,

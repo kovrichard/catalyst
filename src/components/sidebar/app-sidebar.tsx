@@ -4,7 +4,7 @@ import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar"
 
 // @catalyst:auth-start
 
-import ProfileMenu from "@/components/sidebar/profile-menu";
+import ProfileMenu from "@/components/auth/profile-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,

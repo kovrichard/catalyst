@@ -14,6 +14,8 @@ const AUTH_FILES_TO_DELETE = [
 const AUTH_FOLDERS_TO_DELETE = [
   "src/app/(public)/login",
   "src/app/(public)/register",
+  "src/app/(protected)/settings",
+  "src/components/settings",
   "src/components/auth",
   "src/app/api/auth",
   "src/app/(public)/reset-password",
