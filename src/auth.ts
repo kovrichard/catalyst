@@ -66,6 +66,7 @@ export const auth = betterAuth({
 
           if (conf.stripeConfigured) {
             customer = await createStripeCustomer(user);
+            logger.debug(`Saving customer id ${customer.id} to user ${user.id}`);
           }
 
           // Add custom fields to the user here
