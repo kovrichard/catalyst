@@ -1,9 +1,4 @@
-import {
-  createMarkerOptions,
-  removeMarkedCodeFromFiles,
-} from "../utils/code-modifications";
-import { deleteFiles } from "../utils/file-operations";
-import { uninstallPackages } from "../utils/uninstaller";
+import { Remover } from "./remover";
 
 const REDIS_FILES_TO_DELETE = [
   "src/lib/cache/redis.ts",
@@ -14,53 +9,13 @@ const REDIS_FILES_TO_MODIFY = ["src/lib/config.ts", "src/lib/prisma/prisma.ts"];
 
 const REDIS_PACKAGES_TO_UNINSTALL = ["ioredis"];
 
+const remover = new Remover({
+  featureName: "Redis",
+  filesToDelete: REDIS_FILES_TO_DELETE,
+  filesToModify: REDIS_FILES_TO_MODIFY,
+  packagesToUninstall: REDIS_PACKAGES_TO_UNINSTALL,
+});
+
 export async function removeRedis(dryRun = false): Promise<void> {
-  console.log("Removing Redis integration...");
-  if (dryRun) {
-    console.log("(DRY RUN - no files will be modified)\n");
-  }
-
-  console.log("Deleting Redis files:");
-  const deleteResults = deleteFiles(REDIS_FILES_TO_DELETE, dryRun);
-  deleteResults.forEach((result) => {
-    if (result.success) {
-      console.log(`  ✓ ${result.message}`);
-    } else {
-      console.log(`  ✗ ${result.message}`);
-    }
-  });
-
-  console.log("Removing marked code from files:");
-  const redisMarkers = createMarkerOptions("redis");
-  const modifyResults = removeMarkedCodeFromFiles(
-    REDIS_FILES_TO_MODIFY,
-    redisMarkers,
-    dryRun
-  );
-  modifyResults.forEach((result) => {
-    if (result.success) {
-      console.log(`  ✓ ${result.message}`);
-    } else {
-      console.log(`  ✗ ${result.message}`);
-    }
-  });
-
-  console.log("Uninstalling Redis packages:");
-  const uninstallResults = uninstallPackages(REDIS_PACKAGES_TO_UNINSTALL, dryRun);
-  uninstallResults.forEach((result) => {
-    if (result.success) {
-      console.log(`  ✓ ${result.message}`);
-    } else {
-      console.log(`  ✗ ${result.message}`);
-    }
-  });
-
-  const allFailed = [...deleteResults, ...modifyResults].filter((r) => !r.success);
-  if (allFailed.length > 0) {
-    console.log(`\n  Warning: ${allFailed.length} operation(s) failed.`);
-  } else if (dryRun) {
-    console.log("\n  DRY RUN - no files actually modified");
-  } else {
-    console.log("\n  All Redis code removed successfully.");
-  }
+  await remover.run(dryRun);
 }
