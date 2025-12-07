@@ -9,7 +9,7 @@ export let stripe: Stripe | null = null;
 
 if (conf.stripeConfigured) {
   stripe = new Stripe(conf.stripeSecretKey, {
-    apiVersion: "2024-09-30.acacia",
+    apiVersion: "2025-11-17.clover",
   });
 }
 

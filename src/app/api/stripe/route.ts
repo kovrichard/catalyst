@@ -14,8 +14,7 @@ export async function POST(req: Request) {
 
   const sig = req.headers.get("stripe-signature") || "";
 
-  // biome-ignore lint/suspicious/noImplicitAnyLet: TODO: Need further investigation
-  let event;
+  let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
@@ -29,7 +28,11 @@ export async function POST(req: Request) {
   }
 
   switch (event.type) {
-    // Handle various event types
+    case "customer.created": {
+      const customer = event.data.object as Stripe.Customer;
+      logger.info(`Customer created: ${customer.id}`);
+      break;
+    }
     case "customer.subscription.updated": {
       const subscription = event.data.object as Stripe.Subscription;
       logger.info(`Subscription updated: ${subscription.id}`);
