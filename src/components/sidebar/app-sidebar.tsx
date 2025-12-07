@@ -37,7 +37,7 @@ export async function AppSidebar() {
               <DropdownMenuTrigger asChild className="h-auto">
                 <SidebarMenuButton>
                   <Avatar className="size-7">
-                    <AvatarImage src={user?.picture || ""} />
+                    <AvatarImage src={user?.image || ""} />
                     <AvatarFallback className="text-muted-foreground">
                       {user?.name
                         ?.split(" ")

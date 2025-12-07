@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import conf from "@/lib/config";
+import OAuthForm from "@/components/auth/oauth-form";
 import {
   Card,
   CardContent,
@@ -8,8 +8,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import OAuthForm from "./oauth-form";
+} from "@/components/ui/card";
+import conf from "@/lib/config";
 
 export default function AuthCard({
   title,
@@ -35,10 +35,17 @@ export default function AuthCard({
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-6">
         {children}
         {(hasGitHub || hasGoogle) && (
-          <p className="mx-auto text-muted-foreground text-sm">or continue with</p>
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+            </div>
+          </div>
         )}
         {hasGoogle && <OAuthForm provider="google" />}
         {hasGitHub && <OAuthForm provider="github" />}

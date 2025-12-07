@@ -16,11 +16,19 @@ datasource db {
 model User {
   @@map("users")
 
-  id              Int      @id @default(autoincrement())
+  // Better Auth columns
+  id              String      @id @default(cuid()) @map("id")
   name            String
   email           String @unique
-  password        String?
-  picture         String
+  emailVerified Boolean?       @map("email_verified")
+  image         String?        @map("image")
+  sessions      Session[]
+  accounts      Account[]
+
+  // Deprecated columns
+  password      String?        @map("password")
+
+  // Custom columns
   notifications   Notification[]
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
@@ -29,7 +37,7 @@ model User {
 model Notification {
   @@map("notifications")
 
-  id                Int      @id @default(autoincrement())
+  id                String   @id @default(cuid())
   type              String
   title             String
   content           String
@@ -37,7 +45,57 @@ model Notification {
   read              Boolean @default(false)
   archived          Boolean @default(false)
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId            Int      @map("user_id")
+  userId            String   @map("user_id")
   createdAt         DateTime @default(now()) @map("created_at")
   updatedAt         DateTime @updatedAt @map("updated_at")
+}
+
+// Better Auth tables
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime @map("expires_at")
+  token     String   @unique @map("token")
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([token])
+  @@map("sessions")
+}
+
+model Account {
+  id                   String   @id @default(cuid())
+  userId               String   @map("user_id")
+  providerId           String   @map("provider_id")
+  accountId            String   @map("account_id")
+  refreshToken         String?  @map("refresh_token")
+  accessToken          String?  @map("access_token")
+  idToken              String?  @map("id_token")
+  accessTokenExpiresAt DateTime? @map("access_token_expires_at")
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at")
+  scope                String?    @map("scope")
+  password             String?    @map("password")
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String   @map("identifier")
+  value      String   @map("value")
+  expiresAt  DateTime @map("expires_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([identifier, value])
+  @@map("verifications")
 }

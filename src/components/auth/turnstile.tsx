@@ -1,3 +1,5 @@
+"use client";
+
 import { Turnstile } from "@marsidev/react-turnstile";
 import publicConf from "@/lib/public-config";
 
@@ -11,21 +13,23 @@ export default function TurnstileComponent({
   }
 
   return (
-    <Turnstile
-      className="mx-auto"
-      siteKey={publicConf.turnstileSiteKey}
-      onSuccess={(token: string) => {
-        setValue(token);
-      }}
-      onError={() => {
-        setValue("");
-      }}
-      onExpire={() => {
-        setValue("");
-      }}
-      onTimeout={() => {
-        setValue("");
-      }}
-    />
+    <div className="h-[65px]">
+      <Turnstile
+        className="mx-auto"
+        siteKey={publicConf.turnstileSiteKey}
+        onSuccess={(token: string) => {
+          setValue(token);
+        }}
+        onError={() => {
+          setValue("");
+        }}
+        onExpire={() => {
+          setValue("");
+        }}
+        onTimeout={() => {
+          setValue("");
+        }}
+      />
+    </div>
   );
 }

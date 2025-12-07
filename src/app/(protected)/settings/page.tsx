@@ -17,10 +17,14 @@ export default async function SettingsPage() {
       id: userId,
     },
     select: {
-      password: true,
+      accounts: {
+        select: {
+          password: true,
+        },
+      },
     },
   });
-  const hasPassword = Boolean(user?.password);
+  const hasPassword = user?.accounts?.some((account) => account.password);
 
   return (
     <div className="relative flex max-h-svh min-w-[320px] flex-1 flex-col items-center justify-center bg-background md:rounded-[20px]">

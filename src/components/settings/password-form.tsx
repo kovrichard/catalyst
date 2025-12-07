@@ -1,18 +1,17 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useActionState, useEffect, useMemo, useTransition } from "react";
+import { useMemo, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import useToast from "@/hooks/use-toast";
-import { updateUserPassword } from "@/lib/actions/users";
-import { initialState } from "@/lib/utils";
+import { setUserPassword } from "@/lib/actions/users";
+import { changePassword } from "@/lib/auth-client";
 import { type UpdatePasswordFormData, updatePasswordSchema } from "@/types/auth";
 
-export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) {
-  const [state, formAction, isPending] = useActionState(updateUserPassword, initialState);
+export default function PasswordForm({ hasPassword }: { hasPassword?: boolean }) {
   const [isTransitionPending, startTransition] = useTransition();
 
   const schema = useMemo(() => {
@@ -46,21 +45,38 @@ export default function PasswordForm({ hasPassword }: { hasPassword: boolean }) 
     },
   });
 
-  useToast(state);
-
-  useEffect(() => {
-    if (state.success) {
-      reset();
-    }
-  }, [state.success, reset]);
-
   const onSubmit = (data: UpdatePasswordFormData) => {
-    startTransition(() => {
-      formAction(data);
+    startTransition(async () => {
+      if (hasPassword) {
+        await changePassword(
+          {
+            currentPassword: data.currentPassword ?? "",
+            newPassword: data.newPassword,
+            revokeOtherSessions: true,
+          },
+          {
+            onSuccess: () => {
+              toast.success("Password updated");
+              reset();
+            },
+            onError: (error) => {
+              toast.error(error.error.message);
+            },
+          }
+        );
+      } else {
+        const result = await setUserPassword(data.newPassword);
+        if (result.success) {
+          toast.success(result.message);
+          reset();
+        } else {
+          toast.error(result.message);
+        }
+      }
     });
   };
 
-  const isLoading = isPending || isSubmitting || isTransitionPending;
+  const isLoading = isSubmitting || isTransitionPending;
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>

@@ -1,13 +1,14 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import { render } from "@react-email/components";
-import HelloWorld from "../../../emails/hello-world";
+import ResetPassword from "@/../emails/reset-password";
 
-if (!process.env.AWS_ACCESS_KEY_ID) {
-  throw new Error("AWS_ACCESS_KEY_ID is not set.");
-}
+import conf from "@/lib/config";
+import { logger } from "@/lib/logger";
 
-if (!process.env.AWS_SECRET_ACCESS_KEY) {
-  throw new Error("AWS_SECRET_ACCESS_KEY is not set.");
+let client: SESClient | null = null;
+
+if (conf.awsConfigured) {
+  client = new SESClient({ region: conf.awsRegion });
 }
 
 export class EmailError extends Error {
@@ -17,19 +18,40 @@ export class EmailError extends Error {
   }
 }
 
-const client = new SESClient({ region: "eu-central-1" });
+export class EmailNotConfiguredError extends Error {
+  constructor() {
+    super("Email client not configured.");
+    this.name = this.constructor.name;
+  }
+}
 
-export async function sendEmail(from: string, to: string, name: string) {
-  const body = await render(<HelloWorld name={name} />);
+type SendResetPasswordEmailProps = {
+  to: string;
+  name: string;
+  url: string;
+};
+
+export async function sendResetPasswordEmail({
+  to,
+  name,
+  url,
+}: SendResetPasswordEmailProps) {
+  if (!client) {
+    const errorMessage = "Email client not configured.";
+    logger.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+
+  const body = await render(<ResetPassword name={name} url={url} />);
 
   const command: SendEmailCommand = new SendEmailCommand({
-    Source: from,
+    Source: conf.fromEmailAddress,
     Destination: {
       ToAddresses: [to],
     },
     Message: {
       Subject: {
-        Data: "Hello from Catalyst!",
+        Data: "Catalyst - Reset your password",
       },
       Body: {
         Html: {
@@ -41,13 +63,13 @@ export async function sendEmail(from: string, to: string, name: string) {
   });
 
   try {
+    logger.info("Sending reset password email...");
+
     const data = await client.send(command);
 
     return data;
-
-    // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
-  } catch (error: any) {
-    console.error(error);
-    throw new EmailError("Failed to send email.");
+  } catch (error) {
+    logger.error(`Failed to send email: ${error}`);
+    throw error;
   }
 }

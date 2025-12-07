@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActionState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -42,11 +43,11 @@ export default function LoginForm() {
 
   useToast(state, toastCallback);
 
-  const onSubmit = async (data: LoginFormData) => {
+  async function onSubmit(data: LoginFormData) {
     startTransition(() => {
       formAction(data);
     });
-  };
+  }
 
   function setTurnstileValue(token: string) {
     setValue("cf-turnstile-response", token);
@@ -55,8 +56,8 @@ export default function LoginForm() {
   const isLoading = isPending || isSubmitting || isTransitionPending;
 
   return (
-    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-      <Label htmlFor="email" className="flex flex-col gap-1">
+    <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
+      <Label htmlFor="email" className="grid gap-1">
         <span>Email</span>
         <Input
           type="email"
@@ -69,8 +70,16 @@ export default function LoginForm() {
           <span className="text-destructive text-xs">{errors.email.message}</span>
         )}
       </Label>
-      <Label htmlFor="password" className="flex flex-col gap-1">
-        <span>Password</span>
+      <div className="grid gap-1">
+        <div className="flex items-center justify-between">
+          <Label htmlFor="password">Password</Label>
+          <Link
+            href="/reset-password/request"
+            className="text-primary text-xs underline-offset-4 hover:underline"
+          >
+            Forgot Password?
+          </Link>
+        </div>
         <Input
           type="password"
           id="password"
@@ -80,7 +89,7 @@ export default function LoginForm() {
         {errors.password && (
           <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
-      </Label>
+      </div>
       <TurnstileComponent setValue={setTurnstileValue} />
       <PendingSubmitButton isPending={isLoading} text="Sign in" />
     </form>

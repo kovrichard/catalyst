@@ -28,9 +28,17 @@ FROM base AS prerelease
 
 COPY --from=install /temp/dev/node_modules node_modules
 COPY --from=install /temp/dev/src/lib/prisma/generated ./src/lib/prisma/generated
-COPY . .
+
+COPY ./emails ./emails
+COPY ./public ./public
+COPY ./src ./src
+COPY package.json bun.lock ./
+COPY ./next.config.mjs next.config.mjs
+COPY postcss.config.mjs postcss.config.mjs
+COPY tsconfig.json tsconfig.json
 
 ENV NODE_ENV=production
+
 RUN bun run build
 
 FROM base AS release

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -95,6 +96,18 @@ export default function RegisterForm() {
         )}
       </Label>
       <TurnstileComponent setValue={setTurnstileValue} />
+      <div className="text-muted-foreground text-xs">
+        By signing up, you agree to our{" "}
+        <a
+          href="/privacy-policy"
+          target="_blank"
+          className="relative inline-flex items-center text-primary hover:underline"
+          rel="noopener"
+        >
+          <span>Privacy Policy</span>
+          <ExternalLink size={10} className="-top-px relative ml-1" />
+        </a>
+      </div>
       <PendingSubmitButton isPending={isLoading} text="Sign up" />
     </form>
   );

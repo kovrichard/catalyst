@@ -4,9 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { CreditCard, FileText, Settings } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
+import { SignOut } from "@/components/signout-button";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useTRPC } from "@/lib/trpc/client";
-import { SignOut } from "../signout-button";
 import {
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -68,7 +68,7 @@ export default function ProfileMenu() {
       </DropdownMenuItem>
       <DropdownMenuSeparator />
       <DropdownMenuItem asChild>
-        <SignOut />
+        <SignOut buttonText="Sign Out" />
       </DropdownMenuItem>
     </>
   );

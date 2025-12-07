@@ -9,15 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      # Public
-
-      ## General
-      NEXT_PUBLIC_AUTHORITY: https://catalyst.richardkovacs.dev
-
-      ## Auth
-      NEXT_PUBLIC_AUTH_REDIRECT_URL: /dashboard
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v4

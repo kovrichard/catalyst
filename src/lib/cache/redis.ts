@@ -40,8 +40,8 @@ export const CacheKeys = {
     session: (userId: number) => `user:session:${userId}`,
   },
   notification: {
-    byUserId: (userId: number) => `notifications:user:${userId}`,
-    byId: (id: number) => `notification:id:${id}`,
+    byUserId: (userId: string) => `notifications:user:${userId}`,
+    byId: (id: string) => `notification:id:${id}`,
   },
 } as const;
 
@@ -149,8 +149,8 @@ export async function invalidateUserCache(userId: number, email?: string): Promi
 
 // Notification-specific cache invalidation
 export async function invalidateNotificationCache(
-  userId: number,
-  notificationId?: number
+  userId: string,
+  notificationId?: string
 ): Promise<void> {
   const keys = [CacheKeys.notification.byUserId(userId)];
 
@@ -161,7 +161,7 @@ export async function invalidateNotificationCache(
   await invalidateCache(keys);
 }
 
-export async function invalidateNotificationsCache(userId: number): Promise<void> {
+export async function invalidateNotificationsCache(userId: string): Promise<void> {
   await invalidateCache([CacheKeys.notification.byUserId(userId)]);
 }
 
