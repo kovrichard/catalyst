@@ -38,8 +38,6 @@ COPY postcss.config.mjs postcss.config.mjs
 COPY tsconfig.json tsconfig.json
 
 ENV NODE_ENV=production
-ENV AUTHORITY=localhost:3000
-ENV NEXT_PUBLIC_AUTH_REDIRECT_URL=/dashboard
 
 RUN bun run build
 

@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const schema = z.object({
   // Auth
-  redirectPath: z.string(),
+  redirectPath: z.string().default("/dashboard"),
 
   // Tracking
   gaId: z.string().optional(),
@@ -21,7 +21,7 @@ const envVars = {
   host: `${process.env.NEXT_PUBLIC_SCHEME || "https"}://${process.env.NEXT_PUBLIC_AUTHORITY}`,
 
   // Auth
-  redirectPath: process.env.NEXT_PUBLIC_AUTH_REDIRECT_URL,
+  redirectPath: process.env.NEXT_PUBLIC_AUTH_REDIRECT_PATH,
 
   // Tracking
   gaId: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,

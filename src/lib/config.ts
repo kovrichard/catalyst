@@ -8,7 +8,7 @@ const schema = z.object({
   logLevel: z.enum(["error", "warn", "info", "debug"]).default("info"),
   logDrainUrl: z.string().default(""),
   scheme: z.string().default("https"),
-  authority: z.string(),
+  authority: z.string().default("localhost:3000"),
   host: z.url(),
 
   // Auth

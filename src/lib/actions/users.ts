@@ -151,7 +151,7 @@ export async function setUserPassword(password: string): Promise<FormState> {
 export async function requestPasswordReset(email: string): Promise<FormState> {
   try {
     const response = await auth.api.requestPasswordReset({
-      body: { email, redirectTo: `${conf.scheme}://${conf.authority}/reset-password` },
+      body: { email, redirectTo: `${conf.host}/reset-password` },
     });
 
     return {
