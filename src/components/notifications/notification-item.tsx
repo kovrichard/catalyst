@@ -8,13 +8,13 @@ import { readNotification } from "@/lib/actions/notifications";
 import type { Notification } from "@/lib/prisma/generated/client";
 import { formatTimeAgo } from "@/lib/utils";
 
+function handleNotificationClick(event: React.MouseEvent) {
+  event.preventDefault();
+}
+
 export function NotificationItem({
   notification,
 }: Readonly<{ notification: Notification }>) {
-  function handleNotificationClick(event: React.MouseEvent) {
-    event.preventDefault();
-  }
-
   return (
     <li>
       <Link
