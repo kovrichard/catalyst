@@ -15,7 +15,7 @@ export interface RemoverConfig {
 }
 
 export class Remover {
-  private config: RemoverConfig;
+  private readonly config: RemoverConfig;
 
   constructor(config: RemoverConfig) {
     this.config = config;
