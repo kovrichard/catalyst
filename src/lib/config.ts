@@ -47,7 +47,7 @@ const envVars = {
   logDrainUrl: process.env.LOG_DRAIN_URL,
   scheme: process.env.SCHEME,
   authority: process.env.AUTHORITY,
-  host: `${process.env.SCHEME || "https"}://${process.env.AUTHORITY}`,
+  host: `${process.env.SCHEME || "https"}://${process.env.AUTHORITY || "localhost:3000"}`,
 
   // Auth
   githubId: process.env.GITHUB_CLIENT_ID,
