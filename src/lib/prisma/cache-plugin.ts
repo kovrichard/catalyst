@@ -138,7 +138,7 @@ export const withRedisCache = (config: CacheConfig) => {
       args: { where: { id: "sample" } },
     });
     // Extract prefix: "${baseKey}:QuizSession:findUnique:" -> "${baseKey}:"
-    const prefixMatch = sampleKey.match(/^([^:]+:)/);
+    const prefixMatch = /^([^:]+:)/.exec(sampleKey);
     const prefix = prefixMatch ? prefixMatch[1] : "";
 
     // Build pattern to match keys for this model
@@ -238,9 +238,9 @@ export const withRedisCache = (config: CacheConfig) => {
               args,
               userId
             );
-            for await (const cacheKey of keysToInvalidate) {
-              await redis.del(cacheKey);
-            }
+            await Promise.all(
+              Array.from(keysToInvalidate).map((cacheKey) => redis.del(cacheKey))
+            );
 
             return result;
           } else {
