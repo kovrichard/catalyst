@@ -2,10 +2,12 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { after } from "next/server";
+import type Stripe from "stripe";
 import { sendResetPasswordEmail } from "@/lib/aws/ses";
 import conf from "@/lib/config";
 import { logger } from "@/lib/logger";
 import prisma from "@/lib/prisma/prisma";
+import { createStripeCustomer } from "@/lib/stripe";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -60,12 +62,12 @@ export const auth = betterAuth({
         before: async (user) => {
           logger.info(`Creating user with id ${user.id}`);
 
-          // let customer: Stripe.Customer | null = null;
+          let customer: Stripe.Customer | null = null;
 
-          // if (stripeConfigured) {
-          //   customer = await createStripeCustomer(user);
-          //   await createStripeTrialSubscription(user.id, customer.id);
-          // }
+          if (conf.stripeConfigured) {
+            customer = await createStripeCustomer(user);
+            logger.debug(`Saving customer id ${customer.id} to user ${user.id}`);
+          }
 
           // Add custom fields to the user here
           return {

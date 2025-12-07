@@ -1,17 +1,20 @@
 import type Stripe from "stripe";
 import conf from "@/lib/config";
 import { logger } from "@/lib/logger";
+import { stripe } from "@/lib/stripe";
+import { ensure } from "@/lib/utils";
 
 export async function POST(req: Request) {
-  if (!conf.stripeSecretKey || !conf.stripeWebhookSecret) {
+  try {
+    ensure(stripe, "Stripe is not configured");
+  } catch (err) {
+    logger.error(err);
     return new Response("Not implemented", { status: 501 });
   }
-  const stripe = (await import("@/lib/stripe")).stripe;
 
   const sig = req.headers.get("stripe-signature") || "";
 
-  // biome-ignore lint/suspicious/noImplicitAnyLet: TODO: Need further investigation
-  let event;
+  let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
@@ -25,7 +28,11 @@ export async function POST(req: Request) {
   }
 
   switch (event.type) {
-    // Handle various event types
+    case "customer.created": {
+      const customer = event.data.object as Stripe.Customer;
+      logger.info(`Customer created: ${customer.id}`);
+      break;
+    }
     case "customer.subscription.updated": {
       const subscription = event.data.object as Stripe.Subscription;
       logger.info(`Subscription updated: ${subscription.id}`);

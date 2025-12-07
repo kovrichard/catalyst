@@ -26,6 +26,7 @@ const schema = z.object({
   stripeSecretKey: z.string().default(""),
   stripeWebhookSecret: z.string().default(""),
   stripePortalReturnUrl: z.string().default("http://localhost:3000/dashboard"),
+  stripeConfigured: z.boolean().default(false),
 
   // Redis
   redisHost: z.string().default("localhost"),
@@ -65,6 +66,10 @@ const envVars = {
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
   stripePortalReturnUrl: process.env.STRIPE_PORTAL_RETURN_URL,
+  stripeConfigured:
+    process.env.STRIPE_SECRET_KEY !== undefined &&
+    process.env.STRIPE_WEBHOOK_SECRET !== undefined &&
+    process.env.STRIPE_PORTAL_RETURN_URL !== undefined,
 
   // Redis
   redisHost: process.env.REDIS_HOST,
