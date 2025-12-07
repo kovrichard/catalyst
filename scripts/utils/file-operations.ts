@@ -7,13 +7,21 @@ export interface FileOperationResult {
   filePath: string;
 }
 
-export function deleteFile(filePath: string): FileOperationResult {
+export function deleteFile(filePath: string, dryRun = false): FileOperationResult {
   const fullPath = join(process.cwd(), filePath);
 
   if (!existsSync(fullPath)) {
     return {
       success: false,
       message: `File does not exist: ${filePath}`,
+      filePath,
+    };
+  }
+
+  if (dryRun) {
+    return {
+      success: true,
+      message: `Would delete: ${filePath}`,
       filePath,
     };
   }
@@ -34,13 +42,21 @@ export function deleteFile(filePath: string): FileOperationResult {
   }
 }
 
-export function deleteDirectory(dirPath: string): FileOperationResult {
+export function deleteDirectory(dirPath: string, dryRun = false): FileOperationResult {
   const fullPath = join(process.cwd(), dirPath);
 
   if (!existsSync(fullPath)) {
     return {
       success: false,
       message: `Directory does not exist: ${dirPath}`,
+      filePath: dirPath,
+    };
+  }
+
+  if (dryRun) {
+    return {
+      success: true,
+      message: `Would delete directory: ${dirPath}`,
       filePath: dirPath,
     };
   }
@@ -61,6 +77,6 @@ export function deleteDirectory(dirPath: string): FileOperationResult {
   }
 }
 
-export function deleteFiles(filePaths: string[]): FileOperationResult[] {
-  return filePaths.map((filePath) => deleteFile(filePath));
+export function deleteFiles(filePaths: string[], dryRun = false): FileOperationResult[] {
+  return filePaths.map((filePath) => deleteFile(filePath, dryRun));
 }

@@ -10,6 +10,7 @@ interface ConfigOptions {
   removeStripe?: boolean;
   removeRedis?: boolean;
   removeAWS?: boolean;
+  dryRun?: boolean;
 }
 
 interface Feature {
@@ -51,7 +52,11 @@ async function showSummary(options: ConfigOptions): Promise<void> {
     return;
   }
 
-  console.log("\nThe following features will be removed:");
+  if (options.dryRun) {
+    console.log("\n🔍 DRY RUN MODE - No files will be modified\n");
+  }
+
+  console.log("The following features will be removed:");
   removals.forEach((feature) => {
     console.log(`  - ${feature}`);
   });
@@ -59,19 +64,21 @@ async function showSummary(options: ConfigOptions): Promise<void> {
 }
 
 async function executeRemovals(options: ConfigOptions): Promise<void> {
+  const dryRun = options.dryRun ?? false;
+
   if (options.removeStripe) {
-    await removeStripe();
+    await removeStripe(dryRun);
   }
   if (options.removeRedis) {
-    await removeRedis();
+    await removeRedis(dryRun);
   }
   if (options.removeAWS) {
-    await removeAWS();
+    await removeAWS(dryRun);
   }
 }
 
-async function interactiveMode(): Promise<void> {
-  console.log("\n🔧 Catalyst Boilerplate Configuration\n");
+async function interactiveMode(dryRun = false): Promise<void> {
+  console.log(`\n🔧 Catalyst Boilerplate Configuration ${dryRun ? "(DRY RUN)" : ""}\n`);
 
   const enabledFeatures = features.filter((f) => f.enabled);
 
@@ -92,7 +99,9 @@ async function interactiveMode(): Promise<void> {
     return;
   }
 
-  const options: ConfigOptions = {};
+  const options: ConfigOptions = {
+    dryRun,
+  };
   response.features.forEach((key: keyof ConfigOptions) => {
     options[key] = true;
   });
@@ -115,6 +124,7 @@ function parseArgs(): ConfigOptions {
       "--remove <features...>",
       "Remove specific features (comma-separated: stripe, redis, aws)"
     )
+    .option("--dry-run", "Show what would be done without making changes")
     .parse(process.argv);
 
   const opts = program.opts<{
@@ -122,9 +132,12 @@ function parseArgs(): ConfigOptions {
     redis?: boolean;
     aws?: boolean;
     remove?: string[];
+    dryRun?: boolean;
   }>();
 
-  const options: ConfigOptions = {};
+  const options: ConfigOptions = {
+    dryRun: opts.dryRun ?? false,
+  };
 
   if (opts.stripe === false) {
     options.removeStripe = true;
@@ -164,9 +177,10 @@ function parseArgs(): ConfigOptions {
 
 async function main(): Promise<void> {
   const options = parseArgs();
+  const dryRun = options.dryRun ?? false;
 
-  if (Object.keys(options).length === 0) {
-    await interactiveMode();
+  if (Object.keys(options).filter((k) => k !== "dryRun").length === 0) {
+    await interactiveMode(dryRun);
   } else {
     await showSummary(options);
     await executeRemovals(options);
