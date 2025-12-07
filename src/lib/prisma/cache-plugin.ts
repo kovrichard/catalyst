@@ -150,13 +150,19 @@ export const withRedisCache = (config: CacheConfig) => {
     const cacheKeys = new Set<string>();
     let cursor = "0";
 
-    do {
-      const result = await redis.scan(cursor, "MATCH", pattern, "COUNT", 100);
-      cursor = result[0];
-      for (const key of result[1]) {
-        cacheKeys.add(key);
-      }
-    } while (cursor !== "0");
+    try {
+      do {
+        const result = await redis.scan(cursor, "MATCH", pattern, "COUNT", 100);
+        cursor = result[0];
+        for (const key of result[1]) {
+          cacheKeys.add(key);
+        }
+      } while (cursor !== "0");
+    } catch (error) {
+      logger.warn(
+        `Failed to scan cache keys for pattern ${pattern}: ${error instanceof Error ? error.message : String(error)}. Returning partial results.`
+      );
+    }
 
     return invalidateKeys({ model, action, args, cacheKeys });
   };
@@ -202,11 +208,29 @@ export const withRedisCache = (config: CacheConfig) => {
             if (!shouldCacheAction) return query(args);
 
             const cacheKey = key({ model, action: action.operation, args });
-            const cached = await redis.get(cacheKey);
+            let cached: string | null = null;
+            try {
+              cached = await redis.get(cacheKey);
+            } catch (_error) {
+              logger.warn(
+                `Failed to get cache key: ${cacheKey}, falling back to database`
+              );
+            }
 
             if (cached) {
               logger.debug(`Redis cache HIT for key: ${cacheKey}`);
-              return JSON.parse(cached);
+              try {
+                return JSON.parse(cached);
+              } catch (_error) {
+                logger.warn(
+                  `Invalid cached data for key: ${cacheKey}, falling back to database`
+                );
+                try {
+                  await redis.del(cacheKey);
+                } catch (_error) {
+                  logger.warn(`Failed to delete invalid cache key: ${cacheKey}`);
+                }
+              }
             } else {
               logger.debug(`Redis cache MISS for key: ${cacheKey}`);
             }
@@ -214,7 +238,13 @@ export const withRedisCache = (config: CacheConfig) => {
             const result = await query(args);
 
             if (shouldCache({ model, action: action.operation, args, result })) {
-              await redis.set(cacheKey, JSON.stringify(result), "EX", ttlSeconds);
+              try {
+                await redis.set(cacheKey, JSON.stringify(result), "EX", ttlSeconds);
+              } catch (_error) {
+                logger.warn(
+                  `Failed to set cache key: ${cacheKey}, falling back to database`
+                );
+              }
             }
 
             return result;
@@ -238,9 +268,15 @@ export const withRedisCache = (config: CacheConfig) => {
               args,
               userId
             );
-            await Promise.all(
-              Array.from(keysToInvalidate).map((cacheKey) => redis.del(cacheKey))
-            );
+            try {
+              await Promise.all(
+                Array.from(keysToInvalidate).map((cacheKey) => redis.del(cacheKey))
+              );
+            } catch (error) {
+              logger.warn(
+                `Failed to invalidate some cache keys: ${error instanceof Error ? error.message : String(error)}`
+              );
+            }
 
             return result;
           } else {
