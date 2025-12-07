@@ -36,6 +36,12 @@ export async function sendResetPasswordEmail({
   name,
   url,
 }: SendResetPasswordEmailProps) {
+  if (!client) {
+    const errorMessage = "Email client not configured.";
+    logger.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+
   const body = await render(<ResetPassword name={name} url={url} />);
 
   const command: SendEmailCommand = new SendEmailCommand({
@@ -57,19 +63,13 @@ export async function sendResetPasswordEmail({
   });
 
   try {
-    if (!client) {
-      const errorMessage = "Email client not configured.";
-      logger.error(errorMessage);
-      throw new Error(errorMessage);
-    }
-
     logger.info("Sending reset password email...");
 
     const data = await client.send(command);
 
     return data;
   } catch (error) {
-    logger.error("Failed to send email:", error);
+    logger.error(`Failed to send email: ${error}`);
     throw error;
   }
 }
