@@ -1,19 +1,25 @@
-import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
-import { auth } from "@/auth";
 import CatalystBadge from "@/components/footer/catalyst-badge";
+
+// @catalyst:auth-start
+
+import { headers } from "next/headers";
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
+// @catalyst:auth-end
 
 export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // @catalyst:auth-start
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+  // @catalyst:auth-end
 
   return (
     <div className="flex w-full flex-1 flex-col">
@@ -25,6 +31,7 @@ export default async function Layout({
           <Image src="/icon.svg" alt="Catalyst" width={30} height={30} />
           Catalyst
         </Link>
+        {/* @catalyst:auth-start */}
         {session ? (
           <Link href="/dashboard">
             <Button>Dashboard</Button>
@@ -37,6 +44,7 @@ export default async function Layout({
             </Link>
           </>
         )}
+        {/* @catalyst:auth-end */}
       </header>
       {children}
       <footer className="container flex w-full justify-start py-4">

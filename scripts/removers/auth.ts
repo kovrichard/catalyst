@@ -19,7 +19,14 @@ const AUTH_FOLDERS_TO_DELETE = [
   "src/app/(public)/reset-password",
 ];
 
-const AUTH_FILES_TO_MODIFY = ["src/lib/config.ts"];
+const AUTH_FILES_TO_MODIFY = [
+  "src/app/(public)/layout.tsx",
+  "src/app/(protected)/layout.tsx",
+  "src/components/top-menu.tsx",
+  "src/components/sidebar/app-sidebar.tsx",
+  "src/lib/config.ts",
+  "src/app/sitemap.ts",
+];
 
 const AUTH_PACKAGES_TO_UNINSTALL = ["better-auth"];
 

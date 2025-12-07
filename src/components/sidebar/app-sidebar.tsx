@@ -1,5 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Sidebar, SidebarContent, SidebarHeader } from "@/components/ui/sidebar";
+
+// @catalyst:auth-start
+
 import ProfileMenu from "@/components/sidebar/profile-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -8,18 +12,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Sidebar,
-  SidebarContent,
   SidebarFooter,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { getUserFromSession } from "@/lib/services/user.service";
+// @catalyst:auth-end
 
 export async function AppSidebar() {
+  // @catalyst:auth-start
   const user = await getUserFromSession();
+  // @catalyst:auth-end
 
   return (
     <Sidebar>
@@ -30,6 +34,7 @@ export async function AppSidebar() {
         </Link>
       </SidebarHeader>
       <SidebarContent />
+      {/* @catalyst:auth-start */}
       <SidebarFooter className="p-3.5">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -56,6 +61,7 @@ export async function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
+      {/* @catalyst:auth-end */}
     </Sidebar>
   );
 }
