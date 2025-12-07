@@ -1,5 +1,5 @@
-import { existsSync, rmSync, unlinkSync } from "fs";
-import { join } from "path";
+import { existsSync, rmSync, unlinkSync } from "node:fs";
+import { join } from "node:path";
 import type { OperationResult } from "../types/operation-result";
 
 export function deleteFile(filePath: string, dryRun = false): OperationResult {
