@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { spawnSync } from "child_process";
 import type { OperationResult } from "../types/operation-result";
 
 export function uninstallPackage(packageName: string, dryRun = false): OperationResult {
@@ -11,7 +11,7 @@ export function uninstallPackage(packageName: string, dryRun = false): Operation
   }
 
   try {
-    execSync(`bun remove ${packageName}`);
+    spawnSync("bun", ["remove", packageName]);
     return {
       success: true,
       message: `Uninstalled ${packageName}`,
