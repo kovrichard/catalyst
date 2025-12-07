@@ -67,3 +67,10 @@ export function deleteDirectory(dirPath: string, dryRun = false): OperationResul
 export function deleteFiles(filePaths: string[], dryRun = false): OperationResult[] {
   return filePaths.map((filePath) => deleteFile(filePath, dryRun));
 }
+
+export function deleteDirectories(
+  directoryPaths: string[],
+  dryRun = false
+): OperationResult[] {
+  return directoryPaths.map((directoryPath) => deleteDirectory(directoryPath, dryRun));
+}

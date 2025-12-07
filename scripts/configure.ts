@@ -2,14 +2,14 @@
 
 import { Command } from "commander";
 import prompts from "prompts";
-import { removeAWS } from "./removers/aws";
+import { removeAuth } from "./removers/auth";
 import { removeRedis } from "./removers/redis";
 import { removeStripe } from "./removers/stripe";
 
 interface ConfigOptions {
   removeStripe?: boolean;
   removeRedis?: boolean;
-  removeAWS?: boolean;
+  removeAuth?: boolean;
   dryRun?: boolean;
 }
 
@@ -34,9 +34,9 @@ const features: Feature[] = [
     enabled: true,
   },
   {
-    key: "removeAWS",
-    name: "AWS SES",
-    description: "Remove AWS SES integration (email sending)",
+    key: "removeAuth",
+    name: "Auth",
+    description: "Remove authentication (login, register, users, notifications)",
     enabled: true,
   },
 ];
@@ -45,7 +45,7 @@ async function showSummary(options: ConfigOptions): Promise<void> {
   const removals: string[] = [];
   if (options.removeStripe) removals.push("Stripe");
   if (options.removeRedis) removals.push("Redis");
-  if (options.removeAWS) removals.push("AWS SES");
+  if (options.removeAuth) removals.push("Auth");
 
   if (removals.length === 0) {
     console.log("\nNo features selected for removal.");
@@ -72,8 +72,8 @@ async function executeRemovals(options: ConfigOptions): Promise<void> {
   if (options.removeRedis) {
     await removeRedis(dryRun);
   }
-  if (options.removeAWS) {
-    await removeAWS(dryRun);
+  if (options.removeAuth) {
+    await removeAuth(dryRun);
   }
 }
 
@@ -119,10 +119,10 @@ function parseArgs(): ConfigOptions {
     .version("1.0.0")
     .option("--no-stripe", "Remove Stripe integration")
     .option("--no-redis", "Remove Redis integration")
-    .option("--no-aws", "Remove AWS SES integration")
+    .option("--no-auth", "Remove authentication integration")
     .option(
       "--remove <features...>",
-      "Remove specific features (comma-separated: stripe, redis, aws)"
+      "Remove specific features (comma-separated: stripe, redis, auth)"
     )
     .option("--dry-run", "Show what would be done without making changes")
     .parse(process.argv);
@@ -130,7 +130,7 @@ function parseArgs(): ConfigOptions {
   const opts = program.opts<{
     stripe?: boolean;
     redis?: boolean;
-    aws?: boolean;
+    auth?: boolean;
     remove?: string[];
     dryRun?: boolean;
   }>();
@@ -145,8 +145,8 @@ function parseArgs(): ConfigOptions {
   if (opts.redis === false) {
     options.removeRedis = true;
   }
-  if (opts.aws === false) {
-    options.removeAWS = true;
+  if (opts.auth === false) {
+    options.removeAuth = true;
   }
 
   if (opts.remove) {
@@ -161,11 +161,11 @@ function parseArgs(): ConfigOptions {
           options.removeStripe = true;
         } else if (normalized === "redis") {
           options.removeRedis = true;
-        } else if (normalized === "aws") {
-          options.removeAWS = true;
+        } else if (normalized === "auth") {
+          options.removeAuth = true;
         } else {
           console.error(`Unknown feature: ${feature}`);
-          console.error("Available features: stripe, redis, aws");
+          console.error("Available features: stripe, redis, auth");
           process.exit(1);
         }
       });

@@ -11,11 +11,13 @@ const schema = z.object({
   authority: z.string().default("localhost:3000"),
   host: z.url(),
 
+  // @catalyst:auth-start
   // Auth
   githubId: z.string().optional(),
   githubSecret: z.string().optional(),
   googleId: z.string().optional(),
   googleSecret: z.string().optional(),
+  // @catalyst:auth-end
 
   // AWS
   awsRegion: z.string().default("eu-central-1"),
@@ -51,11 +53,13 @@ const envVars = {
   authority: process.env.AUTHORITY,
   host: `${process.env.SCHEME || "https"}://${process.env.AUTHORITY || "localhost:3000"}`,
 
+  // @catalyst:auth-start
   // Auth
   githubId: process.env.GITHUB_CLIENT_ID,
   githubSecret: process.env.GITHUB_CLIENT_SECRET,
   googleId: process.env.GOOGLE_CLIENT_ID,
   googleSecret: process.env.GOOGLE_CLIENT_SECRET,
+  // @catalyst:auth-end
 
   // AWS
   awsRegion: process.env.AWS_REGION,
