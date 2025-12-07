@@ -94,7 +94,7 @@ async function interactiveMode(dryRun = false): Promise<void> {
     instructions: false,
   });
 
-  if (!response || !response.features || response.features.length === 0) {
+  if (!response?.features?.length) {
     console.log("\nNo features selected. Keeping all features.");
     return;
   }
