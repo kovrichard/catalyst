@@ -16,25 +16,37 @@ type MutatingAction =
   | "updateMany"
   | "deleteMany";
 
+type KeyParams = {
+  model: string;
+  action: CachedAction;
+  args: unknown;
+};
+
+type ShouldCacheParams = {
+  model: string;
+  action: CachedAction;
+  args: unknown;
+  result: unknown;
+};
+
+type InvalidateKeysParams = {
+  model: string;
+  action: MutatingAction;
+  args: unknown;
+  cacheKeys: Set<string>;
+};
+
 type CacheConfig = {
   ttlSeconds?: number;
   cacheActions?: Partial<Record<string, CachedAction[]>>; // model -> read actions to cache
   globalActions?: CachedAction[];
-  key?(params: { model: string; action: CachedAction; args: unknown }): string;
-  shouldCache?(params: {
-    model: string;
-    action: CachedAction;
-    args: unknown;
-    result: unknown;
-  }): boolean;
+  key?(params: KeyParams): string;
+  shouldCache?(params: ShouldCacheParams): boolean;
   invalidateOn?: Partial<Record<string, MutatingAction[]>>; // model -> write actions that nuke cache
   globalInvalidations?: MutatingAction[];
-  invalidateKeys?(params: {
-    model: string;
-    action: MutatingAction;
-    args: unknown;
-    cacheKeys: Set<string>;
-  }): Iterable<string> | Promise<Iterable<string>>;
+  invalidateKeys?(
+    params: InvalidateKeysParams
+  ): Iterable<string> | Promise<Iterable<string>>;
 };
 
 type ActionResult =
@@ -103,6 +115,66 @@ function findUserIdRecursive(value: unknown, depth: number): string | null {
   return null;
 }
 
+const getAction = (
+  operation: string,
+  globalActions: CachedAction[],
+  globalInvalidations: MutatingAction[]
+): ActionResult => {
+  if (globalActions.includes(operation as CachedAction))
+    return { type: "cached", operation: operation as CachedAction };
+  if (globalInvalidations.includes(operation as MutatingAction))
+    return { type: "mutating", operation: operation as MutatingAction };
+  return { type: "unknown", operation: "unknown" };
+};
+
+const collectKeys = async (
+  model: string,
+  action: MutatingAction,
+  args: unknown,
+  userId: string | null,
+  key: (params: KeyParams) => string,
+  invalidateKeys: (
+    params: InvalidateKeysParams
+  ) => Iterable<string> | Promise<Iterable<string>>
+) => {
+  if (!isRedisConnected(redis)) return new Set<string>();
+
+  // Extract prefix from key function by generating a sample key
+  const sampleKey = key({
+    model,
+    action: "findUnique" as CachedAction,
+    args: { where: { id: "sample" } },
+  });
+  // Extract prefix: "${baseKey}:QuizSession:findUnique:" -> "${baseKey}:"
+  const prefixMatch = /^([^:]+:)/.exec(sampleKey);
+  const prefix = prefixMatch ? prefixMatch[1] : "";
+
+  // Build pattern to match keys for this model
+  // If userId is present, only match keys with that userId
+  const pattern = userId
+    ? `${prefix}${model}:*:userId:${userId}:*`
+    : `${prefix}${model}:*`;
+
+  const cacheKeys = new Set<string>();
+  let cursor = "0";
+
+  try {
+    do {
+      const result = await redis.scan(cursor, "MATCH", pattern, "COUNT", 100);
+      cursor = result[0];
+      for (const key of result[1]) {
+        cacheKeys.add(key);
+      }
+    } while (cursor !== "0");
+  } catch (error) {
+    logger.warn(
+      `Failed to scan cache keys for pattern ${pattern}: ${error instanceof Error ? error.message : String(error)}. Returning partial results.`
+    );
+  }
+
+  return invalidateKeys({ model, action, args, cacheKeys });
+};
+
 export const withRedisCache = (config: CacheConfig) => {
   const {
     ttlSeconds = 60,
@@ -122,58 +194,6 @@ export const withRedisCache = (config: CacheConfig) => {
     ],
     invalidateKeys = ({ cacheKeys }) => cacheKeys,
   } = config;
-
-  const collectKeys = async (
-    model: string,
-    action: MutatingAction,
-    args: unknown,
-    userId: string | null
-  ) => {
-    if (!isRedisConnected(redis)) return new Set<string>();
-
-    // Extract prefix from key function by generating a sample key
-    const sampleKey = key({
-      model,
-      action: "findUnique" as CachedAction,
-      args: { where: { id: "sample" } },
-    });
-    // Extract prefix: "${baseKey}:QuizSession:findUnique:" -> "${baseKey}:"
-    const prefixMatch = /^([^:]+:)/.exec(sampleKey);
-    const prefix = prefixMatch ? prefixMatch[1] : "";
-
-    // Build pattern to match keys for this model
-    // If userId is present, only match keys with that userId
-    const pattern = userId
-      ? `${prefix}${model}:*:userId:${userId}:*`
-      : `${prefix}${model}:*`;
-
-    const cacheKeys = new Set<string>();
-    let cursor = "0";
-
-    try {
-      do {
-        const result = await redis.scan(cursor, "MATCH", pattern, "COUNT", 100);
-        cursor = result[0];
-        for (const key of result[1]) {
-          cacheKeys.add(key);
-        }
-      } while (cursor !== "0");
-    } catch (error) {
-      logger.warn(
-        `Failed to scan cache keys for pattern ${pattern}: ${error instanceof Error ? error.message : String(error)}. Returning partial results.`
-      );
-    }
-
-    return invalidateKeys({ model, action, args, cacheKeys });
-  };
-
-  const getAction = (operation: string): ActionResult => {
-    if (globalActions.includes(operation as CachedAction))
-      return { type: "cached", operation: operation as CachedAction };
-    if (globalInvalidations.includes(operation as MutatingAction))
-      return { type: "mutating", operation: operation as MutatingAction };
-    return { type: "unknown", operation: "unknown" };
-  };
 
   return Prisma.defineExtension((client) =>
     client.$extends({
@@ -197,7 +217,7 @@ export const withRedisCache = (config: CacheConfig) => {
           }
 
           const userId = extractUserId(args);
-          const action = getAction(operation);
+          const action = getAction(operation, globalActions, globalInvalidations);
 
           if (action.type === "cached") {
             const actionsForModel = cacheActions[model] ?? [];
@@ -266,7 +286,9 @@ export const withRedisCache = (config: CacheConfig) => {
               model,
               action.operation,
               args,
-              userId
+              userId,
+              key,
+              invalidateKeys
             );
             try {
               await Promise.all(
