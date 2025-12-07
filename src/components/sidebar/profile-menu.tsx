@@ -1,20 +1,26 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { CreditCard, FileText, Settings } from "lucide-react";
+import { FileText, Settings } from "lucide-react";
 import Link from "next/link";
-import { useEffect } from "react";
 import { SignOut } from "@/components/signout-button";
-import { useSidebar } from "@/components/ui/sidebar";
-import { useTRPC } from "@/lib/trpc/client";
 import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "../ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
+import { useSidebar } from "@/components/ui/sidebar";
+
+// @catalyst:stripe-start
+
+import { useQuery } from "@tanstack/react-query";
+import { CreditCard } from "lucide-react";
+import { useEffect } from "react";
+import { useTRPC } from "@/lib/trpc/client";
+// @catalyst:stripe-end
 
 export default function ProfileMenu() {
   const { isMobile, setOpenMobile } = useSidebar();
+  // @catalyst:stripe-start
   const trpc = useTRPC();
   const { data: billingPortalUrl, refetch } = useQuery(
     trpc.billingPortal.queryOptions(undefined, {
@@ -25,11 +31,13 @@ export default function ProfileMenu() {
   useEffect(() => {
     refetch();
   }, [refetch]);
+  // @catalyst:stripe-end
 
   return (
     <>
       <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
+      {/* @catalyst:stripe-start */}
       {billingPortalUrl && (
         <DropdownMenuItem className="h-10 p-0">
           <a
@@ -43,6 +51,7 @@ export default function ProfileMenu() {
           </a>
         </DropdownMenuItem>
       )}
+      {/* @catalyst:stripe-end */}
       <DropdownMenuItem className="h-10 p-0">
         <Link
           href="/settings"

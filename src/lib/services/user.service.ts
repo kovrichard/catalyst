@@ -4,7 +4,6 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { auth } from "@/auth";
-import { CacheKeys, CacheTTL, getCached } from "@/lib/cache/redis";
 import { getUserByEmail } from "@/lib/dao/users";
 import type { SessionUser } from "@/types/user";
 
@@ -31,11 +30,7 @@ export const getUserFromSession = cache(async (): Promise<SessionUser> => {
     return redirect(unauthenticatedRedirect);
   }
 
-  const user = await getCached(
-    CacheKeys.user.byEmail(session.user?.email || ""),
-    () => getUserByEmail(session.user?.email || ""),
-    CacheTTL.user
-  );
+  const user = await getUserByEmail(session.user?.email || "");
 
   if (!user) {
     return redirect(unauthenticatedRedirect);

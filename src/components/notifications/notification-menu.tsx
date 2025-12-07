@@ -1,4 +1,6 @@
 import { Bell } from "lucide-react";
+import MarkAllAsReadButton from "@/components/notifications/mark-all-as-read-button";
+import { NotificationItem } from "@/components/notifications/notification-item";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -6,8 +8,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import type { Notification } from "@/lib/prisma/generated/client";
 import { getUserNotifications } from "@/lib/services/notification.service";
-import MarkAllAsReadButton from "./mark-all-as-read-button";
-import { NotificationItem } from "./notification-item";
 
 export default async function NotificationMenu() {
   const notifications = await getUserNotifications();
