@@ -58,19 +58,18 @@ export async function sendResetPasswordEmail({
 
   try {
     if (!client) {
-      throw new EmailNotConfiguredError();
+      const errorMessage = "Email client not configured.";
+      logger.error(errorMessage);
+      throw new Error(errorMessage);
     }
+
+    logger.info("Sending reset password email...");
 
     const data = await client.send(command);
 
     return data;
   } catch (error) {
-    if (error instanceof EmailNotConfiguredError) {
-      logger.error("Email client not configured.");
-      return;
-    }
-
-    console.error(error);
-    throw new EmailError("Failed to send email.");
+    logger.error("Failed to send email:", error);
+    throw error;
   }
 }
