@@ -10,21 +10,34 @@ export function uninstallPackage(packageName: string, dryRun = false): Operation
     };
   }
 
-  try {
-    spawnSync("bun", ["remove", packageName]);
-    return {
-      success: true,
-      message: `Uninstalled ${packageName}`,
-    };
-  } catch (error) {
-    console.error(
-      `Failed to uninstall ${packageName}: ${error instanceof Error ? error.message : String(error)}`
-    );
+  const result = spawnSync("bun", ["remove", packageName], {
+    stdio: "inherit",
+    encoding: "utf-8",
+  });
+
+  if (result.error) {
+    const errorMessage = result.error.message || String(result.error);
+    console.error(`Failed to uninstall ${packageName}: ${errorMessage}`);
     return {
       success: false,
-      message: `Failed to uninstall ${packageName}: ${error instanceof Error ? error.message : String(error)}`,
+      message: `Failed to uninstall ${packageName}: ${errorMessage}`,
     };
   }
+
+  if (result.status !== 0) {
+    const errorMessage =
+      result.stderr?.toString() || `Process exited with code ${result.status}`;
+    console.error(`Failed to uninstall ${packageName}: ${errorMessage}`);
+    return {
+      success: false,
+      message: `Failed to uninstall ${packageName}: ${errorMessage}`,
+    };
+  }
+
+  return {
+    success: true,
+    message: `Uninstalled ${packageName}`,
+  };
 }
 
 export function uninstallPackages(
