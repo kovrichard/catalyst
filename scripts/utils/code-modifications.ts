@@ -11,14 +11,18 @@ function removeCodeBetweenMarkers(
   content: string,
   startMarker: string,
   endMarker: string
-): string {
+): { result: string; error?: string } {
   const lines = content.split("\n");
   const result: string[] = [];
   let insideMarker = false;
   let markerFound = false;
+  let unclosedMarker = false;
 
   for (const line of lines) {
     if (line.includes(startMarker)) {
+      if (insideMarker) {
+        unclosedMarker = true; // Nested start marker
+      }
       insideMarker = true;
       markerFound = true;
       continue;
@@ -34,11 +38,18 @@ function removeCodeBetweenMarkers(
     }
   }
 
-  if (!markerFound) {
-    return content;
+  if (insideMarker || unclosedMarker) {
+    return {
+      result: content,
+      error: `Unclosed marker: found '${startMarker}' without matching '${endMarker}'`,
+    };
   }
 
-  return result.join("\n");
+  if (!markerFound) {
+    return { result: content };
+  }
+
+  return { result: result.join("\n") };
 }
 
 export function removeMarkedCode(
@@ -63,7 +74,14 @@ export function removeMarkedCode(
       options.endMarker
     );
 
-    if (content === modifiedContent) {
+    if (modifiedContent.error) {
+      return {
+        success: false,
+        message: modifiedContent.error,
+      };
+    }
+
+    if (content === modifiedContent.result) {
       return {
         success: true,
         message: `No marked code found in ${filePath}`,
@@ -77,7 +95,7 @@ export function removeMarkedCode(
       };
     }
 
-    writeFileSync(fullPath, modifiedContent, "utf-8");
+    writeFileSync(fullPath, modifiedContent.result, "utf-8");
     return {
       success: true,
       message: `Removed marked code from ${filePath}`,
