@@ -3,10 +3,10 @@
 import { Ellipsis } from "lucide-react";
 import Link from "next/link";
 import type React from "react";
+import { Button } from "@/components/ui/button";
 import { readNotification } from "@/lib/actions/notifications";
 import type { Notification } from "@/lib/prisma/generated/client";
 import { formatTimeAgo } from "@/lib/utils";
-import { Button } from "./ui/button";
 
 export function NotificationItem({
   notification,

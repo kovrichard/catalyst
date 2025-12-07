@@ -1,5 +1,5 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import NotificationMenu from "./notification-menu";
+import NotificationMenu from "./notifications/notification-menu";
 
 export default function TopMenu() {
   return (
