@@ -22,11 +22,13 @@ const schema = z.object({
   fromEmailAddress: z.string().optional(),
   awsConfigured: z.boolean().default(false),
 
+  // @catalyst:stripe-start
   // Stripe
   stripeSecretKey: z.string().default(""),
   stripeWebhookSecret: z.string().default(""),
   stripePortalReturnUrl: z.string().default("http://localhost:3000/dashboard"),
   stripeConfigured: z.boolean().default(false),
+  // @catalyst:stripe-end
 
   // Redis
   redisHost: z.string().default("localhost"),
@@ -62,6 +64,7 @@ const envVars = {
     process.env.AWS_REGION !== undefined &&
     process.env.FROM_EMAIL_ADDRESS !== undefined,
 
+  // @catalyst:stripe-start
   // Stripe
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
@@ -70,6 +73,7 @@ const envVars = {
     process.env.STRIPE_SECRET_KEY !== undefined &&
     process.env.STRIPE_WEBHOOK_SECRET !== undefined &&
     process.env.STRIPE_PORTAL_RETURN_URL !== undefined,
+  // @catalyst:stripe-end
 
   // Redis
   redisHost: process.env.REDIS_HOST,
