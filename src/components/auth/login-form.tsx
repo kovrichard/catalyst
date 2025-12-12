@@ -63,6 +63,7 @@ export default function LoginForm() {
           type="email"
           id="email"
           placeholder="johndoe@example.com"
+          autoComplete="email"
           autoFocus
           {...register("email")}
         />
@@ -84,6 +85,7 @@ export default function LoginForm() {
           type="password"
           id="password"
           placeholder="****************"
+          autoComplete="current-password"
           {...register("password")}
         />
         {errors.password && (

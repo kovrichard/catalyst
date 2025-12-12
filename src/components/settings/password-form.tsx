@@ -83,7 +83,12 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
       {hasPassword && (
         <div>
           <Label htmlFor="current-password">Current Password</Label>
-          <Input type="password" id="current-password" {...register("currentPassword")} />
+          <Input
+            type="password"
+            id="current-password"
+            autoComplete="current-password"
+            {...register("currentPassword")}
+          />
           {errors.currentPassword && (
             <span className="text-destructive text-xs">
               {errors.currentPassword.message}
@@ -93,14 +98,24 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
       )}
       <div>
         <Label htmlFor="new-password">New Password</Label>
-        <Input type="password" id="new-password" {...register("newPassword")} />
+        <Input
+          type="password"
+          id="new-password"
+          autoComplete="new-password"
+          {...register("newPassword")}
+        />
         {errors.newPassword && (
           <span className="text-destructive text-xs">{errors.newPassword.message}</span>
         )}
       </div>
       <div>
         <Label htmlFor="confirm-password">Confirm Password</Label>
-        <Input type="password" id="confirm-password" {...register("confirmPassword")} />
+        <Input
+          type="password"
+          id="confirm-password"
+          autoComplete="new-password"
+          {...register("confirmPassword")}
+        />
         {errors.confirmPassword && (
           <span className="text-destructive text-xs">
             {errors.confirmPassword.message}

@@ -77,6 +77,7 @@ export default function RegisterForm() {
           type="email"
           id="email"
           placeholder="johndoe@example.com"
+          autoComplete="email"
           {...register("email")}
         />
         {errors.email && (
@@ -89,6 +90,7 @@ export default function RegisterForm() {
           type="password"
           id="password"
           placeholder="****************"
+          autoComplete="new-password"
           {...register("password")}
         />
         {errors.password && (
