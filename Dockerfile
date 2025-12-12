@@ -64,9 +64,9 @@ ENV NODE_ENV=production \
 RUN groupadd --system --gid 1001 nodejs && \
     useradd --system --uid 1001 nextjs
 
-COPY --from=prerelease --chown=nextjs:nodejs /app/public ./public
-COPY --from=prerelease --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=prerelease --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=prerelease --chown=nextjs:nodejs --chmod=755 /app/public ./public
+COPY --from=prerelease --chown=nextjs:nodejs --chmod=755 /app/.next/standalone ./
+COPY --from=prerelease --chown=nextjs:nodejs --chmod=755 /app/.next/static ./.next/static
 
 USER nextjs
 
