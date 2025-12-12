@@ -1,13 +1,9 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1 AS base
-
-# install Node.js version 22
-RUN apt-get update && apt-get install -y curl gnupg \
-    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
-    && apt-get install -y nodejs
+FROM oven/bun:1.3.4 AS base
 
 WORKDIR /app
+
 
 # install dependencies into temp directory
 # this will cache them and speed up future builds
@@ -23,6 +19,7 @@ COPY package.json bun.lock /temp/prod/
 COPY prisma/ /temp/prod/prisma/
 RUN cd /temp/prod && bun install --frozen-lockfile --production --ignore-scripts
 RUN cd /temp/prod && bun run postinstall
+
 
 FROM base AS prerelease
 
@@ -52,16 +49,31 @@ COPY postcss.config.mjs postcss.config.mjs
 COPY tsconfig.json tsconfig.json
 
 ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN bun run build
+RUN bun run build:standalone
+
 
 FROM base AS release
 
-COPY --from=prerelease /app/public ./public
-COPY --from=prerelease /app/.next/standalone ./
-COPY --from=prerelease /app/.next/static ./.next/static
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME="0.0.0.0"
+
+RUN groupadd --system --gid 1001 nodejs && \
+    useradd --system --uid 1001 nextjs
+
+COPY --from=prerelease --chown=nextjs:nodejs /app/public ./public
+COPY --from=prerelease --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=prerelease --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
 
 CMD ["bun", "./server.js"]
+
 
 FROM base AS dev
 
