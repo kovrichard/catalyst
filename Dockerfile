@@ -12,13 +12,16 @@ FROM base AS install
 RUN mkdir -p /temp/dev
 COPY package.json bun.lock /temp/dev/
 COPY prisma/ /temp/dev/prisma/
-RUN cd /temp/dev && bun install --frozen-lockfile
+WORKDIR /temp/dev
+RUN bun install --frozen-lockfile
+WORKDIR /app
 
 RUN mkdir -p /temp/prod
 COPY package.json bun.lock /temp/prod/
 COPY prisma/ /temp/prod/prisma/
-RUN cd /temp/prod && bun install --frozen-lockfile --production --ignore-scripts
-RUN cd /temp/prod && bun run postinstall
+WORKDIR /temp/prod
+RUN bun install --frozen-lockfile --production --ignore-scripts
+RUN bun run postinstall
 
 
 FROM base AS prerelease
@@ -64,9 +67,10 @@ ENV NODE_ENV=production \
 RUN groupadd --system --gid 1001 nodejs && \
     useradd --system --uid 1001 nextjs
 
-COPY --from=prerelease --chown=nextjs:nodejs --chmod=755 /app/public ./public
-COPY --from=prerelease --chown=nextjs:nodejs --chmod=755 /app/.next/standalone ./
-COPY --from=prerelease --chown=nextjs:nodejs --chmod=755 /app/.next/static ./.next/static
+# Copy files as root:root (default), then set permissions for nextjs to read/execute only
+COPY --from=prerelease --chmod=755 /app/public ./public
+COPY --from=prerelease --chmod=755 /app/.next/standalone ./
+COPY --from=prerelease --chmod=755 /app/.next/static ./.next/static
 
 USER nextjs
 
