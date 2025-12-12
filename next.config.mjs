@@ -3,7 +3,7 @@ import NextBundleAnalyzer from '@next/bundle-analyzer';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     // This is required if you are using Docker
-    // output: "standalone",
+    output: process.env.EXPORT
 };
 
 const withBundleAnalyzer = NextBundleAnalyzer({
