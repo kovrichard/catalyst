@@ -64,8 +64,7 @@ ENV NODE_ENV=production \
     PORT=3000 \
     HOSTNAME="0.0.0.0"
 
-RUN groupadd --system --gid 1001 nodejs && \
-    useradd --system --uid 1001 nextjs
+RUN useradd --system --uid 1001 nextjs
 
 # Copy files as root:root (default), then set permissions for nextjs to read/execute only
 COPY --from=prerelease --chmod=755 /app/public ./public
