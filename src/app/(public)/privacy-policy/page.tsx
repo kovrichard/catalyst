@@ -125,13 +125,13 @@ export default function PrivacyPolicy() {
             <strong>Website</strong> refers to Catalyst, accessible from{" "}
             {/* TODO: change to the actual website */}
             <a
-              href="https://catalyst.richardkovacs.dev"
+              href="https://catalyst.konvert7.com"
               rel="external nofollow noopener"
               target="_blank"
               className="text-primary underline"
             >
               {/* TODO: change to the actual website */}
-              https://catalyst.richardkovacs.dev
+              https://catalyst.konvert7.com
             </a>
           </p>
         </li>
