@@ -1,9 +1,10 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import { ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useActionState, useTransition } from "react";
+import { useActionState, useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import PendingSubmitButton from "@/components/auth/pending-submit-button";
 import TurnstileComponent from "@/components/auth/turnstile";
@@ -16,6 +17,7 @@ import { type FormState, initialState } from "@/lib/utils";
 import { type RegisterFormData, registerSchema } from "@/types/auth";
 
 export default function RegisterForm() {
+  const turnstileRef = useRef<TurnstileInstance | null>(null);
   const [state, formAction, isPending] = useActionState(registerUser, initialState);
   const [isTransitionPending, startTransition] = useTransition();
   const router = useRouter();
@@ -39,6 +41,9 @@ export default function RegisterForm() {
     if (state.success) {
       localStorage.setItem("catalyst-auth-method", "password");
       router.push(publicConf.redirectPath);
+    } else {
+      setValue("cf-turnstile-response", "");
+      turnstileRef.current?.reset();
     }
   };
 
@@ -97,7 +102,7 @@ export default function RegisterForm() {
           <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
       </Label>
-      <TurnstileComponent setValue={setTurnstileValue} />
+      <TurnstileComponent turnstileRef={turnstileRef} setValue={setTurnstileValue} />
       <div className="text-muted-foreground text-xs">
         By signing up, you agree to our{" "}
         <a

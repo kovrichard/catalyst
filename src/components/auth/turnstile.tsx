@@ -1,11 +1,14 @@
 "use client";
 
-import { Turnstile } from "@marsidev/react-turnstile";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import type { RefObject } from "react";
 import publicConf from "@/lib/public-config";
 
 export default function TurnstileComponent({
+  turnstileRef,
   setValue,
 }: Readonly<{
+  turnstileRef: RefObject<TurnstileInstance | null>;
   setValue: (token: string) => void;
 }>) {
   if (!publicConf.turnstileSiteKey) {
@@ -15,6 +18,7 @@ export default function TurnstileComponent({
   return (
     <div className="h-[65px]">
       <Turnstile
+        ref={turnstileRef}
         className="mx-auto"
         siteKey={publicConf.turnstileSiteKey}
         onSuccess={(token: string) => {
