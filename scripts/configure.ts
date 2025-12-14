@@ -31,8 +31,9 @@ const features: Feature[] = [
   },
   {
     key: "removeDatabase",
-    name: "Database",
-    description: "Remove database integration (Prisma, PostgreSQL, models)",
+    name: "Database & Auth",
+    description:
+      "Remove database and authentication (Prisma, PostgreSQL, everything in auth)",
     enabled: true,
   },
   {

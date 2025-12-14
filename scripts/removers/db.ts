@@ -1,3 +1,4 @@
+import { removeAuth } from "./auth";
 import { Remover } from "./remover";
 
 const DB_FILES_TO_DELETE = ["prisma.config.ts"];
@@ -18,4 +19,5 @@ const remover = new Remover({
 
 export async function removeDatabase(dryRun = false): Promise<void> {
   await remover.run(dryRun);
+  await removeAuth(dryRun);
 }
