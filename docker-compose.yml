@@ -7,24 +7,26 @@ services:
     working_dir: /app/
     env_file:
       - .env
+    ports:
+      - 3000:3000
+    command: bun run dev
+    volumes:
+      - ./:/app/
+      - /app/node_modules/
+      # @catalyst:db-start
+      - /app/src/lib/prisma/generated/
     environment:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@pg_bouncer:5432/${DB_NAME}
       DIRECT_DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@database:5432/${DB_NAME}
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_PASS: ${REDIS_PASS}
-    ports:
-      - 3000:3000
-    volumes:
-      - ./:/app/
-      - /app/node_modules/
-      - /app/src/lib/prisma/generated/
-    command: bun run dev
     depends_on:
       pg_bouncer:
         condition: service_healthy
       redis:
         condition: service_healthy
+        # @catalyst:db-end
 
   prodapp:
     image: prodapp
@@ -41,14 +43,15 @@ services:
     working_dir: /app/
     env_file:
       - .env
+    ports:
+      - 3000:3000
+    # @catalyst:db-start
     environment:
       DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@pg_bouncer:5432/${DB_NAME}
       DIRECT_DATABASE_URL: postgres://${DB_USER}:${DB_PASS}@database:5432/${DB_NAME}
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_PASS: ${REDIS_PASS}
-    ports:
-      - 3000:3000
     depends_on:
       pg_bouncer:
         condition: service_healthy
@@ -128,3 +131,4 @@ services:
 volumes:
   pgdata:
   redisdata:
+  # @catalyst:db-end

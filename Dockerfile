@@ -11,17 +11,23 @@ FROM base AS install
 
 RUN mkdir -p /temp/dev
 COPY package.json bun.lock /temp/dev/
+# @catalyst:db-start
 COPY prisma/ /temp/dev/prisma/
+# @catalyst:db-end
 WORKDIR /temp/dev
 RUN bun install --frozen-lockfile
 WORKDIR /app
 
 RUN mkdir -p /temp/prod
 COPY package.json bun.lock /temp/prod/
+# @catalyst:db-start
 COPY prisma/ /temp/prod/prisma/
+# @catalyst:db-end
 WORKDIR /temp/prod
 RUN bun install --frozen-lockfile --production --ignore-scripts
+# @catalyst:db-start
 RUN bun run postinstall
+# @catalyst:db-end
 
 
 FROM base AS prerelease
@@ -41,7 +47,9 @@ ENV NEXT_PUBLIC_CLARITY_ID=${NEXT_PUBLIC_CLARITY_ID}
 ENV NEXT_PUBLIC_AUTH_REDIRECT_PATH=${NEXT_PUBLIC_AUTH_REDIRECT_PATH}
 
 COPY --from=install /temp/dev/node_modules node_modules
+# @catalyst:db-start
 COPY --from=install /temp/dev/src/lib/prisma/generated ./src/lib/prisma/generated
+# @catalyst:db-end
 
 COPY ./emails ./emails
 COPY ./public ./public
@@ -82,4 +90,6 @@ FROM base AS dev
 
 # copy the installed dependencies from the install stage
 COPY --from=install /temp/dev/node_modules node_modules
+# @catalyst:db-start
 COPY --from=install /temp/dev/src/lib/prisma/generated ./src/lib/prisma/generated
+# @catalyst:db-end

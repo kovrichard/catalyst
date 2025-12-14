@@ -3,11 +3,13 @@
 import { Command } from "commander";
 import prompts from "prompts";
 import { removeAuth } from "./removers/auth";
+import { removeDatabase } from "./removers/db";
 import { removeRedis } from "./removers/redis";
 import { removeStripe } from "./removers/stripe";
 
 interface ConfigOptions {
   removeStripe?: boolean;
+  removeDatabase?: boolean;
   removeRedis?: boolean;
   removeAuth?: boolean;
   dryRun?: boolean;
@@ -28,6 +30,12 @@ const features: Feature[] = [
     enabled: true,
   },
   {
+    key: "removeDatabase",
+    name: "Database",
+    description: "Remove database integration (Prisma, PostgreSQL, models)",
+    enabled: true,
+  },
+  {
     key: "removeRedis",
     name: "Redis",
     description: "Remove Redis integration (caching)",
@@ -44,6 +52,7 @@ const features: Feature[] = [
 async function showSummary(options: ConfigOptions): Promise<void> {
   const removals: string[] = [];
   if (options.removeStripe) removals.push("Stripe");
+  if (options.removeDatabase) removals.push("Database");
   if (options.removeRedis) removals.push("Redis");
   if (options.removeAuth) removals.push("Auth");
 
@@ -68,6 +77,9 @@ async function executeRemovals(options: ConfigOptions): Promise<void> {
 
   if (options.removeStripe) {
     await removeStripe(dryRun);
+  }
+  if (options.removeDatabase) {
+    await removeDatabase(dryRun);
   }
   if (options.removeRedis) {
     await removeRedis(dryRun);
@@ -118,6 +130,7 @@ function parseArgs(): ConfigOptions {
     .description("Configure Catalyst boilerplate by removing unused features")
     .version("1.0.0")
     .option("--no-stripe", "Remove Stripe integration")
+    .option("--no-database", "Remove database integration")
     .option("--no-redis", "Remove Redis integration")
     .option("--no-auth", "Remove authentication integration")
     .option(
@@ -129,6 +142,7 @@ function parseArgs(): ConfigOptions {
 
   const opts = program.opts<{
     stripe?: boolean;
+    database?: boolean;
     redis?: boolean;
     auth?: boolean;
     remove?: string[];
@@ -141,6 +155,9 @@ function parseArgs(): ConfigOptions {
 
   if (opts.stripe === false) {
     options.removeStripe = true;
+  }
+  if (opts.database === false) {
+    options.removeDatabase = true;
   }
   if (opts.redis === false) {
     options.removeRedis = true;
@@ -159,6 +176,8 @@ function parseArgs(): ConfigOptions {
         const normalized = feature.toLowerCase();
         if (normalized === "stripe") {
           options.removeStripe = true;
+        } else if (normalized === "database") {
+          options.removeDatabase = true;
         } else if (normalized === "redis") {
           options.removeRedis = true;
         } else if (normalized === "auth") {

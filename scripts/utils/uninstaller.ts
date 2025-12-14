@@ -12,7 +12,7 @@ export function uninstallPackage(packageName: string, dryRun = false): Operation
 
   const result = spawnSync(
     "bun", // NOSONAR: executed only locally
-    ["remove", packageName],
+    ["remove", packageName, "--ignore-scripts"],
     {
       stdio: "inherit",
       encoding: "utf-8",
