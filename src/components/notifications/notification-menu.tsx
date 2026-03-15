@@ -20,7 +20,7 @@ export default async function NotificationMenu() {
           {notifications.length > 0 && (
             <Badge
               variant="destructive"
-              className="-top-0.5 -right-0.5 absolute inline-flex size-4 items-center justify-center p-0 text-[10px]"
+              className="absolute -top-0.5 -right-0.5 inline-flex size-4 items-center justify-center p-0 text-[10px]"
             >
               {notifications.length > 9 ? "9+" : notifications.length}
             </Badge>

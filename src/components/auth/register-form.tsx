@@ -112,7 +112,7 @@ export default function RegisterForm() {
           rel="noopener"
         >
           <span>Privacy Policy</span>
-          <ExternalLink size={10} className="-top-px relative ml-1" />
+          <ExternalLink size={10} className="relative -top-px ml-1" />
         </a>
       </div>
       <PendingSubmitButton isPending={isLoading} text="Sign up" />

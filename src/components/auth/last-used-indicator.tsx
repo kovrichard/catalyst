@@ -25,7 +25,7 @@ export default function LastUsedIndicator({
     isLastUsed && (
       <div
         className={cn(
-          "sm:-right-28 absolute top-0 right-4 bottom-0 flex items-center justify-center gap-2 text-foreground text-sm sm:text-lg",
+          "absolute top-0 right-4 bottom-0 flex items-center justify-center gap-2 text-foreground text-sm sm:-right-28 sm:text-lg",
           lobster.className,
           className
         )}

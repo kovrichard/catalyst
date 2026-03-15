@@ -13,12 +13,12 @@ export function ShinyBorder({
   return (
     <div className={cn("group relative", className)}>
       {/* Gray border always visible */}
-      <div className="-inset-[1px] absolute rounded-lg border border-border transition-colors duration-300" />
+      <div className="absolute -inset-[1px] rounded-lg border border-border transition-colors duration-300" />
 
       {/* Rotating steel gradient on hover - blurred light particle */}
-      <div className="-inset-[1px] absolute overflow-hidden rounded-lg opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+      <div className="absolute -inset-[1px] overflow-hidden rounded-lg opacity-0 transition-opacity duration-500 group-hover:opacity-100">
         <div
-          className="-inset-[100px] absolute animate-spin-slow blur-md"
+          className="absolute -inset-[100px] animate-spin-slow blur-md"
           style={{
             background: `conic-gradient(
               from 0deg at 50% 50%,
