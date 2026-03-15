@@ -14,7 +14,9 @@ import type { AppRouter } from "./routers/_app";
 export const { TRPCProvider, useTRPC } = createTRPCContext<AppRouter>();
 let browserQueryClient: QueryClient;
 
-const persister = createIDBPersister("catalyst-query-cache");
+export const QUERY_CACHE_KEY = "catalyst-query-cache";
+
+const persister = createIDBPersister(QUERY_CACHE_KEY);
 
 function getQueryClient() {
   if (typeof window === "undefined") {
