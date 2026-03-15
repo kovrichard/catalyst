@@ -24,12 +24,18 @@
       }
     ]
   },
+  "enabledMcpjsonServers": [
+    "playwright",
+    "shadcn",
+    "next-devtools"
+  ],
   "permissions": {
     "allow": [
       "Bash(bun run check-write:*)",
       "Bash(bun run type-check:*)",
       "Bash(bun run test:*)",
-      "Bash(bun run build:*)"
+      "Bash(bun run build:*)",
+      "WebFetch(domain:ui.shadcn.com)"
     ]
   }
 }
