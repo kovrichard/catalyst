@@ -108,6 +108,7 @@
     "prisma": "7.5.0",
     "prompts": "2.4.2",
     "react-email": "5.2.9",
+    "shadcn": "4.0.8",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3"
   },
