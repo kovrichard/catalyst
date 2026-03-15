@@ -87,6 +87,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.4.7",
     "@next/bundle-analyzer": "16.1.6",
+    "@opencode-ai/plugin": "1.2.26",
     "@react-email/preview-server": "5.2.9",
     "@tailwindcss/postcss": "4.2.1",
     "@types/node": "25.5.0",

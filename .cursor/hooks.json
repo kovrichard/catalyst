@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "bun .agents/hooks/check-write.ts"
+      },
+      {
+        "command": "bun .agents/hooks/type-check.ts"
+      },
+      {
+        "command": "bun .agents/hooks/test.ts"
+      }
+    ]
+  }
+}
