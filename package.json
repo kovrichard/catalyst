@@ -87,6 +87,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.7",
+    "@commitlint/cli": "20.4.4",
+    "@commitlint/config-conventional": "20.4.4",
     "@next/bundle-analyzer": "16.1.6",
     "@opencode-ai/plugin": "1.2.26",
     "@react-email/preview-server": "5.2.9",
