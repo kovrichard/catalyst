@@ -203,7 +203,7 @@ export default function Home() {
                 </CursorFloat>
                 <h3 className="font-semibold text-xl">Lightning Fast</h3>
                 <p className="text-muted-foreground text-sm">
-                  Built on Next.js 15 with React Server Components and powered by Bun.js.
+                  Built on Next.js 16 with React Server Components and powered by Bun.js.
                 </p>
               </div>
             </ScrollFloat>
