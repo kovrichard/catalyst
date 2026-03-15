@@ -22,5 +22,8 @@ jobs:
     - name: Lint project
       run: bun run check && bun run type-check
 
+    - name: Run tests
+      run: bun run test
+
     - name: Build project
       run: bun run build
