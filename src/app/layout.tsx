@@ -53,6 +53,12 @@ export default function RootLayout({
       <body
         className={cn(inter.className, "flex min-h-svh min-w-80 flex-col justify-center")}
       >
+        {process.env.NODE_ENV === "development" && process.env.REACT_SCAN === "true" && (
+          <script
+            src="https://unpkg.com/react-scan/dist/auto.global.js"
+            crossOrigin="anonymous"
+          />
+        )}
         <Providers>
           {children}
           <Toaster />
