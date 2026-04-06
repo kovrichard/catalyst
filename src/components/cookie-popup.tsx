@@ -10,6 +10,8 @@ declare global {
   interface Window {
     // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
     gtag?: (...args: any[]) => void;
+    // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
+    clarity?: (...args: any[]) => void;
   }
 }
 
@@ -21,6 +23,7 @@ export default function CookiePopup() {
 
   const updateConsent = (consent: Consent) => {
     localStorage.setItem("ga-consent", consent);
+    localStorage.setItem("clarity-consent", consent);
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("consent", "update", {
         ad_storage: consent,
@@ -28,6 +31,16 @@ export default function CookiePopup() {
         ad_personalization: consent,
         analytics_storage: consent,
       });
+    }
+    if (typeof window !== "undefined" && window.clarity) {
+      if (consent === "granted") {
+        window.clarity("consentv2", {
+          ad_Storage: "granted",
+          analytics_Storage: "granted",
+        });
+      } else {
+        window.clarity("consent", false);
+      }
     }
 
     // Wait for exit animation to complete before hiding

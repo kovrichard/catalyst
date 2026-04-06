@@ -95,6 +95,14 @@ export default function Analytics() {
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
             })(window, document, "clarity", "script", "${clarity}");
+
+            const clarityConsent = localStorage.getItem('clarity-consent');
+            if (clarityConsent === 'granted') {
+              window.clarity('consentv2', {
+                ad_Storage: 'granted',
+                analytics_Storage: 'granted'
+              });
+            }
           `}
         </Script>
       )}
