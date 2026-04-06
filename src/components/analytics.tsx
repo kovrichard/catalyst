@@ -1,13 +1,31 @@
+"use client";
+
+import Clarity from "@microsoft/clarity";
 import Script from "next/script";
-import conf from "@/lib/config";
+import { useEffect } from "react";
 import publicConf from "@/lib/public-config";
 
-export default function Analytics() {
-  const isProd = conf.environment === "production";
+export default function Analytics({ environment }: { environment: string }) {
+  const isProd = environment === "production";
   const analytics = publicConf.gaId;
   const tagManager = publicConf.gtmId;
   const ads = publicConf.googleAdsId;
-  const clarity = publicConf.clarityId;
+  const clarityId = publicConf.clarityId;
+
+  useEffect(() => {
+    const consent = localStorage.getItem("clarity-consent");
+    const granted = consent === "granted";
+
+    if (isProd && clarityId) {
+      Clarity.init(clarityId);
+
+      if (granted) {
+        Clarity.consent();
+      } else {
+        Clarity.consent(false);
+      }
+    }
+  }, [isProd]);
 
   return isProd ? (
     <>
@@ -34,7 +52,7 @@ export default function Analytics() {
                 'ad_personalization': 'denied',
                 'analytics_storage': 'denied'
               });
-              
+
               // Check for existing consent
               const consent = localStorage.getItem('ga-consent');
               if (consent === 'granted') {
@@ -86,25 +104,6 @@ export default function Analytics() {
               });`}
           </Script>
         </>
-      )}
-      {clarity && (
-        <Script id="clarity-init" strategy="beforeInteractive">
-          {`
-            (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "${clarity}");
-
-            const clarityConsent = localStorage.getItem('clarity-consent');
-            if (clarityConsent === 'granted') {
-              window.clarity('consentv2', {
-                ad_Storage: 'granted',
-                analytics_Storage: 'granted'
-              });
-            }
-          `}
-        </Script>
       )}
     </>
   ) : null;

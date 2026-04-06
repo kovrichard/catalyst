@@ -40,6 +40,7 @@
     "@aws-sdk/client-ses": "3.1009.0",
     "@hookform/resolvers": "5.2.2",
     "@marsidev/react-turnstile": "1.4.2",
+    "@microsoft/clarity": "1.0.2",
     "@next/third-parties": "16.1.6",
     "@prisma/adapter-pg": "7.5.0",
     "@prisma/client": "7.5.0",

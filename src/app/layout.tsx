@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <Analytics />
+        <Analytics environment={conf.environment} />
       </head>
       <body
         className={cn(inter.className, "flex min-h-svh min-w-80 flex-col justify-center")}

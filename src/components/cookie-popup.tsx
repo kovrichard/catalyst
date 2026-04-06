@@ -1,5 +1,6 @@
 "use client";
 
+import Clarity from "@microsoft/clarity";
 import { Cookie } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -32,15 +33,9 @@ export default function CookiePopup() {
         analytics_storage: consent,
       });
     }
-    if (typeof window !== "undefined" && window.clarity) {
-      if (consent === "granted") {
-        window.clarity("consentv2", {
-          ad_Storage: "granted",
-          analytics_Storage: "granted",
-        });
-      } else {
-        window.clarity("consent", false);
-      }
+
+    if (window.clarity) {
+      Clarity.consent(consent === "granted");
     }
 
     // Wait for exit animation to complete before hiding
