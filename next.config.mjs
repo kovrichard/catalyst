@@ -3,7 +3,10 @@ import NextBundleAnalyzer from '@next/bundle-analyzer';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     // Use `bun run build:standalone` if you are using Docker
-    output: process.env.EXPORT_MODE
+    output: process.env.EXPORT_MODE,
+    turbopack: {
+        root: import.meta.dirname,
+    },
 };
 
 const withBundleAnalyzer = NextBundleAnalyzer({
