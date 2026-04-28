@@ -93,6 +93,7 @@
     "@types/prompts": "2.4.9",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "babel-plugin-react-compiler": "1.0.0",
     "commander": "14.0.3",
     "dotenv": "17.4.2",
     "dotenv-expand": "13.0.0",

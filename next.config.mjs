@@ -7,6 +7,7 @@ const nextConfig = {
     turbopack: {
         root: import.meta.dirname,
     },
+    reactCompiler: true,
 };
 
 const withBundleAnalyzer = NextBundleAnalyzer({
