@@ -30,7 +30,8 @@
     "prepare": "husky",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:deploy": "prisma migrate deploy"
+    "db:deploy": "prisma migrate deploy",
+    "knip": "knip"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -96,6 +97,7 @@
     "dotenv": "17.4.2",
     "dotenv-expand": "13.0.0",
     "husky": "9.1.7",
+    "knip": "6.7.0",
     "lint-staged": "16.4.0",
     "npm-check-updates": "22.0.1",
     "postcss": "8.5.12",
