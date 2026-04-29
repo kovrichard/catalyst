@@ -9,8 +9,6 @@
     "src/components/ui/*",
     "src/lib/trpc/*",
     ".opencode/plugins/lint.ts",
-    "src/components/auth/signout-button.tsx",
-    "src/lib/auth-client.ts",
     "src/lib/aws/ses.tsx",
     "src/lib/metadata.ts",
     "src/lib/stripe.ts",
