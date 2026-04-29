@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": [
+    "-lintignore"
+  ],
+  "ignore": [
+    "scripts/utils/*",
+    ".agents/hooks/*",
+    "src/components/ui/*",
+    "src/lib/trpc/*",
+    ".opencode/plugins/lint.ts",
+    "src/lib/aws/ses.tsx",
+    "src/lib/metadata.ts",
+    "src/lib/stripe.ts",
+    "scripts/removers/remover.ts"
+  ],
+  "ignoreDependencies": [
+    "@opencode-ai/plugin",
+    "shadcn"
+  ]
+}

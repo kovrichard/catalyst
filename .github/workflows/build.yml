@@ -4,6 +4,9 @@ on:
   push:
     branches:
     - main
+  pull_request:
+    branches:
+    - main
 
 jobs:
   build:
@@ -21,6 +24,9 @@ jobs:
 
     - name: Lint project
       run: bun run check && bun run type-check
+
+    - name: Check unused code
+      run: bun run knip
 
     - name: Run tests
       run: bun run test

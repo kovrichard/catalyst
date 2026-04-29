@@ -26,7 +26,8 @@
         "./src/*"
       ]
     },
-    "target": "ES2017"
+    "target": "es2022",
+    "types": ["bun"]
   },
   "include": [
     "next-env.d.ts",
