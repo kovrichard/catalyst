@@ -17,14 +17,7 @@
     "scripts/removers/remover.ts"
   ],
   "ignoreDependencies": [
-    "@next/third-parties",
-    "@tanstack/query-async-storage-persister",
-    "@tanstack/query-sync-storage-persister",
-    "@trpc/react-query",
-    "motion",
     "@opencode-ai/plugin",
-    "@react-email/ui",
-    "shadcn",
-    "postcss-load-config"
+    "shadcn"
   ]
 }
