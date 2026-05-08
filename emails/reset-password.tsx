@@ -54,7 +54,7 @@ export default function ResetPassword({ name, url }: Readonly<MailProps>) {
         </Head>
         <Body className="bg-secondary px-2 py-10 font-sans">
           <Container
-            className="mx-auto max-w-120 border border-border bg-card p-0"
+            className="mx-auto max-w-[480px] border border-border bg-card p-0"
             style={{ borderRadius: "16px" }}
           >
             <Section className="border-border border-b bg-secondary/50 p-8">
