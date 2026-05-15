@@ -1,5 +1,5 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import { render } from "@react-email/components";
+import { render } from "react-email";
 import ResetPassword from "@/../emails/reset-password";
 
 import conf from "@/lib/config";

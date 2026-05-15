@@ -14,14 +14,14 @@ import {
   Section,
   Tailwind,
   Text,
-} from "@react-email/components";
+} from "react-email";
 
-interface MailProps {
+type MailProps = {
   name: string;
   url: string;
-}
+};
 
-export default function ResetPassword({ name, url }: MailProps) {
+export default function ResetPassword({ name, url }: Readonly<MailProps>) {
   return (
     <Tailwind
       config={{
