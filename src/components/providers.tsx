@@ -3,21 +3,21 @@
 import { ThemeProvider } from "next-themes";
 import type { ReactNode } from "react";
 
-// @catalyst:auth-start
+// @catalyst:trpc-start
 
 import { TRPCReactProvider } from "@/lib/trpc/client";
-// @catalyst:auth-end
+// @catalyst:trpc-end
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    // @catalyst:auth-start
+    // @catalyst:trpc-start
     <TRPCReactProvider>
-      {/* @catalyst:auth-end */}
+      {/* @catalyst:trpc-end */}
       <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
         {children}
       </ThemeProvider>
-      {/* @catalyst:auth-start */}
+      {/* @catalyst:trpc-start */}
     </TRPCReactProvider>
-    // @catalyst:auth-end
+    // @catalyst:trpc-end
   );
 }

@@ -1,6 +1,10 @@
-import { initTRPC, TRPCError } from "@trpc/server";
-import { cache } from "react";
+import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
+
+// @catalyst:auth-start
+
+import { TRPCError } from "@trpc/server";
+import { cache } from "react";
 import { getUserFromSession } from "@/lib/services/user.service";
 
 export const createTRPCContext = cache(async () => {
@@ -12,22 +16,28 @@ export const createTRPCContext = cache(async () => {
 });
 
 type Context = Awaited<ReturnType<typeof createTRPCContext>>;
+// @catalyst:auth-end
 
 // Avoid exporting the entire t-object
 // since it's not very descriptive.
 // For instance, the use of a t variable
 // is common in i18n libraries.
-const t = initTRPC.context<Context>().create({
-  /**
-   * @see https://trpc.io/docs/server/data-transformers
-   */
-  transformer: superjson,
-});
+const t = initTRPC
+  // @catalyst:auth-start
+  .context<Context>()
+  // @catalyst:auth-end
+  .create({
+    /**
+     * @see https://trpc.io/docs/server/data-transformers
+     */
+    transformer: superjson,
+  });
 
 // Base router and procedure helpers
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const publicProcedure = t.procedure;
+// @catalyst:auth-start
 export const protectedProcedure = t.procedure.use(function isAuthed(opts) {
   if (!opts.ctx.user) {
     throw new TRPCError({
@@ -40,3 +50,4 @@ export const protectedProcedure = t.procedure.use(function isAuthed(opts) {
     },
   });
 });
+// @catalyst:auth-end

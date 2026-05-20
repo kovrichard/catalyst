@@ -6,7 +6,9 @@ import {
   type TRPCQueryOptions,
 } from "@trpc/tanstack-react-query";
 import { cache, type ReactNode } from "react";
+// @catalyst:auth-start
 import { createTRPCContext } from "./init";
+// @catalyst:auth-end
 import { makeQueryClient } from "./query-client";
 import { appRouter } from "./routers/_app";
 
@@ -15,7 +17,9 @@ import { appRouter } from "./routers/_app";
 export const getQueryClient = cache(makeQueryClient);
 
 export const trpc = createTRPCOptionsProxy({
+  // @catalyst:auth-start
   ctx: createTRPCContext,
+  // @catalyst:auth-end
   router: appRouter,
   queryClient: getQueryClient,
 });
@@ -44,4 +48,6 @@ export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(queryOptio
   }
 }
 
+// @catalyst:auth-start
 export const caller = appRouter.createCaller(createTRPCContext);
+// @catalyst:auth-end

@@ -17,20 +17,16 @@ const AUTH_FILES_TO_DELETE = [
   "src/components/top-menu.tsx",
 ];
 
-// TODO: when a dedicated removeTrpc toggle is added, move the tRPC paths
-// (src/lib/trpc, src/app/api/trpc) out of this remover.
 const AUTH_FOLDERS_TO_DELETE = [
   "src/app/(public)/login",
   "src/app/(public)/register",
   "src/app/(public)/reset-password",
   "src/app/(protected)",
   "src/app/api/auth",
-  "src/app/api/trpc",
   "src/components/auth",
   "src/components/notifications",
   "src/components/settings",
   "src/components/sidebar",
-  "src/lib/trpc",
 ];
 
 const AUTH_FILES_TO_MODIFY = [
@@ -39,24 +35,17 @@ const AUTH_FILES_TO_MODIFY = [
   "src/lib/public-config.ts",
   "src/lib/utils.ts",
   "src/app/sitemap.ts",
-  "src/components/providers.tsx",
+  "src/lib/trpc/init.ts",
+  "src/lib/trpc/server.tsx",
+  "src/app/api/trpc/[trpc]/route.ts",
 ];
 
-// TODO: when a dedicated removeTrpc toggle is added, move the tRPC + React
-// Query packages out of this remover.
 const AUTH_PACKAGES_TO_UNINSTALL = [
   "better-auth",
   "@hookform/resolvers",
   "@marsidev/react-turnstile",
   "react-hook-form",
   "javascript-time-ago",
-  "@tanstack/react-query",
-  "@tanstack/react-query-persist-client",
-  "@trpc/client",
-  "@trpc/server",
-  "@trpc/tanstack-react-query",
-  "idb-keyval",
-  "superjson",
 ];
 
 const remover = new Remover({
