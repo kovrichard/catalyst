@@ -19,10 +19,12 @@ const schema = z.object({
   googleSecret: z.string().optional(),
   // @catalyst:auth-end
 
+  // @catalyst:email-start
   // AWS
   awsRegion: z.string().default("eu-central-1"),
   fromEmailAddress: z.string().optional(),
   awsConfigured: z.boolean().default(false),
+  // @catalyst:email-end
 
   // @catalyst:stripe-start
   // Stripe
@@ -63,6 +65,7 @@ const envVars = {
   googleSecret: process.env.GOOGLE_CLIENT_SECRET,
   // @catalyst:auth-end
 
+  // @catalyst:email-start
   // AWS
   awsRegion: process.env.AWS_REGION,
   fromEmailAddress: process.env.FROM_EMAIL_ADDRESS,
@@ -71,6 +74,7 @@ const envVars = {
     process.env.AWS_SECRET_ACCESS_KEY !== undefined &&
     process.env.AWS_REGION !== undefined &&
     process.env.FROM_EMAIL_ADDRESS !== undefined,
+  // @catalyst:email-end
 
   // @catalyst:stripe-start
   // Stripe

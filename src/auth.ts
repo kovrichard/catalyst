@@ -1,8 +1,10 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
+// @catalyst:email-start
 import { after } from "next/server";
 import { sendResetPasswordEmail } from "@/lib/aws/ses";
+// @catalyst:email-end
 import conf from "@/lib/config";
 import { logger } from "@/lib/logger";
 import prisma from "@/lib/prisma/prisma";
@@ -19,6 +21,7 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    // @catalyst:email-start
     sendResetPassword: async ({ user, url }, _request) => {
       after(() =>
         sendResetPasswordEmail({
@@ -28,6 +31,7 @@ export const auth = betterAuth({
         })
       );
     },
+    // @catalyst:email-end
     onPasswordReset: async ({ user }, _request) => {
       logger.info(`Password for user ${user.id} has been reset`);
     },

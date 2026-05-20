@@ -7,7 +7,15 @@ const DB_FOLDERS_TO_DELETE = ["prisma", "src/lib/prisma"];
 
 const DB_FILES_TO_MODIFY = ["Dockerfile", "docker-compose.yml"];
 
-const DB_PACKAGES_TO_UNINSTALL = ["@prisma/adapter-pg", "@prisma/client", "prisma"];
+const DB_PACKAGES_TO_UNINSTALL = [
+  "@prisma/adapter-pg",
+  "@prisma/client",
+  "prisma",
+  "dotenv",
+  "dotenv-expand",
+];
+
+const DB_SCRIPTS_TO_REMOVE = ["postinstall", "db:migrate", "db:deploy"];
 
 const remover = new Remover({
   featureName: "Database",
@@ -15,6 +23,7 @@ const remover = new Remover({
   directoriesToDelete: DB_FOLDERS_TO_DELETE,
   filesToModify: DB_FILES_TO_MODIFY,
   packagesToUninstall: DB_PACKAGES_TO_UNINSTALL,
+  scriptsToRemove: DB_SCRIPTS_TO_REMOVE,
 });
 
 export async function removeDatabase(dryRun = false): Promise<void> {

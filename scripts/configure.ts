@@ -5,6 +5,7 @@ import { Command } from "commander";
 import prompts from "prompts";
 import { removeAuth } from "./removers/auth";
 import { removeDatabase } from "./removers/db";
+import { removeEmail } from "./removers/email";
 import { removeRedis } from "./removers/redis";
 import { removeStripe } from "./removers/stripe";
 import { removeTrpc } from "./removers/trpc";
@@ -22,6 +23,7 @@ interface ConfigOptions {
   removeRedis?: boolean;
   removeAuth?: boolean;
   removeTrpc?: boolean;
+  removeEmail?: boolean;
   dryRun?: boolean;
 }
 
@@ -64,6 +66,12 @@ const features: Feature[] = [
     description: "Remove tRPC + React Query stack (client, server, routers, packages)",
     enabled: true,
   },
+  {
+    key: "removeEmail",
+    name: "Email",
+    description: "Remove transactional email (AWS SES, React Email templates)",
+    enabled: true,
+  },
 ];
 
 async function showSummary(options: ConfigOptions): Promise<void> {
@@ -73,6 +81,7 @@ async function showSummary(options: ConfigOptions): Promise<void> {
   if (options.removeRedis) removals.push("Redis");
   if (options.removeAuth) removals.push("Auth");
   if (options.removeTrpc) removals.push("tRPC");
+  if (options.removeEmail) removals.push("Email");
 
   if (removals.length === 0) {
     console.log("\nNo features selected for removal.");
@@ -107,6 +116,9 @@ async function executeRemovals(options: ConfigOptions): Promise<void> {
   }
   if (options.removeTrpc) {
     await removeTrpc(dryRun);
+  }
+  if (options.removeEmail) {
+    await removeEmail(dryRun);
   }
 
   if (!dryRun) {
@@ -168,9 +180,10 @@ function parseArgs(): ConfigOptions {
     .option("--no-redis", "Remove Redis integration")
     .option("--no-auth", "Remove authentication integration")
     .option("--no-trpc", "Remove tRPC + React Query stack")
+    .option("--no-email", "Remove transactional email (AWS SES + React Email)")
     .option(
       "--remove <features...>",
-      "Remove specific features (comma-separated: stripe, redis, auth, trpc)"
+      "Remove specific features (comma-separated: stripe, redis, auth, trpc, email)"
     )
     .option("--dry-run", "Show what would be done without making changes")
     .parse(process.argv);
@@ -181,6 +194,7 @@ function parseArgs(): ConfigOptions {
     redis?: boolean;
     auth?: boolean;
     trpc?: boolean;
+    email?: boolean;
     remove?: string[];
     dryRun?: boolean;
   }>();
@@ -204,6 +218,9 @@ function parseArgs(): ConfigOptions {
   if (opts.trpc === false) {
     options.removeTrpc = true;
   }
+  if (opts.email === false) {
+    options.removeEmail = true;
+  }
 
   if (opts.remove) {
     opts.remove.forEach((featureArg) => {
@@ -223,9 +240,11 @@ function parseArgs(): ConfigOptions {
           options.removeAuth = true;
         } else if (normalized === "trpc") {
           options.removeTrpc = true;
+        } else if (normalized === "email") {
+          options.removeEmail = true;
         } else {
           console.error(`Unknown feature: ${feature}`);
-          console.error("Available features: stripe, redis, auth, trpc");
+          console.error("Available features: stripe, redis, auth, trpc, email");
           process.exit(1);
         }
       });

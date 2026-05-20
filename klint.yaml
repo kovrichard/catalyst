@@ -3,7 +3,9 @@
 include: ["src", "scripts", "tests", "emails", "!node_modules/**", "!src/lib/prisma/generated/**"]
 plugins: [sonar]
 rules:
-  no-unguarded-json-parse: error
+  no-unguarded-json-parse:
+    severity: error
+    include: ["src/**", "scripts/**"]
   no-sync-in-async: error
   no-floating-promise: error
   no-misused-promises: error

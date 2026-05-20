@@ -4,6 +4,7 @@ import {
   removeMarkedCodeFromFiles,
 } from "../utils/code-modifications";
 import { deleteDirectories, deleteFiles } from "../utils/file-operations";
+import { removePackageJsonScripts } from "../utils/package-scripts";
 import { uninstallPackages } from "../utils/uninstaller";
 
 export interface RemoverConfig {
@@ -12,6 +13,7 @@ export interface RemoverConfig {
   directoriesToDelete?: string[];
   filesToModify?: string[];
   packagesToUninstall?: string[];
+  scriptsToRemove?: string[];
 }
 
 export class Remover {
@@ -28,6 +30,7 @@ export class Remover {
       directoriesToDelete,
       filesToModify,
       packagesToUninstall,
+      scriptsToRemove,
     } = this.config;
 
     console.log(`Removing ${featureName} integration...`);
@@ -39,6 +42,7 @@ export class Remover {
     let deleteDirectoryResults: OperationResult[] = [];
     let modifyFileResults: OperationResult[] = [];
     let uninstallPackageResults: OperationResult[] = [];
+    let removeScriptResults: OperationResult[] = [];
 
     if (filesToDelete) {
       console.log(`Deleting ${featureName} files:`);
@@ -77,6 +81,18 @@ export class Remover {
       });
     }
 
+    if (scriptsToRemove) {
+      console.log(`Removing ${featureName} scripts from package.json:`);
+      removeScriptResults = removePackageJsonScripts(scriptsToRemove, dryRun);
+      removeScriptResults.forEach((result) => {
+        if (result.success) {
+          console.log(`  ✓ ${result.message}`);
+        } else {
+          console.log(`  ✗ ${result.message}`);
+        }
+      });
+    }
+
     if (packagesToUninstall) {
       console.log(`Uninstalling ${featureName} packages:`);
       uninstallPackageResults = uninstallPackages(packagesToUninstall, dryRun);
@@ -94,6 +110,7 @@ export class Remover {
       ...deleteDirectoryResults,
       ...modifyFileResults,
       ...uninstallPackageResults,
+      ...removeScriptResults,
     ].filter((r) => !r.success);
     if (allFailed.length > 0) {
       console.log(`\n  Warning: ${allFailed.length} operation(s) failed.\n`);
