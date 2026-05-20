@@ -49,7 +49,15 @@ function removeCodeBetweenMarkers(
     return { result: content };
   }
 
-  return { result: result.join("\n") };
+  // Marker stripping leaves orphan blank lines where the block used to be.
+  // Collapse runs of blanks, plus the single blank at block boundaries that
+  // biome rejects (no empty line at the start or end of a block).
+  const collapsed = result
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/([{(\[])\s*\n\s*\n/g, "$1\n")
+    .replace(/\n\s*\n(\s*[)\]}])/g, "\n$1");
+  return { result: collapsed };
 }
 
 export function removeMarkedCode(
