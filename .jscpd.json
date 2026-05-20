@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/kucherenko/jscpd/master/packages/finder/schema.json",
+  "threshold": 2.5,
+  "reporters": ["threshold"],
+  "absolute": false,
+  "gitignore": true,
+  "minLines": 8,
+  "minTokens": 70,
+  "format": ["typescript", "javascript", "json", "tsx"],
+  "ignore": [
+    "node_modules/**",
+    "src/lib/prisma/generated/**",
+    "**/dist/**",
+    "**/.git/**"
+  ]
+}

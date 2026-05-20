@@ -24,14 +24,16 @@
     "lint-write": "biome lint --write",
     "check": "biome check",
     "check-write": "biome check --write",
+    "knip": "knip",
+    "jscpd": "jscpd --noTips",
+    "klint": "klint",
     "update:patch": "ncu -u --target patch -p bun && bun i",
     "update:minor": "ncu -u --target minor -p bun && bun i",
     "configure": "bun scripts/configure.ts",
     "prepare": "husky",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:deploy": "prisma migrate deploy",
-    "knip": "knip"
+    "db:deploy": "prisma migrate deploy"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -78,6 +80,7 @@
     "@biomejs/biome": "2.4.13",
     "@commitlint/cli": "20.5.2",
     "@commitlint/config-conventional": "20.5.0",
+    "@konvert7/klint": "0.7.1",
     "@next/bundle-analyzer": "16.2.4",
     "@opencode-ai/plugin": "1.14.28",
     "@react-email/preview-server": "5.2.11",
@@ -92,6 +95,7 @@
     "dotenv": "17.4.2",
     "dotenv-expand": "13.0.0",
     "husky": "9.1.7",
+    "jscpd": "4.2.3",
     "knip": "6.7.0",
     "lint-staged": "16.4.0",
     "npm-check-updates": "22.0.1",

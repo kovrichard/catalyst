@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/konvert7/klint/refs/heads/main/klint.schema.json
+
+include: ["src", "scripts", "tests", "emails", "!node_modules/**", "!src/lib/prisma/generated/**"]
+plugins: [sonar]
+rules:
+  no-unguarded-json-parse: error
+  no-sync-in-async:
+    severity: error
+    include: ["src/hooks/**"]
+  no-floating-promise: error
+  no-misused-promises: error
+  no-date-equality: error
+  no-optional-chain-on-non-nullable: error
+  no-object-in-template: error
+  no-nested-template-literals: error
+  no-consecutive-array-push: error
+  no-string-match: error
+  sonar/prefer-string-raw: off
