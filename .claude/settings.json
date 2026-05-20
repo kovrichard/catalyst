@@ -28,6 +28,7 @@
       "Bash(bun run klint:*)",
       "Bash(bun run test:*)",
       "Bash(bun run build:*)",
+      "Bash(bun test:*)",
       "Bash(bunx biome check:*)",
       "Bash(bunx biome format:*)",
       "Bash(bunx tsc:*)",
