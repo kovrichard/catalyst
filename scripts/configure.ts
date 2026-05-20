@@ -1,11 +1,19 @@
 #!/usr/bin/env bun
 
+import { spawn } from "node:child_process";
 import { Command } from "commander";
 import prompts from "prompts";
 import { removeAuth } from "./removers/auth";
 import { removeDatabase } from "./removers/db";
 import { removeRedis } from "./removers/redis";
 import { removeStripe } from "./removers/stripe";
+
+function runCommand(cmd: string, args: string[]): Promise<number> {
+  return new Promise((resolve) => {
+    const proc = spawn(cmd, args, { stdio: "inherit" });
+    proc.on("close", (code) => resolve(code ?? 1));
+  });
+}
 
 interface ConfigOptions {
   removeStripe?: boolean;
@@ -87,6 +95,19 @@ async function executeRemovals(options: ConfigOptions): Promise<void> {
   }
   if (options.removeAuth) {
     await removeAuth(dryRun);
+  }
+
+  if (!dryRun) {
+    // Marker stripping leaves indentation/import-order artifacts that biome
+    // can resolve in one pass. Run the project's check fixer so the working
+    // tree is committable immediately.
+    console.log("Running biome check --write to tidy formatting and imports...");
+    const exitCode = await runCommand("bunx", ["biome", "check", "--write", "."]);
+    if (exitCode !== 0) {
+      console.log(
+        "  Warning: biome reported issues it could not auto-fix. Review the output above."
+      );
+    }
   }
 }
 

@@ -1,6 +1,8 @@
 import { Remover } from "./remover";
 
-const STRIPE_FILES_TO_DELETE = ["src/lib/stripe.ts", "src/app/api/stripe/route.ts"];
+const STRIPE_FILES_TO_DELETE = ["src/lib/stripe.ts"];
+
+const STRIPE_FOLDERS_TO_DELETE = ["src/app/api/stripe"];
 
 const STRIPE_FILES_TO_MODIFY = [
   "src/auth.ts",
@@ -14,6 +16,7 @@ const STRIPE_PACKAGES_TO_UNINSTALL = ["stripe"];
 const remover = new Remover({
   featureName: "Stripe",
   filesToDelete: STRIPE_FILES_TO_DELETE,
+  directoriesToDelete: STRIPE_FOLDERS_TO_DELETE,
   filesToModify: STRIPE_FILES_TO_MODIFY,
   packagesToUninstall: STRIPE_PACKAGES_TO_UNINSTALL,
 });

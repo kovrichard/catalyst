@@ -1,6 +1,9 @@
 import { type ClassValue, clsx } from "clsx";
+// @catalyst:auth-start
+
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+// @catalyst:auth-end
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -19,12 +22,14 @@ export const initialState: FormState = {
   success: undefined,
 };
 
+// @catalyst:auth-start
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo("en-US");
 
 export function formatTimeAgo(date: Date) {
   return timeAgo.format(date);
 }
+// @catalyst:auth-end
 
 // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
 export function ensure(condition: any, message: string): asserts condition {

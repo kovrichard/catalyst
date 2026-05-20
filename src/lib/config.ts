@@ -40,8 +40,10 @@ const schema = z.object({
   redisConfigured: z.boolean().default(false),
   // @catalyst:redis-end
 
+  // @catalyst:auth-start
   // Turnstile
   turnstileSecretKey: z.string().optional(),
+  // @catalyst:auth-end
 });
 
 const envVars = {
@@ -91,8 +93,10 @@ const envVars = {
   ),
   // @catalyst:redis-end
 
+  // @catalyst:auth-start
   // Turnstile
   turnstileSecretKey: process.env.TURNSTILE_SECRET_KEY,
+  // @catalyst:auth-end
 };
 
 const conf = schema.parse(envVars);

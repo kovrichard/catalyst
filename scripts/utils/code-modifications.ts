@@ -55,7 +55,7 @@ function removeCodeBetweenMarkers(
   const collapsed = result
     .join("\n")
     .replace(/\n{3,}/g, "\n\n")
-    .replace(/([{(\[])\s*\n\s*\n/g, "$1\n")
+    .replace(/([{([])\s*\n\s*\n/g, "$1\n")
     .replace(/\n\s*\n(\s*[)\]}])/g, "\n$1");
   return { result: collapsed };
 }
@@ -68,9 +68,11 @@ export function removeMarkedCode(
   const fullPath = join(process.cwd(), filePath);
 
   if (!existsSync(fullPath)) {
+    // Cascading removers may have already deleted this file. Treat as a
+    // no-op rather than a hard failure so cascade output stays clean.
     return {
-      success: false,
-      message: `File does not exist: ${filePath}`,
+      success: true,
+      message: `Skipped (already removed): ${filePath}`,
     };
   }
 
