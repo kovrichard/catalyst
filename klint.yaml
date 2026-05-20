@@ -4,9 +4,7 @@ include: ["src", "scripts", "tests", "emails", "!node_modules/**", "!src/lib/pri
 plugins: [sonar]
 rules:
   no-unguarded-json-parse: error
-  no-sync-in-async:
-    severity: error
-    include: ["src/hooks/**"]
+  no-sync-in-async: error
   no-floating-promise: error
   no-misused-promises: error
   no-date-equality: error
