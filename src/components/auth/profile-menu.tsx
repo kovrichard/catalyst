@@ -37,7 +37,7 @@ export default function ProfileMenu({
   );
 
   useEffect(() => {
-    refetch();
+    void refetch();
   }, [refetch]);
   // @catalyst:stripe-end
 

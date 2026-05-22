@@ -36,9 +36,10 @@ export default function DeleteAccountForm() {
   const successCallback = async (state: FormState) => {
     if (state.success) {
       setOpen(false);
-      setTimeout(async () => {
-        await signOut();
-        router.push("/login");
+      setTimeout(() => {
+        void signOut().then(() => {
+          router.push("/login");
+        });
       }, 2000);
     }
   };
