@@ -44,7 +44,7 @@
         "@biomejs/biome": "2.4.13",
         "@commitlint/cli": "20.5.2",
         "@commitlint/config-conventional": "20.5.0",
-        "@konvert7/klint": "0.7.1",
+        "@konvert7/klint": "0.8.0",
         "@next/bundle-analyzer": "16.2.4",
         "@opencode-ai/plugin": "1.14.28",
         "@react-email/preview-server": "5.2.11",
@@ -449,7 +449,7 @@
 
     "@jscpd/tokenizer": ["@jscpd/tokenizer@4.2.3", "", { "dependencies": { "@jscpd/core": "4.2.3", "spark-md5": "^3.0.2" } }, "sha512-RvjD7/hwqtcQC9MWOl31odTti6kGCFxZ77DKEhwyMn+r6oVEUFbXgcGvzn0GC/wuTl7f3j5MF9JNMeTneOFwYA=="],
 
-    "@konvert7/klint": ["@konvert7/klint@0.7.1", "", { "dependencies": { "@clack/prompts": "^1.3.0", "typescript": "^5.9.3", "yaml": "^2.9.0", "zod": "^4.4.3" }, "bin": { "klint": "cli.ts" } }, "sha512-gDdp5PP5ibkM/TNUo0j38b2vKctP18uRM49LItQNGbjMZ4xSUOjSNtuMyhypi7/DTRIJcSyeOjxLGZOmsRzf0A=="],
+    "@konvert7/klint": ["@konvert7/klint@0.8.0", "", { "dependencies": { "@clack/prompts": "^1.3.0", "typescript": "^5.9.3", "yaml": "^2.9.0", "zod": "^4.4.3" }, "bin": { "klint": "cli.ts" } }, "sha512-DKeXefcE4Eg/y0xbkIZ2nCmGZrdH+ai8DbB+tOt6NZJmnfV+FhEWd3RWZxgDJkk/U68Uz9DtRayE2he4MZMiLQ=="],
 
     "@kurkle/color": ["@kurkle/color@0.3.4", "", {}, "sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w=="],
 

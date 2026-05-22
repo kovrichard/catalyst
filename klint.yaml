@@ -16,3 +16,14 @@ rules:
   no-consecutive-array-push: error
   no-string-match: error
   sonar/prefer-string-raw: off
+
+arch:
+  layers:
+    app-ui:
+      - "src/app/**/*.tsx"
+      - "src/components/**/*.tsx"
+      - "!src/components/ui/**"
+  forbidden:
+    - jsx-element: ["button", "input", "label"]
+      in: app-ui
+      message: "Use the design-system primitives from @/components/ui/* (Button, Input, Label) instead of raw HTML elements."
