@@ -46,7 +46,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="dark scroll-smooth"
+      data-scroll-behavior="smooth"
+    >
       <head>
         <Analytics environment={conf.environment} />
       </head>
