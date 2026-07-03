@@ -1,0 +1,37 @@
+services:
+  agent:
+    build:
+      context: ./.devcontainer
+      dockerfile: Dockerfile
+    user: bun
+    working_dir: /app
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@pg_bouncer:5432/${DB_NAME}
+      - DIRECT_DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@database:5432/${DB_NAME}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASS=${REDIS_PASS}
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+      # Stable, project-scoped names (no ${devcontainerId}) so Claude's auth
+      # token, settings, and session history survive rebuilds and folder moves.
+      - claude-config:/home/bun/.claude
+      - bashhistory:/commandhistory
+    depends_on:
+      pg_bouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: sleep infinity
+
+volumes:
+  node_modules:
+    name: catalyst-agent-node-modules
+  claude-config:
+    name: catalyst-claude-config
+  bashhistory:
+    name: catalyst-bashhistory

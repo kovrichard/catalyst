@@ -1,4 +1,4 @@
-.PHONY: build dev prod sh start-db stop db logs
+.PHONY: build dev prod sh agent start-db stop db logs
 
 build:
 	docker compose build
@@ -6,6 +6,10 @@ build:
 dev:
 	docker compose down prodapp
 	docker compose up -d app database pg_bouncer redis
+
+agent:
+	docker compose -f docker-compose.yml -f .devcontainer/docker-compose.extend.yml up -d agent
+	docker compose -f docker-compose.yml -f .devcontainer/docker-compose.extend.yml exec agent /bin/bash
 
 prod:
 	docker compose down app

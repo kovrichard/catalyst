@@ -1,0 +1,17 @@
+{
+  "name": "catalyst-agent",
+  "dockerComposeFile": ["../docker-compose.yml", "docker-compose.extend.yml"],
+  "service": "agent",
+  "workspaceFolder": "/app",
+  "remoteUser": "bun",
+  "containerEnv": {
+    "CLAUDE_CONFIG_DIR": "/home/bun/.claude",
+    "NODE_OPTIONS": "--max-old-space-size=4096"
+  },
+  "postCreateCommand": "git config --global --add safe.directory /app && bun install --frozen-lockfile",
+  "customizations": {
+    "vscode": {
+      "extensions": ["anthropic.claude-code", "biomejs.biome"]
+    }
+  }
+}
