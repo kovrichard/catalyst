@@ -3,14 +3,24 @@
 import Clarity from "@microsoft/clarity";
 import Script from "next/script";
 import { useEffect } from "react";
-import publicConf from "@/lib/public-config";
 
-export default function Analytics({ environment }: { environment: string }) {
+export default function Analytics({
+  environment,
+  gaId,
+  gtmId,
+  googleAdsId,
+  clarityId,
+}: Readonly<{
+  environment: string;
+  gaId?: string;
+  gtmId?: string;
+  googleAdsId?: string;
+  clarityId?: string;
+}>) {
   const isProd = environment === "production";
-  const analytics = publicConf.gaId;
-  const tagManager = publicConf.gtmId;
-  const ads = publicConf.googleAdsId;
-  const clarityId = publicConf.clarityId;
+  const analytics = gaId;
+  const tagManager = gtmId;
+  const ads = googleAdsId;
 
   useEffect(() => {
     const consent = localStorage.getItem("clarity-consent");
@@ -25,7 +35,7 @@ export default function Analytics({ environment }: { environment: string }) {
         Clarity.consent(false);
       }
     }
-  }, [isProd]);
+  }, [isProd, clarityId]);
 
   return isProd ? (
     <>

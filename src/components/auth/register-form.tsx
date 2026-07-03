@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
 import { registerUser } from "@/lib/actions/users";
-import publicConf from "@/lib/public-config";
+import { usePublicConfig } from "@/lib/contexts/public-config-context";
 import { type FormState, initialState } from "@/lib/utils";
 import { type RegisterFormData, registerSchema } from "@/types/auth";
 
@@ -21,6 +21,7 @@ export default function RegisterForm() {
   const [state, formAction, isPending] = useActionState(registerUser, initialState);
   const [isTransitionPending, startTransition] = useTransition();
   const router = useRouter();
+  const publicConf = usePublicConfig();
 
   const {
     register,

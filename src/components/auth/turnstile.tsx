@@ -2,7 +2,7 @@
 
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import type { RefObject } from "react";
-import publicConf from "@/lib/public-config";
+import { usePublicConfig } from "@/lib/contexts/public-config-context";
 
 export default function TurnstileComponent({
   turnstileRef,
@@ -11,6 +11,8 @@ export default function TurnstileComponent({
   turnstileRef: RefObject<TurnstileInstance | null>;
   setValue: (token: string) => void;
 }>) {
+  const publicConf = usePublicConfig();
+
   if (!publicConf.turnstileSiteKey) {
     return null;
   }

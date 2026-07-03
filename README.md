@@ -171,4 +171,4 @@ If you want to configure a log drain, set the `LOG_DRAIN_URL` environment variab
 
 ## Analytics
 
-Set the `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` and/or `NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID` environment variables in the [`.env`](.env.sample?plain=1#L11) file to enable Google Analytics and/or Google Tag Manager.
+Set the `GOOGLE_ANALYTICS_ID` and/or `GOOGLE_TAG_MANAGER_ID` environment variables in the [`.env`](.env.sample?plain=1#L11) file to enable Google Analytics and/or Google Tag Manager.

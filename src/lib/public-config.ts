@@ -1,3 +1,4 @@
+import "server-only";
 import { z } from "zod";
 
 const schema = z.object({
@@ -21,21 +22,23 @@ const schema = z.object({
 const envVars = {
   // @catalyst:auth-start
   // Auth
-  redirectPath: process.env.NEXT_PUBLIC_AUTH_REDIRECT_PATH || "/dashboard",
+  redirectPath: process.env.AUTH_REDIRECT_PATH || "/dashboard",
   // @catalyst:auth-end
 
   // Tracking
-  gaId: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
-  gtmId: process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
-  googleAdsId: process.env.NEXT_PUBLIC_GOOGLE_ADS_ID,
-  clarityId: process.env.NEXT_PUBLIC_CLARITY_ID,
+  gaId: process.env.GOOGLE_ANALYTICS_ID,
+  gtmId: process.env.GOOGLE_TAG_MANAGER_ID,
+  googleAdsId: process.env.GOOGLE_ADS_ID,
+  clarityId: process.env.CLARITY_ID,
 
   // @catalyst:auth-start
   // Turnstile
-  turnstileSiteKey: process.env.NEXT_PUBLIC_TURNSTILE_SITEKEY,
+  turnstileSiteKey: process.env.TURNSTILE_SITEKEY,
   // @catalyst:auth-end
 };
 
-const publicConf = schema.parse(envVars);
+export type PublicConfig = z.infer<typeof schema>;
+
+const publicConf: PublicConfig = schema.parse(envVars);
 
 export default publicConf;

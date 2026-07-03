@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useToast from "@/hooks/use-toast";
 import { signInUser } from "@/lib/actions/users";
-import publicConf from "@/lib/public-config";
+import { usePublicConfig } from "@/lib/contexts/public-config-context";
 import { type FormState, initialState } from "@/lib/utils";
 import { type LoginFormData, loginSchema } from "@/types/auth";
 
@@ -21,6 +21,7 @@ export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(signInUser, initialState);
   const [isTransitionPending, startTransition] = useTransition();
   const router = useRouter();
+  const publicConf = usePublicConfig();
 
   const {
     register,

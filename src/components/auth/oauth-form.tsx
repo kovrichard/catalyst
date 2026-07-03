@@ -3,9 +3,10 @@
 import type { FormEvent } from "react";
 import OAuthButton from "@/components/auth/oauth-button";
 import { signIn } from "@/lib/auth-client";
-import publicConf from "@/lib/public-config";
+import { usePublicConfig } from "@/lib/contexts/public-config-context";
 
 export default function OAuthForm({ provider }: { provider: string }) {
+  const publicConf = usePublicConfig();
   const config: { title: string } = { title: "" };
 
   if (provider === "google") {
