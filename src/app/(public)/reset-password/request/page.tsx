@@ -10,8 +10,8 @@ import {
 export default async function Page() {
   return (
     <main className="m-auto">
-      <Card>
-        <CardHeader>
+      <Card className="w-92">
+        <CardHeader className="text-center">
           <CardTitle>Reset Password</CardTitle>
           <CardDescription>Enter your email to reset your password</CardDescription>
         </CardHeader>

@@ -62,9 +62,9 @@ export default function LoginForm() {
   const isLoading = isPending || isSubmitting || isTransitionPending;
 
   return (
-    <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
-      <Label htmlFor="email" className="grid gap-1">
-        <span>Email</span>
+    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="email">Email</Label>
         <Input
           type="email"
           id="email"
@@ -76,8 +76,8 @@ export default function LoginForm() {
         {errors.email && (
           <span className="text-destructive text-xs">{errors.email.message}</span>
         )}
-      </Label>
-      <div className="grid gap-1">
+      </div>
+      <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <Label htmlFor="password">Password</Label>
           <Link
@@ -99,7 +99,7 @@ export default function LoginForm() {
         )}
       </div>
       <TurnstileComponent turnstileRef={turnstileRef} setValue={setTurnstileValue} />
-      <PendingSubmitButton isPending={isLoading} text="Sign in" />
+      <PendingSubmitButton isPending={isLoading} text="Sign in" className="w-full" />
     </form>
   );
 }

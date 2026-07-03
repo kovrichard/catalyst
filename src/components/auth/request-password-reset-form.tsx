@@ -34,8 +34,8 @@ export default function RequestPasswordResetForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-4">
-      <div className="grid gap-2">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
         <Label htmlFor="email">Email</Label>
         <Input
           type="email"
@@ -46,7 +46,7 @@ export default function RequestPasswordResetForm() {
           autoFocus
         />
       </div>
-      <Button type="submit" className="mt-2 w-full" disabled={isPending}>
+      <Button type="submit" className="w-full" disabled={isPending}>
         Send Reset Link
       </Button>
       <div className="text-center">

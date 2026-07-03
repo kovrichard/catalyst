@@ -64,8 +64,8 @@ export default function RegisterForm() {
 
   return (
     <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-      <Label htmlFor="name" className="flex flex-col gap-1">
-        <span>Name</span>
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="name">Name</Label>
         <Input
           type="text"
           id="name"
@@ -76,9 +76,9 @@ export default function RegisterForm() {
         {errors.name && (
           <span className="text-destructive text-xs">{errors.name.message}</span>
         )}
-      </Label>
-      <Label htmlFor="email" className="flex flex-col gap-1">
-        <span>Email</span>
+      </div>
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="email">Email</Label>
         <Input
           type="email"
           id="email"
@@ -89,9 +89,9 @@ export default function RegisterForm() {
         {errors.email && (
           <span className="text-destructive text-xs">{errors.email.message}</span>
         )}
-      </Label>
-      <Label htmlFor="password" className="flex flex-col gap-1">
-        <span>Password</span>
+      </div>
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="password">Password</Label>
         <Input
           type="password"
           id="password"
@@ -102,7 +102,7 @@ export default function RegisterForm() {
         {errors.password && (
           <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
-      </Label>
+      </div>
       <TurnstileComponent turnstileRef={turnstileRef} setValue={setTurnstileValue} />
       <div className="text-muted-foreground text-xs">
         By signing up, you agree to our{" "}
@@ -116,7 +116,7 @@ export default function RegisterForm() {
           <ExternalLink size={10} className="relative -top-px ml-1" />
         </a>
       </div>
-      <PendingSubmitButton isPending={isLoading} text="Sign up" />
+      <PendingSubmitButton isPending={isLoading} text="Sign up" className="w-full" />
     </form>
   );
 }

@@ -79,9 +79,9 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
   const isLoading = isSubmitting || isTransitionPending;
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       {hasPassword && (
-        <div>
+        <div className="flex flex-col gap-2">
           <Label htmlFor="current-password">Current Password</Label>
           <Input
             type="password"
@@ -96,7 +96,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
           )}
         </div>
       )}
-      <div>
+      <div className="flex flex-col gap-2">
         <Label htmlFor="new-password">New Password</Label>
         <Input
           type="password"
@@ -108,7 +108,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
           <span className="text-destructive text-xs">{errors.newPassword.message}</span>
         )}
       </div>
-      <div>
+      <div className="flex flex-col gap-2">
         <Label htmlFor="confirm-password">Confirm Password</Label>
         <Input
           type="password"
@@ -122,7 +122,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
           </span>
         )}
       </div>
-      <Button type="submit" className="mt-4 w-fit" disabled={isLoading}>
+      <Button type="submit" className="w-fit" disabled={isLoading}>
         Save
       </Button>
     </form>
