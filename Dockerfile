@@ -30,6 +30,21 @@ RUN bun run postinstall
 # @catalyst:db-end
 
 
+# @catalyst:db-start
+FROM base AS migrate-deps
+
+RUN mkdir -p /temp/migrate
+COPY package.json /temp/migrate/source-package.json
+RUN cd /temp/migrate \
+    && PRISMA_VER="$(node -p "require('./source-package.json').devDependencies.prisma")" \
+    && DOTENV_VER="$(node -p "require('./source-package.json').devDependencies.dotenv")" \
+    && DOTENV_EXPAND_VER="$(node -p "require('./source-package.json').devDependencies['dotenv-expand']")" \
+    && rm source-package.json \
+    && echo "{\"dependencies\":{\"prisma\":\"$PRISMA_VER\",\"dotenv\":\"$DOTENV_VER\",\"dotenv-expand\":\"$DOTENV_EXPAND_VER\"}}" > package.json \
+    && bun install
+# @catalyst:db-end
+
+
 FROM base AS prerelease
 
 COPY --from=install /temp/dev/node_modules node_modules
@@ -64,6 +79,12 @@ RUN useradd --system --uid 1001 nextjs
 COPY --from=prerelease --chmod=755 /app/public ./public
 COPY --from=prerelease --chmod=755 /app/.next/standalone ./
 COPY --from=prerelease --chmod=755 /app/.next/static ./.next/static
+
+# @catalyst:db-start
+COPY --chmod=755 ./prisma ./prisma
+COPY --chmod=755 ./prisma.config.ts ./prisma.config.ts
+COPY --from=migrate-deps --chmod=755 /temp/migrate/node_modules ./node_modules
+# @catalyst:db-end
 
 USER nextjs
 
