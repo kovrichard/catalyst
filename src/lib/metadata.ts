@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const metaTitle = "Catalyst - Next.js Starter Kit";
+export const metaTitle = "Catalyst - Agentic Next.js Boilerplate";
 export const metaDescription =
   "Catalyst is a Next.js starter kit that helps you build modern web applications faster and easier than ever before.";
 export const canonicalUrl = "https://catalyst.konvert7.com";
