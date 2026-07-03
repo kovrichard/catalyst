@@ -100,7 +100,7 @@ export function AlsoIncluded() {
 export function FinalCta() {
   return (
     <section className="relative w-full overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-glow" />
+      <div className="pointer-events-none absolute inset-0 bg-glow-cta" />
       <div className="container relative flex flex-col items-start gap-6 py-28">
         <h2 className="max-w-2xl font-bold text-4xl tracking-tight md:text-5xl">
           Stop reviewing the small stuff.

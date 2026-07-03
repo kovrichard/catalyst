@@ -248,11 +248,21 @@
   background-size: 64px 64px;
 }
 
-/* Emerald "all clear" glow used behind the hero */
+/* Emerald "all clear" glow. Centers are pulled inward and radii fade to
+   transparent before reaching any edge, so the glow never clips into a hard
+   line at the section border. Two variants for the tall hero vs. short CTA. */
 .bg-glow {
   background: radial-gradient(
-    46rem 28rem at 82% -8%,
-    rgb(16 185 129 / 16%),
+    40rem 30rem at 74% 32%,
+    rgb(16 185 129 / 15%),
+    transparent 60%
+  );
+}
+
+.bg-glow-cta {
+  background: radial-gradient(
+    46rem 24rem at 50% 50%,
+    rgb(16 185 129 / 13%),
     transparent 62%
   );
 }
