@@ -46,7 +46,7 @@ export default function Analytics({
             strategy="beforeInteractive"
             src={`https://www.googletagmanager.com/gtag/js?id=${analytics}`}
           ></Script>
-          <Script strategy="beforeInteractive">
+          <Script id="google-analytics" strategy="beforeInteractive">
             {`window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
@@ -79,7 +79,7 @@ export default function Analytics({
       )}
       {tagManager && (
         <>
-          <Script>
+          <Script id="google-tag-manager">
             {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
