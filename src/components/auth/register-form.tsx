@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import { ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useActionState, useRef, useTransition } from "react";
+import { useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import PendingSubmitButton from "@/components/auth/pending-submit-button";
 import TurnstileComponent from "@/components/auth/turnstile";
@@ -27,6 +27,7 @@ export default function RegisterForm() {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -37,6 +38,25 @@ export default function RegisterForm() {
       "cf-turnstile-response": "",
     },
   });
+
+  const turnstileEnabled = Boolean(publicConf.turnstileSiteKey);
+  const [revealTurnstile, setRevealTurnstile] = useState(false);
+  const name = watch("name");
+  const email = watch("email");
+  const password = watch("password");
+  const hasToken = Boolean(watch("cf-turnstile-response"));
+
+  useEffect(() => {
+    if (
+      turnstileEnabled &&
+      !revealTurnstile &&
+      name?.trim() &&
+      email?.trim() &&
+      password?.trim()
+    ) {
+      setRevealTurnstile(true);
+    }
+  }, [turnstileEnabled, revealTurnstile, name, email, password]);
 
   const toastCallback = (state: FormState) => {
     if (state.success) {
@@ -103,20 +123,31 @@ export default function RegisterForm() {
           <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
       </div>
-      <TurnstileComponent turnstileRef={turnstileRef} setValue={setTurnstileValue} />
-      <div className="text-muted-foreground text-xs">
-        By signing up, you agree to our{" "}
-        <a
-          href="/privacy-policy"
-          target="_blank"
-          className="relative inline-flex items-center text-primary hover:underline"
-          rel="noopener"
-        >
-          <span>Privacy Policy</span>
-          <ExternalLink size={10} className="relative -top-px ml-1" />
-        </a>
+      <div className="flex flex-col">
+        <TurnstileComponent
+          turnstileRef={turnstileRef}
+          setValue={setTurnstileValue}
+          show={revealTurnstile}
+        />
+        <div className="pb-6 text-muted-foreground text-xs">
+          By signing up, you agree to our{" "}
+          <a
+            href="/privacy-policy"
+            target="_blank"
+            className="relative inline-flex items-center text-primary hover:underline"
+            rel="noopener"
+          >
+            <span>Privacy Policy</span>
+            <ExternalLink size={10} className="relative -top-px ml-1" />
+          </a>
+        </div>
+        <PendingSubmitButton
+          isPending={isLoading}
+          text="Sign up"
+          className="w-full"
+          disabled={turnstileEnabled && !hasToken}
+        />
       </div>
-      <PendingSubmitButton isPending={isLoading} text="Sign up" className="w-full" />
     </form>
   );
 }

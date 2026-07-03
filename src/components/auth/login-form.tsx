@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useActionState, useRef, useTransition } from "react";
+import { useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import PendingSubmitButton from "@/components/auth/pending-submit-button";
 import TurnstileComponent from "@/components/auth/turnstile";
@@ -27,6 +27,7 @@ export default function LoginForm() {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -36,6 +37,18 @@ export default function LoginForm() {
       "cf-turnstile-response": "",
     },
   });
+
+  const turnstileEnabled = Boolean(publicConf.turnstileSiteKey);
+  const [revealTurnstile, setRevealTurnstile] = useState(false);
+  const email = watch("email");
+  const password = watch("password");
+  const hasToken = Boolean(watch("cf-turnstile-response"));
+
+  useEffect(() => {
+    if (turnstileEnabled && !revealTurnstile && email?.trim() && password?.trim()) {
+      setRevealTurnstile(true);
+    }
+  }, [turnstileEnabled, revealTurnstile, email, password]);
 
   const toastCallback = (state: FormState) => {
     if (state.success) {
@@ -98,8 +111,19 @@ export default function LoginForm() {
           <span className="text-destructive text-xs">{errors.password.message}</span>
         )}
       </div>
-      <TurnstileComponent turnstileRef={turnstileRef} setValue={setTurnstileValue} />
-      <PendingSubmitButton isPending={isLoading} text="Sign in" className="w-full" />
+      <div className="flex flex-col">
+        <TurnstileComponent
+          turnstileRef={turnstileRef}
+          setValue={setTurnstileValue}
+          show={revealTurnstile}
+        />
+        <PendingSubmitButton
+          isPending={isLoading}
+          text="Sign in"
+          className="w-full"
+          disabled={turnstileEnabled && !hasToken}
+        />
+      </div>
     </form>
   );
 }
