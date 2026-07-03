@@ -89,6 +89,13 @@ use the `shadcn` MCP tool to find and install the missing component.
   check if it already exists in the `dao` folder. If it does, use it. If it doesn't, create
   a new function in the `dao` folder, then import and use it wherever needed.
 
+## Visual checks & browser automation
+
+- Prefer the **`/playwright-cli`** skill (drives the `playwright-cli` binary) for screenshots, responsive checks, and browser automation. Use the Playwright MCP (`browser_*` tools) only as a fallback when `playwright-cli` is unavailable, or for DOM-metric probing (`browser_evaluate`).
+- Never write screenshots/PDFs to the repo root. Output folders (both gitignored):
+  - `/playwright-cli` → `.playwright-cli/`. A default-named `playwright-cli screenshot` auto-saves there; with an explicit name keep it under the folder (`--filename=.playwright-cli/<name>.png`) — a bare relative name lands in root.
+  - Playwright MCP → `.playwright-mcp/` (enforced via `--output-dir` in `.mcp.json`; use relative `filename`s).
+
 ## Code organization
 
 - Keep contexts in `/src/lib/contexts/` folder, hooks in `/src/hooks/` folder, and utils in `/src/lib/utils/` folder.

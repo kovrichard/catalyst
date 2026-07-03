@@ -38,3 +38,7 @@ next-env.d.ts
 .env
 
 src/lib/prisma/generated
+
+# playwright artifacts
+.playwright-cli
+.playwright-mcp
