@@ -1,93 +1,137 @@
 import { Badge } from "@/components/ui/badge";
+import { mono } from "./fonts";
 
 const HOOKS = [
   {
-    name: "check",
-    description: "Biome lint + format, so style nits never reach your diff.",
+    cmd: "check",
+    tool: "biome",
+    desc: "Lint and format, so style nits never land in your diff.",
   },
   {
-    name: "type-check",
-    description: "tsc --noEmit, so a red squiggly never ships.",
+    cmd: "type-check",
+    tool: "tsc",
+    desc: "A full tsc --noEmit pass. A red squiggle never ships.",
   },
   {
-    name: "knip",
-    description: "Flags unused exports, files, and dependencies the agent left behind.",
+    cmd: "knip",
+    tool: "knip",
+    desc: "Flags unused exports, files, and dependencies the agent left behind.",
   },
   {
-    name: "jscpd",
-    description:
-      "Catches duplicated code. On failure, the agent is told to refactor, not raise the threshold.",
+    cmd: "jscpd",
+    tool: "jscpd",
+    desc: "Catches copy-paste. Fail it, and the agent must refactor, not raise the threshold.",
   },
   {
-    name: "klint",
-    description:
-      "A custom architecture linter enforcing this repo's own layering rules, not generic best practices.",
+    cmd: "klint",
+    tool: "klint",
+    desc: "Enforces this repo's own layer rules, not just generic lint.",
   },
   {
-    name: "madge",
-    description: "Circular-import detection, before it becomes a build-time mystery.",
+    cmd: "madge",
+    tool: "madge",
+    desc: "Blocks circular imports before they turn into build-time mysteries.",
   },
   {
-    name: "lf",
-    description: "Enforces LF line endings, so git diff stays clean across OSes.",
+    cmd: "lf",
+    tool: "git",
+    desc: "Normalizes line endings, so diffs stay clean across machines.",
   },
 ];
 
 const AGENTS = ["Claude Code", "Cursor", "Codex", "OpenCode"];
 
-function HookRow({
-  name,
-  description,
-  index,
-}: {
-  name: string;
-  description: string;
-  index: number;
-}) {
+const CONFIG = `// .claude/settings.json
+{
+  "hooks": {
+    "Stop": [
+      { "hooks": [
+        { "command": "bun .agents/hooks/check.ts" },
+        { "command": "bun .agents/hooks/type-check.ts" },
+        { "command": "bun .agents/hooks/knip.ts" },
+        { "command": "bun .agents/hooks/jscpd.ts" },
+        { "command": "bun .agents/hooks/klint.ts" },
+        { "command": "bun .agents/hooks/madge.ts" },
+        { "command": "bun .agents/hooks/lf.ts" }
+      ] }
+    ]
+  }
+}`;
+
+function HookCard({ cmd, tool, desc }: { cmd: string; tool: string; desc: string }) {
   return (
-    <li
-      className="fade-in-0 slide-in-from-bottom-2 grid animate-in grid-cols-[auto_7rem_1fr] items-baseline gap-4 border-b fill-mode-both py-3 duration-500 last:border-0"
-      style={{ animationDelay: `${index * 80}ms` }}
-    >
-      <span className="text-emerald-500">✓</span>
-      <span className="font-mono text-sm">{name}</span>
-      <span className="text-muted-foreground text-sm">{description}</span>
-    </li>
+    <div className="flex flex-col gap-3 rounded-xl border bg-card/40 p-5">
+      <div className="flex items-center justify-between gap-2">
+        <span className={`${mono.className} text-sm`}>
+          <span className="text-emerald-500">✓ </span>
+          {cmd}
+        </span>
+        <Badge variant="secondary" className={`${mono.className} text-xs`}>
+          {tool}
+        </Badge>
+      </div>
+      <p className="text-muted-foreground text-sm">{desc}</p>
+    </div>
   );
 }
 
 export function HookChecklist() {
   return (
-    <section id="hooks" className="w-full border-t bg-muted/20">
-      <div className="container flex flex-col gap-8 py-24">
+    <section id="hooks" className="w-full border-b bg-muted/20">
+      <div className="container flex flex-col gap-10 py-24">
         <div className="flex max-w-2xl flex-col gap-3">
-          <p className="flex items-center gap-2 font-mono text-muted-foreground text-xs uppercase tracking-wide">
+          <p
+            className={`${mono.className} flex items-center gap-2 text-muted-foreground text-xs uppercase tracking-widest`}
+          >
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            the stop hook: runs after every agent turn, before you review the diff
+            the stop hook
           </p>
           <h2 className="font-bold text-3xl tracking-tight md:text-4xl">
-            Every agent edit gets a code review before you do.
+            Seven checks between your agent and your review queue.
           </h2>
           <p className="text-lg text-muted-foreground">
-            When Claude Code (or Cursor, Codex, OpenCode) finishes a turn, one runner
-            fires seven checks. Fail one, and the agent sees the failure and fixes it
-            before it ever shows up as a diff for you to review.
+            Every one runs on every turn. Miss none, skip none, and the agent can't raise
+            a threshold to make a failure disappear.
           </p>
         </div>
 
-        <ol className="max-w-3xl">
-          {HOOKS.map((hook, index) => (
-            <HookRow key={hook.name} index={index} {...hook} />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {HOOKS.map((hook) => (
+            <HookCard key={hook.cmd} {...hook} />
           ))}
-        </ol>
+          <div className="flex flex-col justify-center gap-2 rounded-xl border border-dashed bg-transparent p-5">
+            <span className={`${mono.className} text-muted-foreground text-sm`}>
+              + your own
+            </span>
+            <p className="text-muted-foreground text-sm">
+              Drop a script in .agents/hooks and add one line to the Stop array.
+            </p>
+          </div>
+        </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <p className="font-medium text-sm">One hook runner. Four coding agents.</p>
+        <div className="flex flex-wrap items-center gap-3 border-t pt-8">
+          <span className="font-medium text-sm">One runner. Four coding agents.</span>
           {AGENTS.map((agent) => (
-            <Badge key={agent} variant="secondary">
+            <Badge key={agent} variant="outline" className={`${mono.className} text-xs`}>
               {agent}
             </Badge>
           ))}
+        </div>
+
+        <div className="grid grid-cols-1 items-center gap-8 rounded-xl border bg-card/40 p-6 lg:grid-cols-2 lg:p-8">
+          <div className="flex flex-col gap-3">
+            <h3 className="font-semibold text-xl">No magic. It's in the repo.</h3>
+            <p className="text-muted-foreground">
+              The whole pipeline is a handful of lines in a config file you own, mirrored
+              for Cursor, Codex, and OpenCode. Read it, edit it, delete a check you don't
+              want.
+            </p>
+          </div>
+          <pre
+            className={`${mono.className} overflow-x-auto rounded-lg border bg-background/60 p-4 text-muted-foreground text-xs leading-relaxed`}
+          >
+            <code>{CONFIG}</code>
+          </pre>
         </div>
       </div>
     </section>

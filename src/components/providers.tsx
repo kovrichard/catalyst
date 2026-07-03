@@ -13,7 +13,12 @@ export function Providers({ children }: { children: ReactNode }) {
     // @catalyst:trpc-start
     <TRPCReactProvider>
       {/* @catalyst:trpc-end */}
-      <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
         {children}
       </ThemeProvider>
       {/* @catalyst:trpc-start */}

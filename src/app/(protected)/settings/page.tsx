@@ -1,3 +1,4 @@
+import AppearanceForm from "@/components/settings/appearance-form";
 import DeleteAccountForm from "@/components/settings/delete-account-form";
 import PasswordForm from "@/components/settings/password-form";
 import {
@@ -35,6 +36,7 @@ export default async function SettingsPage() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
+            <AppearanceForm />
             <PasswordForm hasPassword={hasPassword} />
             <DeleteAccountForm />
           </div>

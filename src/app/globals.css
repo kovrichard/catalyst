@@ -231,3 +231,28 @@
 .animate-blink {
   animation: blink 1s step-end infinite;
 }
+
+/* Faint engineering grid for section backdrops */
+.bg-grid {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in oklab, currentcolor 8%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, currentcolor 8%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+}
+
+/* Emerald "all clear" glow used behind the hero */
+.bg-glow {
+  background: radial-gradient(
+    46rem 28rem at 82% -8%,
+    rgb(16 185 129 / 16%),
+    transparent 62%
+  );
+}
