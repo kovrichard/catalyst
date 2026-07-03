@@ -45,6 +45,12 @@ jobs:
     - name: Klint
       run: bun run klint
 
+    - name: Madge
+      run: bun run madge
+
+    - name: Line endings
+      run: bun run lf
+
     - name: Tests
       run: bun run test
 

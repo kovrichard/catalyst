@@ -1,6 +1,6 @@
 import { Remover } from "./remover";
 
-const STRIPE_FILES_TO_DELETE = ["src/lib/stripe.ts"];
+const STRIPE_FILES_TO_DELETE = ["src/lib/stripe.ts", "src/lib/stripe-public.ts"];
 
 const STRIPE_FOLDERS_TO_DELETE = ["src/app/api/stripe"];
 

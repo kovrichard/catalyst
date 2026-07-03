@@ -12,7 +12,7 @@ import prisma from "@/lib/prisma/prisma";
 // @catalyst:stripe-start
 
 import type Stripe from "stripe";
-import { createStripeCustomer } from "@/lib/stripe";
+import { createStripeCustomer } from "@/lib/stripe-public";
 // @catalyst:stripe-end
 
 export const auth = betterAuth({

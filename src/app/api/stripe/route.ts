@@ -1,7 +1,7 @@
 import type Stripe from "stripe";
 import conf from "@/lib/config";
 import { logger } from "@/lib/logger";
-import { stripe } from "@/lib/stripe";
+import { stripe } from "@/lib/stripe-public";
 import { ensure } from "@/lib/utils";
 
 export async function POST(req: Request) {
