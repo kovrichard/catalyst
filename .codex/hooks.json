@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/check.ts --codex"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/type-check.ts --codex"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/knip.ts --codex"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/jscpd.ts --codex"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/klint.ts --codex"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/madge.ts --codex"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/lf.ts --codex"
+          }
+        ]
+      }
+    ]
+  }
+}

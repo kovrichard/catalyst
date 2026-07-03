@@ -8,7 +8,9 @@
           { "type": "command", "command": "bun .agents/hooks/type-check.ts" },
           { "type": "command", "command": "bun .agents/hooks/knip.ts" },
           { "type": "command", "command": "bun .agents/hooks/jscpd.ts" },
-          { "type": "command", "command": "bun .agents/hooks/klint.ts" }
+          { "type": "command", "command": "bun .agents/hooks/klint.ts" },
+          { "type": "command", "command": "bun .agents/hooks/madge.ts" },
+          { "type": "command", "command": "bun .agents/hooks/lf.ts" }
         ]
       }
     ]
@@ -26,6 +28,8 @@
       "Bash(bun run knip:*)",
       "Bash(bun run jscpd:*)",
       "Bash(bun run klint:*)",
+      "Bash(bun run madge:*)",
+      "Bash(bun run lf:*)",
       "Bash(bun run test:*)",
       "Bash(bun run build:*)",
       "Bash(bun test:*)",

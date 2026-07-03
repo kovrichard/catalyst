@@ -6,7 +6,9 @@
       { "command": "bun .agents/hooks/type-check.ts" },
       { "command": "bun .agents/hooks/knip.ts" },
       { "command": "bun .agents/hooks/jscpd.ts" },
-      { "command": "bun .agents/hooks/klint.ts" }
+      { "command": "bun .agents/hooks/klint.ts" },
+      { "command": "bun .agents/hooks/madge.ts" },
+      { "command": "bun .agents/hooks/lf.ts" }
     ]
   }
 }
