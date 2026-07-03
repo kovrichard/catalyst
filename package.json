@@ -82,7 +82,7 @@
     "@biomejs/biome": "2.5.2",
     "@commitlint/cli": "21.2.0",
     "@commitlint/config-conventional": "21.2.0",
-    "@konvert7/klint": "0.25.0",
+    "@konvert7/klint": "0.26.0",
     "@next/bundle-analyzer": "16.2.10",
     "@opencode-ai/plugin": "1.17.13",
     "@react-email/ui": "6.6.6",

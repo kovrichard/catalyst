@@ -44,7 +44,7 @@
         "@biomejs/biome": "2.5.2",
         "@commitlint/cli": "21.2.0",
         "@commitlint/config-conventional": "21.2.0",
-        "@konvert7/klint": "0.25.0",
+        "@konvert7/klint": "0.26.0",
         "@next/bundle-analyzer": "16.2.10",
         "@opencode-ai/plugin": "1.17.13",
         "@react-email/ui": "6.6.6",
@@ -406,15 +406,15 @@
 
     "@jridgewell/trace-mapping": ["@jridgewell/trace-mapping@0.3.25", "", { "dependencies": { "@jridgewell/resolve-uri": "^3.1.0", "@jridgewell/sourcemap-codec": "^1.4.14" } }, "sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ=="],
 
-    "@konvert7/klint": ["@konvert7/klint@0.25.0", "", { "dependencies": { "@clack/prompts": "^1.3.0", "typescript": "^5.9.3", "yaml": "^2.9.0", "zod": "^4.4.3" }, "optionalDependencies": { "@konvert7/klint-darwin-arm64": "0.25.0", "@konvert7/klint-darwin-x64": "0.25.0", "@konvert7/klint-linux-x64": "0.25.0", "@konvert7/klint-win32-x64": "0.25.0" }, "bin": { "klint": "cli.ts" } }, "sha512-D2RZ6Bbw7MG3FgjkbYOGp6j3QXzBufVplSLiEj3g+O0/tUWTwjAsoluOL2IULV74EtgOBXwzRAO9SljuuPMtxA=="],
+    "@konvert7/klint": ["@konvert7/klint@0.26.0", "", { "dependencies": { "@clack/prompts": "^1.3.0", "typescript": "^5.9.3", "yaml": "^2.9.0", "zod": "^4.4.3" }, "optionalDependencies": { "@konvert7/klint-darwin-arm64": "0.26.0", "@konvert7/klint-darwin-x64": "0.26.0", "@konvert7/klint-linux-x64": "0.26.0", "@konvert7/klint-win32-x64": "0.26.0" }, "bin": { "klint": "cli.ts" } }, "sha512-DQcVyYFK0sNJgs4hEtcklUt/ezzmHNdkI50Lt0pETtNLRVaqJQOSf+7ZvUAg98WAlfJqWuQUxsknfBePCDJ0Fw=="],
 
-    "@konvert7/klint-darwin-arm64": ["@konvert7/klint-darwin-arm64@0.25.0", "", { "os": "darwin", "cpu": "arm64", "bin": { "klint-rs": "bin/klint-rs" } }, "sha512-msEOciNv+i7EFg7NjyBkWmEZKb/ZZ3Bmfg/+igJXAdWKpv31HzcMbfenuR33tbP+MgpurJya0l1g7nNJVIaDKA=="],
+    "@konvert7/klint-darwin-arm64": ["@konvert7/klint-darwin-arm64@0.26.0", "", { "os": "darwin", "cpu": "arm64", "bin": { "klint-rs": "bin/klint-rs" } }, "sha512-XbRR0tuCWQrn3aQCrUEd7wWNHiw/dY9QwGge7g0dcWjp6+c0Qp+c3ED7ihjpeIhX+AI8YCokL7ZVDtx3ajgIUg=="],
 
-    "@konvert7/klint-darwin-x64": ["@konvert7/klint-darwin-x64@0.25.0", "", { "os": "darwin", "cpu": "x64", "bin": { "klint-rs": "bin/klint-rs" } }, "sha512-YNJkq/zCbMBDi5mIElJ6GgKzNzBzWphgI9Xhqlq5dL8zEMFDte8nWbbcvrD1o3/uBSYlqoDL6TS7egwKT/syYA=="],
+    "@konvert7/klint-darwin-x64": ["@konvert7/klint-darwin-x64@0.26.0", "", { "os": "darwin", "cpu": "x64", "bin": { "klint-rs": "bin/klint-rs" } }, "sha512-E66kjt1D0ffJtayaLsJfIj7p1zDW8ZpuQ6jUzPVKYRVi/nsCMWhiu6/aq7fVBdIkst4+dQtzzySa1Hsc2j7suw=="],
 
-    "@konvert7/klint-linux-x64": ["@konvert7/klint-linux-x64@0.25.0", "", { "os": "linux", "cpu": "x64", "bin": { "klint-rs": "bin/klint-rs" } }, "sha512-qWCC4kifzs97O/Sxlr/WUYTfrk/0he+K71HCe5wtO5Y8iIICyX1/lRKyCItym+w/WKR0wQUlx3GI4/rjsEyhIQ=="],
+    "@konvert7/klint-linux-x64": ["@konvert7/klint-linux-x64@0.26.0", "", { "os": "linux", "cpu": "x64", "bin": { "klint-rs": "bin/klint-rs" } }, "sha512-8TLXmLR8lK9Uv2B0MHENStoRUbL+djOodEY3PaOlFofapmIaEPaYCOSoj044orQu2L6uBY9XuBT4y+9ggqqRoA=="],
 
-    "@konvert7/klint-win32-x64": ["@konvert7/klint-win32-x64@0.25.0", "", { "os": "win32", "cpu": "x64", "bin": { "klint-rs": "bin/klint-rs.exe" } }, "sha512-AR96PIXMXXtpMqH8hJ/hvPVwpwjOCWsauIhztk8RfrkeS6YDw14y/HzYjXLf/fGiNg3KoJRKCE259w+EM2dETg=="],
+    "@konvert7/klint-win32-x64": ["@konvert7/klint-win32-x64@0.26.0", "", { "os": "win32", "cpu": "x64", "bin": { "klint-rs": "bin/klint-rs.exe" } }, "sha512-x4ZWRayRADJdrScLdT2WwOEF1lVDmIb4c4qEKvYA+TXPqWAxb0PC+ZNheLKdyAss5goKA30k9F2frnp0OeIs9A=="],
 
     "@kurkle/color": ["@kurkle/color@0.3.4", "", {}, "sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w=="],
 
