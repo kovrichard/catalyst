@@ -6,7 +6,7 @@ const exitCode = runHook(["bun", "run", "jscpd", "--silent"]);
 if (exitCode === 0) process.exit(0);
 
 process.stderr.write("\n--- jscpd: offending clones ---\n");
-runHook(["bun", "run", "jscpd"]);
+runHook(["bun", "run", "jscpd", "--reporters", "ai"]);
 process.stderr.write(
   "\n--- ACTION ---\n" +
     "Refactor the duplicated code to eliminate it.\n" +

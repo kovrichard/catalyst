@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/kucherenko/jscpd/master/packages/finder/schema.json",
   "threshold": 2.5,
   "reporters": ["threshold"],
   "absolute": false,

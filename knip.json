@@ -11,8 +11,7 @@
     ".opencode/plugins/lint.ts",
     "src/lib/aws/ses.tsx",
     "src/lib/metadata.ts",
-    "src/lib/stripe.ts",
-    "scripts/removers/remover.ts"
+    "src/lib/stripe.ts"
   ],
   "ignoreDependencies": [
     "@opencode-ai/plugin",
