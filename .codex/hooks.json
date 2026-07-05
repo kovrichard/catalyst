@@ -57,6 +57,22 @@
             "command": "bun .agents/hooks/lf.ts --codex"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/secretlint.ts --codex"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/build.ts --codex"
+          }
+        ]
       }
     ]
   }

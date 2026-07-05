@@ -8,7 +8,9 @@
       { "command": "bun .agents/hooks/jscpd.ts" },
       { "command": "bun .agents/hooks/klint.ts" },
       { "command": "bun .agents/hooks/madge.ts" },
-      { "command": "bun .agents/hooks/lf.ts" }
+      { "command": "bun .agents/hooks/lf.ts" },
+      { "command": "bun .agents/hooks/secretlint.ts" },
+      { "command": "bun .agents/hooks/build.ts" }
     ]
   }
 }

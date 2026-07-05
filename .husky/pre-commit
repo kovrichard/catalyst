@@ -7,3 +7,4 @@ bun run jscpd
 bun run klint
 bun run madge
 bun run lf
+bun run secretlint

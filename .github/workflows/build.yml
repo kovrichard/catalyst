@@ -55,6 +55,9 @@ jobs:
     - name: Line endings
       run: bun run lf
 
+    - name: Secretlint
+      run: bun run secretlint
+
     - name: Tests
       run: bun run test
 

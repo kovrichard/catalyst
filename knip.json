@@ -15,6 +15,7 @@
   ],
   "ignoreDependencies": [
     "@opencode-ai/plugin",
-    "shadcn"
+    "shadcn",
+    "@secretlint/secretlint-rule-preset-recommend"
   ]
 }
