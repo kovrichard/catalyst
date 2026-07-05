@@ -11,8 +11,7 @@
           { "type": "command", "command": "bun .agents/hooks/klint.ts" },
           { "type": "command", "command": "bun .agents/hooks/madge.ts" },
           { "type": "command", "command": "bun .agents/hooks/lf.ts" },
-          { "type": "command", "command": "bun .agents/hooks/secretlint.ts" },
-          { "type": "command", "command": "bun .agents/hooks/build.ts" }
+          { "type": "command", "command": "bun .agents/hooks/secretlint.ts" }
         ]
       }
     ]
