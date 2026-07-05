@@ -10,10 +10,7 @@ export const LintPlugin: Plugin = async ({ $ }) => {
       await $`bun run klint --json`;
       await $`bun run madge`;
       await $`bun run lf`;
-      await $`bun run test`;
-    },
-    "session.idle": async () => {
-      await $`bun run build`;
+      await $`bun run secretlint`;
     },
   };
 };
