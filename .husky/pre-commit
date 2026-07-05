@@ -1,1 +1,9 @@
-bun run lint-staged && bun run type-check && bun run knip && bun run jscpd && bun run klint && bun run madge && bun run lf
+set -e
+
+bun run lint-staged
+bun run type-check
+bun run knip
+bun run jscpd
+bun run klint
+bun run madge
+bun run lf
