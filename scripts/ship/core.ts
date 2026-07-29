@@ -8,6 +8,7 @@ export type ShipArgs = {
   sha: string;
   branch: string;
   env: string;
+  ciWorkflow: string;
   skipCi: boolean;
   extra: Record<string, string>;
 };
@@ -48,7 +49,7 @@ export function requireEnv(name: string): string {
   return value as string;
 }
 
-const KNOWN_FLAGS = new Set(["--sha", "--branch", "--env", "--no-ci"]);
+const KNOWN_FLAGS = new Set(["--sha", "--branch", "--env", "--ci-workflow", "--no-ci"]);
 
 export function parseArgs(): ShipArgs {
   const argv = process.argv.slice(2);
@@ -68,6 +69,7 @@ export function parseArgs(): ShipArgs {
     sha: get("--sha") ?? positionalSha ?? sh("git rev-parse HEAD"),
     branch: get("--branch") ?? "stage",
     env: get("--env") ?? "stage",
+    ciWorkflow: get("--ci-workflow") ?? "build",
     skipCi: argv.includes("--no-ci"),
     extra,
   };
@@ -88,16 +90,19 @@ export function parseJson<T>(raw: string, source: string): T {
   }
 }
 
-async function waitForCi(sha: string, branch: string): Promise<void> {
+// `gh run list` is newest-first and a branch usually carries several workflows,
+// so the run must be pinned to the CI workflow by name — otherwise a later
+// workflow for the same commit wins the lookup and gets mistaken for CI.
+async function waitForCi(sha: string, branch: string, workflow: string): Promise<void> {
   const deadline = Date.now() + CI_TIMEOUT_MS;
   while (Date.now() < deadline) {
     const runs = parseJson<CiRun[]>(
       sh(
-        `gh run list --branch ${branch} --limit 20 --json databaseId,headSha,status,conclusion,workflowName`
+        `gh run list --branch ${branch} --workflow ${workflow} --limit 20 --json databaseId,headSha,status,conclusion,workflowName`
       ),
-      '"gh run list" output'
+      `"gh run list --workflow ${workflow}" output`
     );
-    const run = runs.find((r) => r.headSha === sha);
+    const run = runs.find((r) => r.headSha.startsWith(sha) || sha.startsWith(r.headSha));
     if (!run) {
       log("ci", `no run for ${sha.slice(0, 7)} yet…`);
     } else if (run.status !== "completed") {
@@ -123,7 +128,7 @@ export async function runShip(provider: ShipProvider): Promise<void> {
   if (args.skipCi) {
     log("ci", "skipped (--no-ci)");
   } else {
-    await waitForCi(args.sha, args.branch);
+    await waitForCi(args.sha, args.branch, args.ciWorkflow);
   }
 
   const deadline = Date.now() + DEPLOY_TIMEOUT_MS;
