@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -62,10 +62,11 @@ jobs:
       run: bun run test
 
     - name: Build project
+      if: github.event_name == 'pull_request'
       run: bun run build
 
   publish:
-    needs: build
+    needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
