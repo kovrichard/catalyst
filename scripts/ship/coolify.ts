@@ -3,29 +3,41 @@
 import {
   type DeployStatus,
   fail,
+  parseJson,
   requireEnv,
   runShip,
   type ShipArgs,
   type ShipProvider,
+  sh,
 } from "./core";
 
 const baseUrl = requireEnv("COOLIFY_BASE_URL").replace(/\/+$/, "");
 const token = requireEnv("COOLIFY_ACCESS_TOKEN");
 
 const API = `${baseUrl}/api/v1`;
+const DEPLOY_WORKFLOW = "deploy";
 const DEPLOYMENT_PAGE_SIZE = 20;
+const CLOCK_SKEW_MS = 30_000;
+
+const TERMINAL_FAILURES = new Set(["failed", "cancelled-by-user"]);
+const SUCCESS = "finished";
+
+type DeployRun = {
+  databaseId: number;
+  headSha: string;
+  status: string;
+  conclusion: string;
+  startedAt: string;
+};
 
 type DeploymentRecord = {
   deployment_uuid: string;
   status: string;
-  commit?: string;
+  created_at: string;
   commit_message?: string;
   server_name?: string;
   updated_at?: string;
 };
-
-const TERMINAL_FAILURES = new Set(["failed", "cancelled-by-user"]);
-const SUCCESS = "finished";
 
 async function coolify(path: string): Promise<unknown> {
   const res = await fetch(`${API}${path}`, {
@@ -45,7 +57,7 @@ function appUuidFor(args: ShipArgs): string {
 }
 
 // Coolify's OpenAPI declares GET /deployments/applications/{uuid} as Application[],
-// but the running API returns deployment records, sometimes wrapped in a container.
+// but the running API returns {count, deployments:[…]}.
 function toDeploymentRecords(payload: unknown): DeploymentRecord[] {
   if (Array.isArray(payload)) return payload as DeploymentRecord[];
   const container = (payload ?? {}) as { deployments?: unknown; data?: unknown };
@@ -53,25 +65,66 @@ function toDeploymentRecords(payload: unknown): DeploymentRecord[] {
   return Array.isArray(list) ? (list as DeploymentRecord[]) : [];
 }
 
-function matchesCommit(deployment: DeploymentRecord, sha: string): boolean {
-  const commit = deployment.commit;
-  if (!commit) return false;
-  return commit.startsWith(sha) || sha.startsWith(commit);
+// The app uses the dockerimage build pack, so Coolify never learns the commit it
+// is running — every deployment record reads commit="HEAD". The deploy workflow
+// run is what ties a commit to a deployment: it fires the webhook only for its
+// own sha, so its start time bounds which deployment belongs to that commit.
+function deployRunFor(sha: string, branch: string): DeployRun | undefined {
+  const runs = parseJson<DeployRun[]>(
+    sh(
+      `gh run list --branch ${branch} --workflow ${DEPLOY_WORKFLOW} --limit 20 --json databaseId,headSha,status,conclusion,startedAt`
+    ),
+    `"gh run list --workflow ${DEPLOY_WORKFLOW}" output`
+  );
+  return runs.find((run) => run.headSha.startsWith(sha) || sha.startsWith(run.headSha));
+}
+
+function firstDeploymentAfter(
+  records: DeploymentRecord[],
+  since: number
+): DeploymentRecord | undefined {
+  return records
+    .filter((record) => Date.parse(record.created_at) >= since)
+    .sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at))[0];
 }
 
 const coolifyProvider: ShipProvider = {
   name: "coolify",
   async checkDeploy(sha: string, args: ShipArgs): Promise<DeployStatus> {
-    const appUuid = appUuidFor(args);
+    const run = deployRunFor(sha, args.branch);
+    if (!run) {
+      return {
+        state: "pending",
+        detail: `no ${DEPLOY_WORKFLOW} run for ${sha.slice(0, 7)} yet…`,
+      };
+    }
+    if (run.status !== "completed") {
+      return {
+        state: "pending",
+        detail: `${DEPLOY_WORKFLOW} run ${run.databaseId} ${run.status}…`,
+      };
+    }
+    if (run.conclusion !== "success") {
+      return {
+        state: "failed",
+        detail: `${DEPLOY_WORKFLOW} run ${run.databaseId} concluded "${run.conclusion}" — the webhook was rejected`,
+      };
+    }
+
     const records = toDeploymentRecords(
-      await coolify(`/deployments/applications/${appUuid}?take=${DEPLOYMENT_PAGE_SIZE}`)
+      await coolify(
+        `/deployments/applications/${appUuidFor(args)}?take=${DEPLOYMENT_PAGE_SIZE}`
+      )
     );
-    const deployment = records.find((record) => matchesCommit(record, sha));
+    const deployment = firstDeploymentAfter(
+      records,
+      Date.parse(run.startedAt) - CLOCK_SKEW_MS
+    );
 
     if (!deployment) {
       return {
         state: "pending",
-        detail: `no Coolify deployment for ${sha.slice(0, 7)} yet…`,
+        detail: "webhook accepted, waiting for Coolify to register the deployment…",
       };
     }
     if (TERMINAL_FAILURES.has(deployment.status)) {
@@ -87,7 +140,7 @@ const coolifyProvider: ShipProvider = {
     return {
       state: "success",
       meta: {
-        appUuid,
+        deployWorkflowRun: run.databaseId,
         deploymentUuid: deployment.deployment_uuid,
         status: deployment.status,
         commitMessage: deployment.commit_message,

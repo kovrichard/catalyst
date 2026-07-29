@@ -47,7 +47,9 @@ Also needs `gh` authenticated (for the CI gate) and `playwright-cli` available �
    bun scripts/ship/coolify.ts --no-ci             # skip the GitHub CI gate
    ```
 
-   It gates on, in order: GitHub CI `conclusion==success` → a Coolify deployment whose `commit` matches the pushed SHA reaching `status=="finished"`. Exit `0` with a final `{"ok":true,...}` line means it's deployed. Non-zero + `{"ok":false,"error":...}` means it broke — surface the error verbatim.
+   It gates on, in order: GitHub CI `conclusion==success` → the `deploy` workflow run for that SHA concluding `success` → the Coolify deployment it triggered reaching `status=="finished"`. Exit `0` with a final `{"ok":true,...}` line means it's deployed. Non-zero + `{"ok":false,"error":...}` means it broke — surface the error verbatim.
+
+   **Why three gates and not two.** The app uses the `dockerimage` build pack, so Coolify pulls a prebuilt image and never learns which commit it is running — every deployment record reads `commit: "HEAD"`. The `deploy` workflow run is the only thing that ties a commit to a deployment, since it fires the webhook solely for its own SHA. Its success alone is not enough either: the webhook returns as soon as Coolify *queues* the build, so the run can go green while the deployment is still building or about to fail. The poller therefore uses the run's start time to pick out the deployment it triggered, then waits on that deployment's real status.
 
 3. **Visual check** (only after the poller succeeds) — use the environment's URL:
 
@@ -97,7 +99,8 @@ Never echo the token, and never paste a resolved URL or UUID into a committed fi
 
 `GET /deployments/{uuid}` returns an `ApplicationDeploymentQueue`. The fields that matter for shipping:
 
-- `commit` — the git SHA being deployed. **This is the key you match a push against.**
+- `commit` — the git SHA, **but only for git-based build packs**. On a `dockerimage` app (this repo) it is always the literal string `"HEAD"`, so it cannot be used to identify a push.
+- `created_at` — the key this repo correlates against, bounded by the `deploy` workflow run's start time
 - `status` — see enum below
 - `deployment_uuid`, `application_name`, `commit_message`, `server_name`
 - `logs` — build output, useful when a deploy fails

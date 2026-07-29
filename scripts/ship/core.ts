@@ -80,21 +80,22 @@ type CiRun = {
   conclusion: string;
 };
 
-function parseCiRuns(raw: string): CiRun[] {
+export function parseJson<T>(raw: string, source: string): T {
   try {
-    return JSON.parse(raw) as CiRun[];
+    return JSON.parse(raw) as T;
   } catch {
-    return fail(`Could not parse "gh run list" output as JSON: ${raw.slice(0, 200)}`);
+    return fail(`Could not parse ${source} as JSON: ${raw.slice(0, 200)}`);
   }
 }
 
 async function waitForCi(sha: string, branch: string): Promise<void> {
   const deadline = Date.now() + CI_TIMEOUT_MS;
   while (Date.now() < deadline) {
-    const runs = parseCiRuns(
+    const runs = parseJson<CiRun[]>(
       sh(
         `gh run list --branch ${branch} --limit 20 --json databaseId,headSha,status,conclusion,workflowName`
-      )
+      ),
+      '"gh run list" output'
     );
     const run = runs.find((r) => r.headSha === sha);
     if (!run) {

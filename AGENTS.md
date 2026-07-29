@@ -98,9 +98,10 @@ use the `shadcn` MCP tool to find and install the missing component.
 
 ## Shipping
 
-- After a push, use a **`ship-*`** skill to verify the deploy end-to-end before proposing a PR into `main`. This repo deploys to Coolify, so use **`/ship-coolify`**. It waits for GitHub CI, then the Coolify deployment (`status=="finished"`, keyed to the pushed commit), and does a visual check.
+- After a push, use a **`ship-*`** skill to verify the deploy end-to-end before proposing a PR into `main`. This repo deploys to Coolify, so use **`/ship-coolify`**. It waits for GitHub CI, then the `deploy` workflow run for that commit, then the Coolify deployment it triggered (`status=="finished"`), and does a visual check.
 - The platform-agnostic orchestration lives in `scripts/ship/core.ts`; each platform is a thin provider (`scripts/ship/coolify.ts`). Run the poller directly: `bun scripts/ship/coolify.ts [--sha=<sha>] [--env=stage|production] [--app=<uuid>] [--no-ci]`. Exit `0` + `{"ok":true}` means deployed; non-zero + `{"ok":false,"error":...}` means a gate failed — surface the error verbatim.
 - Needs `COOLIFY_BASE_URL`, `COOLIFY_ACCESS_TOKEN`, and an app UUID (`COOLIFY_APP_UUID_<ENV>` or `COOLIFY_APP_UUID`) in `.env` — gitignored, and `bun` auto-loads it, so the scripts pick it up with no shell setup. See `.env.sample`. Also needs an authenticated `gh`. Nothing about your instance is committed — the `/ship-coolify` skill also doubles as the Coolify REST API reference.
+- Deployment itself is CI's job: `.github/workflows/deploy.yml` runs on `workflow_run` after `build` succeeds on `main` and hits the Coolify deploy webhook. It is gated on the `COOLIFY_WEBHOOK` variable in the `Production` environment (plus a repo-level `COOLIFY_TOKEN` secret) — unset means the step skips, so forks are unaffected. Same mechanism as `letterbox`.
 - Stop once the environment is deployed **and** visually checked. Never open the PR into `main` automatically — that's the user's call.
 
 ## Code organization
