@@ -1,0 +1,23 @@
+name: deploy
+
+on:
+  workflow_run:
+    workflows: [build]
+    types: [completed]
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+    - name: Deploy to Coolify
+      if: vars.COOLIFY_WEBHOOK != ''
+      run: |
+        curl --fail --request GET '${{ vars.COOLIFY_WEBHOOK }}' \
+          --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
