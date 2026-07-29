@@ -96,6 +96,13 @@ use the `shadcn` MCP tool to find and install the missing component.
   - `/playwright-cli` → `.playwright-cli/`. A default-named `playwright-cli screenshot` auto-saves there; with an explicit name keep it under the folder (`--filename=.playwright-cli/<name>.png`) — a bare relative name lands in root.
   - Playwright MCP → `.playwright-mcp/` (enforced via `--output-dir` in `.mcp.json`; use relative `filename`s).
 
+## Shipping
+
+- After a push, use a **`ship-*`** skill to verify the deploy end-to-end before proposing a PR into `main`. This repo deploys to Coolify, so use **`/ship-coolify`**. It waits for GitHub CI, then the Coolify deployment (`status=="finished"`, keyed to the pushed commit), and does a visual check.
+- The platform-agnostic orchestration lives in `scripts/ship/core.ts`; each platform is a thin provider (`scripts/ship/coolify.ts`). Run the poller directly: `bun scripts/ship/coolify.ts [--sha=<sha>] [--env=stage|production] [--app=<uuid>] [--no-ci]`. Exit `0` + `{"ok":true}` means deployed; non-zero + `{"ok":false,"error":...}` means a gate failed — surface the error verbatim.
+- Needs `COOLIFY_BASE_URL`, `COOLIFY_ACCESS_TOKEN`, and an app UUID (`COOLIFY_APP_UUID_<ENV>` or `COOLIFY_APP_UUID`) in `.env` — gitignored, and `bun` auto-loads it, so the scripts pick it up with no shell setup. See `.env.sample`. Also needs an authenticated `gh`. Nothing about your instance is committed — the `/ship-coolify` skill also doubles as the Coolify REST API reference.
+- Stop once the environment is deployed **and** visually checked. Never open the PR into `main` automatically — that's the user's call.
+
 ## Code organization
 
 - Keep contexts in `/src/lib/contexts/` folder, hooks in `/src/hooks/` folder, and utils in `/src/lib/utils/` folder.

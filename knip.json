@@ -5,6 +5,7 @@
   ],
   "ignore": [
     "scripts/utils/*",
+    "scripts/ship/**",
     ".agents/hooks/*",
     "src/components/ui/*",
     "src/lib/trpc/*",
