@@ -26,12 +26,31 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       style={
         {
+          fontFamily: "inherit",
           "--normal-bg": "var(--popover)",
           "--normal-text": "var(--popover-foreground)",
           "--normal-border": "var(--border)",
+          "--normal-bg-hover": "var(--accent)",
+          "--normal-border-hover": "var(--border)",
           "--border-radius": "var(--radius)",
         } as React.CSSProperties
       }
+      toastOptions={{
+        classNames: {
+          toast: "text-sm! gap-2!",
+          description: "text-muted-foreground!",
+          actionButton:
+            "bg-primary! text-primary-foreground! rounded-md! h-7! px-2.5! font-medium!",
+          cancelButton: "bg-muted! text-muted-foreground! rounded-md! h-7! px-2.5!",
+          closeButton:
+            "bg-popover! text-muted-foreground! border-border! hover:text-foreground!",
+          success:
+            "[&_[data-icon]]:text-emerald-600 dark:[&_[data-icon]]:text-emerald-400",
+          error: "[&_[data-icon]]:text-destructive",
+          warning: "[&_[data-icon]]:text-amber-600 dark:[&_[data-icon]]:text-amber-400",
+          info: "[&_[data-icon]]:text-primary",
+        },
+      }}
       {...props}
     />
   );
