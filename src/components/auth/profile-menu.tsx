@@ -1,7 +1,9 @@
 "use client";
 
-import { ExternalLink, FileText, Settings } from "lucide-react";
+import { ExternalLink, FileText, Monitor, Moon, Settings, Sun } from "lucide-react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import { SignOut } from "@/components/sidebar/signout-button";
 import {
   DropdownMenuContent,
@@ -9,13 +11,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+
+const THEME_OPTIONS = [
+  { value: "light", label: "Light", Icon: Sun },
+  { value: "system", label: "System", Icon: Monitor },
+  { value: "dark", label: "Dark", Icon: Moon },
+] as const;
 
 // @catalyst:stripe-start
 
 import { useQuery } from "@tanstack/react-query";
 import { CreditCard } from "lucide-react";
-import { useEffect } from "react";
 import { useTRPC } from "@/lib/trpc/client";
 // @catalyst:stripe-end
 
@@ -28,6 +36,14 @@ export default function ProfileMenu({
   userEmail: string;
   userImage?: string;
 }>) {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  const ActiveThemeIcon =
+    THEME_OPTIONS.find((option) => option.value === theme)?.Icon ?? Moon;
+
   // @catalyst:stripe-start
   const trpc = useTRPC();
   const { data: billingPortalUrl, refetch } = useQuery(
@@ -102,6 +118,30 @@ export default function ProfileMenu({
           </span>
         </a>
       </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <div className="flex items-center justify-between gap-2 px-2 py-1.5">
+        <div className="flex items-center gap-2 text-sm">
+          <ActiveThemeIcon className="size-4 shrink-0 text-muted-foreground" />
+          Theme
+        </div>
+        <ToggleGroup
+          type="single"
+          value={mounted ? theme : ""}
+          onValueChange={(value) => value && setTheme(value)}
+          className="gap-0.5 rounded-md bg-muted p-0.5"
+        >
+          {THEME_OPTIONS.map(({ value, label, Icon }) => (
+            <ToggleGroupItem
+              key={value}
+              value={value}
+              aria-label={label}
+              className="size-7 min-w-0 rounded-[5px] p-0 text-muted-foreground data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm"
+            >
+              <Icon className="size-3.5" />
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+      </div>
       <DropdownMenuSeparator />
       <DropdownMenuItem asChild>
         <SignOut buttonText="Sign Out" />
