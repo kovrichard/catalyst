@@ -52,7 +52,13 @@ arch:
     - jsx-element: ["button", "input", "label"]
       in: app-ui
       message: "Use the design-system primitives from @/components/ui/* (Button, Input, Label) instead of raw HTML elements."
+  maxCommentDensity:
+    - limit: 15
+      in: ["src/**", "scripts/**", "!src/components/ui/**"]
+      ignore: ["@catalyst:"]
+      message: "Too much of this file is explanatory prose — encode intent in names and small functions. @catalyst: markers and JSDoc are exempt."
   maxCommentBlock:
     - limit: 3
       in: ["src/**", "scripts/**", "!src/components/ui/**"]
-      message: "Comment block too tall — extract a well-named function instead of stacking explanatory lines. JSDoc blocks are exempt."
+      ignore: ["@catalyst:"]
+      message: "Comment block too tall — extract a well-named function instead of stacking explanatory lines. @catalyst: markers and JSDoc are exempt."
