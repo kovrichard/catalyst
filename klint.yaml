@@ -30,11 +30,20 @@ arch:
       - "!src/lib/dao/**"
       - "!src/lib/prisma/**"
       - "!src/auth.ts"
+    dao:
+      - "src/lib/dao/**"
+    request-context:
+      - "src/lib/session.ts"
+      - "src/auth.ts"
   imports:
     - from: outside-dao
       deny: prisma-client
       type-only: allow
       message: "Prisma belongs in the DAO — add a function under src/lib/dao/ and call that instead. src/auth.ts is the only exception, because Better Auth's prismaAdapter takes the client instance itself."
+    - from: dao
+      deny: request-context
+      type-only: allow
+      message: "DAO functions must not read the session — take userId as a parameter instead. Reading request state binds the query to a request, which breaks webhook and cron callers and forces dynamic rendering."
   forbidden:
     - jsx-element: ["button", "input", "label"]
       in: app-ui
