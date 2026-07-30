@@ -1,11 +1,7 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
-import { Lobster } from "next/font/google";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-
-const lobster = Lobster({ subsets: ["latin"], weight: "400" });
 
 export default function LastUsedIndicator({
   provider,
@@ -23,16 +19,14 @@ export default function LastUsedIndicator({
 
   return (
     isLastUsed && (
-      <div
+      <span
         className={cn(
-          "absolute top-0 right-4 bottom-0 flex items-center justify-center gap-2 text-foreground text-sm sm:-right-28 sm:text-lg",
-          lobster.className,
+          "pointer-events-none absolute -top-2 -right-2 rounded-md border border-primary bg-secondary px-2 py-1 font-semibold text-[10px] text-secondary-foreground uppercase leading-none tracking-wide",
           className
         )}
       >
-        <ArrowLeft size={24} className="hidden sm:block" />
-        <span>Last used</span>
-      </div>
+        Last used
+      </span>
     )
   );
 }
