@@ -5,7 +5,7 @@ import superjson from "superjson";
 
 import { TRPCError } from "@trpc/server";
 import { cache } from "react";
-import { getUserFromSession } from "@/lib/services/user.service";
+import { getUserFromSession } from "@/lib/session";
 
 export const createTRPCContext = cache(async () => {
   const user = await getUserFromSession();

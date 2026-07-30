@@ -84,10 +84,16 @@ use the `shadcn` MCP tool to find and install the missing component.
   - Fix any errors or warnings until the code passes the checks.
 - Install new dependencies with `bun add <package> --exact`, meaning the exact version of the package.
   - If a dependency is installed with ^, install that exact version and remove the ^.
-- Write prisma functions in `/src/lib/dao/` or `src/lib/actions/` folders. Never import
-  `prisma` directly in route handlers or components. Before implementing a database query,
-  check if it already exists in the `dao` folder. If it does, use it. If it doesn't, create
-  a new function in the `dao` folder, then import and use it wherever needed.
+- Write prisma functions in `/src/lib/dao/`. Nothing outside that folder may import the prisma
+  client — `src/auth.ts` is the only exception, because Better Auth's `prismaAdapter` takes the
+  client instance itself. The `arch.imports` rule in `klint.yaml` enforces this, so a stray
+  import fails `bun run klint`. Before implementing a database query, check if it already
+  exists in the `dao` folder. If it does, use it. If it doesn't, create a new function in the
+  `dao` folder, then import and use it wherever needed.
+- Session access lives in `src/lib/session.ts` (`getUserFromSession`, `getUserIdFromSession`).
+  Pass the resulting `userId` into DAO functions explicitly — DAO functions must never read the
+  session themselves, since `headers()` would make them request-bound and unusable from
+  webhooks or cron.
 
 ## Visual checks & browser automation
 

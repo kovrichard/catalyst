@@ -1,5 +1,5 @@
 import conf from "@/lib/config";
-import { getUserFromSession } from "@/lib/services/user.service";
+import { getUserFromSession } from "@/lib/session";
 import { ensure } from "@/lib/utils";
 import { stripe } from "./stripe-public";
 

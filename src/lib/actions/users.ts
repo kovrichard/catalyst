@@ -6,10 +6,10 @@ import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { auth } from "@/auth";
 import conf from "@/lib/config";
+import { deleteUserById } from "@/lib/dao/users";
 import { logger } from "@/lib/logger";
-import prisma from "@/lib/prisma/prisma";
 import publicConf from "@/lib/public-config";
-import { getUserIdFromSession } from "@/lib/services/user.service";
+import { getUserIdFromSession } from "@/lib/session";
 import { turnstileFailedResponse, verifyTurnstile } from "@/lib/turnstile";
 import type { FormState } from "@/lib/utils";
 import {
@@ -174,11 +174,7 @@ export async function requestPasswordReset(email: string): Promise<FormState> {
 export async function deleteUser(): Promise<FormState> {
   const userId = await getUserIdFromSession();
 
-  await prisma.user.delete({
-    where: {
-      id: userId,
-    },
-  });
+  await deleteUserById(userId);
 
   return {
     message: "User deleted",

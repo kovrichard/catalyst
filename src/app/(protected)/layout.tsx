@@ -6,7 +6,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 
 // @catalyst:auth-start
 
-import { getUserFromSession } from "@/lib/services/user.service";
+import { getUserFromSession } from "@/lib/session";
 // @catalyst:auth-end
 
 export default async function Layout({

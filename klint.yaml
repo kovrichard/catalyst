@@ -23,6 +23,18 @@ arch:
       - "src/app/**/*.tsx"
       - "src/components/**/*.tsx"
       - "!src/components/ui/**"
+    prisma-client:
+      - "src/lib/prisma/prisma.ts"
+    outside-dao:
+      - "src/**"
+      - "!src/lib/dao/**"
+      - "!src/lib/prisma/**"
+      - "!src/auth.ts"
+  imports:
+    - from: outside-dao
+      deny: prisma-client
+      type-only: allow
+      message: "Prisma belongs in the DAO — add a function under src/lib/dao/ and call that instead. src/auth.ts is the only exception, because Better Auth's prismaAdapter takes the client instance itself."
   forbidden:
     - jsx-element: ["button", "input", "label"]
       in: app-ui

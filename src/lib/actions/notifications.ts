@@ -2,12 +2,20 @@
 
 import "server-only";
 
-import { markAsRead, markMultipleAsRead } from "@/lib/services/notification.service";
+import {
+  markMultipleNotificationsAsRead,
+  markNotificationAsRead,
+} from "@/lib/dao/notifications";
+import { getUserIdFromSession } from "@/lib/session";
 
 export async function readNotification(notificationId: string): Promise<void> {
-  await markAsRead(notificationId);
+  const userId = await getUserIdFromSession();
+
+  await markNotificationAsRead(notificationId, userId);
 }
 
 export async function readNotifications(notificationIds: string[]): Promise<void> {
-  await markMultipleAsRead(notificationIds);
+  const userId = await getUserIdFromSession();
+
+  await markMultipleNotificationsAsRead(notificationIds, userId);
 }

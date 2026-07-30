@@ -7,24 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import prisma from "@/lib/prisma/prisma";
-import { getUserIdFromSession } from "@/lib/services/user.service";
+import { userHasPassword } from "@/lib/dao/users";
+import { getUserIdFromSession } from "@/lib/session";
 
 export default async function SettingsPage() {
   const userId = await getUserIdFromSession();
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-    select: {
-      accounts: {
-        select: {
-          password: true,
-        },
-      },
-    },
-  });
-  const hasPassword = user?.accounts?.some((account) => account.password);
+  const hasPassword = await userHasPassword(userId);
 
   return (
     <div className="relative flex max-h-svh min-w-[320px] flex-1 flex-col items-center justify-center bg-background">

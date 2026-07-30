@@ -6,12 +6,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { getNotifications } from "@/lib/dao/notifications";
 import type { Notification } from "@/lib/prisma/generated/client";
-import { getUserNotifications } from "@/lib/services/notification.service";
+import { getUserIdFromSession } from "@/lib/session";
 import { cn } from "@/lib/utils";
 
 export default async function NotificationMenu() {
-  const notifications = await getUserNotifications();
+  const userId = await getUserIdFromSession();
+  const notifications = await getNotifications(userId);
 
   return (
     <Popover>

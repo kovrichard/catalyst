@@ -17,7 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { getUserFromSession } from "@/lib/services/user.service";
+import { getUserFromSession } from "@/lib/session";
 // @catalyst:auth-end
 
 export async function AppSidebar() {
