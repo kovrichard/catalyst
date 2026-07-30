@@ -4,7 +4,6 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { auth } from "@/auth";
-import { getUserByEmail } from "@/lib/dao/users";
 import type { SessionUser } from "@/types/user";
 
 const unauthenticatedRedirect = "/login";
@@ -26,21 +25,10 @@ export const getUserFromSession = cache(async (): Promise<SessionUser> => {
     headers: await headers(),
   });
 
-  if (!session) {
+  if (!session?.user?.id) {
     return redirect(unauthenticatedRedirect);
   }
 
-  const user = await getUserByEmail(session.user?.email || "");
-
-  if (!user) {
-    return redirect(unauthenticatedRedirect);
-  }
-
-  return {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    image: user.image,
-    emailVerified: user.emailVerified,
-  };
+  const { id, name, email, image, emailVerified } = session.user;
+  return { id, name, email, image: image ?? null, emailVerified };
 });

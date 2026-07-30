@@ -54,6 +54,14 @@ export const auth = betterAuth({
       trustedProviders: ["google", "github"],
     },
   },
+  // Signed session payload rides in a cookie so getSession answers without a
+  // database round-trip. maxAge bounds how long a revoked session stays usable.
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 60,
+    },
+  },
   plugins: [nextCookies()],
   user: {
     additionalFields: {
