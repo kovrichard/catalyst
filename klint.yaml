@@ -1,4 +1,4 @@
-$schema: https://raw.githubusercontent.com/konvert7/klint/refs/tags/v0.30.0/klint.schema.json
+$schema: https://raw.githubusercontent.com/konvert7/klint/refs/tags/v0.31.0/klint.schema.json
 include: ["src", "scripts", "tests", "emails", "!node_modules/**", "!src/lib/prisma/generated/**"]
 plugins: [sonar]
 rules:
