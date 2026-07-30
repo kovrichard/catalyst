@@ -18,10 +18,7 @@ export const createTRPCContext = cache(async () => {
 type Context = Awaited<ReturnType<typeof createTRPCContext>>;
 // @catalyst:auth-end
 
-// Avoid exporting the entire t-object
-// since it's not very descriptive.
-// For instance, the use of a t variable
-// is common in i18n libraries.
+// Not exported: a bare `t` is undescriptive and collides with the i18n convention.
 const t = initTRPC
   // @catalyst:auth-start
   .context<Context>()

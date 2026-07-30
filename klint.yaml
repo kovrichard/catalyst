@@ -44,7 +44,15 @@ arch:
       deny: request-context
       type-only: allow
       message: "DAO functions must not read the session — take userId as a parameter instead. Reading request state binds the query to a request, which breaks webhook and cron callers and forces dynamic rendering."
+    - from: dao
+      deny-packages: ["next/headers", "next/navigation", "next/cache"]
+      type-only: allow
+      message: "DAO functions must stay request-agnostic — no headers(), cookies(), redirect(), or revalidate. Take userId as a parameter and let the caller handle request state, so webhooks and cron can reuse the same query."
   forbidden:
     - jsx-element: ["button", "input", "label"]
       in: app-ui
       message: "Use the design-system primitives from @/components/ui/* (Button, Input, Label) instead of raw HTML elements."
+  maxCommentBlock:
+    - limit: 3
+      in: ["src/**", "scripts/**", "!src/components/ui/**"]
+      message: "Comment block too tall — extract a well-named function instead of stacking explanatory lines. JSDoc blocks are exempt."
