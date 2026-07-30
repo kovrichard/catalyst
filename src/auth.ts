@@ -65,11 +65,7 @@ export const auth = betterAuth({
   plugins: [nextCookies()],
   user: {
     additionalFields: {
-      // Add extra fields to the user here, e.g.
-      // customerId: {
-      //   type: "string",
-      //   required: false,
-      // },
+      // Extra user fields go here, e.g. customerId: { type: "string", required: false }
     },
   },
   databaseHooks: {

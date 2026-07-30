@@ -65,10 +65,9 @@ function toDeploymentRecords(payload: unknown): DeploymentRecord[] {
   return Array.isArray(list) ? (list as DeploymentRecord[]) : [];
 }
 
-// The app uses the dockerimage build pack, so Coolify never learns the commit it
-// is running — every deployment record reads commit="HEAD". The deploy workflow
-// run is what ties a commit to a deployment: it fires the webhook only for its
-// own sha, so its start time bounds which deployment belongs to that commit.
+// The dockerimage build pack leaves every Coolify deployment record at commit="HEAD",
+// so the deploy workflow run is the only commit↔deployment link: it fires the webhook
+// for its own sha alone, and its start time bounds which deployment belongs to it.
 function deployRunFor(sha: string, branch: string): DeployRun | undefined {
   const runs = parseJson<DeployRun[]>(
     sh(
