@@ -11,18 +11,18 @@ export async function AuthNav() {
 
   if (session) {
     return (
-      <Link href="/dashboard">
-        <Button>Dashboard</Button>
-      </Link>
+      <Button asChild>
+        <Link href="/dashboard">Dashboard</Link>
+      </Button>
     );
   }
 
   return (
     <>
       <Link href="/login">Login</Link>
-      <Link href="/register">
-        <Button>Register</Button>
-      </Link>
+      <Button asChild>
+        <Link href="/register">Register</Link>
+      </Button>
     </>
   );
 }
