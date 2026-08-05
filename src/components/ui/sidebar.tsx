@@ -31,6 +31,13 @@ const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
+function readSidebarCookie(): boolean | undefined {
+  const match = document.cookie.match(
+    new RegExp(String.raw`(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=(true|false)`)
+  );
+  return match ? match[1] === "true" : undefined;
+}
+
 type SidebarContextProps = {
   state: "expanded" | "collapsed";
   open: boolean;
@@ -71,6 +78,15 @@ function SidebarProvider({
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
   const [_open, _setOpen] = React.useState(defaultOpen);
+  // The prerendered shell cannot read the cookie, so the server always renders
+  // `defaultOpen`. Adopting the stored state in a layout effect lands it before the
+  // browser paints, so hydration still matches the streamed markup.
+  React.useLayoutEffect(() => {
+    const stored = readSidebarCookie();
+    if (stored !== undefined) {
+      _setOpen(stored);
+    }
+  }, []);
   const open = openProp ?? _open;
   const setOpen = React.useCallback(
     (value: boolean | ((value: boolean) => boolean)) => {
