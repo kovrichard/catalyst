@@ -32,11 +32,18 @@ const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 function readSidebarCookie(): boolean | undefined {
+  if (typeof document === "undefined") return undefined;
   const match = document.cookie.match(
     new RegExp(String.raw`(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=(true|false)`)
   );
   return match ? match[1] === "true" : undefined;
 }
+
+// Resolve the persisted collapsed state before first paint so the streamed shell never
+// flashes the sidebar open then closed. Runs once while the browser parses the SSR
+// stream and edits its own parent (the sidebar root) directly; React owns the state
+// after hydration via readSidebarCookie() seeding SidebarProvider.
+const SIDEBAR_PREPAINT_SCRIPT = `(function(){try{var m=document.cookie.match(/(?:^|;\\s*)${SIDEBAR_COOKIE_NAME}=([^;]+)/);if(m&&m[1]==='false'){var r=document.currentScript.closest('[data-collapsible-mode]');r.setAttribute('data-state','collapsed');r.setAttribute('data-collapsible',r.dataset.collapsibleMode||'');}}catch(e){}})();`;
 
 type SidebarContextProps = {
   state: "expanded" | "collapsed";
@@ -77,16 +84,9 @@ function SidebarProvider({
 
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
-  const [_open, _setOpen] = React.useState(defaultOpen);
-  // The prerendered shell cannot read the cookie, so the server always renders
-  // `defaultOpen`. Adopting the stored state in a layout effect lands it before the
-  // browser paints, so hydration still matches the streamed markup.
-  React.useLayoutEffect(() => {
-    const stored = readSidebarCookie();
-    if (stored !== undefined) {
-      _setOpen(stored);
-    }
-  }, []);
+  // Seeded from the cookie so client renders match what the pre-paint script already
+  // wrote into the DOM; falls back to defaultOpen during SSR/prerender.
+  const [_open, _setOpen] = React.useState(() => readSidebarCookie() ?? defaultOpen);
   const open = openProp ?? _open;
   const setOpen = React.useCallback(
     (value: boolean | ((value: boolean) => boolean)) => {
@@ -220,9 +220,11 @@ function Sidebar({
 
   return (
     <div
+      suppressHydrationWarning
       className="group peer hidden text-sidebar-foreground md:block"
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
+      data-collapsible-mode={collapsible}
       data-variant={variant}
       data-side={side}
       data-slot="sidebar"
@@ -262,6 +264,18 @@ function Sidebar({
           {children}
         </div>
       </div>
+      {/* React 19 warns on <script> elements in client components (they never execute
+          on client renders). Injecting it as innerHTML keeps it out of React's element
+          tree: the browser runs it while parsing the SSR stream (the only time
+          pre-paint matters), and client mounts skip it — state is already seeded from
+          readSidebarCookie(). */}
+      <span
+        hidden
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: SIDEBAR_PREPAINT_SCRIPT is a module-level constant, never user input
+        dangerouslySetInnerHTML={{
+          __html: `<script>${SIDEBAR_PREPAINT_SCRIPT}</script>`,
+        }}
+      />
     </div>
   );
 }
