@@ -2,6 +2,7 @@ import NextBundleAnalyzer from "@next/bundle-analyzer";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  cacheComponents: true,
   // Use `bun run build:standalone` if you are using Docker
   output: process.env.EXPORT_MODE,
   turbopack: {

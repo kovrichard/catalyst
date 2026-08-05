@@ -1,29 +1,30 @@
-import { cookies } from "next/headers";
 import type React from "react";
+import { Suspense } from "react";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
+import { AppSidebarSkeleton } from "@/components/sidebar/app-sidebar-skeleton";
 import TopMenu from "@/components/top-menu";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 // @catalyst:auth-start
 
-import { getUserFromSession } from "@/lib/session";
+import { RequireSession } from "@/components/auth/require-session";
 // @catalyst:auth-end
 
-export default async function Layout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // @catalyst:auth-start
-  await getUserFromSession();
-  // @catalyst:auth-end
-  const cookieStore = await cookies();
-  const sidebarState = cookieStore.get("sidebar:state");
-  const defaultOpen = sidebarState ? sidebarState.value === "true" : true;
-
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
-      <AppSidebar />
+    <SidebarProvider>
+      {/* @catalyst:auth-start */}
+      <Suspense fallback={null}>
+        <RequireSession />
+      </Suspense>
+      {/* @catalyst:auth-end */}
+      <Suspense fallback={<AppSidebarSkeleton />}>
+        <AppSidebar />
+      </Suspense>
       <main className="relative flex min-h-screen flex-1 bg-muted/40">
         <div className="flex flex-1 flex-col">
           <TopMenu />

@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import { PasswordFormSkeleton } from "@/components/auth/password-form-skeleton";
 import PasswordResetForm from "@/components/auth/password-reset-form";
 import {
   Card,
@@ -7,13 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ token: string }>;
-}) {
-  const { token } = await searchParams;
+type SearchParams = Promise<{ token: string }>;
 
+export default function Page({ searchParams }: { searchParams: SearchParams }) {
   return (
     <main className="m-auto">
       <Card className="w-92">
@@ -22,9 +20,17 @@ export default async function Page({
           <CardDescription>Enter your new password</CardDescription>
         </CardHeader>
         <CardContent>
-          <PasswordResetForm token={token} />
+          <Suspense fallback={<PasswordFormSkeleton />}>
+            <TokenBoundForm searchParams={searchParams} />
+          </Suspense>
         </CardContent>
       </Card>
     </main>
   );
+}
+
+async function TokenBoundForm({ searchParams }: { searchParams: SearchParams }) {
+  const { token } = await searchParams;
+
+  return <PasswordResetForm token={token} />;
 }

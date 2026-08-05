@@ -5,22 +5,15 @@ import CatalystBadge from "@/components/footer/catalyst-badge";
 
 // @catalyst:auth-start
 
-import { headers } from "next/headers";
-import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
+import { AuthNav, AuthNavSkeleton } from "@/components/auth/auth-nav";
 // @catalyst:auth-end
 
-export default async function Layout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // @catalyst:auth-start
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  // @catalyst:auth-end
-
   return (
     <div className="flex w-full flex-1 flex-col">
       <header className="container flex w-full items-center justify-end gap-4 py-4">
@@ -32,18 +25,9 @@ export default async function Layout({
           Catalyst
         </Link>
         {/* @catalyst:auth-start */}
-        {session ? (
-          <Link href="/dashboard">
-            <Button>Dashboard</Button>
-          </Link>
-        ) : (
-          <>
-            <Link href="/login">Login</Link>
-            <Link href="/register">
-              <Button>Register</Button>
-            </Link>
-          </>
-        )}
+        <Suspense fallback={<AuthNavSkeleton />}>
+          <AuthNav />
+        </Suspense>
         {/* @catalyst:auth-end */}
       </header>
       {children}
