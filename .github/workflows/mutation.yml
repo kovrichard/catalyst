@@ -1,0 +1,38 @@
+name: mutation
+
+on:
+  pull_request:
+    branches:
+    - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  mutation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+      with:
+        # Full history so the merge-base against the PR base branch resolves.
+        fetch-depth: 0
+
+    - name: Setup Bun.js
+      uses: oven-sh/setup-bun@v2
+
+    - name: Install dependencies
+      run: bun install --frozen-lockfile
+
+    - name: Mutation-test the changed lines
+      run: bun run test:mutate:diff "origin/${{ github.event.pull_request.base.ref }}"
+
+    - name: Upload mutation report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: mutation-report
+        path: reports/mutation.html
+        if-no-files-found: ignore
