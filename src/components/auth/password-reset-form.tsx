@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useId, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { resetPassword } from "@/lib/auth-client";
 
 export default function PasswordResetForm({ token }: { token: string }) {
+  const passwordId = useId();
+  const confirmPasswordId = useId();
   const [isPending, setIsPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -41,22 +43,24 @@ export default function PasswordResetForm({ token }: { token: string }) {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <Label htmlFor="password">New Password</Label>
+        <Label htmlFor={passwordId}>New Password</Label>
         <Input
           type="password"
-          id="password"
+          id={passwordId}
           name="password"
           placeholder="****************"
+          autoComplete="new-password"
           required
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="confirm-password">Confirm Password</Label>
+        <Label htmlFor={confirmPasswordId}>Confirm Password</Label>
         <Input
           type="password"
-          id="confirm-password"
+          id={confirmPasswordId}
           name="confirm-password"
           placeholder="****************"
+          autoComplete="new-password"
           required
         />
       </div>

@@ -20,6 +20,7 @@ const STEPS = [
 
 export function Pipeline() {
   return (
+    // biome-ignore lint/correctness/useUniqueElementIds: deep-linkable page anchor targeted by href="#pipeline"
     <section id="pipeline" className="w-full border-b">
       <div className="container flex flex-col gap-10 py-20">
         <div className="flex max-w-2xl flex-col gap-3">

@@ -46,6 +46,7 @@ export default function Analytics({
             strategy="beforeInteractive"
             src={`https://www.googletagmanager.com/gtag/js?id=${analytics}`}
           ></Script>
+          {/* biome-ignore lint/correctness/useUniqueElementIds: next/script keys inline scripts by id to dedupe them across renders */}
           <Script id="google-analytics" strategy="beforeInteractive">
             {`window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
@@ -79,6 +80,7 @@ export default function Analytics({
       )}
       {tagManager && (
         <>
+          {/* biome-ignore lint/correctness/useUniqueElementIds: next/script keys inline scripts by id to dedupe them across renders */}
           <Script id="google-tag-manager">
             {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -103,6 +105,7 @@ export default function Analytics({
             src={`https://www.googletagmanager.com/gtag/js?id=${ads}`}
             strategy="beforeInteractive"
           />
+          {/* biome-ignore lint/correctness/useUniqueElementIds: next/script keys inline scripts by id to dedupe them across renders */}
           <Script id="google-ads" strategy="beforeInteractive">
             {`window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
