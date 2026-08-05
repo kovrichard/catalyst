@@ -8,7 +8,13 @@ import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import conf from "@/lib/config";
 import { PublicConfigProvider } from "@/lib/contexts/public-config-context";
-import { canonicalUrl, metaDescription, metaTitle, openGraph } from "@/lib/metadata";
+import {
+  canonicalUrl,
+  metaDescription,
+  metaTitle,
+  openGraph,
+  robotsPolicy,
+} from "@/lib/metadata";
 import publicConf from "@/lib/public-config";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +32,7 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   // creator: "",
-  robots: "index, follow",
+  robots: robotsPolicy,
   openGraph: {
     ...openGraph,
     url: conf.host,

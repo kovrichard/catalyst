@@ -1,4 +1,9 @@
 import type { Metadata } from "next";
+import conf from "@/lib/config";
+
+export const robotsPolicy: Metadata["robots"] = conf.isProductionEnvironment
+  ? "index, follow"
+  : "noindex, nofollow";
 
 export const metaTitle = "Catalyst - Agentic Next.js Boilerplate";
 export const metaDescription =
