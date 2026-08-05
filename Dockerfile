@@ -1,11 +1,15 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
-# Next 16.3's standalone server fails to load next-server/app-page-turbo.runtime.prod.js
-# below bun 1.3.14 ("Expected CommonJS module to have a function wrapper"), which 500s
-# every SSR route.
-FROM oven/bun:1.3.14 AS base
+FROM oven/bun:1.3.13 AS base
 
 WORKDIR /app
+
+# The bun image resolves `node` to bun itself, and Next 16.3 needs a real one: bun
+# segfaults at the end of `next build`, and its standalone server rejects
+# next-server/app-page-turbo.runtime.prod.js with "Expected CommonJS module to have a
+# function wrapper", which 500s every SSR route. apt's node takes PATH precedence over
+# bun's fallback shim, so both the build and the server land on it.
+RUN apt update -y && apt install -y nodejs && rm -rf /var/lib/apt/lists/*
 
 
 # install dependencies into temp directory
@@ -93,7 +97,7 @@ USER nextjs
 
 EXPOSE 3000
 
-CMD ["bun", "./server.js"]
+CMD ["node", "./server.js"]
 
 
 FROM base AS dev

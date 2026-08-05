@@ -2,7 +2,7 @@
 # Node and the Claude Code CLI are installed directly here rather than via the
 # node dev container feature: the bun image is Debian (sh is dash), where that
 # feature's `source` call fails with exit 127.
-FROM oven/bun:1.3.14
+FROM oven/bun:1.3.13
 
 # Pre-create the named-volume mount points owned by the non-root `bun` user.
 # An empty Docker volume otherwise mounts as root, leaving Claude unable to
