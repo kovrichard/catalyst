@@ -47,11 +47,18 @@ describe("deleteFile", () => {
     expect(deleteFile("doomed.ts").message).toBe("Deleted: doomed.ts");
   });
 
-  it("fails on a missing file", () => {
+  it("treats a missing file as already removed", () => {
     const result = deleteFile("ghost.ts");
 
-    expect(result.success).toBe(false);
-    expect(result.message).toBe("File does not exist: ghost.ts");
+    expect(result.success).toBe(true);
+    expect(result.message).toBe("Skipped (already removed): ghost.ts");
+  });
+
+  it("stays successful when the same file is deleted twice", () => {
+    givenFile("doomed.ts");
+
+    expect(deleteFile("doomed.ts").success).toBe(true);
+    expect(deleteFile("doomed.ts").success).toBe(true);
   });
 
   it("leaves the file in place on a dry run", () => {
@@ -64,8 +71,11 @@ describe("deleteFile", () => {
     expect(existsSync(join(projectDir, "doomed.ts"))).toBe(true);
   });
 
-  it("fails a dry run on a missing file", () => {
-    expect(deleteFile("ghost.ts", true).success).toBe(false);
+  it("skips a dry run on a missing file", () => {
+    const result = deleteFile("ghost.ts", true);
+
+    expect(result.success).toBe(true);
+    expect(result.message).toBe("Skipped (already removed): ghost.ts");
   });
 
   it("resolves paths against the working directory", () => {
@@ -100,11 +110,18 @@ describe("deleteDirectory", () => {
     expect(deleteDirectory("feature").message).toBe("Deleted directory: feature");
   });
 
-  it("fails on a missing directory", () => {
+  it("treats a missing directory as already removed", () => {
     const result = deleteDirectory("ghost");
 
-    expect(result.success).toBe(false);
-    expect(result.message).toBe("Directory does not exist: ghost");
+    expect(result.success).toBe(true);
+    expect(result.message).toBe("Skipped (already removed): ghost");
+  });
+
+  it("stays successful when the same directory is deleted twice", () => {
+    givenDirectory("feature");
+
+    expect(deleteDirectory("feature").success).toBe(true);
+    expect(deleteDirectory("feature").success).toBe(true);
   });
 
   it("leaves the directory in place on a dry run", () => {
@@ -125,7 +142,11 @@ describe("deleteFiles", () => {
 
     const results = deleteFiles(["first.ts", "second.ts", "third.ts"]);
 
-    expect(results.map((result) => result.success)).toEqual([true, false, true]);
+    expect(results.map((result) => result.message)).toEqual([
+      "Deleted: first.ts",
+      "Skipped (already removed): second.ts",
+      "Deleted: third.ts",
+    ]);
   });
 
   it("returns nothing for an empty list", () => {
@@ -149,7 +170,11 @@ describe("deleteDirectories", () => {
 
     const results = deleteDirectories(["first", "second", "third"]);
 
-    expect(results.map((result) => result.success)).toEqual([true, false, true]);
+    expect(results.map((result) => result.message)).toEqual([
+      "Deleted directory: first",
+      "Skipped (already removed): second",
+      "Deleted directory: third",
+    ]);
   });
 
   it("returns nothing for an empty list", () => {
