@@ -33,9 +33,9 @@ const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 function readSidebarCookie(): boolean | undefined {
   if (typeof document === "undefined") return undefined;
-  const match = document.cookie.match(
-    new RegExp(String.raw`(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=(true|false)`)
-  );
+  const match = new RegExp(
+    String.raw`(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=(true|false)`
+  ).exec(document.cookie);
   return match ? match[1] === "true" : undefined;
 }
 
@@ -43,7 +43,7 @@ function readSidebarCookie(): boolean | undefined {
 // flashes the sidebar open then closed. Runs once while the browser parses the SSR
 // stream and edits its own parent (the sidebar root) directly; React owns the state
 // after hydration via readSidebarCookie() seeding SidebarProvider.
-const SIDEBAR_PREPAINT_SCRIPT = `(function(){try{var m=document.cookie.match(/(?:^|;\\s*)${SIDEBAR_COOKIE_NAME}=([^;]+)/);if(m&&m[1]==='false'){var r=document.currentScript.closest('[data-collapsible-mode]');r.setAttribute('data-state','collapsed');r.setAttribute('data-collapsible',r.dataset.collapsibleMode||'');}}catch(e){}})();`;
+const SIDEBAR_PREPAINT_SCRIPT = String.raw`(function(){try{var m=document.cookie.match(/(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=([^;]+)/);if(m&&m[1]==='false'){var r=document.currentScript.closest('[data-collapsible-mode]');r.setAttribute('data-state','collapsed');r.setAttribute('data-collapsible',r.dataset.collapsibleMode||'');}}catch(e){}})();`;
 
 type SidebarContextProps = {
   state: "expanded" | "collapsed";

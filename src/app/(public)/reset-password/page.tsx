@@ -11,7 +11,7 @@ import {
 
 type SearchParams = Promise<{ token: string }>;
 
-export default function Page({ searchParams }: { searchParams: SearchParams }) {
+export default function Page({ searchParams }: Readonly<{ searchParams: SearchParams }>) {
   return (
     <main className="m-auto">
       <Card className="w-92">
@@ -29,7 +29,9 @@ export default function Page({ searchParams }: { searchParams: SearchParams }) {
   );
 }
 
-async function TokenBoundForm({ searchParams }: { searchParams: SearchParams }) {
+async function TokenBoundForm({
+  searchParams,
+}: Readonly<{ searchParams: SearchParams }>) {
   const { token } = await searchParams;
 
   return <PasswordResetForm token={token} />;

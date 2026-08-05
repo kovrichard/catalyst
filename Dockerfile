@@ -9,7 +9,7 @@ WORKDIR /app
 # next-server/app-page-turbo.runtime.prod.js with "Expected CommonJS module to have a
 # function wrapper", which 500s every SSR route. apt's node takes PATH precedence over
 # bun's fallback shim, so both the build and the server land on it.
-RUN apt update -y && apt install -y nodejs && rm -rf /var/lib/apt/lists/*
+RUN apt update -y && apt install -y --no-install-recommends nodejs && rm -rf /var/lib/apt/lists/*
 
 
 # install dependencies into temp directory
