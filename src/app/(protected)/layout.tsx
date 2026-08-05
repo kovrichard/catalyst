@@ -7,21 +7,27 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 
 // @catalyst:auth-start
 
-import { RequireSession } from "@/components/auth/require-session";
+import { getUserFromSession } from "@/lib/session";
 // @catalyst:auth-end
 
-export default function Layout({
+// @catalyst:auth-start
+// Blocking, not partially prerendered: a prerendered shell is built without
+// request context, so it would be served with a 200 before the session check
+// below could run.
+export const instant = false;
+// @catalyst:auth-end
+
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // @catalyst:auth-start
+  await getUserFromSession();
+  // @catalyst:auth-end
+
   return (
     <SidebarProvider>
-      {/* @catalyst:auth-start */}
-      <Suspense fallback={null}>
-        <RequireSession />
-      </Suspense>
-      {/* @catalyst:auth-end */}
       <Suspense fallback={<AppSidebarSkeleton />}>
         <AppSidebar />
       </Suspense>
