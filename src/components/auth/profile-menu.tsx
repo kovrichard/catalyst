@@ -20,12 +20,14 @@ const THEME_OPTIONS = [
   { value: "dark", label: "Dark", Icon: Moon },
 ] as const;
 
+// @catalyst:trpc-start
 // @catalyst:stripe-start
 
 import { useQuery } from "@tanstack/react-query";
 import { CreditCard } from "lucide-react";
 import { useTRPC } from "@/lib/trpc/client";
 // @catalyst:stripe-end
+// @catalyst:trpc-end
 
 export default function ProfileMenu({
   userName,
@@ -44,6 +46,7 @@ export default function ProfileMenu({
   const ActiveThemeIcon =
     THEME_OPTIONS.find((option) => option.value === theme)?.Icon ?? Moon;
 
+  // @catalyst:trpc-start
   // @catalyst:stripe-start
   const trpc = useTRPC();
   const { data: billingPortalUrl, refetch } = useQuery(
@@ -56,6 +59,7 @@ export default function ProfileMenu({
     void refetch();
   }, [refetch]);
   // @catalyst:stripe-end
+  // @catalyst:trpc-end
 
   return (
     <DropdownMenuContent
@@ -82,6 +86,7 @@ export default function ProfileMenu({
         </div>
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
+      {/* @catalyst:trpc-start */}
       {/* @catalyst:stripe-start */}
       {billingPortalUrl && (
         <DropdownMenuItem className="h-10 p-0">
@@ -97,6 +102,7 @@ export default function ProfileMenu({
         </DropdownMenuItem>
       )}
       {/* @catalyst:stripe-end */}
+      {/* @catalyst:trpc-end */}
       <DropdownMenuItem className="cursor-pointer p-0" asChild>
         <Link href="/settings" className="flex size-full items-center gap-2 px-2 py-1.5">
           <Settings className="shrink-0" />

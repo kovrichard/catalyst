@@ -1,5 +1,11 @@
 import { describe, expect, it } from "bun:test";
-import { cn, ensure, formatTimeAgo, initialState } from "../src/lib/utils";
+import { cn, ensure, initialState } from "../src/lib/utils";
+
+// @catalyst:auth-start
+
+import { formatTimeAgo } from "../src/lib/utils";
+
+// @catalyst:auth-end
 
 describe("cn", () => {
   it("joins plain class names", () => {
@@ -67,6 +73,7 @@ describe("initialState", () => {
   });
 });
 
+// @catalyst:auth-start
 describe("formatTimeAgo", () => {
   it("describes a moment seconds ago as just now", () => {
     expect(formatTimeAgo(new Date(Date.now() - 1000))).toBe("just now");
@@ -86,3 +93,4 @@ describe("formatTimeAgo", () => {
     expect(formatTimeAgo(new Date(Date.now() + 60 * 60 * 1000))).toBe("in 1 hour");
   });
 });
+// @catalyst:auth-end

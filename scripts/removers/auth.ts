@@ -14,6 +14,8 @@ const AUTH_FILES_TO_DELETE = [
   "src/lib/turnstile.ts",
   "src/hooks/use-toast.tsx",
   "src/components/top-menu.tsx",
+  "src/proxy.ts",
+  "tests/turnstile.test.ts",
 ];
 
 const AUTH_FOLDERS_TO_DELETE = [
@@ -35,8 +37,9 @@ const AUTH_FILES_TO_MODIFY = [
   "src/lib/utils.ts",
   "src/app/sitemap.ts",
   "src/lib/trpc/init.ts",
-  "src/lib/trpc/server.tsx",
-  "src/app/api/trpc/[trpc]/route.ts",
+  "src/lib/trpc/routers/_app.ts",
+  "tests/preload.ts",
+  "tests/utils.test.ts",
 ];
 
 const AUTH_PACKAGES_TO_UNINSTALL = [

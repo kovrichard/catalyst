@@ -1,34 +1,36 @@
 import { initTRPC } from "@trpc/server";
+import { cache } from "react";
 import superjson from "superjson";
 
 // @catalyst:auth-start
 
 import { TRPCError } from "@trpc/server";
-import { cache } from "react";
 import { getUserFromSession } from "@/lib/session";
+// @catalyst:auth-end
 
 export const createTRPCContext = cache(async () => {
+  // @catalyst:auth-start
   const user = await getUserFromSession();
+  // @catalyst:auth-end
   /**
    * @see: https://trpc.io/docs/server/context
    */
-  return { user };
+  return {
+    // @catalyst:auth-start
+    user,
+    // @catalyst:auth-end
+  };
 });
 
 type Context = Awaited<ReturnType<typeof createTRPCContext>>;
-// @catalyst:auth-end
 
 // Not exported: a bare `t` is undescriptive and collides with the i18n convention.
-const t = initTRPC
-  // @catalyst:auth-start
-  .context<Context>()
-  // @catalyst:auth-end
-  .create({
-    /**
-     * @see https://trpc.io/docs/server/data-transformers
-     */
-    transformer: superjson,
-  });
+const t = initTRPC.context<Context>().create({
+  /**
+   * @see https://trpc.io/docs/server/data-transformers
+   */
+  transformer: superjson,
+});
 
 // Base router and procedure helpers
 export const createTRPCRouter = t.router;
