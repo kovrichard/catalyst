@@ -1,6 +1,9 @@
 # use the official Bun image
 # see all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1.3.4 AS base
+# Next 16.3's standalone server fails to load next-server/app-page-turbo.runtime.prod.js
+# below bun 1.3.14 ("Expected CommonJS module to have a function wrapper"), which 500s
+# every SSR route.
+FROM oven/bun:1.3.14 AS base
 
 WORKDIR /app
 
