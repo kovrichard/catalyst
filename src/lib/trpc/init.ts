@@ -5,12 +5,12 @@ import superjson from "superjson";
 // @catalyst:auth-start
 
 import { TRPCError } from "@trpc/server";
-import { getUserFromSession } from "@/lib/session";
+import { getOptionalUser } from "@/lib/session";
 // @catalyst:auth-end
 
 export const createTRPCContext = cache(async () => {
   // @catalyst:auth-start
-  const user = await getUserFromSession();
+  const user = await getOptionalUser();
   // @catalyst:auth-end
   /**
    * @see: https://trpc.io/docs/server/context

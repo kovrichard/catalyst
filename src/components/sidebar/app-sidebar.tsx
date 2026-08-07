@@ -17,12 +17,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { getUserFromSession } from "@/lib/session";
+import { getChromeUser } from "@/lib/session";
 // @catalyst:auth-end
 
 export async function AppSidebar() {
   // @catalyst:auth-start
-  const user = await getUserFromSession();
+  const user = await getChromeUser();
   // @catalyst:auth-end
 
   return (

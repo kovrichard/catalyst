@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type React from "react";
 import { Suspense } from "react";
+import { SessionGate } from "@/components/auth/session-gate";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { AppSidebarSkeleton } from "@/components/sidebar/app-sidebar-skeleton";
 import TopMenu from "@/components/top-menu";
@@ -17,6 +18,9 @@ export default function Layout({
 }>) {
   return (
     <SidebarProvider>
+      <Suspense fallback={null}>
+        <SessionGate />
+      </Suspense>
       <Suspense fallback={<AppSidebarSkeleton />}>
         <AppSidebar />
       </Suspense>
