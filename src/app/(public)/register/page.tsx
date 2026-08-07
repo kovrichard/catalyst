@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import AuthCard from "@/components/auth/auth-card";
 import RegisterForm from "@/components/auth/register-form";
-import { canonicalUrl, openGraph } from "@/lib/metadata";
+import { openGraph } from "@/lib/metadata";
 
 const path = "/register";
 
 export const metadata: Metadata = {
   alternates: {
-    canonical: `${canonicalUrl}${path}`,
+    canonical: path,
   },
   openGraph: {
     ...openGraph,

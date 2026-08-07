@@ -1,4 +1,4 @@
-import { canonicalUrl, metaTitle } from "@/lib/metadata";
+import { metaTitle, siteUrl } from "@/lib/metadata";
 
 type Json = Record<string, unknown>;
 
@@ -15,8 +15,8 @@ export function organizationLd(overrides: Json = {}): Json {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: metaTitle,
-    url: canonicalUrl,
-    logo: `${canonicalUrl}/icon.svg`,
+    url: siteUrl,
+    logo: `${siteUrl}/icon.svg`,
     ...overrides,
   };
 }
@@ -26,8 +26,8 @@ export function webSiteLd(overrides: Json = {}): Json {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: metaTitle,
-    url: canonicalUrl,
-    publisher: { "@type": "Organization", name: metaTitle, url: canonicalUrl },
+    url: siteUrl,
+    publisher: { "@type": "Organization", name: metaTitle, url: siteUrl },
     ...overrides,
   };
 }
@@ -39,7 +39,7 @@ export function softwareApplicationLd(overrides: Json = {}): Json {
     name: metaTitle,
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
-    url: canonicalUrl,
+    url: siteUrl,
     ...overrides,
   };
 }
@@ -65,7 +65,7 @@ export function breadcrumbLd(items: { name: string; path: string }[]): Json {
       "@type": "ListItem",
       position: i + 1,
       name,
-      item: `${canonicalUrl}${path}`,
+      item: `${siteUrl}${path}`,
     })),
   };
 }

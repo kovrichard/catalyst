@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { canonicalUrl, openGraph } from "@/lib/metadata";
+import { openGraph } from "@/lib/metadata";
 
 const path = "/privacy-policy";
 // TODO: change to the actual company
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: `${canonicalUrl}${path}`,
+    canonical: path,
   },
   openGraph: {
     ...openGraph,

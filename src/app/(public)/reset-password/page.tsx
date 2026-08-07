@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { PasswordResetFormSkeleton } from "@/components/auth/password-form-skeleton";
@@ -9,8 +10,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { openGraph } from "@/lib/metadata";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+const path = "/reset-password";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: path,
+  },
+  openGraph: {
+    ...openGraph,
+    url: path,
+  },
+};
 
 export default function Page({ searchParams }: Readonly<{ searchParams: SearchParams }>) {
   return (

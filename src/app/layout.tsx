@@ -9,11 +9,11 @@ import { Toaster } from "@/components/ui/sonner";
 import conf from "@/lib/config";
 import { PublicConfigProvider } from "@/lib/contexts/public-config-context";
 import {
-  canonicalUrl,
   metaDescription,
   metaTitle,
   openGraph,
   robotsPolicy,
+  siteUrl,
 } from "@/lib/metadata";
 import publicConf from "@/lib/public-config";
 import { cn } from "@/lib/utils";
@@ -21,10 +21,7 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(conf.host),
-  alternates: {
-    canonical: canonicalUrl,
-  },
+  metadataBase: new URL(siteUrl),
   title: metaTitle,
   description: metaDescription,
   icons: {
@@ -35,7 +32,7 @@ export const metadata: Metadata = {
   robots: robotsPolicy,
   openGraph: {
     ...openGraph,
-    url: conf.host,
+    url: siteUrl,
   },
   twitter: {
     // creator: "@",

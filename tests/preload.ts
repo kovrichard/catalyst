@@ -5,6 +5,16 @@ import { mock } from "bun:test";
 // bun does not settle a preload's top-level await before test files run.
 void mock.module("server-only", () => ({}));
 
+// next/font/google resolves real font files at build time, which doesn't exist
+// under bun test. bun statically inspects the factory's own keys to validate
+// named imports (Inter, JetBrains_Mono, ...), so a Proxy without an ownKeys
+// trap reports no exports at all — list the fonts this repo actually imports.
+const mockFontLoader = () => ({ className: "mock-font", variable: "--font-mock" });
+void mock.module("next/font/google", () => ({
+  Inter: mockFontLoader,
+  JetBrains_Mono: mockFontLoader,
+}));
+
 const placeholders: Record<string, string> = {
   SCHEME: "http",
   AUTHORITY: "localhost:3000",
