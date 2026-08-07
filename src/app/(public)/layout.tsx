@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
 import CatalystBadge from "@/components/footer/catalyst-badge";
+import { JsonLd, organizationLd, webSiteLd } from "@/components/marketing/json-ld";
 
 // @catalyst:auth-start
 
@@ -16,6 +17,8 @@ export default function Layout({
 }>) {
   return (
     <div className="flex w-full flex-1 flex-col">
+      <JsonLd data={organizationLd()} />
+      <JsonLd data={webSiteLd()} />
       <header className="container flex w-full items-center justify-end gap-4 py-4">
         <Link
           href="/"

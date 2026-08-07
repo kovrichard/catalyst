@@ -12,7 +12,8 @@
     ".opencode/plugins/lint.ts",
     "src/lib/aws/ses.tsx",
     "src/lib/metadata.ts",
-    "src/lib/stripe.ts"
+    "src/lib/stripe.ts",
+    "src/components/marketing/json-ld.tsx"
   ],
   "ignoreDependencies": [
     "@opencode-ai/plugin",
