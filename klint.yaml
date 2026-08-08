@@ -1,4 +1,4 @@
-$schema: https://raw.githubusercontent.com/konvert7/klint/refs/tags/v0.31.0/klint.schema.json
+$schema: https://raw.githubusercontent.com/konvert7/klint/refs/tags/v0.33.0/klint.schema.json
 include: ["src", "scripts", "tests", "emails", "!node_modules/**", "!src/lib/prisma/generated/**"]
 plugins: [sonar]
 rules:
@@ -14,6 +14,7 @@ rules:
   no-nested-template-literals: error
   no-consecutive-array-push: error
   no-string-match: error
+  no-async-predicate: error
   sonar/prefer-string-raw: off
 
 arch:
@@ -47,10 +48,24 @@ arch:
       deny-packages: ["next/headers", "next/navigation", "next/cache"]
       type-only: allow
       message: "DAO functions must stay request-agnostic — no headers(), cookies(), redirect(), or revalidate. Take userId as a parameter and let the caller handle request state, so webhooks and cron can reuse the same query."
+  singleton:
+    - pattern: "new PrismaClient("
+      only: "src/lib/prisma/prisma.ts"
+      in: ["src/**", "!src/lib/prisma/generated/**"]
+      message: "Instantiate PrismaClient only in src/lib/prisma/prisma.ts — import the default `prisma` singleton everywhere else. A second client opens its own connection pool and silently exhausts Postgres connections."
+
   forbidden:
     - jsx-element: ["button", "input", "label"]
       in: app-ui
       message: "Use the design-system primitives from @/components/ui/* (Button, Input, Label) instead of raw HTML elements."
+    - pattern: "radix-ui"
+      in: ["src/**", "!src/components/ui/**"]
+      message: "Import the wrapped component from @/components/ui — raw radix-ui primitives belong only in src/components/ui, so the app keeps one UI vocabulary."
+
+  maxLines:
+    - limit: 900
+      in: ["src/**", "scripts/**"]
+      message: "File too long — split it into focused modules."
   maxCommentDensity:
     - limit: 15
       in: ["src/**", "scripts/**", "!src/components/ui/**"]

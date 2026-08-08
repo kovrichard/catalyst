@@ -31,6 +31,20 @@ const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
+function readSidebarCookie(): boolean | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = new RegExp(
+    String.raw`(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=(true|false)`
+  ).exec(document.cookie);
+  return match ? match[1] === "true" : undefined;
+}
+
+// Resolve the persisted collapsed state before first paint so the streamed shell never
+// flashes the sidebar open then closed. Runs once while the browser parses the SSR
+// stream and edits its own parent (the sidebar root) directly; React owns the state
+// after hydration via readSidebarCookie() seeding SidebarProvider.
+const SIDEBAR_PREPAINT_SCRIPT = String.raw`(function(){try{var m=document.cookie.match(/(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=([^;]+)/);if(m&&m[1]==='false'){var r=document.currentScript.closest('[data-collapsible-mode]');r.setAttribute('data-state','collapsed');r.setAttribute('data-collapsible',r.dataset.collapsibleMode||'');}}catch(e){}})();`;
+
 type SidebarContextProps = {
   state: "expanded" | "collapsed";
   open: boolean;
@@ -70,7 +84,9 @@ function SidebarProvider({
 
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
-  const [_open, _setOpen] = React.useState(defaultOpen);
+  // Seeded from the cookie so client renders match what the pre-paint script already
+  // wrote into the DOM; falls back to defaultOpen during SSR/prerender.
+  const [_open, _setOpen] = React.useState(() => readSidebarCookie() ?? defaultOpen);
   const open = openProp ?? _open;
   const setOpen = React.useCallback(
     (value: boolean | ((value: boolean) => boolean)) => {
@@ -204,9 +220,11 @@ function Sidebar({
 
   return (
     <div
+      suppressHydrationWarning
       className="group peer hidden text-sidebar-foreground md:block"
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
+      data-collapsible-mode={collapsible}
       data-variant={variant}
       data-side={side}
       data-slot="sidebar"
@@ -246,6 +264,18 @@ function Sidebar({
           {children}
         </div>
       </div>
+      {/* React 19 warns on <script> elements in client components (they never execute
+          on client renders). Injecting it as innerHTML keeps it out of React's element
+          tree: the browser runs it while parsing the SSR stream (the only time
+          pre-paint matters), and client mounts skip it — state is already seeded from
+          readSidebarCookie(). */}
+      <span
+        hidden
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: SIDEBAR_PREPAINT_SCRIPT is a module-level constant, never user input
+        dangerouslySetInnerHTML={{
+          __html: `<script>${SIDEBAR_PREPAINT_SCRIPT}</script>`,
+        }}
+      />
     </div>
   );
 }
@@ -465,7 +495,7 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
   {
     variants: {
       variant: {

@@ -5,6 +5,7 @@ import { z } from "zod";
 const schema = z.object({
   // General
   environment: z.enum(["development", "stage", "production"]).default("development"),
+  isProductionEnvironment: z.boolean().default(false),
   logLevel: z.enum(["error", "warn", "info", "debug"]).default("info"),
   logDrainUrl: z.string().default(""),
   scheme: z.string().default("https"),
@@ -51,6 +52,7 @@ const schema = z.object({
 const envVars = {
   // General
   environment: process.env.ENVIRONMENT,
+  isProductionEnvironment: process.env.ENVIRONMENT === "production",
   logLevel: process.env.LOG_LEVEL,
   logDrainUrl: process.env.LOG_DRAIN_URL,
   scheme: process.env.SCHEME,

@@ -1,0 +1,44 @@
+name: mutation
+
+on:
+  pull_request:
+    branches:
+    - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  mutation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+      with:
+        # Full history so the merge-base against the PR base branch resolves.
+        fetch-depth: 0
+
+    - name: Setup Bun.js
+      uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+
+    - name: Install dependencies
+      # No lifecycle scripts, so no dependency can run arbitrary code on install.
+      run: bun install --frozen-lockfile --ignore-scripts
+
+    - name: Generate Prisma client
+      # Stryker's dry run executes the whole suite, and tests that import page
+      # modules pull in server actions -> DAO -> the gitignored generated client.
+      run: bunx prisma generate
+
+    - name: Mutation-test the changed lines
+      run: bun run test:mutate:diff "origin/${{ github.event.pull_request.base.ref }}"
+
+    - name: Upload mutation report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: mutation-report
+        path: reports/mutation.html
+        if-no-files-found: ignore

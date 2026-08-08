@@ -42,3 +42,8 @@ src/lib/prisma/generated
 # playwright artifacts
 .playwright-cli
 .playwright-mcp
+
+# mutation testing sandbox + reports
+.stryker-tmp
+stryker.log
+reports

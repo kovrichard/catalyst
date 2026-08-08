@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo, useTransition } from "react";
+import { useId, useMemo, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,9 @@ import { changePassword } from "@/lib/auth-client";
 import { type UpdatePasswordFormData, updatePasswordSchema } from "@/types/auth";
 
 export default function PasswordForm({ hasPassword }: { hasPassword?: boolean }) {
+  const currentPasswordId = useId();
+  const newPasswordId = useId();
+  const confirmPasswordId = useId();
   const [isTransitionPending, startTransition] = useTransition();
 
   const schema = useMemo(() => {
@@ -82,10 +85,10 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       {hasPassword && (
         <div className="flex flex-col gap-2">
-          <Label htmlFor="current-password">Current Password</Label>
+          <Label htmlFor={currentPasswordId}>Current Password</Label>
           <Input
             type="password"
-            id="current-password"
+            id={currentPasswordId}
             autoComplete="current-password"
             {...register("currentPassword")}
           />
@@ -97,10 +100,10 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
         </div>
       )}
       <div className="flex flex-col gap-2">
-        <Label htmlFor="new-password">New Password</Label>
+        <Label htmlFor={newPasswordId}>New Password</Label>
         <Input
           type="password"
-          id="new-password"
+          id={newPasswordId}
           autoComplete="new-password"
           {...register("newPassword")}
         />
@@ -109,10 +112,10 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
         )}
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="confirm-password">Confirm Password</Label>
+        <Label htmlFor={confirmPasswordId}>Confirm Password</Label>
         <Input
           type="password"
-          id="confirm-password"
+          id={confirmPasswordId}
           autoComplete="new-password"
           {...register("confirmPassword")}
         />

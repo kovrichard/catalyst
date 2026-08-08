@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import { ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useRef, useState, useTransition } from "react";
+import { useActionState, useEffect, useId, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import PendingSubmitButton from "@/components/auth/pending-submit-button";
 import TurnstileComponent from "@/components/auth/turnstile";
@@ -17,6 +17,9 @@ import { type FormState, initialState } from "@/lib/utils";
 import { type RegisterFormData, registerSchema } from "@/types/auth";
 
 export default function RegisterForm() {
+  const nameId = useId();
+  const emailId = useId();
+  const passwordId = useId();
   const turnstileRef = useRef<TurnstileInstance | null>(null);
   const [state, formAction, isPending] = useActionState(registerUser, initialState);
   const [isTransitionPending, startTransition] = useTransition();
@@ -85,11 +88,12 @@ export default function RegisterForm() {
   return (
     <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor={nameId}>Name</Label>
         <Input
           type="text"
-          id="name"
+          id={nameId}
           placeholder="John Doe"
+          autoComplete="name"
           autoFocus
           {...register("name")}
         />
@@ -98,10 +102,10 @@ export default function RegisterForm() {
         )}
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor={emailId}>Email</Label>
         <Input
           type="email"
-          id="email"
+          id={emailId}
           placeholder="johndoe@example.com"
           autoComplete="email"
           {...register("email")}
@@ -111,10 +115,10 @@ export default function RegisterForm() {
         )}
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor={passwordId}>Password</Label>
         <Input
           type="password"
-          id="password"
+          id={passwordId}
           placeholder="****************"
           autoComplete="new-password"
           {...register("password")}
