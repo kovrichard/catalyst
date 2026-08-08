@@ -4,7 +4,8 @@ import { openGraph } from "@/lib/metadata";
 const path = "/privacy-policy";
 // TODO: change to the actual company
 const title = "Privacy Policy | Catalyst";
-const description = "Privacy Policy for Catalyst";
+const description =
+  "The privacy policy covering how Catalyst collects, uses, and protects your data.";
 
 export const metadata: Metadata = {
   title,

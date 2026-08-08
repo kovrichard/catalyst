@@ -15,13 +15,20 @@ import { openGraph } from "@/lib/metadata";
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 const path = "/reset-password";
+const title = "Reset your password | Catalyst";
+const description =
+  "Choose a new password for your Catalyst account using your reset link.";
 
 export const metadata: Metadata = {
+  title,
+  description,
   alternates: {
     canonical: path,
   },
   openGraph: {
     ...openGraph,
+    title,
+    description,
     url: path,
   },
 };

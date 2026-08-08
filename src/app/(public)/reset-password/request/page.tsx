@@ -10,13 +10,19 @@ import {
 import { openGraph } from "@/lib/metadata";
 
 const path = "/reset-password/request";
+const title = "Forgot your password? | Catalyst";
+const description = "Request a password reset link for your Catalyst account.";
 
 export const metadata: Metadata = {
+  title,
+  description,
   alternates: {
     canonical: path,
   },
   openGraph: {
     ...openGraph,
+    title,
+    description,
     url: path,
   },
 };

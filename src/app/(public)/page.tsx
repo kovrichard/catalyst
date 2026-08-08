@@ -5,11 +5,13 @@ import { Hero } from "@/components/marketing/hero";
 import { HookChecklist } from "@/components/marketing/hook-checklist";
 import { Pipeline } from "@/components/marketing/pipeline";
 import { logger } from "@/lib/logger";
-import { openGraph } from "@/lib/metadata";
+import { metaDescription, metaTitle, openGraph } from "@/lib/metadata";
 
 const path = "/";
 
 export const metadata: Metadata = {
+  title: metaTitle,
+  description: metaDescription,
   alternates: {
     canonical: path,
   },

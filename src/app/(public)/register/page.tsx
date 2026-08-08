@@ -4,13 +4,20 @@ import RegisterForm from "@/components/auth/register-form";
 import { openGraph } from "@/lib/metadata";
 
 const path = "/register";
+const title = "Sign up | Catalyst";
+const description =
+  "Create a Catalyst account and start building with the agentic Next.js boilerplate.";
 
 export const metadata: Metadata = {
+  title,
+  description,
   alternates: {
     canonical: path,
   },
   openGraph: {
     ...openGraph,
+    title,
+    description,
     url: path,
   },
 };
