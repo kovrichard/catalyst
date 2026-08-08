@@ -24,9 +24,13 @@ jobs:
       uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
 
     - name: Install dependencies
-      # No lifecycle scripts: the mutation ring excludes the Prisma and DAO
-      # layers, so the generated client is never loaded by the suite.
+      # No lifecycle scripts, so no dependency can run arbitrary code on install.
       run: bun install --frozen-lockfile --ignore-scripts
+
+    - name: Generate Prisma client
+      # Stryker's dry run executes the whole suite, and tests that import page
+      # modules pull in server actions -> DAO -> the gitignored generated client.
+      run: bunx prisma generate
 
     - name: Mutation-test the changed lines
       run: bun run test:mutate:diff "origin/${{ github.event.pull_request.base.ref }}"
