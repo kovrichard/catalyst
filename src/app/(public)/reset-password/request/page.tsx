@@ -16,6 +16,7 @@ const description = "Request a password reset link for your Catalyst account.";
 export const metadata: Metadata = {
   title,
   description,
+  robots: { index: false, follow: false },
   alternates: {
     canonical: path,
   },
