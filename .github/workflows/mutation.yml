@@ -30,7 +30,7 @@ jobs:
     - name: Generate Prisma client
       # Stryker's dry run executes the whole suite, and tests that import page
       # modules pull in server actions -> DAO -> the gitignored generated client.
-      run: bunx prisma generate
+      run: bunx prisma@7.8.0 generate
 
     - name: Mutation-test the changed lines
       run: bun run test:mutate:diff "origin/${{ github.event.pull_request.base.ref }}"
