@@ -42,7 +42,9 @@ export default {
     // No --isolate: bun re-runs the preload and rebuilds the module graph for every
     // file, and this runner's dry-run preload eager-imports every mutated module each
     // time.
-    bunArgs: [],
+    // --env-file replaces .env loading outright, so a developer's real secrets can't
+    // reach the mutation run. Same fixture the normal test runner uses.
+    bunArgs: ["--env-file=tests/env.fixture"],
     timeout: 60000,
     // Loading the whole suite pushes the runner's inspector handshake past its 5s
     // default.
@@ -54,6 +56,9 @@ export default {
   // symlinks under the agent directories (ENOTSUP). Excluding the tooling dirs also
   // keeps the sandbox down to what the suite needs.
   ignorePatterns: [
+    // Belt-and-suspenders alongside --env-file above: never let Stryker even copy the
+    // real secrets in .env into a sandbox.
+    ".env",
     ".agents",
     ".claude",
     ".codex",

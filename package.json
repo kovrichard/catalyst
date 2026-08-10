@@ -16,7 +16,7 @@
     "build:standalone": "EXPORT_MODE=standalone next build",
     "start": "next start",
     "type-check": "tsc --noEmit",
-    "test": "bun test",
+    "test": "bun test --env-file=tests/env.fixture --randomize",
     "test:mutate": "stryker run",
     "test:mutate:diff": "bun .agents/scripts/mutate-diff.ts",
     "lint-staged": "lint-staged",
