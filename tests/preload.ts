@@ -1,4 +1,29 @@
 import { mock } from "bun:test";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
+// Re-applies tests/env.fixture inside this worker, overwriting anything a
+// developer's real .env leaked in through process inheritance (e.g. a
+// mutation-testing worker spawned from an already-.env-loaded parent process
+// — `bun test --env-file` alone can't unset a key the process already has).
+function enforceEnvFixture() {
+  const content = readFileSync(join(import.meta.dir, "env.fixture"), "utf-8");
+  for (const rawLine of content.split("\n")) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) continue;
+    const separatorIndex = line.indexOf("=");
+    if (separatorIndex === -1) continue;
+    const key = line.slice(0, separatorIndex);
+    const value = line.slice(separatorIndex + 1);
+    if (value === "@absent") {
+      delete process.env[key];
+    } else {
+      process.env[key] = value;
+    }
+  }
+}
+
+enforceEnvFixture();
 
 // Next's "server-only" marker throws outside a React Server Component runtime.
 // bun registers a synchronous factory before it resolves the returned promise, and
@@ -14,23 +39,3 @@ void mock.module("next/font/google", () => ({
   Inter: mockFontLoader,
   JetBrains_Mono: mockFontLoader,
 }));
-
-const placeholders: Record<string, string> = {
-  SCHEME: "http",
-  AUTHORITY: "localhost:3000",
-  LOG_LEVEL: "error",
-  // @catalyst:redis-start
-  // Present so `redisConfigured` is true: the suite exercises the configured path.
-  // Redis itself is never reached — the client is created with `lazyConnect`.
-  REDIS_HOST: "localhost",
-  REDIS_PORT: "6380",
-  REDIS_PASS: "test-redis-password-placeholder",
-  // @catalyst:redis-end
-  // @catalyst:auth-start
-  TURNSTILE_SECRET_KEY: "test-turnstile-secret",
-  // @catalyst:auth-end
-};
-
-for (const [key, value] of Object.entries(placeholders)) {
-  process.env[key] = value;
-}

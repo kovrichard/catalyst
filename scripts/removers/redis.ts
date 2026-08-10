@@ -9,7 +9,7 @@ const REDIS_FILES_TO_DELETE = [
 const REDIS_FILES_TO_MODIFY = [
   "src/lib/config.ts",
   "src/lib/prisma/prisma.ts",
-  "tests/preload.ts",
+  "tests/env.fixture",
 ];
 
 const REDIS_PACKAGES_TO_UNINSTALL = ["ioredis"];

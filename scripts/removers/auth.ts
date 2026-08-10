@@ -38,7 +38,7 @@ const AUTH_FILES_TO_MODIFY = [
   "src/app/sitemap.ts",
   "src/lib/trpc/init.ts",
   "src/lib/trpc/routers/_app.ts",
-  "tests/preload.ts",
+  "tests/env.fixture",
   "tests/utils.test.ts",
 ];
 
