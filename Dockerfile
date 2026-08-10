@@ -9,7 +9,10 @@ WORKDIR /app
 # next-server/app-page-turbo.runtime.prod.js with "Expected CommonJS module to have a
 # function wrapper", which 500s every SSR route. apt's node takes PATH precedence over
 # bun's fallback shim, so both the build and the server land on it.
-RUN apt update -y && apt install -y --no-install-recommends nodejs && rm -rf /var/lib/apt/lists/*
+# ca-certificates isn't in this base image; without it node's TLS client rejects every
+# HTTPS request with UNABLE_TO_GET_ISSUER_CERT_LOCALLY, which breaks Prisma's postinstall
+# engine download.
+RUN apt update -y && apt install -y --no-install-recommends nodejs ca-certificates && rm -rf /var/lib/apt/lists/*
 
 
 # install dependencies into temp directory
