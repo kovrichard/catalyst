@@ -1,16 +1,23 @@
 import type { Metadata } from "next";
 import AuthCard from "@/components/auth/auth-card";
 import RegisterForm from "@/components/auth/register-form";
-import { canonicalUrl, openGraph } from "@/lib/metadata";
+import { openGraph } from "@/lib/metadata";
 
 const path = "/register";
+const title = "Sign up | Catalyst";
+const description =
+  "Create a Catalyst account and start building with the agentic Next.js boilerplate.";
 
 export const metadata: Metadata = {
+  title,
+  description,
   alternates: {
-    canonical: `${canonicalUrl}${path}`,
+    canonical: path,
   },
   openGraph: {
     ...openGraph,
+    title,
+    description,
     url: path,
   },
 };

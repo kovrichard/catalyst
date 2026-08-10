@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { canonicalUrl, openGraph } from "@/lib/metadata";
+import { openGraph } from "@/lib/metadata";
 
 const path = "/privacy-policy";
 // TODO: change to the actual company
 const title = "Privacy Policy | Catalyst";
-const description = "Privacy Policy for Catalyst";
+const description =
+  "The privacy policy covering how Catalyst collects, uses, and protects your data.";
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: `${canonicalUrl}${path}`,
+    canonical: path,
   },
   openGraph: {
     ...openGraph,

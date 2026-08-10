@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useRef, useState, useTransition } from "react";
+import { useActionState, useEffect, useId, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import PendingSubmitButton from "@/components/auth/pending-submit-button";
 import TurnstileComponent from "@/components/auth/turnstile";
@@ -17,6 +17,8 @@ import { type FormState, initialState } from "@/lib/utils";
 import { type LoginFormData, loginSchema } from "@/types/auth";
 
 export default function LoginForm() {
+  const emailId = useId();
+  const passwordId = useId();
   const turnstileRef = useRef<TurnstileInstance | null>(null);
   const [state, formAction, isPending] = useActionState(signInUser, initialState);
   const [isTransitionPending, startTransition] = useTransition();
@@ -77,10 +79,10 @@ export default function LoginForm() {
   return (
     <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor={emailId}>Email</Label>
         <Input
           type="email"
-          id="email"
+          id={emailId}
           placeholder="johndoe@example.com"
           autoComplete="email"
           autoFocus
@@ -92,7 +94,7 @@ export default function LoginForm() {
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor={passwordId}>Password</Label>
           <Link
             href="/reset-password/request"
             className="text-primary text-xs underline-offset-4 hover:underline"
@@ -102,7 +104,7 @@ export default function LoginForm() {
         </div>
         <Input
           type="password"
-          id="password"
+          id={passwordId}
           placeholder="****************"
           autoComplete="current-password"
           {...register("password")}

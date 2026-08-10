@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
 import AuthCard from "@/components/auth/auth-card";
 import LoginForm from "@/components/auth/login-form";
-import { canonicalUrl, openGraph } from "@/lib/metadata";
+import { openGraph } from "@/lib/metadata";
 
 const path = "/login";
+const title = "Log in | Catalyst";
+const description = "Sign in to your Catalyst account to pick up where you left off.";
 
 export const metadata: Metadata = {
+  title,
+  description,
   alternates: {
-    canonical: `${canonicalUrl}${path}`,
+    canonical: path,
   },
   openGraph: {
     ...openGraph,
+    title,
+    description,
     url: path,
   },
 };

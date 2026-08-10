@@ -6,9 +6,11 @@ export function deleteFile(filePath: string, dryRun = false): OperationResult {
   const fullPath = join(process.cwd(), filePath);
 
   if (!existsSync(fullPath)) {
+    // Cascading removers may have already deleted this file. Treat as a
+    // no-op rather than a hard failure so cascade output stays clean.
     return {
-      success: false,
-      message: `File does not exist: ${filePath}`,
+      success: true,
+      message: `Skipped (already removed): ${filePath}`,
     };
   }
 
@@ -37,9 +39,11 @@ export function deleteDirectory(dirPath: string, dryRun = false): OperationResul
   const fullPath = join(process.cwd(), dirPath);
 
   if (!existsSync(fullPath)) {
+    // Cascading removers may have already deleted this directory. Treat as a
+    // no-op rather than a hard failure so cascade output stays clean.
     return {
-      success: false,
-      message: `Directory does not exist: ${dirPath}`,
+      success: true,
+      message: `Skipped (already removed): ${dirPath}`,
     };
   }
 

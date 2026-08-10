@@ -8,7 +8,7 @@ const STRIPE_FILES_TO_MODIFY = [
   "src/auth.ts",
   "src/lib/config.ts",
   "src/lib/trpc/routers/_app.ts",
-  "src/components/sidebar/profile-menu.tsx",
+  "src/components/auth/profile-menu.tsx",
 ];
 
 const STRIPE_PACKAGES_TO_UNINSTALL = ["stripe"];

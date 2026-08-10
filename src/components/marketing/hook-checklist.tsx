@@ -77,6 +77,7 @@ function HookCard({ cmd, tool, desc }: { cmd: string; tool: string; desc: string
 
 export function HookChecklist() {
   return (
+    // biome-ignore lint/correctness/useUniqueElementIds: deep-linkable page anchor
     <section id="hooks" className="w-full border-b bg-muted/20">
       <div className="container flex flex-col gap-10 py-24">
         <div className="flex max-w-2xl flex-col gap-3">

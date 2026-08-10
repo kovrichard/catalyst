@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useId, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { requestPasswordReset } from "@/lib/actions/users";
 
 export default function RequestPasswordResetForm() {
+  const emailId = useId();
   const [isPending, setIsPending] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -36,12 +37,13 @@ export default function RequestPasswordResetForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor={emailId}>Email</Label>
         <Input
           type="email"
-          id="email"
+          id={emailId}
           name="email"
           placeholder="johndoe@example.com"
+          autoComplete="email"
           required
           autoFocus
         />

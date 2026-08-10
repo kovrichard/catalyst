@@ -1,24 +1,30 @@
 import type { MetadataRoute } from "next";
-import conf from "@/lib/config";
+import { cacheLife } from "next/cache";
+import { siteUrl } from "@/lib/metadata";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  "use cache";
+  cacheLife("days");
+
+  const lastModified = new Date();
+
   return [
     {
-      url: `${conf.host}/`,
-      lastModified: new Date(),
+      url: `${siteUrl}/`,
+      lastModified,
       changeFrequency: "yearly",
       priority: 1,
     },
     // @catalyst:auth-start
     {
-      url: `${conf.host}/login`,
-      lastModified: new Date(),
+      url: `${siteUrl}/login`,
+      lastModified,
       changeFrequency: "yearly",
       priority: 0.8,
     },
     {
-      url: `${conf.host}/register`,
-      lastModified: new Date(),
+      url: `${siteUrl}/register`,
+      lastModified,
       changeFrequency: "yearly",
       priority: 0.8,
     },
