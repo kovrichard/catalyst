@@ -18,6 +18,7 @@
   "ignoreDependencies": [
     "@opencode-ai/plugin",
     "shadcn",
+    "vaul",
     "@secretlint/secretlint-rule-preset-recommend",
     "@stryker-mutator/bun-runner",
     "@stryker-mutator/api"
