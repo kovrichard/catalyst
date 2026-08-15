@@ -54,7 +54,7 @@ services:
   database:
     image: postgres:16.4
     ports:
-      - 5433:5432
+      - ${DB_PORT:-5433}:5432
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
@@ -80,7 +80,7 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASS}
     ports:
-      - 5434:5432
+      - ${DB_POOL_PORT:-5434}:5432
     healthcheck:
       test:
         [
@@ -103,7 +103,7 @@ services:
   redis:
     image: redis:8.2.2
     ports:
-      - 6379:6379
+      - ${REDIS_PORT:-6379}:6379
     volumes:
       - redisdata:/data
     command: >
