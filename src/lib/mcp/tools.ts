@@ -99,7 +99,7 @@ export function registerMcpTools(server: McpServer): void {
         "Read rows from a table. Results are always limited to records you own. Use the cursor from a previous response to page.",
       inputSchema: z.object({
         table: tableSchema,
-        filters: z.array(filterSchema).optional(),
+        filters: z.array(filterSchema).max(20).optional(),
         orderBy: z
           .object({ field: z.string(), direction: z.enum(["asc", "desc"]) })
           .optional(),
