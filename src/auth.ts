@@ -16,7 +16,15 @@ import prisma from "@/lib/prisma/prisma";
 
 import type Stripe from "stripe";
 import { createStripeCustomer } from "@/lib/stripe-public";
+
 // @catalyst:stripe-end
+
+// @catalyst:mcp-start
+// Better Auth copies these onto the key row when the key is created, so a change
+// here only reaches keys minted afterwards — existing keys keep their old limit.
+const apiKeyRateLimitWindowMs = 60_000;
+const apiKeyRateLimitMaxRequests = 120;
+// @catalyst:mcp-end
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -67,7 +75,13 @@ export const auth = betterAuth({
   },
   plugins: [
     // @catalyst:mcp-start
-    apiKey(),
+    apiKey({
+      rateLimit: {
+        enabled: true,
+        timeWindow: apiKeyRateLimitWindowMs,
+        maxRequests: apiKeyRateLimitMaxRequests,
+      },
+    }),
     // @catalyst:mcp-end
     nextCookies(),
   ],

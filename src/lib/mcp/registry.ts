@@ -61,12 +61,28 @@ const scopeNotes: Record<ScopeKind, string> = {
   "user-owned": "Only rows you own are ever returned.",
 };
 
+const modelsByTable = new Map<string, ExposedModel>(
+  (Object.keys(specs) as ExposedModel[]).map((model) => [specs[model].table, model])
+);
+
 export function modelSpec(model: ExposedModel): ModelSpec {
   return specs[model];
 }
 
-export function isExposedModel(name: string): name is ExposedModel {
-  return Object.hasOwn(specs, name);
+export function exposedModels(): ExposedModel[] {
+  return Object.keys(specs) as ExposedModel[];
+}
+
+export function exposedTables(): string[] {
+  return [...modelsByTable.keys()];
+}
+
+export function tableName(model: ExposedModel): string {
+  return specs[model].table;
+}
+
+export function modelForTable(table: string): ExposedModel | undefined {
+  return modelsByTable.get(table);
 }
 
 export function filterableFields(model: ExposedModel): string[] {
@@ -79,23 +95,21 @@ export function sortableFields(model: ExposedModel): string[] {
   return Object.keys(fields).filter((field) => fields[field]?.sortable === true);
 }
 
-export function listModels() {
-  return Object.keys(specs).map((name) => {
-    const model = modelSpec(name as ExposedModel);
+export function listTables() {
+  return exposedModels().map((model) => {
+    const spec = modelSpec(model);
     return {
-      model: name,
-      table: model.table,
-      description: model.description,
-      access: scopeNotes[model.scope.kind],
+      table: spec.table,
+      description: spec.description,
+      access: scopeNotes[spec.scope.kind],
     };
   });
 }
 
-export function describeModel(model: ExposedModel) {
+export function describeTable(model: ExposedModel) {
   const spec = modelSpec(model);
 
   return {
-    model,
     table: spec.table,
     description: spec.description,
     access: scopeNotes[spec.scope.kind],

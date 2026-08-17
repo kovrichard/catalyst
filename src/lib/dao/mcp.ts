@@ -3,6 +3,7 @@ import {
   filterableFields,
   modelSpec,
   sortableFields,
+  tableName,
 } from "@/lib/mcp/registry";
 import prisma from "@/lib/prisma/prisma";
 
@@ -84,7 +85,7 @@ function compileFilters(model: ExposedModel, filters: QueryFilter[]): WhereClaus
   for (const filter of filters) {
     if (!allowed.includes(filter.field)) {
       throw new Error(
-        `Field "${filter.field}" is not filterable on "${model}". Filterable: ${allowed.join(", ")}.`
+        `Field "${filter.field}" is not filterable on "${tableName(model)}". Filterable: ${allowed.join(", ")}.`
       );
     }
 
@@ -106,7 +107,7 @@ function compileOrderBy(
   const allowed = sortableFields(model);
   if (!allowed.includes(orderBy.field)) {
     throw new Error(
-      `Field "${orderBy.field}" is not sortable on "${model}". Sortable: ${allowed.join(", ") || "none"}.`
+      `Field "${orderBy.field}" is not sortable on "${tableName(model)}". Sortable: ${allowed.join(", ") || "none"}.`
     );
   }
 

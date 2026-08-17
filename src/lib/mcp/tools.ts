@@ -9,10 +9,12 @@ import {
 } from "@/lib/dao/mcp";
 import { userIdFromAuthInfo } from "@/lib/mcp/auth";
 import {
-  describeModel,
+  describeTable,
   type ExposedModel,
-  isExposedModel,
-  listModels,
+  exposedModels,
+  exposedTables,
+  listTables,
+  modelForTable,
 } from "@/lib/mcp/registry";
 
 const schemaResourceUri = "catalyst://schema";
@@ -43,13 +45,13 @@ function errorResult(message: string) {
 }
 
 function toExposedModel(table: string): ExposedModel {
-  if (!isExposedModel(table)) {
-    const available = listModels()
-      .map((model) => model.model)
-      .join(", ");
-    throw new Error(`Unknown table "${table}". Available tables: ${available}.`);
+  const model = modelForTable(table);
+  if (!model) {
+    throw new Error(
+      `Unknown table "${table}". Available tables: ${exposedTables().join(", ")}.`
+    );
   }
-  return table;
+  return model;
 }
 
 function callerId(ctx: ToolContext): string {
@@ -75,7 +77,7 @@ export function registerMcpTools(server: McpServer): void {
         "List every database table exposed over MCP, with a note on how each is scoped to you.",
       inputSchema: z.object({}),
     },
-    () => jsonResult(listModels())
+    () => jsonResult(listTables())
   );
 
   server.registerTool(
@@ -86,7 +88,7 @@ export function registerMcpTools(server: McpServer): void {
         "Show a table's columns, their types, and which are filterable or sortable.",
       inputSchema: z.object({ table: tableSchema }),
     },
-    ({ table }) => guarded(async () => describeModel(toExposedModel(table)))
+    ({ table }) => guarded(async () => describeTable(toExposedModel(table)))
   );
 
   server.registerTool(
@@ -148,11 +150,7 @@ export function registerMcpTools(server: McpServer): void {
         {
           uri: uri.href,
           mimeType: "application/json",
-          text: JSON.stringify(
-            listModels().map((model) => describeModel(model.model as ExposedModel)),
-            null,
-            2
-          ),
+          text: JSON.stringify(exposedModels().map(describeTable), null, 2),
         },
       ],
     })
