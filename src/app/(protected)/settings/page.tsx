@@ -8,6 +8,7 @@ import { auth } from "@/auth";
 import { PasswordFormSkeleton } from "@/components/auth/password-form-skeleton";
 // @catalyst:mcp-start
 import ApiKeysCard from "@/components/settings/api-keys-card";
+import ApiKeysList from "@/components/settings/api-keys-list";
 import ApiKeysSkeleton from "@/components/settings/api-keys-skeleton";
 // @catalyst:mcp-end
 import DeleteAccountForm from "@/components/settings/delete-account-form";
@@ -36,9 +37,11 @@ export default function SettingsPage() {
               <AccountPasswordForm />
             </Suspense>
             {/* @catalyst:mcp-start */}
-            <Suspense fallback={<ApiKeysSkeleton />}>
-              <ApiKeys />
-            </Suspense>
+            <ApiKeysCard>
+              <Suspense fallback={<ApiKeysSkeleton />}>
+                <ApiKeys />
+              </Suspense>
+            </ApiKeysCard>
             {/* @catalyst:mcp-end */}
             <DeleteAccountForm />
           </div>
@@ -59,6 +62,6 @@ async function AccountPasswordForm() {
 async function ApiKeys() {
   const { apiKeys } = await auth.api.listApiKeys({ headers: await headers() });
 
-  return <ApiKeysCard apiKeys={apiKeys} />;
+  return <ApiKeysList apiKeys={apiKeys} />;
 }
 // @catalyst:mcp-end
