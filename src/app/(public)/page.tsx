@@ -3,6 +3,7 @@ import { AgentSkills } from "@/components/marketing/agent-skills";
 import { AlsoIncluded, FinalCta } from "@/components/marketing/also-included";
 import { Hero } from "@/components/marketing/hero";
 import { HookChecklist } from "@/components/marketing/hook-checklist";
+import { McpServer } from "@/components/marketing/mcp-server";
 import { Pipeline } from "@/components/marketing/pipeline";
 import { logger } from "@/lib/logger";
 import { metaDescription, metaTitle, openGraph } from "@/lib/metadata";
@@ -30,6 +31,7 @@ export default function Home() {
       <Pipeline />
       <HookChecklist />
       <AgentSkills />
+      <McpServer />
       <AlsoIncluded />
       <FinalCta />
     </main>

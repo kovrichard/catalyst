@@ -12,7 +12,8 @@ This repository provides a powerful starter kit for building modern web applicat
 - [tRPC](https://trpc.io): End-to-end typesafe APIs written in TypeScript.
 - [Husky](https://typicode.github.io/husky/): Git hooks that help to enforce coding standards by running scripts during the commit process.
 - [Biome](https://biomejs.dev): A toolchain for linting, formatting, and other code quality tasks.
-- [Auth.js](https://authjs.dev): A simple and open-source authentication library for modern web applications.
+- [Better Auth](https://www.better-auth.com): A comprehensive, framework-agnostic authentication library for TypeScript.
+- [Model Context Protocol](https://modelcontextprotocol.io): A read-only MCP server so external agents can query your hosted database with an API key.
 - [Stripe](https://stripe.com): A payment processing platform for online businesses.
 - [Zod](https://zod.dev): TypeScript-first schema validation with static type inference.
 - [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
@@ -120,7 +121,7 @@ bun run migrate
 
 ## Authentication
 
-The Catalyst starter kit uses Auth.js for authentication. You can find the authentication logic in [`src/auth.ts`](src/auth.ts).
+The Catalyst starter kit uses Better Auth for authentication. You can find the authentication logic in [`src/auth.ts`](src/auth.ts).
 
 By default, a development secret is already set in the [`.env.sample`](.env.sample?plain=1#L26) file called `AUTH_SECRET`. Set this secret to a more secure random string at the hosting provider of your choice when deploying the application.
 
@@ -129,6 +130,23 @@ If you also need Google login, add your Google OAuth client ID and secret to the
 GitHub login is also supported. Add your GitHub OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L27) file.
 
 All of these environment variables have placeholders if you copied the [`.env.sample`](.env.sample) file.
+
+## MCP server (read-only)
+
+Catalyst exposes a read-only [MCP](https://modelcontextprotocol.io) server at `POST /api/mcp`, so external agents can query your hosted database directly. It is stateless Streamable HTTP, so any client that speaks the protocol and can set a header connects with no stdio bridge.
+
+Authentication is a Better Auth API key sent as `Authorization: Bearer <key>`. Users mint keys in settings, and each key carries its own rate limit. A throttled key gets a `429` with `Retry-After`, not a misleading `401`.
+
+Access is defined by an allowlist in [`src/lib/mcp/registry.ts`](src/lib/mcp/registry.ts): a model is invisible unless it is listed, and a column is invisible unless it appears in that model's fields. Every query is scoped to the caller's own rows inside the DAO, never by the caller, so auth tables and columns like `User.password` are absent by omission.
+
+Four tools are available: `list_tables`, `describe_table`, `query_table`, and `get_record`, plus a `catalyst://schema` resource. Writes are deliberately absent.
+
+To connect an agent, sync the generated config for Claude Code, Cursor, and opencode:
+
+```bash
+export CATALYST_MCP_KEY="paste-the-key-from-settings-once"
+bun run mcp:sync
+```
 
 ## CI/CD
 

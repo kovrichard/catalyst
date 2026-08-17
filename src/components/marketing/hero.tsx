@@ -16,6 +16,7 @@ const STACK = [
   "Stripe",
   "Tailwind",
   "shadcn/ui",
+  "MCP",
 ];
 
 const TERMINAL = [
