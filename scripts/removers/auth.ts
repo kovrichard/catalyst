@@ -1,3 +1,4 @@
+import { removeMcp } from "./mcp";
 import { Remover } from "./remover";
 import { removeStripe } from "./stripe";
 
@@ -61,4 +62,5 @@ const remover = new Remover({
 export async function removeAuth(dryRun = false): Promise<void> {
   await remover.run(dryRun);
   await removeStripe(dryRun);
+  await removeMcp(dryRun);
 }

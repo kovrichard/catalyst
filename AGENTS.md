@@ -95,6 +95,41 @@ use the `shadcn` MCP tool to find and install the missing component.
   session themselves, since `headers()` would make them request-bound and unusable from
   webhooks or cron.
 
+## MCP server (read-only)
+
+The app exposes a read-only MCP server at `POST /api/mcp` so external agents can query the
+hosted database. It is stateless Streamable HTTP (`mcp-handler`), so any client that speaks
+Streamable HTTP and can set a header connects directly — no stdio bridge.
+
+- **Auth is a Better Auth API key** sent as `Authorization: Bearer <key>`. Users mint keys in
+  settings; `src/lib/mcp/auth.ts` resolves the bearer token to a `userId` and returns it as
+  `AuthInfo.extra.userId`. That resolver is the single place an OAuth branch would be added —
+  the claude.ai connector UI needs OAuth, an API key alone will not connect there.
+- **`src/lib/mcp/registry.ts` is the access control.** A model is invisible unless listed, and a
+  column is invisible unless it appears in that model's `fields`. Auth tables and
+  `User.password` are absent by omission, not filtered out later. To expose a new model, add it
+  to the registry and its Prisma delegate to `readDelegates` in `src/lib/dao/mcp.ts` — scoping,
+  limit clamping, and field masking come for free.
+- **Scoping is enforced in the DAO**, never by the caller: every query merges
+  `{ [scope.column]: userId }` into `where`. Filters are compiled field-by-field against the
+  allowlist, so a caller cannot reach the scope column or pass a raw `where`.
+- Tools: `list_tables`, `describe_table`, `query_table`, `get_record`, plus a `catalyst://schema`
+  resource. Page size defaults to 25 and is capped at 100.
+- Writes are deliberately absent — `ReadDelegate` exposes only `findMany`/`findFirst`/`count`.
+
+Connect an agent by pointing it at the deployed route:
+
+```json
+{
+  "mcpServers": {
+    "catalyst": {
+      "url": "https://your-app.example.com/api/mcp",
+      "headers": { "Authorization": "Bearer <your-api-key>" }
+    }
+  }
+}
+```
+
 ## Visual checks & browser automation
 
 - Prefer the **`/playwright-cli`** skill (drives the `playwright-cli` binary) for screenshots, responsive checks, and browser automation. Use the Playwright MCP (`browser_*` tools) only as a fallback when `playwright-cli` is unavailable, or for DOM-metric probing (`browser_evaluate`).

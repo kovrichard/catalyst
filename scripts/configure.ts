@@ -6,6 +6,7 @@ import prompts from "prompts";
 import { removeAuth } from "./removers/auth";
 import { removeDatabase } from "./removers/db";
 import { removeEmail } from "./removers/email";
+import { removeMcp } from "./removers/mcp";
 import { removeRedis } from "./removers/redis";
 import { removeStripe } from "./removers/stripe";
 import { removeTrpc } from "./removers/trpc";
@@ -24,6 +25,7 @@ interface ConfigOptions {
   removeAuth?: boolean;
   removeTrpc?: boolean;
   removeEmail?: boolean;
+  removeMcp?: boolean;
   dryRun?: boolean;
 }
 
@@ -72,6 +74,12 @@ const features: Feature[] = [
     description: "Remove transactional email (AWS SES, React Email templates)",
     enabled: true,
   },
+  {
+    key: "removeMcp",
+    name: "MCP",
+    description: "Remove the read-only MCP server (API keys, registry, /api/mcp route)",
+    enabled: true,
+  },
 ];
 
 async function showSummary(options: ConfigOptions): Promise<void> {
@@ -82,6 +90,7 @@ async function showSummary(options: ConfigOptions): Promise<void> {
   if (options.removeAuth) removals.push("Auth");
   if (options.removeTrpc) removals.push("tRPC");
   if (options.removeEmail) removals.push("Email");
+  if (options.removeMcp) removals.push("MCP");
 
   if (removals.length === 0) {
     console.log("\nNo features selected for removal.");
@@ -119,6 +128,9 @@ async function executeRemovals(options: ConfigOptions): Promise<void> {
   }
   if (options.removeEmail) {
     await removeEmail(dryRun);
+  }
+  if (options.removeMcp) {
+    await removeMcp(dryRun);
   }
 
   if (!dryRun) {
@@ -181,9 +193,10 @@ function parseArgs(): ConfigOptions {
     .option("--no-auth", "Remove authentication integration")
     .option("--no-trpc", "Remove tRPC + React Query stack")
     .option("--no-email", "Remove transactional email (AWS SES + React Email)")
+    .option("--no-mcp", "Remove the read-only MCP server")
     .option(
       "--remove <features...>",
-      "Remove specific features (comma-separated: stripe, redis, auth, trpc, email)"
+      "Remove specific features (comma-separated: stripe, redis, auth, trpc, email, mcp)"
     )
     .option("--dry-run", "Show what would be done without making changes")
     .parse(process.argv);
@@ -195,6 +208,7 @@ function parseArgs(): ConfigOptions {
     auth?: boolean;
     trpc?: boolean;
     email?: boolean;
+    mcp?: boolean;
     remove?: string[];
     dryRun?: boolean;
   }>();
@@ -221,6 +235,9 @@ function parseArgs(): ConfigOptions {
   if (opts.email === false) {
     options.removeEmail = true;
   }
+  if (opts.mcp === false) {
+    options.removeMcp = true;
+  }
 
   if (opts.remove) {
     opts.remove.forEach((featureArg) => {
@@ -242,9 +259,11 @@ function parseArgs(): ConfigOptions {
           options.removeTrpc = true;
         } else if (normalized === "email") {
           options.removeEmail = true;
+        } else if (normalized === "mcp") {
+          options.removeMcp = true;
         } else {
           console.error(`Unknown feature: ${feature}`);
-          console.error("Available features: stripe, redis, auth, trpc, email");
+          console.error("Available features: stripe, redis, auth, trpc, email, mcp");
           process.exit(1);
         }
       });
