@@ -1,3 +1,6 @@
+// @catalyst:mcp-start
+import { apiKey } from "@better-auth/api-key";
+// @catalyst:mcp-end
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
@@ -62,7 +65,12 @@ export const auth = betterAuth({
       maxAge: 60,
     },
   },
-  plugins: [nextCookies()],
+  plugins: [
+    // @catalyst:mcp-start
+    apiKey(),
+    // @catalyst:mcp-end
+    nextCookies(),
+  ],
   user: {
     additionalFields: {
       // Extra user fields go here, e.g. customerId: { type: "string", required: false }

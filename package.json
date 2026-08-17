@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-ses": "3.1079.0",
+    "@better-auth/api-key": "1.6.29",
     "@hookform/resolvers": "5.4.0",
     "@marsidev/react-turnstile": "1.5.3",
     "@microsoft/clarity": "1.0.2",
@@ -58,7 +59,7 @@
     "@trpc/client": "11.18.0",
     "@trpc/server": "11.18.0",
     "@trpc/tanstack-react-query": "11.18.0",
-    "better-auth": "1.6.23",
+    "better-auth": "1.6.29",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "idb-keyval": "6.2.6",
