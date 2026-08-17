@@ -31,6 +31,7 @@
     "klint": "klint",
     "madge": "madge --circular --extensions ts,tsx --ts-config tsconfig.json --exclude 'prisma/generated' src",
     "lf": "bun .agents/scripts/check-lf.ts",
+    "mcp:sync": "bun .agents/scripts/sync-mcp.ts",
     "secretlint": "secretlint \"**/*\"",
     "update:patch": "ncu -u --target patch -p bun && bun i",
     "update:minor": "ncu -u --target minor -p bun && bun i",

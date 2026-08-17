@@ -117,18 +117,30 @@ Streamable HTTP and can set a header connects directly — no stdio bridge.
   resource. Page size defaults to 25 and is capped at 100.
 - Writes are deliberately absent — `ReadDelegate` exposes only `findMany`/`findFirst`/`count`.
 
-Connect an agent by pointing it at the deployed route:
+### Connecting an agent
 
-```json
-{
-  "mcpServers": {
-    "catalyst": {
-      "url": "https://your-app.example.com/api/mcp",
-      "headers": { "Authorization": "Bearer <your-api-key>" }
-    }
-  }
-}
+`.agents/mcp.json` is the **canonical** MCP config. Do not edit `.mcp.json`,
+`.cursor/mcp.json`, or `opencode.json` directly — they are generated:
+
+```bash
+bun run mcp:sync
 ```
+
+The three agents expand environment variables with incompatible syntax, which is why one
+shared file cannot serve them: Claude Code uses `${VAR}` and `${VAR:-default}`, Cursor uses
+`${env:VAR}`, opencode uses `{env:VAR}`. Write the canonical file in Claude Code's syntax —
+it is the only one that supports defaults — and the generator inlines each default for the
+targets that lack them, while keeping secrets as per-agent variable references.
+
+Expansion reads your **shell** environment, not the repo's `.env`. `bun` auto-loads `.env`,
+Claude Code does not, so export the key (or bridge it with `direnv`):
+
+```bash
+export CATALYST_MCP_KEY="paste-the-key-from-settings-once"
+```
+
+An unset variable with no default is not a hard failure — the literal `${VAR}` text is sent
+as the token, which surfaces as a 401 rather than a config error. Check with `claude mcp list`.
 
 ## Visual checks & browser automation
 

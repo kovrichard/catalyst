@@ -1,5 +1,12 @@
 {
   "mcpServers": {
+    "catalyst": {
+      "type": "http",
+      "url": "${CATALYST_MCP_URL:-http://localhost:3000/api/mcp}",
+      "headers": {
+        "Authorization": "Bearer ${CATALYST_MCP_KEY}"
+      }
+    },
     "playwright": {
       "command": "npx",
       "args": ["@playwright/mcp@latest", "--output-dir", ".playwright-mcp"]
