@@ -138,15 +138,27 @@ shared file cannot serve them: Claude Code uses `${VAR}` and `${VAR:-default}`, 
 it is the only one that supports defaults — and the generator inlines each default for the
 targets that lack them, while keeping secrets as per-agent variable references.
 
+There is one entry per environment — `catalyst-dev`, `catalyst-stage`, `catalyst-prod` — so
+an agent can reach any of them (or several at once) without swapping variables. No server
+change is needed: every deployment already serves `/api/mcp` against its own database, and
+keys live per-env, so targeting an environment is only a matter of which key you export. The
+`dev` URL defaults to `localhost:3000`; `stage`/`prod` carry `example.com` placeholder
+defaults — replace them with your real domains (or set `CATALYST_MCP_URL_STAGE` /
+`CATALYST_MCP_URL_PROD`) once you deploy.
+
 Expansion reads your **shell** environment, not the repo's `.env`. `bun` auto-loads `.env`,
-Claude Code does not, so export the key (or bridge it with `direnv`):
+Claude Code does not, so export the key for each env you use (or bridge it with `direnv`).
+Mint a key in that environment's own `/settings`, since keys are scoped to their database:
 
 ```bash
-export CATALYST_MCP_KEY="paste-the-key-from-settings-once"
+export CATALYST_MCP_KEY_DEV="paste-the-key-from-settings-once"
+export CATALYST_MCP_KEY_STAGE="..."
+export CATALYST_MCP_KEY_PROD="..."
 ```
 
-An unset variable with no default is not a hard failure — the literal `${VAR}` text is sent
-as the token, which surfaces as a 401 rather than a config error. Check with `claude mcp list`.
+An unset key is not a hard failure — the literal `${VAR}` text is sent as the token, which
+surfaces as a 401 on that one entry rather than a config error, leaving the others usable.
+Check with `claude mcp list`.
 
 ## Visual checks & browser automation
 

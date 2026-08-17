@@ -1,10 +1,24 @@
 {
   "mcpServers": {
-    "catalyst": {
+    "catalyst-dev": {
       "type": "http",
-      "url": "${CATALYST_MCP_URL:-http://localhost:3000/api/mcp}",
+      "url": "${CATALYST_MCP_URL_DEV:-http://localhost:3000/api/mcp}",
       "headers": {
-        "Authorization": "Bearer ${CATALYST_MCP_KEY}"
+        "Authorization": "Bearer ${CATALYST_MCP_KEY_DEV}"
+      }
+    },
+    "catalyst-stage": {
+      "type": "http",
+      "url": "${CATALYST_MCP_URL_STAGE:-https://stage.example.com/api/mcp}",
+      "headers": {
+        "Authorization": "Bearer ${CATALYST_MCP_KEY_STAGE}"
+      }
+    },
+    "catalyst-prod": {
+      "type": "http",
+      "url": "${CATALYST_MCP_URL_PROD:-https://example.com/api/mcp}",
+      "headers": {
+        "Authorization": "Bearer ${CATALYST_MCP_KEY_PROD}"
       }
     },
     "playwright": {

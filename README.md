@@ -141,10 +141,16 @@ Access is defined by an allowlist in [`src/lib/mcp/registry.ts`](src/lib/mcp/reg
 
 Four tools are available: `list_tables`, `describe_table`, `query_table`, and `get_record`, plus a `catalyst://schema` resource. Writes are deliberately absent.
 
-To connect an agent, sync the generated config for Claude Code, Cursor, and opencode:
+The config ships one entry per environment — `catalyst-dev`, `catalyst-stage`, and
+`catalyst-prod` — so an agent can reach any of them without swapping variables. `dev` defaults
+to `localhost:3000`; `stage` and `prod` carry `example.com` placeholder URLs, so point them at
+your real domains (or set `CATALYST_MCP_URL_STAGE` / `CATALYST_MCP_URL_PROD`) once you deploy.
+
+To connect an agent, mint a key in that environment's settings, export it, and sync the
+generated config for Claude Code, Cursor, and opencode:
 
 ```bash
-export CATALYST_MCP_KEY="paste-the-key-from-settings-once"
+export CATALYST_MCP_KEY_DEV="paste-the-key-from-settings-once"
 bun run mcp:sync
 ```
 

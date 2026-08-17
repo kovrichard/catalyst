@@ -1,12 +1,28 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
-    "catalyst": {
+    "catalyst-dev": {
       "type": "remote",
       "url": "http://localhost:3000/api/mcp",
       "enabled": true,
       "headers": {
-        "Authorization": "Bearer {env:CATALYST_MCP_KEY}"
+        "Authorization": "Bearer {env:CATALYST_MCP_KEY_DEV}"
+      }
+    },
+    "catalyst-stage": {
+      "type": "remote",
+      "url": "https://stage.example.com/api/mcp",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:CATALYST_MCP_KEY_STAGE}"
+      }
+    },
+    "catalyst-prod": {
+      "type": "remote",
+      "url": "https://example.com/api/mcp",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:CATALYST_MCP_KEY_PROD}"
       }
     },
     "playwright": {
