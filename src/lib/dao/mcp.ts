@@ -122,6 +122,10 @@ function scopedWhere(
   return { ...filters, [modelSpec(model).scope.column]: userId };
 }
 
+function ownedRecordWhere(model: ExposedModel, userId: string, id: string): WhereClause {
+  return { AND: [{ id }, { [modelSpec(model).scope.column]: userId }] };
+}
+
 export async function queryModel(
   model: ExposedModel,
   userId: string,
@@ -152,7 +156,7 @@ export async function queryModel(
 
 export async function getRecord(model: ExposedModel, userId: string, id: string) {
   return readDelegates[model].findFirst({
-    where: scopedWhere(model, userId, { id }),
+    where: ownedRecordWhere(model, userId, id),
     select: buildSelect(model),
   });
 }

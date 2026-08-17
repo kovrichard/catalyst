@@ -105,6 +105,10 @@ Streamable HTTP and can set a header connects directly — no stdio bridge.
   settings; `src/lib/mcp/auth.ts` resolves the bearer token to a `userId` and returns it as
   `AuthInfo.extra.userId`. That resolver is the single place an OAuth branch would be added —
   the claude.ai connector UI needs OAuth, an API key alone will not connect there.
+- **A throttled key gets `429` with `Retry-After`, not `401`.** Each key carries its own limit
+  (120 requests / 60s, copied onto the row at creation). `withMcpAuth` can only answer 401/403,
+  so `route.ts` verifies the token itself and returns the 429 before delegating — an invalid or
+  absent token still gets the standard 401 challenge from `withMcpAuth`.
 - **`src/lib/mcp/registry.ts` is the access control.** A model is invisible unless listed, and a
   column is invisible unless it appears in that model's `fields`. Auth tables and
   `User.password` are absent by omission, not filtered out later. To expose a new model, add it
@@ -112,7 +116,9 @@ Streamable HTTP and can set a header connects directly — no stdio bridge.
   limit clamping, and field masking come for free.
 - **Scoping is enforced in the DAO**, never by the caller: every query merges
   `{ [scope.column]: userId }` into `where`. Filters are compiled field-by-field against the
-  allowlist, so a caller cannot reach the scope column or pass a raw `where`.
+  allowlist, so a caller cannot reach the scope column or pass a raw `where`. Single-record
+  reads `AND` the requested id with the scope predicate instead of merging — on `User` the
+  scope column *is* `id`, so a merge would silently overwrite the id being looked up.
 - Tools: `list_tables`, `describe_table`, `query_table`, `get_record`, plus a `catalyst://schema`
   resource. Page size defaults to 25 and is capped at 100.
 - Writes are deliberately absent — `ReadDelegate` exposes only `findMany`/`findFirst`/`count`.
