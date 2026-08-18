@@ -70,8 +70,14 @@ COPY ./next.config.mjs next.config.mjs
 COPY postcss.config.mjs postcss.config.mjs
 COPY tsconfig.json tsconfig.json
 
+# Deploy target. src/lib/config.ts reads it at module scope, so the prerendered
+# shell (robots meta, analytics gate) freezes it here at build time rather than
+# picking it up from the runtime environment.
+ARG ENVIRONMENT
+
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV ENVIRONMENT=$ENVIRONMENT
 
 RUN bun run build:standalone
 

@@ -99,6 +99,9 @@ jobs:
         file: Dockerfile
         platforms: linux/amd64
         push: true
+        # This job only runs on a push to main, which is the image Coolify deploys.
+        build-args: |
+          ENVIRONMENT=production
         tags: |
           ${{ steps.image.outputs.name }}:latest
           ${{ steps.image.outputs.name }}:${{ github.sha }}
