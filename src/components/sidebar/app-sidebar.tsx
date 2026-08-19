@@ -8,7 +8,6 @@ import { Suspense } from "react";
 import ProfileMenu from "@/components/auth/profile-menu";
 import { SignInButton } from "@/components/auth/sign-in-button";
 import NotificationMenu from "@/components/notifications/notification-menu";
-import { NotificationMenuSkeleton } from "@/components/notifications/notification-menu-skeleton";
 import { SidebarUserSkeleton } from "@/components/sidebar/app-sidebar-skeleton";
 import { NavMain } from "@/components/sidebar/nav-main";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -48,9 +47,7 @@ export function AppSidebar() {
           </SidebarMenu>
           {/* @catalyst:auth-start */}
           <span className="group-data-[collapsible=icon]:hidden">
-            <Suspense fallback={<NotificationMenuSkeleton />}>
-              <NotificationMenu />
-            </Suspense>
+            <NotificationMenu />
           </span>
           {/* @catalyst:auth-end */}
         </div>
