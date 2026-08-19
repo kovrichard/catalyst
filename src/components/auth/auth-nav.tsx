@@ -28,5 +28,5 @@ export async function AuthNav() {
 }
 
 export function AuthNavSkeleton() {
-  return <Skeleton className="h-9 w-36 rounded-md" />;
+  return <Skeleton className="h-11 w-36 rounded-md md:h-9" />;
 }
