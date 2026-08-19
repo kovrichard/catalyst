@@ -250,7 +250,7 @@ function Sidebar({
             // Adjust the padding for floating and inset variants.
             variant === "floating" || variant === "inset"
               ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-              : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
+              : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)",
             className
           )}
           {...props}
@@ -306,28 +306,61 @@ function SidebarTrigger({
   );
 }
 
+const RAIL_SEGMENT =
+  "h-3 w-0.5 bg-sidebar-foreground/40 transition-[rotate,background-color] duration-200 group-hover/rail:bg-sidebar-foreground/70";
+
 function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
-  const { toggleSidebar } = useSidebar();
+  const { state, toggleSidebar } = useSidebar();
 
   return (
-    <button
+    <div
+      className="pointer-events-none absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:block"
       data-sidebar="rail"
       data-slot="sidebar-rail"
-      aria-label="Toggle Sidebar"
-      tabIndex={-1}
-      onClick={toggleSidebar}
-      title="Toggle Sidebar"
-      className={cn(
-        "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-out after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
-        "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
-        "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
-        "group-data-[collapsible=offcanvas]:translate-x-0 hover:group-data-[collapsible=offcanvas]:bg-sidebar group-data-[collapsible=offcanvas]:after:left-full",
-        "[[data-side=left][data-collapsible=offcanvas]_&]:-right-2",
-        "[[data-side=right][data-collapsible=offcanvas]_&]:-left-2",
-        className
-      )}
-      {...props}
-    />
+    >
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            aria-label="Toggle Sidebar"
+            className={cn(
+              "group/rail peer/rail pointer-events-auto absolute top-1/2 left-1/2 flex h-12 w-8 -translate-x-[8px] -translate-y-1/2 items-center justify-center",
+              "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
+              "[[data-side=left][data-state=collapsed]_&]:cursor-e-resize [[data-side=right][data-state=collapsed]_&]:cursor-w-resize",
+              className
+            )}
+            onClick={toggleSidebar}
+            tabIndex={-1}
+            type="button"
+            {...props}
+          >
+            {/* Styled through group-data-[state] rather than the state variable:
+                the shell always renders "expanded" on the server, so a JS branch
+                would mismatch when the cookie says collapsed. */}
+            <span className="flex h-6 w-1 flex-col transition-[translate] duration-200 group-data-[state=collapsed]:group-hover/rail:translate-x-[8px] group-data-[state=expanded]:group-hover/rail:-translate-x-[4px]">
+              <span
+                className={cn(
+                  RAIL_SEGMENT,
+                  "origin-bottom rounded-t-full group-data-[state=collapsed]:group-hover/rail:rotate-[-20deg] group-data-[state=expanded]:group-hover/rail:rotate-20"
+                )}
+              />
+              <span
+                className={cn(
+                  RAIL_SEGMENT,
+                  "origin-top rounded-b-full group-data-[state=collapsed]:group-hover/rail:rotate-20 group-data-[state=expanded]:group-hover/rail:rotate-[-20deg]"
+                )}
+              />
+            </span>
+          </button>
+        </TooltipTrigger>
+        <TooltipContent className="ml-2" side="right">
+          {state === "expanded" ? "Click to close" : "Click to open"}
+        </TooltipContent>
+      </Tooltip>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-sidebar-border transition-[translate] duration-200 group-data-[state=collapsed]:peer-hover/rail:translate-x-[4px] group-data-[state=expanded]:peer-hover/rail:-translate-x-[4px]"
+      />
+    </div>
   );
 }
 

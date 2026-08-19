@@ -16,6 +16,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar";
 import { getChromeUser } from "@/lib/session";
 // @catalyst:auth-end
@@ -79,6 +80,7 @@ export async function AppSidebar() {
         </SidebarMenu>
       </SidebarFooter>
       {/* @catalyst:auth-end */}
+      <SidebarRail />
     </Sidebar>
   );
 }
