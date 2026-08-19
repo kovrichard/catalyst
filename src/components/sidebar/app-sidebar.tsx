@@ -7,6 +7,8 @@ import { ChevronsUpDown } from "lucide-react";
 import { Suspense } from "react";
 import ProfileMenu from "@/components/auth/profile-menu";
 import { SignInButton } from "@/components/auth/sign-in-button";
+import NotificationMenu from "@/components/notifications/notification-menu";
+import { NotificationMenuSkeleton } from "@/components/notifications/notification-menu-skeleton";
 import { SidebarUserSkeleton } from "@/components/sidebar/app-sidebar-skeleton";
 import { NavMain } from "@/components/sidebar/nav-main";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -30,11 +32,28 @@ import { getChromeUser } from "@/lib/session";
 export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="py-3.5 pl-[22px]">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <Image src="/icon.svg" alt="Catalyst" width={28} height={28} />
-          Catalyst
-        </Link>
+      <SidebarHeader>
+        <div className="flex items-center gap-2">
+          <SidebarMenu className="min-w-0 flex-1">
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild size="lg" tooltip="Catalyst">
+                <Link href="/dashboard">
+                  <div className="flex aspect-square size-8 items-center justify-center">
+                    <Image alt="Catalyst" height={28} src="/icon.svg" width={28} />
+                  </div>
+                  <span className="truncate font-semibold">Catalyst</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+          {/* @catalyst:auth-start */}
+          <span className="group-data-[collapsible=icon]:hidden">
+            <Suspense fallback={<NotificationMenuSkeleton />}>
+              <NotificationMenu />
+            </Suspense>
+          </span>
+          {/* @catalyst:auth-end */}
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <NavMain />

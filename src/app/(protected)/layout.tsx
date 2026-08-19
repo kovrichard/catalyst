@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import { SessionGate } from "@/components/auth/session-gate";
 import BottomNavigation from "@/components/bottom-navigation";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
-import TopMenu from "@/components/top-menu";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
@@ -23,10 +22,7 @@ export default function Layout({
       </Suspense>
       <AppSidebar />
       <main className="relative flex min-h-screen flex-1 bg-muted/40">
-        <div className="flex flex-1 flex-col pb-20 md:pb-0">
-          <TopMenu />
-          {children}
-        </div>
+        <div className="flex flex-1 flex-col pb-20 md:pb-0">{children}</div>
       </main>
       <BottomNavigation />
     </SidebarProvider>
