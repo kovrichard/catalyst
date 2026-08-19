@@ -99,7 +99,7 @@ export default function LoginForm() {
             href="/reset-password/request"
             className="text-primary text-xs underline-offset-4 hover:underline"
           >
-            Forgot Password?
+            Forgot password?
           </Link>
         </div>
         <Input

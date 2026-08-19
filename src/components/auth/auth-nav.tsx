@@ -19,9 +19,9 @@ export async function AuthNav() {
 
   return (
     <>
-      <Link href="/login">Login</Link>
+      <Link href="/login">Log in</Link>
       <Button asChild>
-        <Link href="/register">Register</Link>
+        <Link href="/register">Sign up</Link>
       </Button>
     </>
   );

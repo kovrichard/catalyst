@@ -43,7 +43,7 @@ export default function PasswordResetForm({ token }: { token: string }) {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <Label htmlFor={passwordId}>New Password</Label>
+        <Label htmlFor={passwordId}>New password</Label>
         <Input
           type="password"
           id={passwordId}
@@ -54,7 +54,7 @@ export default function PasswordResetForm({ token }: { token: string }) {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor={confirmPasswordId}>Confirm Password</Label>
+        <Label htmlFor={confirmPasswordId}>Confirm new password</Label>
         <Input
           type="password"
           id={confirmPasswordId}
@@ -65,7 +65,7 @@ export default function PasswordResetForm({ token }: { token: string }) {
         />
       </div>
       <Button type="submit" className="w-full" disabled={isPending}>
-        Reset Password
+        Save new password
       </Button>
     </form>
   );
