@@ -6,7 +6,7 @@ import { ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useId, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import PendingSubmitButton from "@/components/auth/pending-submit-button";
+import AuthSubmitButton from "@/components/auth/auth-submit-button";
 import TurnstileComponent from "@/components/auth/turnstile";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -145,7 +145,7 @@ export default function RegisterForm() {
             <ExternalLink size={10} className="relative -top-px ml-1" />
           </a>
         </div>
-        <PendingSubmitButton
+        <AuthSubmitButton
           isPending={isLoading}
           text="Sign up"
           className="w-full"
