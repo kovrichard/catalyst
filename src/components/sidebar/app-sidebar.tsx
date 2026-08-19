@@ -4,8 +4,10 @@ import Link from "next/link";
 // @catalyst:auth-start
 
 import { ChevronsUpDown } from "lucide-react";
+import { Suspense } from "react";
 import ProfileMenu from "@/components/auth/profile-menu";
 import { SignInButton } from "@/components/auth/sign-in-button";
+import { SidebarUserSkeleton } from "@/components/sidebar/app-sidebar-skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -21,11 +23,10 @@ import {
 import { getChromeUser } from "@/lib/session";
 // @catalyst:auth-end
 
-export async function AppSidebar() {
-  // @catalyst:auth-start
-  const user = await getChromeUser();
-  // @catalyst:auth-end
-
+// Synchronous on purpose: the logo and rail carry no data, so awaiting the
+// session here would hold the whole sidebar behind a fallback. Only the footer
+// user block reads the session, and it suspends on its own.
+export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="py-3.5 pl-[22px]">
@@ -39,43 +40,9 @@ export async function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton
-                    size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                  >
-                    <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage src={user?.image || ""} alt={user?.name || "U"} />
-                      <AvatarFallback className="rounded-lg">
-                        {user?.name
-                          ?.split(" ")
-                          .slice(0, 2)
-                          .map((n) => n[0])
-                          .join("") || "A"}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-medium">
-                        {user?.name || "Anonymous"}
-                      </span>
-                      {user?.email && (
-                        <span className="truncate text-xs">{user.email}</span>
-                      )}
-                    </div>
-                    <ChevronsUpDown className="ml-auto size-4" />
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <ProfileMenu
-                  userName={user.name}
-                  userEmail={user.email}
-                  userImage={user.image || undefined}
-                />
-              </DropdownMenu>
-            ) : (
-              <SignInButton />
-            )}
+            <Suspense fallback={<SidebarUserSkeleton />}>
+              <SidebarUser />
+            </Suspense>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
@@ -84,3 +51,45 @@ export async function AppSidebar() {
     </Sidebar>
   );
 }
+
+// @catalyst:auth-start
+async function SidebarUser() {
+  const user = await getChromeUser();
+
+  if (!user) {
+    return <SignInButton />;
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <SidebarMenuButton
+          size="lg"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        >
+          <Avatar className="h-8 w-8 rounded-lg">
+            <AvatarImage src={user?.image || ""} alt={user?.name || "U"} />
+            <AvatarFallback className="rounded-lg">
+              {user?.name
+                ?.split(" ")
+                .slice(0, 2)
+                .map((n) => n[0])
+                .join("") || "A"}
+            </AvatarFallback>
+          </Avatar>
+          <div className="grid flex-1 text-left text-sm leading-tight">
+            <span className="truncate font-medium">{user?.name || "Anonymous"}</span>
+            {user?.email && <span className="truncate text-xs">{user.email}</span>}
+          </div>
+          <ChevronsUpDown className="ml-auto size-4" />
+        </SidebarMenuButton>
+      </DropdownMenuTrigger>
+      <ProfileMenu
+        userName={user.name}
+        userEmail={user.email}
+        userImage={user.image || undefined}
+      />
+    </DropdownMenu>
+  );
+}
+// @catalyst:auth-end
