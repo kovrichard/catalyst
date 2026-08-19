@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import AuthCard from "@/components/auth/auth-card";
 import { PasswordResetFormSkeleton } from "@/components/auth/password-form-skeleton";
 import PasswordResetForm from "@/components/auth/password-reset-form";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { openGraph } from "@/lib/metadata";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -36,18 +30,16 @@ export const metadata: Metadata = {
 
 export default function Page({ searchParams }: Readonly<{ searchParams: SearchParams }>) {
   return (
-    <main className="m-auto">
-      <Card className="w-92">
-        <CardHeader className="text-center">
-          <CardTitle>Reset Password</CardTitle>
-          <CardDescription>Enter your new password</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Suspense fallback={<PasswordResetFormSkeleton />}>
-            <TokenBoundForm searchParams={searchParams} />
-          </Suspense>
-        </CardContent>
-      </Card>
+    <main className="m-auto w-full px-4 py-8">
+      <AuthCard
+        title="Choose a new password"
+        description="Pick something you have not used here before."
+        showOAuth={false}
+      >
+        <Suspense fallback={<PasswordResetFormSkeleton />}>
+          <TokenBoundForm searchParams={searchParams} />
+        </Suspense>
+      </AuthCard>
     </main>
   );
 }
@@ -67,9 +59,9 @@ async function TokenBoundForm({
 function InvalidResetLink() {
   return (
     <p className="text-center text-muted-foreground text-sm">
-      This reset link is invalid or incomplete.{" "}
-      <Link href="/reset-password/request" className="underline">
-        Request a new one
+      This link is not valid any more.{" "}
+      <Link href="/reset-password/request" className="underline underline-offset-4">
+        Ask for a new one
       </Link>
       .
     </p>
