@@ -32,6 +32,7 @@ const AUTH_FOLDERS_TO_DELETE = [
 
 const AUTH_FILES_TO_MODIFY = [
   "src/app/(public)/layout.tsx",
+  "src/components/bottom-navigation.tsx",
   "src/lib/config.ts",
   "src/lib/public-config.ts",
   "src/lib/utils.ts",
