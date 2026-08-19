@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import ProfileMenu from "@/components/auth/profile-menu";
 import { SignInButton } from "@/components/auth/sign-in-button";
 import { SidebarUserSkeleton } from "@/components/sidebar/app-sidebar-skeleton";
+import { NavMain } from "@/components/sidebar/nav-main";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
@@ -28,14 +29,16 @@ import { getChromeUser } from "@/lib/session";
 // user block reads the session, and it suspends on its own.
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader className="py-3.5 pl-[22px]">
         <Link href="/dashboard" className="flex items-center gap-2">
           <Image src="/icon.svg" alt="Catalyst" width={28} height={28} />
           Catalyst
         </Link>
       </SidebarHeader>
-      <SidebarContent />
+      <SidebarContent>
+        <NavMain />
+      </SidebarContent>
       {/* @catalyst:auth-start */}
       <SidebarFooter>
         <SidebarMenu>
