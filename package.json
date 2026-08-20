@@ -64,6 +64,7 @@
     "better-auth": "1.6.29",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
+    "cmdk": "1.1.1",
     "idb-keyval": "6.2.6",
     "ioredis": "5.11.1",
     "javascript-time-ago": "2.6.4",

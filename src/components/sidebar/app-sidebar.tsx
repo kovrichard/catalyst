@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SearchTrigger } from "@/components/command-palette/search-trigger";
 
 // @catalyst:auth-start
 
@@ -53,6 +54,7 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent>
+        <SearchTrigger />
         <NavMain />
       </SidebarContent>
       {/* @catalyst:auth-start */}
