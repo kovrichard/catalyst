@@ -22,10 +22,19 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
 
 const ModalContext = React.createContext(false);
 const useModalIsMobile = () => React.useContext(ModalContext);
+
+// DrawerContent caps itself at 80vh without scrolling, so a tall form clips its
+// own footer off-screen; this wrapper scrolls instead. It owns the whole sheet's
+// horizontal inset too, so the drawer's own header/footer padding is zeroed out
+// rather than stacking and insetting them deeper than the body between them.
+const SCROLLABLE_BODY = [
+  "flex min-h-0 flex-col gap-4 overflow-y-auto px-4 pb-8",
+  "[&_[data-slot=drawer-header]]:p-0 [&_[data-slot=drawer-header]]:pt-2",
+  "[&_[data-slot=drawer-footer]]:p-0",
+].join(" ");
 
 function Modal({ children, ...props }: React.ComponentProps<typeof Dialog>) {
   const isMobile = useIsMobile();
@@ -50,11 +59,24 @@ function ModalClose(props: React.ComponentProps<typeof DialogClose>) {
 
 function ModalContent({
   className,
+  children,
   ...props
 }: React.ComponentProps<typeof DialogContent>) {
   const isMobile = useModalIsMobile();
-  const Content = isMobile ? DrawerContent : DialogContent;
-  return <Content className={cn(isMobile && "gap-4 px-4 pb-8", className)} {...props} />;
+
+  if (!isMobile) {
+    return (
+      <DialogContent className={className} {...props}>
+        {children}
+      </DialogContent>
+    );
+  }
+
+  return (
+    <DrawerContent className={className} {...props}>
+      <div className={SCROLLABLE_BODY}>{children}</div>
+    </DrawerContent>
+  );
 }
 
 function ModalHeader(props: React.ComponentProps<typeof DialogHeader>) {

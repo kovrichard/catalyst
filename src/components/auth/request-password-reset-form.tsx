@@ -49,14 +49,14 @@ export default function RequestPasswordResetForm() {
         />
       </div>
       <Button type="submit" className="w-full" disabled={isPending}>
-        Send Reset Link
+        Send reset link
       </Button>
       <div className="text-center">
         <Link
           href="/login"
           className="text-muted-foreground text-sm transition-colors hover:text-primary"
         >
-          Back to Login
+          Back to log in
         </Link>
       </div>
     </form>

@@ -14,7 +14,6 @@ const AUTH_FILES_TO_DELETE = [
   "src/lib/auth-client.ts",
   "src/lib/turnstile.ts",
   "src/hooks/use-toast.tsx",
-  "src/components/top-menu.tsx",
   "src/proxy.ts",
   "tests/turnstile.test.ts",
 ];
@@ -33,6 +32,7 @@ const AUTH_FOLDERS_TO_DELETE = [
 
 const AUTH_FILES_TO_MODIFY = [
   "src/app/(public)/layout.tsx",
+  "src/components/bottom-navigation.tsx",
   "src/lib/config.ts",
   "src/lib/public-config.ts",
   "src/lib/utils.ts",

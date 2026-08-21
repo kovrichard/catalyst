@@ -23,10 +23,10 @@ export const metadata: Metadata = {
 
 export default function Login() {
   return (
-    <main className="m-auto">
+    <main className="m-auto w-full px-4 py-8">
       <AuthCard
-        title="Welcome back!"
-        description="Sign in to your account to continue"
+        title="Welcome back"
+        description="Log in to pick up where you left off."
         ctaQuestion="First time here?"
         ctaText="Sign up"
         ctaLink="/register"

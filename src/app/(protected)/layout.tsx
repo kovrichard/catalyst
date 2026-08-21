@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import type React from "react";
 import { Suspense } from "react";
 import { SessionGate } from "@/components/auth/session-gate";
+import BottomNavigation from "@/components/bottom-navigation";
+import { CommandPalette } from "@/components/command-palette/command-palette";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
-import { AppSidebarSkeleton } from "@/components/sidebar/app-sidebar-skeleton";
-import TopMenu from "@/components/top-menu";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { CommandPaletteProvider } from "@/lib/contexts/command-palette-context";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -17,19 +18,18 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <SidebarProvider>
-      <Suspense fallback={null}>
-        <SessionGate />
-      </Suspense>
-      <Suspense fallback={<AppSidebarSkeleton />}>
+    <CommandPaletteProvider>
+      <SidebarProvider>
+        <Suspense fallback={null}>
+          <SessionGate />
+        </Suspense>
         <AppSidebar />
-      </Suspense>
-      <main className="relative flex min-h-screen flex-1 bg-muted/40">
-        <div className="flex flex-1 flex-col">
-          <TopMenu />
-          {children}
-        </div>
-      </main>
-    </SidebarProvider>
+        <main className="relative flex min-h-screen flex-1 bg-muted/40">
+          <div className="flex flex-1 flex-col pb-20 md:pb-0">{children}</div>
+        </main>
+        <BottomNavigation />
+        <CommandPalette />
+      </SidebarProvider>
+    </CommandPaletteProvider>
   );
 }

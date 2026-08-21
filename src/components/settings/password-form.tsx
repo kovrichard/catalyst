@@ -85,7 +85,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       {hasPassword && (
         <div className="flex flex-col gap-2">
-          <Label htmlFor={currentPasswordId}>Current Password</Label>
+          <Label htmlFor={currentPasswordId}>Current password</Label>
           <Input
             type="password"
             id={currentPasswordId}
@@ -100,7 +100,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
         </div>
       )}
       <div className="flex flex-col gap-2">
-        <Label htmlFor={newPasswordId}>New Password</Label>
+        <Label htmlFor={newPasswordId}>New password</Label>
         <Input
           type="password"
           id={newPasswordId}
@@ -112,7 +112,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
         )}
       </div>
       <div className="flex flex-col gap-2">
-        <Label htmlFor={confirmPasswordId}>Confirm Password</Label>
+        <Label htmlFor={confirmPasswordId}>Confirm new password</Label>
         <Input
           type="password"
           id={confirmPasswordId}

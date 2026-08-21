@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import type React from "react";
@@ -19,6 +19,15 @@ import publicConf from "@/lib/public-config";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// Without resizes-content the layout viewport ignores the on-screen keyboard, so
+// bottom-anchored sheets keep their full height behind it and push their fields
+// off the top of the screen.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  interactiveWidget: "resizes-content",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useId, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import PendingSubmitButton from "@/components/auth/pending-submit-button";
+import AuthSubmitButton from "@/components/auth/auth-submit-button";
 import TurnstileComponent from "@/components/auth/turnstile";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -99,7 +99,7 @@ export default function LoginForm() {
             href="/reset-password/request"
             className="text-primary text-xs underline-offset-4 hover:underline"
           >
-            Forgot Password?
+            Forgot password?
           </Link>
         </div>
         <Input
@@ -119,7 +119,7 @@ export default function LoginForm() {
           setValue={setTurnstileValue}
           show={revealTurnstile}
         />
-        <PendingSubmitButton
+        <AuthSubmitButton
           isPending={isLoading}
           text="Sign in"
           className="w-full"
