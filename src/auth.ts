@@ -6,7 +6,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 // @catalyst:email-start
 import { after } from "next/server";
-import { sendResetPasswordEmail } from "@/lib/aws/ses";
+import { sendResetPasswordEmail, sendVerificationEmail } from "@/lib/aws/ses";
 // @catalyst:email-end
 import conf from "@/lib/config";
 import { logger } from "@/lib/logger";
@@ -47,6 +47,24 @@ export const auth = betterAuth({
       logger.info(`Password for user ${user.id} has been reset`);
     },
   },
+  // @catalyst:email-start
+  // Account linking refuses to attach an OAuth identity to an unverified local
+  // row, so without this a password signup can never sign in with a provider.
+  emailVerification: {
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    expiresIn: 60 * 60 * 24,
+    sendVerificationEmail: async ({ user, url }, _request) => {
+      after(() =>
+        sendVerificationEmail({
+          to: user.email,
+          name: user.name,
+          url: url,
+        })
+      );
+    },
+  },
+  // @catalyst:email-end
   socialProviders: {
     github: {
       enabled: Boolean(conf.githubId) && Boolean(conf.githubSecret),

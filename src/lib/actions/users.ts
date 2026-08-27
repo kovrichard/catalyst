@@ -106,7 +106,7 @@ export async function registerUser(
 
     return {
       message: "Registered successfully",
-      description: "You have been successfully registered.",
+      description: "Check your inbox for a link to confirm your email address.",
       success: true,
     };
     // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation

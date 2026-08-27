@@ -1,6 +1,7 @@
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { render } from "@react-email/components";
 import ResetPassword from "@/../emails/reset-password";
+import VerifyEmail from "@/../emails/verify-email";
 
 import conf from "@/lib/config";
 import { logger } from "@/lib/logger";
@@ -67,6 +68,58 @@ export async function sendResetPasswordEmail({
 
   try {
     logger.info("Sending reset password email...");
+
+    const data = await client.send(command);
+
+    return data;
+  } catch (error) {
+    logger.error(`Failed to send email: ${error}`);
+    throw error;
+  }
+}
+
+type SendVerificationEmailProps = {
+  to: string;
+  name: string;
+  url: string;
+};
+
+export async function sendVerificationEmail({
+  to,
+  name,
+  url,
+}: SendVerificationEmailProps) {
+  if (!client) {
+    const errorMessage = "Email client not configured.";
+    logger.error(errorMessage);
+    throw new Error(errorMessage);
+  }
+
+  const body = await render(<VerifyEmail name={name} url={url} />);
+
+  const command: SendEmailCommand = new SendEmailCommand({
+    FromEmailAddress: conf.fromEmailAddress,
+    Destination: {
+      ToAddresses: [to],
+    },
+    Content: {
+      Simple: {
+        Subject: {
+          Data: "Catalyst - Confirm your email address",
+          Charset: "UTF-8",
+        },
+        Body: {
+          Html: {
+            Charset: "UTF-8",
+            Data: body,
+          },
+        },
+      },
+    },
+  });
+
+  try {
+    logger.info("Sending verification email...");
 
     const data = await client.send(command);
 
