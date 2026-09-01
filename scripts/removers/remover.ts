@@ -9,6 +9,7 @@ import { uninstallPackages } from "../utils/uninstaller";
 
 export interface RemoverConfig {
   featureName: string;
+  markerName?: string;
   filesToDelete?: string[];
   directoriesToDelete?: string[];
   filesToModify?: string[];
@@ -26,6 +27,7 @@ export class Remover {
   async run(dryRun = false): Promise<void> {
     const {
       featureName,
+      markerName,
       filesToDelete,
       directoriesToDelete,
       filesToModify,
@@ -70,7 +72,7 @@ export class Remover {
 
     if (filesToModify) {
       console.log(`Removing marked code from files:`);
-      const markers = createMarkerOptions(featureName.toLowerCase());
+      const markers = createMarkerOptions(markerName ?? featureName.toLowerCase());
       modifyFileResults = removeMarkedCodeFromFiles(filesToModify, markers, dryRun);
       modifyFileResults.forEach((result) => {
         if (result.success) {

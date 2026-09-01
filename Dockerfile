@@ -62,7 +62,9 @@ COPY --from=install /temp/dev/node_modules node_modules
 COPY --from=install /temp/dev/src/lib/prisma/generated ./src/lib/prisma/generated
 # @catalyst:db-end
 
+# @catalyst:email-start
 COPY ./emails ./emails
+# @catalyst:email-end
 COPY ./public ./public
 COPY ./src ./src
 COPY package.json bun.lock ./
