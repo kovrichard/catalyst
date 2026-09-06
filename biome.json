@@ -95,6 +95,10 @@
         "useCollapsedElseIf": "error",
         "useCollapsedIf": "error",
         "useConsistentArrayType": "error",
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": { "style": "type" }
+        },
         "useDefaultParameterLast": "error",
         "useEnumInitializers": "error",
         "useFilenamingConvention": "error",

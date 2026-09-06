@@ -1,4 +1,4 @@
-export interface OperationResult {
+export type OperationResult = {
   success: boolean;
   message: string;
-}
+};

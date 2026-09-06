@@ -2,10 +2,10 @@
 
 import { createContext, useContext, useMemo, useState } from "react";
 
-interface CommandPaletteState {
+type CommandPaletteState = {
   open: boolean;
   setOpen: (open: boolean) => void;
-}
+};
 
 const CommandPaletteContext = createContext<CommandPaletteState | null>(null);
 

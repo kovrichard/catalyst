@@ -8,14 +8,14 @@ const SEARCH_GLOBS = ["src/**/*.{ts,tsx}", "Dockerfile", "docker-compose.yml"];
 
 const GENERATED = /^src\/lib\/prisma\/generated\//;
 
-interface Remover {
+type Remover = {
   file: string;
   featureName: string;
   markerName: string;
   filesToModify: string[];
   removedPaths: string[];
   scriptsToRemove: string[];
-}
+};
 
 function listBracket(source: string, suffix: string): string[] {
   const match = new RegExp(String.raw`const \w+_${suffix} = \[([^\]]*)\]`).exec(source);

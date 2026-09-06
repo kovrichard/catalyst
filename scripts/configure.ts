@@ -19,7 +19,7 @@ function runCommand(cmd: string, args: string[]): Promise<number> {
   });
 }
 
-interface ConfigOptions {
+type ConfigOptions = {
   removeStripe?: boolean;
   removeDatabase?: boolean;
   removeRedis?: boolean;
@@ -29,14 +29,14 @@ interface ConfigOptions {
   removeMcp?: boolean;
   removeStorage?: boolean;
   dryRun?: boolean;
-}
+};
 
-interface Feature {
+type Feature = {
   key: keyof ConfigOptions;
   name: string;
   description: string;
   enabled: boolean;
-}
+};
 
 const features: Feature[] = [
   {

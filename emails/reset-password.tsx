@@ -16,10 +16,10 @@ import {
   Text,
 } from "@react-email/components";
 
-interface MailProps {
+type MailProps = {
   name: string;
   url: string;
-}
+};
 
 export default function ResetPassword({ name, url }: MailProps) {
   return (

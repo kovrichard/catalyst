@@ -7,7 +7,7 @@ import { deleteDirectories, deleteFiles } from "../utils/file-operations";
 import { removePackageJsonScripts } from "../utils/package-scripts";
 import { uninstallPackages } from "../utils/uninstaller";
 
-export interface RemoverConfig {
+export type RemoverConfig = {
   featureName: string;
   markerName?: string;
   filesToDelete?: string[];
@@ -15,7 +15,7 @@ export interface RemoverConfig {
   filesToModify?: string[];
   packagesToUninstall?: string[];
   scriptsToRemove?: string[];
-}
+};
 
 export class Remover {
   private readonly config: RemoverConfig;
