@@ -43,6 +43,7 @@
         "noExcessiveNestedTestSuites": "error",
         "noUselessCatchBinding": "error",
         "noUselessStringConcat": "error",
+        "noUselessUndefined": "error",
         "useWhile": "error"
       },
       "correctness": {

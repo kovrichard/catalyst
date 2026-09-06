@@ -41,7 +41,7 @@ function rateLimitOutcome(error: VerifyApiKeyError): McpAuthOutcome | undefined 
   const message = error.code ? rateLimitMessages[error.code] : undefined;
 
   if (!message) {
-    return undefined;
+    return;
   }
 
   return {
