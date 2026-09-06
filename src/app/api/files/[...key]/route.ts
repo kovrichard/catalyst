@@ -3,9 +3,6 @@ import { getOptionalUser } from "@/lib/session";
 import { isOwnedFileKey } from "@/lib/storage/file-keys";
 import { getSignedFileUrl } from "@/lib/storage/s3";
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-
 // Mints a short-lived signed CloudFront URL per request and redirects to it, so
 // clients can persist the stable `/api/files/<key>` path and never hold a URL
 // that expires out from under them.
