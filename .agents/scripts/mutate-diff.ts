@@ -11,10 +11,10 @@ function mutatePatterns(): string[] {
 
 type MutateFilter = { includes: Glob[]; excludes: Glob[] };
 
-function mutateFilter(patterns: string[]): MutateFilter {
+function mutateFilter(globPatterns: string[]): MutateFilter {
   const includes: Glob[] = [];
   const excludes: Glob[] = [];
-  for (const pattern of patterns) {
+  for (const pattern of globPatterns) {
     if (pattern.startsWith("!")) {
       excludes.push(new Glob(pattern.slice(1)));
     } else {
@@ -77,8 +77,8 @@ function changedRanges(diff: string, filter: MutateFilter): string[] {
   return ranges;
 }
 
-function runStryker(ranges: string[]): number {
-  const r = spawnSync("bunx", ["stryker", "run", "--mutate", ranges.join(",")], {
+function runStryker(mutateRanges: string[]): number {
+  const r = spawnSync("bunx", ["stryker", "run", "--mutate", mutateRanges.join(",")], {
     stdio: "inherit",
   });
   return r.status ?? 1;

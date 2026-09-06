@@ -61,8 +61,8 @@ export default function RegisterForm() {
     }
   }, [turnstileEnabled, revealTurnstile, name, email, password]);
 
-  const toastCallback = (state: FormState) => {
-    if (state.success) {
+  const toastCallback = (formState: FormState) => {
+    if (formState.success) {
       localStorage.setItem("catalyst-auth-method", "password");
       router.push(publicConf.redirectPath);
     } else {

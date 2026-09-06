@@ -30,15 +30,15 @@ export default function DeleteAccountForm() {
   const isConfirmed = confirmText === CONFIRM_PHRASE;
   const router = useRouter();
 
-  function handleOpenChange(open: boolean) {
-    setOpen(open);
-    if (!open) {
+  function handleOpenChange(nextOpen: boolean) {
+    setOpen(nextOpen);
+    if (!nextOpen) {
       setConfirmText("");
     }
   }
 
-  const successCallback = async (state: FormState) => {
-    if (state.success) {
+  const successCallback = async (formState: FormState) => {
+    if (formState.success) {
       setOpen(false);
       setTimeout(() => {
         void signOut().then(() => {

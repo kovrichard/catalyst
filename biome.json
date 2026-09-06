@@ -135,6 +135,7 @@
         "noHeadImportInDocument": "error",
         "noImportCycles": "error",
         "noSkippedTests": "error",
+        "noShadow": "error",
         "noUnassignedVariables": "error",
         "noUnknownAtRules": "warn",
         "noUnusedExpressions": "error",

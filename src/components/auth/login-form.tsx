@@ -52,8 +52,8 @@ export default function LoginForm() {
     }
   }, [turnstileEnabled, revealTurnstile, email, password]);
 
-  const toastCallback = (state: FormState) => {
-    if (state.success) {
+  const toastCallback = (formState: FormState) => {
+    if (formState.success) {
       localStorage.setItem("catalyst-auth-method", "password");
       router.push(publicConf.redirectPath);
     } else {

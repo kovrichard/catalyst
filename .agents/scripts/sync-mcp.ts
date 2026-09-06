@@ -74,11 +74,11 @@ function toOpencodeServer(server: Server) {
   };
 }
 
-function toOpencode(servers: ServerMap) {
+function toOpencode(serverMap: ServerMap) {
   return {
     $schema: "https://opencode.ai/config.json",
     mcp: Object.fromEntries(
-      Object.entries(servers).map(([name, server]) => [name, toOpencodeServer(server)])
+      Object.entries(serverMap).map(([name, server]) => [name, toOpencodeServer(server)])
     ),
   };
 }
