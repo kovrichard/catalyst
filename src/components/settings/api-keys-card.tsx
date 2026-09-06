@@ -30,13 +30,10 @@ export default function ApiKeysCard({ children }: { children: ReactNode }) {
   }, [createState.key]);
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg border p-4">
-      <div className="flex flex-col gap-1">
-        <h4 className="font-semibold text-lg">API Keys</h4>
-        <p className="text-muted-foreground text-sm">
-          Give an agent read-only access to your data over MCP.
-        </p>
-      </div>
+    <div className="flex flex-col gap-4 rounded-2xl border bg-card p-4 sm:p-5">
+      <p className="text-muted-foreground text-sm">
+        Give an agent read-only access to your data over MCP.
+      </p>
 
       <form ref={formRef} action={createAction} className="flex items-center gap-2">
         <Input name="name" placeholder="Key name, e.g. Claude Code" maxLength={64} />
