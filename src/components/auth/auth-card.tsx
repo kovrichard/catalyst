@@ -33,7 +33,7 @@ export default function AuthCard({
 
       {children}
 
-      {oauth && (
+      {oauth ? (
         <div className="flex flex-col gap-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -43,12 +43,12 @@ export default function AuthCard({
               <span className="bg-card px-2 text-muted-foreground">or continue with</span>
             </div>
           </div>
-          {hasGoogle && <OAuthForm provider="google" />}
-          {hasGitHub && <OAuthForm provider="github" />}
+          {hasGoogle ? <OAuthForm provider="google" /> : null}
+          {hasGitHub ? <OAuthForm provider="github" /> : null}
         </div>
-      )}
+      ) : null}
 
-      {ctaQuestion && ctaText && ctaLink && (
+      {ctaQuestion && ctaText && ctaLink ? (
         <p className="text-center">
           <span className="text-muted-foreground text-sm">{ctaQuestion}</span>{" "}
           <Link
@@ -58,7 +58,7 @@ export default function AuthCard({
             {ctaText}
           </Link>
         </p>
-      )}
+      ) : null}
     </div>
   );
 }

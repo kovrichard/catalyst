@@ -24,7 +24,9 @@ export default function ApiKeyCreatedModal({
   const [copied, setCopied] = useState(false);
 
   async function copyKey() {
-    if (!apiKey) return;
+    if (!apiKey) {
+      return;
+    }
 
     await navigator.clipboard.writeText(apiKey);
     setCopied(true);

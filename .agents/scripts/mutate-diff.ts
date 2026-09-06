@@ -4,6 +4,9 @@ import strykerConfig from "../../stryker.config.mjs";
 
 const baseRef = process.argv[2] ?? "origin/main";
 
+const DIFF_FILE_HEADER = /^\+\+\+ b\/(.+)$/;
+const DIFF_HUNK_HEADER = /^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@/;
+
 function mutatePatterns(): string[] {
   const patterns = strykerConfig.mutate ?? [];
   return patterns.filter((pattern): pattern is string => typeof pattern === "string");
@@ -11,10 +14,10 @@ function mutatePatterns(): string[] {
 
 type MutateFilter = { includes: Glob[]; excludes: Glob[] };
 
-function mutateFilter(patterns: string[]): MutateFilter {
+function mutateFilter(globPatterns: string[]): MutateFilter {
   const includes: Glob[] = [];
   const excludes: Glob[] = [];
-  for (const pattern of patterns) {
+  for (const pattern of globPatterns) {
     if (pattern.startsWith("!")) {
       excludes.push(new Glob(pattern.slice(1)));
     } else {
@@ -49,21 +52,27 @@ function changedRanges(diff: string, filter: MutateFilter): string[] {
   let current: string | null = null;
 
   for (const line of diff.split("\n")) {
-    const fileMatch = /^\+\+\+ b\/(.+)$/.exec(line);
+    const fileMatch = DIFF_FILE_HEADER.exec(line);
     if (fileMatch) {
       const path = fileMatch[1];
       current = isMutatable(path, filter) ? path : null;
       continue;
     }
 
-    if (!current) continue;
+    if (!current) {
+      continue;
+    }
 
-    const hunk = /^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@/.exec(line);
-    if (!hunk) continue;
+    const hunk = DIFF_HUNK_HEADER.exec(line);
+    if (!hunk) {
+      continue;
+    }
 
     const start = Number(hunk[1]);
     const count = hunk[2] === undefined ? 1 : Number(hunk[2]);
-    if (count === 0) continue;
+    if (count === 0) {
+      continue;
+    }
 
     ranges.push(`${current}:${start}-${start + count - 1}`);
   }
@@ -71,8 +80,8 @@ function changedRanges(diff: string, filter: MutateFilter): string[] {
   return ranges;
 }
 
-function runStryker(ranges: string[]): number {
-  const r = spawnSync("bunx", ["stryker", "run", "--mutate", ranges.join(",")], {
+function runStryker(mutateRanges: string[]): number {
+  const r = spawnSync("bunx", ["stryker", "run", "--mutate", mutateRanges.join(",")], {
     stdio: "inherit",
   });
   return r.status ?? 1;

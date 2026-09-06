@@ -40,7 +40,9 @@ function retryAfterSecondsFrom(error: VerifyApiKeyError): number {
 function rateLimitOutcome(error: VerifyApiKeyError): McpAuthOutcome | undefined {
   const message = error.code ? rateLimitMessages[error.code] : undefined;
 
-  if (!message) return undefined;
+  if (!message) {
+    return;
+  }
 
   return {
     kind: "rate-limited",
@@ -58,7 +60,9 @@ function rateLimitOutcome(error: VerifyApiKeyError): McpAuthOutcome | undefined 
 export async function authenticateMcpRequest(request: Request): Promise<McpAuthOutcome> {
   const bearerToken = bearerTokenFromRequest(request);
 
-  if (!bearerToken) return { kind: "unauthenticated" };
+  if (!bearerToken) {
+    return { kind: "unauthenticated" };
+  }
 
   try {
     const { valid, key, error } = await auth.api.verifyApiKey({
@@ -66,9 +70,13 @@ export async function authenticateMcpRequest(request: Request): Promise<McpAuthO
     });
 
     const rateLimited = error ? rateLimitOutcome(error) : undefined;
-    if (rateLimited) return rateLimited;
+    if (rateLimited) {
+      return rateLimited;
+    }
 
-    if (!valid || !key) return { kind: "unauthenticated" };
+    if (!valid || !key) {
+      return { kind: "unauthenticated" };
+    }
 
     return {
       kind: "authenticated",

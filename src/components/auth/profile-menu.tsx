@@ -73,7 +73,7 @@ export default function ProfileMenu({
             <AvatarImage src={userImage} alt={userName} />
             <AvatarFallback className="rounded-lg">
               {userName
-                ?.split(" ")
+                .split(" ")
                 .slice(0, 2)
                 .map((n) => n[0])
                 .join("") || "A"}
@@ -88,7 +88,7 @@ export default function ProfileMenu({
       <DropdownMenuSeparator />
       {/* @catalyst:trpc-start */}
       {/* @catalyst:stripe-start */}
-      {billingPortalUrl && (
+      {billingPortalUrl ? (
         <DropdownMenuItem className="h-10 p-0">
           <a
             href={billingPortalUrl}
@@ -100,7 +100,7 @@ export default function ProfileMenu({
             <span>Billing</span>
           </a>
         </DropdownMenuItem>
-      )}
+      ) : null}
       {/* @catalyst:stripe-end */}
       {/* @catalyst:trpc-end */}
       <DropdownMenuItem className="cursor-pointer p-0" asChild>

@@ -11,8 +11,10 @@ import {
 } from "@/components/ui/sidebar";
 import { useCommandPalette } from "@/lib/contexts/command-palette-context";
 
+const APPLE_PLATFORM = /Mac|iPhone|iPad/;
+
 function isApplePlatform(): boolean {
-  return /Mac|iPhone|iPad/.test(navigator.platform);
+  return APPLE_PLATFORM.test(navigator.platform);
 }
 
 function useShortcutLabel(): string {

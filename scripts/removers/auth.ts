@@ -1,5 +1,6 @@
 import { removeMcp } from "./mcp";
 import { Remover } from "./remover";
+import { removeStorage } from "./storage";
 import { removeStripe } from "./stripe";
 
 const AUTH_FILES_TO_DELETE = [
@@ -63,4 +64,5 @@ export async function removeAuth(dryRun = false): Promise<void> {
   await remover.run(dryRun);
   await removeStripe(dryRun);
   await removeMcp(dryRun);
+  await removeStorage(dryRun);
 }

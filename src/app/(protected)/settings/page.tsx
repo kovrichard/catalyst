@@ -22,7 +22,7 @@ export default function SettingsPage() {
       <div className="flex flex-col gap-1">
         <h1 className="font-semibold text-2xl tracking-tight">Settings</h1>
         <p className="text-muted-foreground text-sm">
-          Change your password, or close your account.
+          Your password, the keys agents use, and your account.
         </p>
       </div>
 

@@ -41,7 +41,9 @@ const readDelegates: Record<ExposedModel, ReadDelegate> = {
 };
 
 function clampLimit(limit: number | undefined): number {
-  if (limit === undefined) return defaultLimit;
+  if (limit === undefined) {
+    return defaultLimit;
+  }
   return Math.min(maxLimit, Math.max(minLimit, Math.trunc(limit)));
 }
 
@@ -58,7 +60,9 @@ function coerceValue(
   field: string,
   value: string | number | boolean
 ): PrismaValue {
-  if (modelSpec(model).fields[field]?.kind !== "datetime") return value;
+  if (modelSpec(model).fields[field]?.kind !== "datetime") {
+    return value;
+  }
 
   const parsed = new Date(String(value));
   if (Number.isNaN(parsed.getTime())) {
@@ -102,7 +106,9 @@ function compileOrderBy(
   model: ExposedModel,
   orderBy: QueryOptions["orderBy"]
 ): Record<string, string>[] {
-  if (!orderBy) return [{ id: "desc" }];
+  if (!orderBy) {
+    return [{ id: "desc" }];
+  }
 
   const allowed = sortableFields(model);
   if (!allowed.includes(orderBy.field)) {

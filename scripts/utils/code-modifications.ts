@@ -2,10 +2,10 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { OperationResult } from "../types/operation-result";
 
-export interface MarkerOptions {
+export type MarkerOptions = {
   startMarker: string;
   endMarker: string;
-}
+};
 
 function removeCodeBetweenMarkers(
   content: string,

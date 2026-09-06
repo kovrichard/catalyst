@@ -43,7 +43,9 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (!isPaletteShortcut(event)) return;
+      if (!isPaletteShortcut(event)) {
+        return;
+      }
       event.preventDefault();
       setOpen(!open);
     };

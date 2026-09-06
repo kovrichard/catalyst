@@ -51,7 +51,9 @@ async function coolify(path: string): Promise<unknown> {
 }
 
 function appUuidFor(args: ShipArgs): string {
-  if (args.extra.app) return args.extra.app;
+  if (args.extra.app) {
+    return args.extra.app;
+  }
   const scoped = process.env[`COOLIFY_APP_UUID_${args.env.toUpperCase()}`];
   return scoped ?? requireEnv("COOLIFY_APP_UUID");
 }
@@ -59,7 +61,9 @@ function appUuidFor(args: ShipArgs): string {
 // Coolify's OpenAPI declares GET /deployments/applications/{uuid} as Application[],
 // but the running API returns {count, deployments:[…]}.
 function toDeploymentRecords(payload: unknown): DeploymentRecord[] {
-  if (Array.isArray(payload)) return payload as DeploymentRecord[];
+  if (Array.isArray(payload)) {
+    return payload as DeploymentRecord[];
+  }
   const container = (payload ?? {}) as { deployments?: unknown; data?: unknown };
   const list = container.deployments ?? container.data;
   return Array.isArray(list) ? (list as DeploymentRecord[]) : [];

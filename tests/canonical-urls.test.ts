@@ -10,13 +10,16 @@
 import { describe, expect, it } from "bun:test";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/metadata";
+import { comparePaths } from "./helpers";
 
 const PUBLIC_ROUTE_GLOB = "src/app/(public)/**/page.tsx";
+const APP_DIR_PREFIX = /^src\/app/;
+const PAGE_FILE_SUFFIX = /\/page\.tsx$/;
 
 function routeOf(file: string): string {
   const segments = file
-    .replace(/^src\/app/, "")
-    .replace(/\/page\.tsx$/, "")
+    .replace(APP_DIR_PREFIX, "")
+    .replace(PAGE_FILE_SUFFIX, "")
     .split("/")
     .filter((segment) => segment !== "" && !segment.startsWith("("));
 
@@ -28,7 +31,7 @@ async function publicPages(): Promise<{ file: string; route: string }[]> {
   for await (const file of new Bun.Glob(PUBLIC_ROUTE_GLOB).scan(".")) {
     files.push(file);
   }
-  return files.sort().map((file) => ({ file, route: routeOf(file) }));
+  return files.sort(comparePaths).map((file) => ({ file, route: routeOf(file) }));
 }
 
 const pages = await publicPages();
@@ -43,7 +46,7 @@ describe("canonical URLs", () => {
   // literal, and hold it to this origin so a canonical can never point off-site.
   it.each(pages)("$route declares itself canonical", async ({ file, route }) => {
     const { metadata } = (await import(`${process.cwd()}/${file}`)) as {
-      metadata: Metadata;
+      metadata?: Metadata;
     };
 
     const declared = metadata?.alternates?.canonical;

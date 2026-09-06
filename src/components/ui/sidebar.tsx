@@ -32,7 +32,9 @@ const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 function readSidebarCookie(): boolean | undefined {
-  if (typeof document === "undefined") return undefined;
+  if (typeof document === "undefined") {
+    return;
+  }
   const match = new RegExp(
     String.raw`(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=(true|false)`
   ).exec(document.cookie);
@@ -106,7 +108,9 @@ function SidebarProvider({
 
   // Helper to toggle the sidebar.
   const toggleSidebar = React.useCallback(() => {
-    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
+    return isMobile
+      ? setOpenMobile((current) => !current)
+      : setOpen((current) => !current);
   }, [isMobile, setOpen]);
 
   // Adds a keyboard shortcut to toggle the sidebar.
@@ -669,9 +673,9 @@ function SidebarMenuSkeleton({
       className={cn("flex h-8 items-center gap-2 rounded-md px-2", className)}
       {...props}
     >
-      {showIcon && (
+      {showIcon ? (
         <Skeleton className="size-4 rounded-md" data-sidebar="menu-skeleton-icon" />
-      )}
+      ) : null}
       <Skeleton
         className="h-4 max-w-(--skeleton-width) flex-1"
         data-sidebar="menu-skeleton-text"

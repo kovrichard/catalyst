@@ -10,9 +10,13 @@ function enforceEnvFixture() {
   const content = readFileSync(join(import.meta.dir, "env.fixture"), "utf-8");
   for (const rawLine of content.split("\n")) {
     const line = rawLine.trim();
-    if (!line || line.startsWith("#")) continue;
+    if (!line || line.startsWith("#")) {
+      continue;
+    }
     const separatorIndex = line.indexOf("=");
-    if (separatorIndex === -1) continue;
+    if (separatorIndex === -1) {
+      continue;
+    }
     const key = line.slice(0, separatorIndex);
     const value = line.slice(separatorIndex + 1);
     if (value === "@absent") {

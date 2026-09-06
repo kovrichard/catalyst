@@ -40,8 +40,12 @@
     "rules": {
       "preset": "recommended",
       "complexity": {
+        "noExcessiveCognitiveComplexity": "error",
         "noExcessiveNestedTestSuites": "error",
+        "noImplicitCoercions": "error",
+        "noUselessCatchBinding": "error",
         "noUselessStringConcat": "error",
+        "noUselessUndefined": "error",
         "useWhile": "error"
       },
       "correctness": {
@@ -72,6 +76,7 @@
         "noBarrelFile": "error",
         "noDelete": "error",
         "noReExportAll": "error",
+        "useTopLevelRegex": "error",
         "noUnwantedPolyfillio": "error",
         "useGoogleFontPreconnect": "error"
       },
@@ -91,10 +96,14 @@
         "noValueAtRule": "error",
         "noYodaExpression": "error",
         "useAsConstAssertion": "error",
-        "useBlockStatements": "off",
+        "useBlockStatements": "error",
         "useCollapsedElseIf": "error",
         "useCollapsedIf": "error",
         "useConsistentArrayType": "error",
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": { "style": "type" }
+        },
         "useDefaultParameterLast": "error",
         "useEnumInitializers": "error",
         "useFilenamingConvention": "error",
@@ -126,10 +135,13 @@
         "noFocusedTests": "error",
         "noHeadImportInDocument": "error",
         "noImportCycles": "error",
+        "noLeakedRender": "error",
         "noSkippedTests": "error",
+        "noShadow": "error",
         "noUnassignedVariables": "error",
         "noUnknownAtRules": "warn",
         "noUnusedExpressions": "error",
+        "useArraySortCompare": "error",
         "useBiomeIgnoreFolder": "error",
         "useDeprecatedDate": "error",
         "useErrorMessage": "error",

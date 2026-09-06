@@ -17,6 +17,7 @@ This repository provides a powerful starter kit for building modern web applicat
 - [Stripe](https://stripe.com): A payment processing platform for online businesses.
 - [Zod](https://zod.dev): TypeScript-first schema validation with static type inference.
 - [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
+- [Amazon S3](https://aws.amazon.com/s3/): Object storage for user uploads, served through signed CloudFront URLs.
 - [Amazon SES](https://aws.amazon.com/ses/): A reliable, scalable, and cost-effective email service.
 - [React Email](https://react.email): A library for building responsive HTML emails using React.
 - [Google Analytics](https://analytics.google.com): You know what it is.
@@ -166,6 +167,26 @@ The project is configured to have a `robots.txt`, a `sitemap.xml`, and a `manife
 Set the `NEXT_PUBLIC_AUTHORITY` environment variable in the [`.env`](.env.sample?plain=1#L5) file to the domain of your application. This variable is used in the `robots.txt` and `sitemap.xml` files.
 
 It also sets various SEO-related tags in the root [`layout.tsx`](src/app/layout.tsx) file. Modify and extend these tags to fit your application's needs.
+
+## File storage
+
+User uploads live in S3 under a `<userId>/<fileId>` key, so ownership is encoded in the key
+itself. The browser PUTs bytes straight to a presigned URL — they never transit the server.
+
+Set `AWS_S3_BUCKET` (plus the shared `AWS_REGION` / `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY`)
+to enable storage. Without them `conf.s3Configured` stays false and every read operation returns
+`null` instead of throwing, so the app runs unconfigured.
+
+Reads go through [`/api/files/<key>`](src/app/api/files/), which checks the session user owns the
+key and then redirects to a freshly signed, short-lived CloudFront URL. Clients persist that
+stable path rather than a time-bound URL, so links never go stale. Signing needs
+`AWS_CLOUDFRONT_KEY_PAIR_ID`, `AWS_CLOUDFRONT_PRIVATE_KEY_BASE64`, and
+`AWS_CLOUDFRONT_DISTRIBUTION_DOMAIN`; with any of them unset the route answers `404`.
+
+Call `createUploadUrls(count)` from [`src/lib/actions/uploads.ts`](src/lib/actions/uploads.ts) to
+mint upload targets. The primitives themselves (`putObject`, `getObjectBytes`, `getObjectSize`,
+`deleteObject`, `deleteObjectsUnderPrefix`, `copyObject`) are in
+[`src/lib/storage/s3.ts`](src/lib/storage/s3.ts).
 
 ## Payments
 

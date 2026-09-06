@@ -41,7 +41,9 @@ function ProfileTrigger({ initials, image }: { initials: string; image?: string 
 
 async function ProfileSlot() {
   const user = await getChromeUser();
-  if (!user) return <ProfileTrigger initials="" />;
+  if (!user) {
+    return <ProfileTrigger initials="" />;
+  }
 
   const initials =
     user.name

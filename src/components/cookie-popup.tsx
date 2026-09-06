@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 declare global {
+  // biome-ignore lint/style/useConsistentTypeDefinitions: augmenting the global Window requires declaration merging, which only an interface provides
   interface Window {
     // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
     gtag?: (...args: any[]) => void;
@@ -65,7 +66,9 @@ export default function CookiePopup() {
     }
   }, []);
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div

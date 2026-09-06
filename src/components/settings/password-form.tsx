@@ -83,7 +83,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-      {hasPassword && (
+      {hasPassword ? (
         <div className="flex flex-col gap-2">
           <Label htmlFor={currentPasswordId}>Current password</Label>
           <Input
@@ -92,13 +92,13 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
             autoComplete="current-password"
             {...register("currentPassword")}
           />
-          {errors.currentPassword && (
+          {errors.currentPassword ? (
             <span className="text-destructive text-xs">
               {errors.currentPassword.message}
             </span>
-          )}
+          ) : null}
         </div>
-      )}
+      ) : null}
       <div className="flex flex-col gap-2">
         <Label htmlFor={newPasswordId}>New password</Label>
         <Input
@@ -107,9 +107,9 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
           autoComplete="new-password"
           {...register("newPassword")}
         />
-        {errors.newPassword && (
+        {errors.newPassword ? (
           <span className="text-destructive text-xs">{errors.newPassword.message}</span>
-        )}
+        ) : null}
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor={confirmPasswordId}>Confirm new password</Label>
@@ -119,11 +119,11 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
           autoComplete="new-password"
           {...register("confirmPassword")}
         />
-        {errors.confirmPassword && (
+        {errors.confirmPassword ? (
           <span className="text-destructive text-xs">
             {errors.confirmPassword.message}
           </span>
-        )}
+        ) : null}
       </div>
       <Button type="submit" className="w-fit" disabled={isLoading}>
         Save

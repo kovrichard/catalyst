@@ -21,7 +21,7 @@ type MailProps = {
   url: string;
 };
 
-export default function ResetPassword({ name, url }: MailProps) {
+export default function VerifyEmail({ name, url }: MailProps) {
   return (
     <Tailwind
       config={{
@@ -76,14 +76,14 @@ export default function ResetPassword({ name, url }: MailProps) {
 
             <Section className="p-8">
               <Heading className="mt-0 mb-4 font-medium text-text text-xl">
-                Password Reset Request
+                Confirm Your Email Address
               </Heading>
               <Text className="mb-6 text-[15px] text-text leading-7">
                 Hi <strong>{name}</strong>,
               </Text>
               <Text className="mb-8 text-[15px] text-text leading-7">
-                We received a request to reset your password for your Catalyst account.
-                Click the button below to proceed.
+                Welcome to Catalyst. Confirm this address so we know we can reach you
+                about your account.
               </Text>
 
               <Section className="mb-8 text-center">
@@ -97,19 +97,24 @@ export default function ResetPassword({ name, url }: MailProps) {
                     textDecoration: "none",
                   }}
                 >
-                  Reset Password
+                  Confirm Email
                 </Button>
               </Section>
 
               <Text className="mb-4 text-[15px] text-text leading-7">
-                If you didn't request this change, you can safely ignore this email. Your
-                password will remain unchanged.
+                Confirming also lets you sign in with a social account later using this
+                same address.
+              </Text>
+
+              <Text className="mb-4 text-[15px] text-text leading-7">
+                If you didn't create a Catalyst account, you can safely ignore this email
+                and nothing will happen.
               </Text>
 
               <Hr className="my-8 border-border border-t" />
 
               <Text className="text-center text-muted text-xs leading-5">
-                This link will expire in 1 hour.
+                This link will expire in 24 hours.
                 <br />
                 <Link
                   href={url}
@@ -133,7 +138,7 @@ export default function ResetPassword({ name, url }: MailProps) {
   );
 }
 
-ResetPassword.PreviewProps = {
+VerifyEmail.PreviewProps = {
   name: "John Doe",
-  url: "http://localhost:3000/reset-password?token=12345",
+  url: "http://localhost:3000/api/auth/verify-email?token=12345",
 } as MailProps;

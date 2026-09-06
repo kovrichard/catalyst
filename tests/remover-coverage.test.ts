@@ -7,26 +7,32 @@ const MARKER = /@catalyst:([a-z]+)-start/g;
 const SEARCH_GLOBS = ["src/**/*.{ts,tsx}", "Dockerfile", "docker-compose.yml"];
 
 const GENERATED = /^src\/lib\/prisma\/generated\//;
+const FEATURE_NAME = /featureName: "([^"]+)"/;
+const MARKER_NAME = /markerName: "([^"]+)"/;
 
-interface Remover {
+type Remover = {
   file: string;
   featureName: string;
   markerName: string;
   filesToModify: string[];
   removedPaths: string[];
   scriptsToRemove: string[];
-}
+};
 
 function listBracket(source: string, suffix: string): string[] {
   const match = new RegExp(String.raw`const \w+_${suffix} = \[([^\]]*)\]`).exec(source);
-  if (!match) return [];
+  if (!match) {
+    return [];
+  }
   return [...match[1].matchAll(/"([^"]+)"/g)].map((entry) => entry[1]);
 }
 
 async function scan(patterns: string[]): Promise<string[]> {
   const found: string[] = [];
   for (const pattern of patterns) {
-    for await (const file of new Bun.Glob(pattern).scan(".")) found.push(file);
+    for await (const file of new Bun.Glob(pattern).scan(".")) {
+      found.push(file);
+    }
   }
   return found;
 }
@@ -35,8 +41,8 @@ const removers: Remover[] = (await scan([REMOVER_GLOB]))
   .filter((file) => !file.endsWith("remover.ts"))
   .map((file) => {
     const source = readFileSync(file, "utf-8");
-    const featureName = /featureName: "([^"]+)"/.exec(source)?.[1] ?? "";
-    const markerName = /markerName: "([^"]+)"/.exec(source)?.[1];
+    const featureName = FEATURE_NAME.exec(source)?.[1] ?? "";
+    const markerName = MARKER_NAME.exec(source)?.[1];
     return {
       file,
       featureName,
@@ -83,7 +89,9 @@ describe("remover coverage", () => {
   it("either strips or deletes every marked file", () => {
     const missed = markerUses.filter(({ file, feature }) => {
       const owner = removers.find((remover) => remover.markerName === feature);
-      if (!owner) return false;
+      if (!owner) {
+        return false;
+      }
       const stripped = owner.filesToModify.includes(file);
       const deleted = owner.removedPaths.some(
         (path) => file === path || file.startsWith(`${path}/`)

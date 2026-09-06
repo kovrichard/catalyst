@@ -21,7 +21,7 @@ export function SignOut({ buttonText }: Readonly<{ buttonText: string }>) {
       await del(QUERY_CACHE_KEY);
       // @catalyst:trpc-end
       await signOut();
-    } catch (_) {
+    } catch {
       // sign out even if the server call fails
     } finally {
       globalThis.location.href = "/login";

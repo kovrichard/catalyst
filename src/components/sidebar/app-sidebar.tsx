@@ -100,7 +100,7 @@ async function SidebarUser() {
           </Avatar>
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-medium">{user?.name || "Anonymous"}</span>
-            {user?.email && <span className="truncate text-xs">{user.email}</span>}
+            {user?.email ? <span className="truncate text-xs">{user.email}</span> : null}
           </div>
           <ChevronsUpDown className="ml-auto size-4" />
         </SidebarMenuButton>

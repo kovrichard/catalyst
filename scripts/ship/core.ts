@@ -59,9 +59,13 @@ export function parseArgs(): ShipArgs {
   };
   const extra: Record<string, string> = {};
   for (const arg of argv) {
-    if (!arg.startsWith("--") || !arg.includes("=")) continue;
+    if (!arg.startsWith("--") || !arg.includes("=")) {
+      continue;
+    }
     const key = arg.slice(0, arg.indexOf("="));
-    if (KNOWN_FLAGS.has(key)) continue;
+    if (KNOWN_FLAGS.has(key)) {
+      continue;
+    }
     extra[key.slice(2)] = arg.slice(arg.indexOf("=") + 1);
   }
   const positionalSha = argv.find((a) => !a.startsWith("--"));
