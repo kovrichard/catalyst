@@ -52,6 +52,7 @@
     "@aws-sdk/cloudfront-signer": "3.1116.0",
     "@aws-sdk/s3-request-presigner": "3.1116.0",
     "@better-auth/api-key": "1.6.29",
+    "@better-auth/passkey": "1.6.29",
     "@hookform/resolvers": "5.4.0",
     "@marsidev/react-turnstile": "1.5.3",
     "@microsoft/clarity": "1.0.2",

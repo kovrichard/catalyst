@@ -1,6 +1,7 @@
 // @catalyst:mcp-start
 import { apiKey } from "@better-auth/api-key";
 // @catalyst:mcp-end
+import { passkey } from "@better-auth/passkey";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
@@ -25,6 +26,8 @@ import { createStripeCustomer } from "@/lib/stripe-public";
 const apiKeyRateLimitWindowMs = 60_000;
 const apiKeyRateLimitMaxRequests = 120;
 // @catalyst:mcp-end
+
+const passkeyRelyingPartyId = conf.authority.split(":")[0];
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -96,6 +99,11 @@ export const auth = betterAuth({
       },
     }),
     // @catalyst:mcp-end
+    passkey({
+      rpID: passkeyRelyingPartyId,
+      rpName: "Catalyst",
+      origin: conf.host,
+    }),
     nextCookies(),
   ],
   user: {

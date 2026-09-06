@@ -14,7 +14,6 @@ datasource db {
 }
 
 model User {
-
   // Better Auth columns
   id            String    @id @default(cuid()) @map("id")
   name          String
@@ -23,6 +22,7 @@ model User {
   image         String?   @map("image")
   sessions      Session[]
   accounts      Account[]
+  passkeys      Passkey[]
 
   // Deprecated columns
   password String? @map("password")
@@ -39,7 +39,6 @@ model User {
 }
 
 model Notification {
-
   id        String   @id @default(cuid())
   type      String
   title     String
@@ -128,6 +127,25 @@ model Apikey {
 }
 
 // @catalyst:mcp-end
+
+model Passkey {
+  id           String   @id @default(cuid())
+  name         String?  @map("name")
+  publicKey    String   @map("public_key")
+  userId       String   @map("user_id")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialID String   @map("credential_id")
+  counter      Int      @map("counter")
+  deviceType   String   @map("device_type")
+  backedUp     Boolean  @map("backed_up")
+  transports   String?  @map("transports")
+  aaguid       String?  @map("aaguid")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([credentialID])
+  @@map("passkeys")
+}
 
 model Verification {
   id         String   @id @default(cuid())
