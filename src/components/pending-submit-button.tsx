@@ -21,6 +21,7 @@ export default function PendingSubmitButton({
       className={cn("relative", className)}
       {...props}
     >
+      {/* biome-ignore lint/suspicious/noLeakedRender: text is a required string prop and is the button label, so rendering it is the intended alternate */}
       {isPending ? <LoaderCircle className="animate-spin" size={18} /> : text}
       {children}
     </Button>

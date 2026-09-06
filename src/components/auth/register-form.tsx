@@ -97,9 +97,9 @@ export default function RegisterForm() {
           autoFocus
           {...register("name")}
         />
-        {errors.name && (
+        {errors.name ? (
           <span className="text-destructive text-xs">{errors.name.message}</span>
-        )}
+        ) : null}
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor={emailId}>Email</Label>
@@ -110,9 +110,9 @@ export default function RegisterForm() {
           autoComplete="email"
           {...register("email")}
         />
-        {errors.email && (
+        {errors.email ? (
           <span className="text-destructive text-xs">{errors.email.message}</span>
-        )}
+        ) : null}
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor={passwordId}>Password</Label>
@@ -123,9 +123,9 @@ export default function RegisterForm() {
           autoComplete="new-password"
           {...register("password")}
         />
-        {errors.password && (
+        {errors.password ? (
           <span className="text-destructive text-xs">{errors.password.message}</span>
-        )}
+        ) : null}
       </div>
       <div className="flex flex-col">
         <TurnstileComponent

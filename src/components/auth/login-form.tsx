@@ -88,9 +88,9 @@ export default function LoginForm() {
           autoFocus
           {...register("email")}
         />
-        {errors.email && (
+        {errors.email ? (
           <span className="text-destructive text-xs">{errors.email.message}</span>
-        )}
+        ) : null}
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
@@ -109,9 +109,9 @@ export default function LoginForm() {
           autoComplete="current-password"
           {...register("password")}
         />
-        {errors.password && (
+        {errors.password ? (
           <span className="text-destructive text-xs">{errors.password.message}</span>
-        )}
+        ) : null}
       </div>
       <div className="flex flex-col">
         <TurnstileComponent

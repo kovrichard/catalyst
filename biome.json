@@ -135,6 +135,7 @@
         "noFocusedTests": "error",
         "noHeadImportInDocument": "error",
         "noImportCycles": "error",
+        "noLeakedRender": "error",
         "noSkippedTests": "error",
         "noShadow": "error",
         "noUnassignedVariables": "error",

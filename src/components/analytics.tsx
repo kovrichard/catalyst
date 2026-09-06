@@ -39,7 +39,7 @@ export default function Analytics({
 
   return isProd ? (
     <>
-      {analytics && (
+      {analytics ? (
         <>
           <Script
             async
@@ -77,8 +77,8 @@ export default function Analytics({
             `}
           </Script>
         </>
-      )}
-      {tagManager && (
+      ) : null}
+      {tagManager ? (
         <>
           {/* biome-ignore lint/correctness/useUniqueElementIds: next/script keys inline scripts by id to dedupe them across renders */}
           <Script id="google-tag-manager">
@@ -98,8 +98,8 @@ export default function Analytics({
             ></iframe>
           </noscript>
         </>
-      )}
-      {ads && (
+      ) : null}
+      {ads ? (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${ads}`}
@@ -117,7 +117,7 @@ export default function Analytics({
               });`}
           </Script>
         </>
-      )}
+      ) : null}
     </>
   ) : null;
 }
