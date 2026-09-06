@@ -31,8 +31,11 @@ type ConfigOptions = {
   dryRun?: boolean;
 };
 
+type RemovalKey = Exclude<keyof ConfigOptions, "dryRun">;
+
 type Feature = {
-  key: keyof ConfigOptions;
+  key: RemovalKey;
+  flag: string;
   name: string;
   description: string;
   enabled: boolean;
@@ -41,12 +44,14 @@ type Feature = {
 const features: Feature[] = [
   {
     key: "removeStripe",
+    flag: "stripe",
     name: "Stripe",
     description: "Remove Stripe integration (payments, webhooks, billing portal)",
     enabled: true,
   },
   {
     key: "removeDatabase",
+    flag: "database",
     name: "Database & Auth",
     description:
       "Remove database and authentication (Prisma, PostgreSQL, everything in auth)",
@@ -54,36 +59,42 @@ const features: Feature[] = [
   },
   {
     key: "removeRedis",
+    flag: "redis",
     name: "Redis",
     description: "Remove Redis integration (caching)",
     enabled: true,
   },
   {
     key: "removeAuth",
+    flag: "auth",
     name: "Auth",
     description: "Remove authentication (login, register, users, notifications)",
     enabled: true,
   },
   {
     key: "removeTrpc",
+    flag: "trpc",
     name: "tRPC",
     description: "Remove tRPC + React Query stack (client, server, routers, packages)",
     enabled: true,
   },
   {
     key: "removeEmail",
+    flag: "email",
     name: "Email",
     description: "Remove transactional email (AWS SES, React Email templates)",
     enabled: true,
   },
   {
     key: "removeMcp",
+    flag: "mcp",
     name: "MCP",
     description: "Remove the read-only MCP server (API keys, registry, /api/mcp route)",
     enabled: true,
   },
   {
     key: "removeStorage",
+    flag: "storage",
     name: "Storage",
     description: "Remove S3 file storage (uploads, presigned URLs, CloudFront signing)",
     enabled: true,
@@ -208,6 +219,39 @@ async function interactiveMode(dryRun = false): Promise<void> {
   await executeRemovals(options);
 }
 
+const featureByFlag = new Map(features.map((feature) => [feature.flag, feature.key]));
+
+function featureFlagList(): string {
+  return [...featureByFlag.keys()].join(", ");
+}
+
+function applyNegatedFlags(opts: Record<string, unknown>, options: ConfigOptions): void {
+  for (const feature of features) {
+    if (opts[feature.flag] === false) {
+      options[feature.key] = true;
+    }
+  }
+}
+
+function splitFeatureList(entries: string[]): string[] {
+  return entries
+    .flatMap((entry) => entry.split(","))
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+}
+
+function applyRemoveList(entries: string[], options: ConfigOptions): void {
+  for (const entry of splitFeatureList(entries)) {
+    const key = featureByFlag.get(entry.toLowerCase());
+    if (!key) {
+      console.error(`Unknown feature: ${entry}`);
+      console.error(`Available features: ${featureFlagList()}`);
+      process.exit(1);
+    }
+    options[key] = true;
+  }
+}
+
 function parseArgs(): ConfigOptions {
   const program = new Command();
 
@@ -225,86 +269,26 @@ function parseArgs(): ConfigOptions {
     .option("--no-storage", "Remove S3 file storage")
     .option(
       "--remove <features...>",
-      "Remove specific features (comma-separated: stripe, redis, auth, trpc, email, mcp, storage)"
+      `Remove specific features (comma-separated: ${featureFlagList()})`
     )
     .option("--dry-run", "Show what would be done without making changes")
     .parse(process.argv);
 
-  const opts = program.opts<{
-    stripe?: boolean;
-    database?: boolean;
-    redis?: boolean;
-    auth?: boolean;
-    trpc?: boolean;
-    email?: boolean;
-    mcp?: boolean;
-    storage?: boolean;
-    remove?: string[];
-    dryRun?: boolean;
-  }>();
+  const opts = program.opts<
+    Record<string, unknown> & {
+      remove?: string[];
+      dryRun?: boolean;
+    }
+  >();
 
   const options: ConfigOptions = {
     dryRun: opts.dryRun ?? false,
   };
 
-  if (opts.stripe === false) {
-    options.removeStripe = true;
-  }
-  if (opts.database === false) {
-    options.removeDatabase = true;
-  }
-  if (opts.redis === false) {
-    options.removeRedis = true;
-  }
-  if (opts.auth === false) {
-    options.removeAuth = true;
-  }
-  if (opts.trpc === false) {
-    options.removeTrpc = true;
-  }
-  if (opts.email === false) {
-    options.removeEmail = true;
-  }
-  if (opts.mcp === false) {
-    options.removeMcp = true;
-  }
-  if (opts.storage === false) {
-    options.removeStorage = true;
-  }
+  applyNegatedFlags(opts, options);
 
   if (opts.remove) {
-    opts.remove.forEach((featureArg) => {
-      const features = featureArg
-        .split(",")
-        .map((f) => f.trim())
-        .filter(Boolean);
-      features.forEach((feature) => {
-        const normalized = feature.toLowerCase();
-        if (normalized === "stripe") {
-          options.removeStripe = true;
-        } else if (normalized === "database") {
-          options.removeDatabase = true;
-        } else if (normalized === "redis") {
-          options.removeRedis = true;
-        } else if (normalized === "auth") {
-          options.removeAuth = true;
-        } else if (normalized === "trpc") {
-          options.removeTrpc = true;
-        } else if (normalized === "email") {
-          options.removeEmail = true;
-        } else if (normalized === "mcp") {
-          options.removeMcp = true;
-        } else if (normalized === "storage") {
-          options.removeStorage = true;
-        } else {
-          console.error(`Unknown feature: ${feature}`);
-          console.error(
-            "Available features: stripe, redis, auth, trpc, email, mcp, storage"
-          );
-          process.exit(1);
-        }
-      });
-    });
+    applyRemoveList(opts.remove, options);
   }
 
   return options;

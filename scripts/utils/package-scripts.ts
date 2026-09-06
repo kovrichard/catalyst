@@ -4,6 +4,48 @@ import type { OperationResult } from "../types/operation-result";
 
 const PACKAGE_JSON_PATH = "package.json";
 
+type ScriptOutcome = {
+  removed: boolean;
+  result: OperationResult;
+};
+
+function failEveryScript(
+  scriptNames: string[],
+  message: (name: string) => string
+): OperationResult[] {
+  return scriptNames.map((name) => ({ success: false, message: message(name) }));
+}
+
+function removeScript(
+  scripts: Record<string, string> | undefined,
+  name: string,
+  dryRun: boolean
+): ScriptOutcome {
+  if (!scripts || !Object.hasOwn(scripts, name)) {
+    return {
+      removed: false,
+      result: {
+        success: true,
+        message: `Script "${name}" not present in package.json — skipped`,
+      },
+    };
+  }
+
+  if (!dryRun) {
+    delete scripts[name];
+  }
+
+  return {
+    removed: true,
+    result: {
+      success: true,
+      message: dryRun
+        ? `Would remove script "${name}" from package.json`
+        : `Removed script "${name}" from package.json`,
+    },
+  };
+}
+
 export function removePackageJsonScripts(
   scriptNames: string[],
   dryRun = false
@@ -14,10 +56,10 @@ export function removePackageJsonScripts(
 
   const fullPath = join(process.cwd(), PACKAGE_JSON_PATH);
   if (!existsSync(fullPath)) {
-    return scriptNames.map((name) => ({
-      success: false,
-      message: `package.json not found while removing script "${name}"`,
-    }));
+    return failEveryScript(
+      scriptNames,
+      (name) => `package.json not found while removing script "${name}"`
+    );
   }
 
   const raw = readFileSync(fullPath, "utf-8");
@@ -29,37 +71,17 @@ export function removePackageJsonScripts(
     parsed = JSON.parse(raw);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    return scriptNames.map((name) => ({
-      success: false,
-      message: `Failed to parse package.json while removing script "${name}": ${message}`,
-    }));
+    return failEveryScript(
+      scriptNames,
+      (name) => `Failed to parse package.json while removing script "${name}": ${message}`
+    );
   }
 
-  const results: OperationResult[] = [];
-  let changed = false;
-  for (const name of scriptNames) {
-    if (parsed.scripts && Object.hasOwn(parsed.scripts, name)) {
-      if (!dryRun) {
-        delete parsed.scripts[name];
-      }
-      changed = true;
-      results.push({
-        success: true,
-        message: dryRun
-          ? `Would remove script "${name}" from package.json`
-          : `Removed script "${name}" from package.json`,
-      });
-    } else {
-      results.push({
-        success: true,
-        message: `Script "${name}" not present in package.json — skipped`,
-      });
-    }
-  }
+  const outcomes = scriptNames.map((name) => removeScript(parsed.scripts, name, dryRun));
 
-  if (changed && !dryRun) {
+  if (!dryRun && outcomes.some((outcome) => outcome.removed)) {
     writeFileSync(fullPath, `${JSON.stringify(parsed, null, indent)}\n`, "utf-8");
   }
 
-  return results;
+  return outcomes.map((outcome) => outcome.result);
 }
