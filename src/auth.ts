@@ -78,7 +78,7 @@ export const auth = betterAuth({
   account: {
     accountLinking: {
       enabled: true,
-      trustedProviders: ["google", "github"],
+      trustedProviders: ["google"],
     },
   },
   // Signed session payload rides in a cookie so getSession answers without a
