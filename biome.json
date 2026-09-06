@@ -41,6 +41,7 @@
       "preset": "recommended",
       "complexity": {
         "noExcessiveNestedTestSuites": "error",
+        "noImplicitCoercions": "error",
         "noUselessCatchBinding": "error",
         "noUselessStringConcat": "error",
         "noUselessUndefined": "error",
