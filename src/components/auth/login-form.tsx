@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useId, useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import AuthSubmitButton from "@/components/auth/auth-submit-button";
+import PasswordInput from "@/components/auth/password-input";
 import TurnstileComponent from "@/components/auth/turnstile";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -102,8 +103,7 @@ export default function LoginForm() {
             Forgot password?
           </Link>
         </div>
-        <Input
-          type="password"
+        <PasswordInput
           id={passwordId}
           placeholder="****************"
           autoComplete="current-password"
