@@ -20,9 +20,8 @@ export default function AuthCard({
   ctaLink?: string;
   showOAuth?: boolean;
 }) {
-  const hasGitHub = Boolean(conf.githubId) && Boolean(conf.githubSecret);
   const hasGoogle = Boolean(conf.googleId) && Boolean(conf.googleSecret);
-  const oauth = showOAuth && (hasGitHub || hasGoogle);
+  const oauth = showOAuth && hasGoogle;
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col gap-6 rounded-2xl border bg-card p-6">
@@ -44,7 +43,6 @@ export default function AuthCard({
             </div>
           </div>
           {hasGoogle ? <OAuthForm provider="google" /> : null}
-          {hasGitHub ? <OAuthForm provider="github" /> : null}
         </div>
       ) : null}
 

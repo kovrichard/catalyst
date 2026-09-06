@@ -128,8 +128,6 @@ By default, a development secret is already set in the [`.env.sample`](.env.samp
 
 If you also need Google login, add your Google OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L29) file.
 
-GitHub login is also supported. Add your GitHub OAuth client ID and secret to the [`.env`](.env.sample?plain=1#L27) file.
-
 All of these environment variables have placeholders if you copied the [`.env.sample`](.env.sample) file.
 
 ## MCP server (read-only)

@@ -66,11 +66,6 @@ export const auth = betterAuth({
   },
   // @catalyst:email-end
   socialProviders: {
-    github: {
-      enabled: Boolean(conf.githubId) && Boolean(conf.githubSecret),
-      clientId: conf.githubId || "",
-      clientSecret: conf.githubSecret,
-    },
     google: {
       enabled: Boolean(conf.googleId) && Boolean(conf.googleSecret),
       clientId: conf.googleId || "",
