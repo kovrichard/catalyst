@@ -12,9 +12,11 @@ import ApiKeysList from "@/components/settings/api-keys-list";
 import ApiKeysSkeleton from "@/components/settings/api-keys-skeleton";
 // @catalyst:mcp-end
 import DeleteAccountForm from "@/components/settings/delete-account-form";
+import PasskeysCard from "@/components/settings/passkeys-card";
 import PasswordForm from "@/components/settings/password-form";
 import { userHasPassword } from "@/lib/dao/users";
 import { getUserIdFromSession } from "@/lib/session";
+import { toApiKeySummary } from "@/types/api-key";
 
 export default function SettingsPage() {
   return (
@@ -33,6 +35,13 @@ export default function SettingsPage() {
             <AccountPasswordForm />
           </Suspense>
         </div>
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="font-semibold">Passkeys</h2>
+        <Suspense fallback={<PasswordFormSkeleton />}>
+          <AccountPasskeys />
+        </Suspense>
       </section>
 
       {/* @catalyst:mcp-start */}
@@ -54,6 +63,12 @@ export default function SettingsPage() {
   );
 }
 
+async function AccountPasskeys() {
+  const passkeys = await auth.api.listPasskeys({ headers: await headers() });
+
+  return <PasskeysCard passkeys={passkeys} />;
+}
+
 async function AccountPasswordForm() {
   const userId = await getUserIdFromSession();
   const hasPassword = await userHasPassword(userId);
@@ -65,6 +80,6 @@ async function AccountPasswordForm() {
 async function ApiKeys() {
   const { apiKeys } = await auth.api.listApiKeys({ headers: await headers() });
 
-  return <ApiKeysList apiKeys={apiKeys} />;
+  return <ApiKeysList apiKeys={apiKeys.map(toApiKeySummary)} />;
 }
 // @catalyst:mcp-end

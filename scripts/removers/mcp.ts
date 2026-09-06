@@ -7,6 +7,7 @@ const MCP_FILES_TO_DELETE = [
   "src/components/settings/api-keys-card.tsx",
   "src/components/settings/api-keys-skeleton.tsx",
   "src/components/settings/api-key-created-modal.tsx",
+  "tests/api-key.test.ts",
 ];
 
 const MCP_FOLDERS_TO_DELETE = ["src/lib/mcp", "src/app/api/mcp"];
