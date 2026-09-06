@@ -32,6 +32,8 @@ arch:
       - "!src/auth.ts"
     dao:
       - "src/lib/dao/**"
+    ui-primitives:
+      - "src/components/ui/**"
     request-context:
       - "src/lib/session.ts"
       - "src/auth.ts"
@@ -58,6 +60,10 @@ arch:
       deny: prisma-client
       type-only: allow
       message: "Prisma belongs in the DAO — add a function under src/lib/dao/ and call that instead. src/auth.ts is the only exception, because Better Auth's prismaAdapter takes the client instance itself."
+    - from: ui-primitives
+      allow: ["src/components/ui/**", "src/lib/utils.ts", "src/hooks/**"]
+      type-only: allow
+      message: "shadcn primitives stay app-agnostic — `shadcn add` overwrites these files, taking any app logic with them. Compose app behaviour in src/components instead."
     - from: dao
       deny: request-context
       type-only: allow
