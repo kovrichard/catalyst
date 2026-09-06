@@ -38,7 +38,9 @@ function inlineDefaults(value: string, toReference: (name: string) => string): s
 }
 
 function rewriteDeep<T>(value: T, toReference: (name: string) => string): T {
-  if (typeof value === "string") return inlineDefaults(value, toReference) as T;
+  if (typeof value === "string") {
+    return inlineDefaults(value, toReference) as T;
+  }
   if (Array.isArray(value)) {
     return value.map((item) => rewriteDeep(item, toReference)) as T;
   }
@@ -83,7 +85,9 @@ function toOpencode(servers: ServerMap) {
 
 function replaceSymlink(absolutePath: string): void {
   try {
-    if (lstatSync(absolutePath).isSymbolicLink()) unlinkSync(absolutePath);
+    if (lstatSync(absolutePath).isSymbolicLink()) {
+      unlinkSync(absolutePath);
+    }
   } catch {
     // Nothing at that path yet — writing creates it.
   }

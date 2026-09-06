@@ -3,9 +3,15 @@ import { spawnSync } from "node:child_process";
 type HookFormat = "claude" | "cursor" | "opencode" | "codex";
 
 export function hookFormatFromArgs(args: string[] = process.argv.slice(2)): HookFormat {
-  if (args.includes("--codex")) return "codex";
-  if (args.includes("--cursor")) return "cursor";
-  if (args.includes("--opencode")) return "opencode";
+  if (args.includes("--codex")) {
+    return "codex";
+  }
+  if (args.includes("--cursor")) {
+    return "cursor";
+  }
+  if (args.includes("--opencode")) {
+    return "opencode";
+  }
   return "claude";
 }
 
@@ -18,7 +24,9 @@ function writeFailure(format: HookFormat, output: string): void {
 }
 
 function writeSuccess(format: HookFormat, output: string): number {
-  if (format === "codex") return 0;
+  if (format === "codex") {
+    return 0;
+  }
   process.stdout.write(JSON.stringify({ output }));
   return 0;
 }
@@ -29,7 +37,9 @@ function worktreeHasChanges(): boolean {
     shell: true,
     stdio: ["ignore", "pipe", "pipe"],
   });
-  if ((r.status ?? -1) !== 0) return true;
+  if ((r.status ?? -1) !== 0) {
+    return true;
+  }
   return (r.stdout ?? "").trim().length > 0;
 }
 
@@ -54,7 +64,9 @@ export function runHook(args: string[], format = hookFormatFromArgs()): number {
   const output = out || "(no output)";
   const ok = (r.status ?? -1) === 0;
 
-  if (ok) return writeSuccess(format, output);
+  if (ok) {
+    return writeSuccess(format, output);
+  }
   writeFailure(format, output);
   return 2;
 }

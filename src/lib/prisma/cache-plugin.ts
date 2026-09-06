@@ -74,29 +74,39 @@ const defaultKey = ({
 };
 
 function extractUserId(args: unknown): string | null {
-  if (typeof args !== "object" || args === null) return null;
+  if (typeof args !== "object" || args === null) {
+    return null;
+  }
 
   const obj = args as Record<string, unknown>;
 
   // Check where first (for queries and updates)
   if (obj.where) {
     const userId = findUserIdRecursive(obj.where, 0);
-    if (userId) return userId;
+    if (userId) {
+      return userId;
+    }
   }
 
   // Check data (for create/update operations)
   if (obj.data) {
     const userId = findUserIdRecursive(obj.data, 0);
-    if (userId) return userId;
+    if (userId) {
+      return userId;
+    }
   }
 
   return null;
 }
 
 function findUserIdRecursive(value: unknown, depth: number): string | null {
-  if (depth > 5) return null;
+  if (depth > 5) {
+    return null;
+  }
 
-  if (typeof value !== "object" || value === null) return null;
+  if (typeof value !== "object" || value === null) {
+    return null;
+  }
 
   const obj = value as Record<string, unknown>;
   if (obj.userId && typeof obj.userId === "string") {
@@ -147,15 +157,19 @@ class RedisCacheHandler {
   }
 
   private getAction(operation: string): ActionResult {
-    if (this.globalActions.includes(operation as CachedAction))
+    if (this.globalActions.includes(operation as CachedAction)) {
       return { type: "cached", operation: operation as CachedAction };
-    if (this.globalInvalidations.includes(operation as MutatingAction))
+    }
+    if (this.globalInvalidations.includes(operation as MutatingAction)) {
       return { type: "mutating", operation: operation as MutatingAction };
+    }
     return { type: "unknown", operation: "unknown" };
   }
 
   private async getCachedValue(cacheKey: string): Promise<string | null> {
-    if (!isRedisConnected(redis)) return null;
+    if (!isRedisConnected(redis)) {
+      return null;
+    }
 
     try {
       return await redis.get(cacheKey);
@@ -182,7 +196,9 @@ class RedisCacheHandler {
   }
 
   private async setCachedValue(cacheKey: string, value: unknown): Promise<void> {
-    if (!isRedisConnected(redis)) return;
+    if (!isRedisConnected(redis)) {
+      return;
+    }
     try {
       await redis.set(cacheKey, JSON.stringify(value), "EX", this.ttlSeconds);
     } catch (_error) {
@@ -191,7 +207,9 @@ class RedisCacheHandler {
   }
 
   private async invalidateCacheKeys(keys: Iterable<string>): Promise<void> {
-    if (!isRedisConnected(redis)) return;
+    if (!isRedisConnected(redis)) {
+      return;
+    }
     const deleteResults = await Promise.allSettled(
       Array.from(keys).map((cacheKey) => redis.del(cacheKey))
     );
@@ -211,7 +229,9 @@ class RedisCacheHandler {
     args: unknown,
     userId: string | null
   ): Promise<Iterable<string>> {
-    if (!isRedisConnected(redis)) return new Set<string>();
+    if (!isRedisConnected(redis)) {
+      return new Set<string>();
+    }
 
     // Extract prefix from key function by generating a sample key
     const sampleKey = this.key({
@@ -259,7 +279,9 @@ class RedisCacheHandler {
     const shouldCacheAction =
       actionsForModel.includes(action) || this.globalActions.includes(action);
 
-    if (!shouldCacheAction) return query(args);
+    if (!shouldCacheAction) {
+      return query(args);
+    }
 
     const cacheKey = this.key({ model, action, args });
     const cached = await this.getCachedValue(cacheKey);
@@ -295,7 +317,9 @@ class RedisCacheHandler {
     const shouldInvalidate =
       modelInvalidations.includes(action) || this.globalInvalidations.includes(action);
 
-    if (!shouldInvalidate) return query(args);
+    if (!shouldInvalidate) {
+      return query(args);
+    }
 
     const result = await query(args);
 
@@ -322,7 +346,9 @@ class RedisCacheHandler {
     args: unknown,
     query: (args: unknown) => Promise<unknown>
   ): Promise<unknown> {
-    if (!model) return query(args);
+    if (!model) {
+      return query(args);
+    }
 
     if (!isRedisConnected(redis)) {
       logger.debug("Redis not configured, falling back to database");

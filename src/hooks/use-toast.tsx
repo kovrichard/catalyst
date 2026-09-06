@@ -9,7 +9,9 @@ const useToast = (
   callback: ((state: FormState) => void) | undefined = undefined
 ) => {
   useEffect(() => {
-    if (!state.message) return;
+    if (!state.message) {
+      return;
+    }
 
     toast(state.message, {
       description: state.description,

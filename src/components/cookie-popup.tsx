@@ -65,7 +65,9 @@ export default function CookiePopup() {
     }
   }, []);
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div

@@ -18,7 +18,9 @@ import { formatTimeAgo } from "@/lib/utils";
 import type { ApiKeySummary } from "@/types/api-key";
 
 function lastUsedLabel(apiKey: ApiKeySummary) {
-  if (!apiKey.lastRequest) return "never used";
+  if (!apiKey.lastRequest) {
+    return "never used";
+  }
   return `last used ${formatTimeAgo(apiKey.lastRequest)}`;
 }
 
@@ -28,7 +30,9 @@ export default function ApiKeysList({ apiKeys }: { apiKeys: ApiKeySummary[] }) {
 
   function confirmRevoke() {
     const target = revokeTarget;
-    if (!target) return;
+    if (!target) {
+      return;
+    }
 
     setRevokeTarget(null);
     startRevoke(async () => {

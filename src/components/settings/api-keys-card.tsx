@@ -24,7 +24,9 @@ export default function ApiKeysCard({ children }: { children: ReactNode }) {
   useToast(createState);
 
   useEffect(() => {
-    if (!createState.key) return;
+    if (!createState.key) {
+      return;
+    }
     setRevealedKey(createState.key);
     formRef.current?.reset();
   }, [createState.key]);

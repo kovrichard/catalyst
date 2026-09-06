@@ -8,7 +8,9 @@ export function removePackageJsonScripts(
   scriptNames: string[],
   dryRun = false
 ): OperationResult[] {
-  if (scriptNames.length === 0) return [];
+  if (scriptNames.length === 0) {
+    return [];
+  }
 
   const fullPath = join(process.cwd(), PACKAGE_JSON_PATH);
   if (!existsSync(fullPath)) {

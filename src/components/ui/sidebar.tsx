@@ -32,7 +32,9 @@ const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 function readSidebarCookie(): boolean | undefined {
-  if (typeof document === "undefined") return undefined;
+  if (typeof document === "undefined") {
+    return undefined;
+  }
   const match = new RegExp(
     String.raw`(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=(true|false)`
   ).exec(document.cookie);

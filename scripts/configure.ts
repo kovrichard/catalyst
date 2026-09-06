@@ -92,14 +92,30 @@ const features: Feature[] = [
 
 async function showSummary(options: ConfigOptions): Promise<void> {
   const removals: string[] = [];
-  if (options.removeStripe) removals.push("Stripe");
-  if (options.removeDatabase) removals.push("Database");
-  if (options.removeRedis) removals.push("Redis");
-  if (options.removeAuth) removals.push("Auth");
-  if (options.removeTrpc) removals.push("tRPC");
-  if (options.removeEmail) removals.push("Email");
-  if (options.removeMcp) removals.push("MCP");
-  if (options.removeStorage) removals.push("Storage");
+  if (options.removeStripe) {
+    removals.push("Stripe");
+  }
+  if (options.removeDatabase) {
+    removals.push("Database");
+  }
+  if (options.removeRedis) {
+    removals.push("Redis");
+  }
+  if (options.removeAuth) {
+    removals.push("Auth");
+  }
+  if (options.removeTrpc) {
+    removals.push("tRPC");
+  }
+  if (options.removeEmail) {
+    removals.push("Email");
+  }
+  if (options.removeMcp) {
+    removals.push("MCP");
+  }
+  if (options.removeStorage) {
+    removals.push("Storage");
+  }
 
   if (removals.length === 0) {
     console.log("\nNo features selected for removal.");

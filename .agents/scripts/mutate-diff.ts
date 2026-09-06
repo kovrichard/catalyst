@@ -56,14 +56,20 @@ function changedRanges(diff: string, filter: MutateFilter): string[] {
       continue;
     }
 
-    if (!current) continue;
+    if (!current) {
+      continue;
+    }
 
     const hunk = /^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@/.exec(line);
-    if (!hunk) continue;
+    if (!hunk) {
+      continue;
+    }
 
     const start = Number(hunk[1]);
     const count = hunk[2] === undefined ? 1 : Number(hunk[2]);
-    if (count === 0) continue;
+    if (count === 0) {
+      continue;
+    }
 
     ranges.push(`${current}:${start}-${start + count - 1}`);
   }

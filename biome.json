@@ -91,7 +91,7 @@
         "noValueAtRule": "error",
         "noYodaExpression": "error",
         "useAsConstAssertion": "error",
-        "useBlockStatements": "off",
+        "useBlockStatements": "error",
         "useCollapsedElseIf": "error",
         "useCollapsedIf": "error",
         "useConsistentArrayType": "error",
