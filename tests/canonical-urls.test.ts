@@ -46,7 +46,7 @@ describe("canonical URLs", () => {
   // literal, and hold it to this origin so a canonical can never point off-site.
   it.each(pages)("$route declares itself canonical", async ({ file, route }) => {
     const { metadata } = (await import(`${process.cwd()}/${file}`)) as {
-      metadata: Metadata;
+      metadata?: Metadata;
     };
 
     const declared = metadata?.alternates?.canonical;

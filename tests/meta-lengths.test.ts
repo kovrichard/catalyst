@@ -46,7 +46,7 @@ const pages = (
   await Promise.all(
     files.map(async (file) => {
       const { metadata } = (await import(`${process.cwd()}/${file}`)) as {
-        metadata: Metadata;
+        metadata?: Metadata;
       };
       return {
         file,

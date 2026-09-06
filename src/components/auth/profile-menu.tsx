@@ -73,7 +73,7 @@ export default function ProfileMenu({
             <AvatarImage src={userImage} alt={userName} />
             <AvatarFallback className="rounded-lg">
               {userName
-                ?.split(" ")
+                .split(" ")
                 .slice(0, 2)
                 .map((n) => n[0])
                 .join("") || "A"}
