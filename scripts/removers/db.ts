@@ -19,6 +19,7 @@ const DB_SCRIPTS_TO_REMOVE = ["postinstall", "db:migrate", "db:deploy"];
 
 const remover = new Remover({
   featureName: "Database",
+  markerName: "db",
   filesToDelete: DB_FILES_TO_DELETE,
   directoriesToDelete: DB_FOLDERS_TO_DELETE,
   filesToModify: DB_FILES_TO_MODIFY,
