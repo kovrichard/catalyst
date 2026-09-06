@@ -10,6 +10,7 @@
 import { describe, expect, it } from "bun:test";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/metadata";
+import { comparePaths } from "./helpers";
 
 const PUBLIC_ROUTE_GLOB = "src/app/(public)/**/page.tsx";
 
@@ -28,7 +29,7 @@ async function publicPages(): Promise<{ file: string; route: string }[]> {
   for await (const file of new Bun.Glob(PUBLIC_ROUTE_GLOB).scan(".")) {
     files.push(file);
   }
-  return files.sort().map((file) => ({ file, route: routeOf(file) }));
+  return files.sort(comparePaths).map((file) => ({ file, route: routeOf(file) }));
 }
 
 const pages = await publicPages();

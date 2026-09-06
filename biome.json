@@ -138,6 +138,7 @@
         "noUnassignedVariables": "error",
         "noUnknownAtRules": "warn",
         "noUnusedExpressions": "error",
+        "useArraySortCompare": "error",
         "useBiomeIgnoreFolder": "error",
         "useDeprecatedDate": "error",
         "useErrorMessage": "error",
