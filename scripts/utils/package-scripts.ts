@@ -3,6 +3,7 @@ import { join } from "node:path";
 import type { OperationResult } from "../types/operation-result";
 
 const PACKAGE_JSON_PATH = "package.json";
+const LEADING_INDENT = /^(\s+)"/m;
 
 type ScriptOutcome = {
   removed: boolean;
@@ -64,7 +65,7 @@ export function removePackageJsonScripts(
 
   const raw = readFileSync(fullPath, "utf-8");
   // package.json may use tabs or spaces; preserve whichever it was authored with.
-  const indentMatch = /^(\s+)"/m.exec(raw);
+  const indentMatch = LEADING_INDENT.exec(raw);
   const indent = indentMatch?.[1] ?? "  ";
   let parsed: { scripts?: Record<string, string> };
   try {

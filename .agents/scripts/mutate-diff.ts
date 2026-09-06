@@ -4,6 +4,9 @@ import strykerConfig from "../../stryker.config.mjs";
 
 const baseRef = process.argv[2] ?? "origin/main";
 
+const DIFF_FILE_HEADER = /^\+\+\+ b\/(.+)$/;
+const DIFF_HUNK_HEADER = /^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@/;
+
 function mutatePatterns(): string[] {
   const patterns = strykerConfig.mutate ?? [];
   return patterns.filter((pattern): pattern is string => typeof pattern === "string");
@@ -49,7 +52,7 @@ function changedRanges(diff: string, filter: MutateFilter): string[] {
   let current: string | null = null;
 
   for (const line of diff.split("\n")) {
-    const fileMatch = /^\+\+\+ b\/(.+)$/.exec(line);
+    const fileMatch = DIFF_FILE_HEADER.exec(line);
     if (fileMatch) {
       const path = fileMatch[1];
       current = isMutatable(path, filter) ? path : null;
@@ -60,7 +63,7 @@ function changedRanges(diff: string, filter: MutateFilter): string[] {
       continue;
     }
 
-    const hunk = /^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@/.exec(line);
+    const hunk = DIFF_HUNK_HEADER.exec(line);
     if (!hunk) {
       continue;
     }

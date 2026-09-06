@@ -7,6 +7,8 @@ const MARKER = /@catalyst:([a-z]+)-start/g;
 const SEARCH_GLOBS = ["src/**/*.{ts,tsx}", "Dockerfile", "docker-compose.yml"];
 
 const GENERATED = /^src\/lib\/prisma\/generated\//;
+const FEATURE_NAME = /featureName: "([^"]+)"/;
+const MARKER_NAME = /markerName: "([^"]+)"/;
 
 type Remover = {
   file: string;
@@ -39,8 +41,8 @@ const removers: Remover[] = (await scan([REMOVER_GLOB]))
   .filter((file) => !file.endsWith("remover.ts"))
   .map((file) => {
     const source = readFileSync(file, "utf-8");
-    const featureName = /featureName: "([^"]+)"/.exec(source)?.[1] ?? "";
-    const markerName = /markerName: "([^"]+)"/.exec(source)?.[1];
+    const featureName = FEATURE_NAME.exec(source)?.[1] ?? "";
+    const markerName = MARKER_NAME.exec(source)?.[1];
     return {
       file,
       featureName,

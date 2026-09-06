@@ -76,6 +76,7 @@
         "noBarrelFile": "error",
         "noDelete": "error",
         "noReExportAll": "error",
+        "useTopLevelRegex": "error",
         "noUnwantedPolyfillio": "error",
         "useGoogleFontPreconnect": "error"
       },

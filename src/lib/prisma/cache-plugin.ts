@@ -5,6 +5,7 @@ import { Prisma } from "@/lib/prisma/generated/client";
 
 const redis = getRedisClient();
 const baseKey = encodeURIComponent(conf.host);
+const KEY_PREFIX = /^([^:]+:)/;
 
 type CachedAction = "findUnique" | "findFirst" | "findMany" | "count" | "aggregate";
 type MutatingAction =
@@ -240,7 +241,7 @@ class RedisCacheHandler {
       args: { where: { id: "sample" } },
     });
     // Extract prefix: "${baseKey}:QuizSession:findUnique:" -> "${baseKey}:"
-    const prefixMatch = /^([^:]+:)/.exec(sampleKey);
+    const prefixMatch = KEY_PREFIX.exec(sampleKey);
     const prefix = prefixMatch ? prefixMatch[1] : "";
 
     // Build pattern to match keys for this model

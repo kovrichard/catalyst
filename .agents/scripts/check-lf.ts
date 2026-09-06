@@ -1,5 +1,8 @@
 import { spawnSync } from "node:child_process";
 
+const WHITESPACE = /\s+/;
+const CRLF_OR_MIXED = /crlf|mixed/;
+
 function listTrackedFilesWithEol(): string[] {
   const r = spawnSync("git", ["ls-files", "--eol"], { encoding: "utf8" });
   if (r.status !== 0) {
@@ -10,8 +13,8 @@ function listTrackedFilesWithEol(): string[] {
 }
 
 function hasCarriageReturn(eolLine: string): boolean {
-  const [index, worktree] = eolLine.split(/\s+/);
-  return /crlf|mixed/.test(index) || /crlf|mixed/.test(worktree);
+  const [index, worktree] = eolLine.split(WHITESPACE);
+  return CRLF_OR_MIXED.test(index) || CRLF_OR_MIXED.test(worktree);
 }
 
 function pathFrom(eolLine: string): string {

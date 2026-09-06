@@ -13,11 +13,13 @@ import { siteUrl } from "@/lib/metadata";
 import { comparePaths } from "./helpers";
 
 const PUBLIC_ROUTE_GLOB = "src/app/(public)/**/page.tsx";
+const APP_DIR_PREFIX = /^src\/app/;
+const PAGE_FILE_SUFFIX = /\/page\.tsx$/;
 
 function routeOf(file: string): string {
   const segments = file
-    .replace(/^src\/app/, "")
-    .replace(/\/page\.tsx$/, "")
+    .replace(APP_DIR_PREFIX, "")
+    .replace(PAGE_FILE_SUFFIX, "")
     .split("/")
     .filter((segment) => segment !== "" && !segment.startsWith("("));
 
