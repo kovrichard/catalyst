@@ -173,7 +173,7 @@ class RedisCacheHandler {
 
     try {
       return await redis.get(cacheKey);
-    } catch (_error) {
+    } catch {
       logger.warn(`Failed to get cache key: ${cacheKey}, falling back to database`);
       return null;
     }
@@ -182,12 +182,12 @@ class RedisCacheHandler {
   private async parseCachedValue(cached: string, cacheKey: string): Promise<unknown> {
     try {
       return JSON.parse(cached);
-    } catch (_error) {
+    } catch {
       logger.warn(`Invalid cached data for key: ${cacheKey}, falling back to database`);
       if (isRedisConnected(redis)) {
         try {
           await redis.del(cacheKey);
-        } catch (_error) {
+        } catch {
           logger.warn(`Failed to delete invalid cache key: ${cacheKey}`);
         }
       }
@@ -201,7 +201,7 @@ class RedisCacheHandler {
     }
     try {
       await redis.set(cacheKey, JSON.stringify(value), "EX", this.ttlSeconds);
-    } catch (_error) {
+    } catch {
       logger.warn(`Failed to set cache key: ${cacheKey}, falling back to database`);
     }
   }
