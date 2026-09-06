@@ -160,6 +160,22 @@ An unset key is not a hard failure — the literal `${VAR}` text is sent as the 
 surfaces as a 401 on that one entry rather than a config error, leaving the others usable.
 Check with `claude mcp list`.
 
+## File storage (S3)
+
+- `src/lib/storage/` is deliberately **not** under `src/lib/aws/` — the Email remover deletes that
+  whole directory, which would take S3 with it.
+- For the same reason storage reads `AWS_REGION` into its own `conf.s3Region` rather than sharing
+  the email block's `conf.awsRegion`: each `@catalyst:` block has to survive the other's removal.
+- `src/lib/storage/s3-client.ts` owns the single `S3Client`. It is `null` when `conf.s3Configured`
+  is false. `getS3Client()` returns the nullable client for operations that degrade to a no-op or
+  `null`; `requireS3Client()` throws `StorageNotConfiguredError` for writes that must not silently
+  succeed (`putObject`, `copyObject`).
+- Keys are `<userId>/<fileId>` — ownership is the key prefix, checked by `isOwnedFileKey` in
+  `src/lib/storage/file-keys.ts`. Never serve a key without running it through that guard;
+  `tests/file-keys.test.ts` covers traversal and prefix-collision cases.
+- `/api/files/<key>` signs on demand and redirects. Store the `/api/files/...` path, never a signed
+  URL — signed URLs expire, the path does not.
+
 ## Visual checks & browser automation
 
 - Prefer the **`/playwright-cli`** skill (drives the `playwright-cli` binary) for screenshots, responsive checks, and browser automation. Use the Playwright MCP (`browser_*` tools) only as a fallback when `playwright-cli` is unavailable, or for DOM-metric probing (`browser_evaluate`).

@@ -13,7 +13,9 @@
     "src/lib/aws/ses.tsx",
     "src/lib/metadata.ts",
     "src/lib/stripe.ts",
-    "src/components/marketing/json-ld.tsx"
+    "src/components/marketing/json-ld.tsx",
+    "src/lib/storage/*",
+    "src/lib/actions/uploads.ts"
   ],
   "ignoreDependencies": [
     "@opencode-ai/plugin",

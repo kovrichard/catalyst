@@ -27,6 +27,17 @@ const schema = z.object({
   awsConfigured: z.boolean().default(false),
   // @catalyst:email-end
 
+  // @catalyst:storage-start
+  // S3 storage
+  s3Region: z.string().default("eu-central-1"),
+  s3Bucket: z.string().default(""),
+  s3Configured: z.boolean().default(false),
+  cdnKeyPairId: z.string().default(""),
+  cdnPrivateKey: z.string().default(""),
+  cdnDistributionDomain: z.string().default(""),
+  cdnSigningEnabled: z.boolean().default(false),
+  // @catalyst:storage-end
+
   // @catalyst:stripe-start
   // Stripe
   stripeSecretKey: z.string().default(""),
@@ -77,6 +88,28 @@ const envVars = {
     process.env.AWS_REGION !== undefined &&
     process.env.FROM_EMAIL_ADDRESS !== undefined,
   // @catalyst:email-end
+
+  // @catalyst:storage-start
+  // S3 storage
+  s3Region: process.env.AWS_REGION,
+  s3Bucket: process.env.AWS_S3_BUCKET,
+  s3Configured:
+    process.env.AWS_ACCESS_KEY_ID !== undefined &&
+    process.env.AWS_SECRET_ACCESS_KEY !== undefined &&
+    process.env.AWS_REGION !== undefined &&
+    process.env.AWS_S3_BUCKET !== undefined,
+  cdnKeyPairId: process.env.AWS_CLOUDFRONT_KEY_PAIR_ID,
+  cdnPrivateKey: process.env.AWS_CLOUDFRONT_PRIVATE_KEY_BASE64
+    ? Buffer.from(process.env.AWS_CLOUDFRONT_PRIVATE_KEY_BASE64, "base64").toString(
+        "utf-8"
+      )
+    : undefined,
+  cdnDistributionDomain: process.env.AWS_CLOUDFRONT_DISTRIBUTION_DOMAIN,
+  cdnSigningEnabled:
+    process.env.AWS_CLOUDFRONT_KEY_PAIR_ID !== undefined &&
+    process.env.AWS_CLOUDFRONT_PRIVATE_KEY_BASE64 !== undefined &&
+    process.env.AWS_CLOUDFRONT_DISTRIBUTION_DOMAIN !== undefined,
+  // @catalyst:storage-end
 
   // @catalyst:stripe-start
   // Stripe
