@@ -13,7 +13,7 @@ export default function Layout({
     <div className="flex w-full flex-1 flex-col">
       <JsonLd data={organizationLd()} />
       <JsonLd data={webSiteLd()} />
-      <header className="container flex w-full items-center py-4">
+      <header className="container flex w-full items-center p-4">
         <BrandLink />
       </header>
       {children}
