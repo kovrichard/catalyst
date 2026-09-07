@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { TurnstileInstance } from "@marsidev/react-turnstile";
 import { ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useId, useRef, useState, useTransition } from "react";
+import { useActionState, useId, useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import AuthSubmitButton from "@/components/auth/auth-submit-button";
 import PasswordInput from "@/components/auth/password-input";
@@ -44,23 +44,7 @@ export default function RegisterForm() {
   });
 
   const turnstileEnabled = Boolean(publicConf.turnstileSiteKey);
-  const [revealTurnstile, setRevealTurnstile] = useState(false);
-  const name = watch("name");
-  const email = watch("email");
-  const password = watch("password");
   const hasToken = Boolean(watch("cf-turnstile-response"));
-
-  useEffect(() => {
-    if (
-      turnstileEnabled &&
-      !revealTurnstile &&
-      name?.trim() &&
-      email?.trim() &&
-      password?.trim()
-    ) {
-      setRevealTurnstile(true);
-    }
-  }, [turnstileEnabled, revealTurnstile, name, email, password]);
 
   const toastCallback = (formState: FormState) => {
     if (formState.success) {
@@ -128,11 +112,7 @@ export default function RegisterForm() {
         ) : null}
       </div>
       <div className="flex flex-col">
-        <TurnstileComponent
-          turnstileRef={turnstileRef}
-          setValue={setTurnstileValue}
-          show={revealTurnstile}
-        />
+        <TurnstileComponent turnstileRef={turnstileRef} setValue={setTurnstileValue} />
         <div className="pb-6 text-muted-foreground text-xs">
           By signing up, you agree to our{" "}
           <a
