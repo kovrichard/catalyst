@@ -17,7 +17,7 @@ import { describe, expect, test } from "bun:test";
 import type { Metadata } from "next";
 import { comparePaths } from "./helpers";
 
-const PUBLIC_ROUTE_GLOB = "src/app/(public)/**/page.tsx";
+const PUBLIC_ROUTE_GLOBS = ["src/app/(public)/**/page.tsx", "src/app/(auth)/**/page.tsx"];
 
 const TITLE_MAX = 60;
 const DESCRIPTION_MIN = 50;
@@ -35,8 +35,10 @@ function isNoindexed(robots: Metadata["robots"]): boolean {
 
 async function publicPages(): Promise<string[]> {
   const files: string[] = [];
-  for await (const file of new Bun.Glob(PUBLIC_ROUTE_GLOB).scan(".")) {
-    files.push(file);
+  for (const glob of PUBLIC_ROUTE_GLOBS) {
+    for await (const file of new Bun.Glob(glob).scan(".")) {
+      files.push(file);
+    }
   }
   return files.sort(comparePaths);
 }

@@ -5,14 +5,14 @@
 //
 // This walks the public routes rather than listing them, so a page added
 // without a canonical fails here instead of silently deindexing itself.
-// Break-verify: deleting `alternates` from any (public) page reds this.
+// Break-verify: deleting `alternates` from any public or auth page reds this.
 
 import { describe, expect, it } from "bun:test";
 import type { Metadata } from "next";
 import { siteUrl } from "@/lib/metadata";
 import { comparePaths } from "./helpers";
 
-const PUBLIC_ROUTE_GLOB = "src/app/(public)/**/page.tsx";
+const PUBLIC_ROUTE_GLOBS = ["src/app/(public)/**/page.tsx", "src/app/(auth)/**/page.tsx"];
 const APP_DIR_PREFIX = /^src\/app/;
 const PAGE_FILE_SUFFIX = /\/page\.tsx$/;
 
@@ -28,8 +28,10 @@ function routeOf(file: string): string {
 
 async function publicPages(): Promise<{ file: string; route: string }[]> {
   const files: string[] = [];
-  for await (const file of new Bun.Glob(PUBLIC_ROUTE_GLOB).scan(".")) {
-    files.push(file);
+  for (const glob of PUBLIC_ROUTE_GLOBS) {
+    for await (const file of new Bun.Glob(glob).scan(".")) {
+      files.push(file);
+    }
   }
   return files.sort(comparePaths).map((file) => ({ file, route: routeOf(file) }));
 }

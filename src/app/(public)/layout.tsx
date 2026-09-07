@@ -1,6 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
 import type React from "react";
+import BrandLink from "@/components/brand-link";
 import CatalystBadge from "@/components/footer/catalyst-badge";
 import { JsonLd, organizationLd, webSiteLd } from "@/components/marketing/json-ld";
 
@@ -20,13 +19,7 @@ export default function Layout({
       <JsonLd data={organizationLd()} />
       <JsonLd data={webSiteLd()} />
       <header className="container flex w-full items-center justify-end gap-4 py-4">
-        <Link
-          href="/"
-          className="mr-auto flex items-center gap-2 whitespace-pre font-medium text-lg"
-        >
-          <Image src="/icon.svg" alt="Catalyst" width={30} height={30} />
-          Catalyst
-        </Link>
+        <BrandLink />
         {/* @catalyst:auth-start */}
         <Suspense fallback={<AuthNavSkeleton />}>
           <AuthNav />
