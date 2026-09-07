@@ -102,6 +102,8 @@ jobs:
         # This job only runs on a push to main, which is the image Coolify deploys.
         build-args: |
           ENVIRONMENT=production
+          TURNSTILE_SITEKEY=${{ vars.TURNSTILE_SITEKEY }}
+          GOOGLE_CLIENT_ID=${{ vars.GOOGLE_CLIENT_ID }}
         tags: |
           ${{ steps.image.outputs.name }}:latest
           ${{ steps.image.outputs.name }}:${{ github.sha }}

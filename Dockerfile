@@ -76,10 +76,20 @@ COPY tsconfig.json tsconfig.json
 # shell (robots meta, analytics gate) freezes it here at build time rather than
 # picking it up from the runtime environment.
 ARG ENVIRONMENT
+# @catalyst:auth-start
+# Both are public values (the sitekey ships in the HTML, the client id in every
+# OAuth redirect) and the auth pages prerender on them, so they freeze here too.
+ARG TURNSTILE_SITEKEY
+ARG GOOGLE_CLIENT_ID
+# @catalyst:auth-end
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV ENVIRONMENT=$ENVIRONMENT
+# @catalyst:auth-start
+ENV TURNSTILE_SITEKEY=$TURNSTILE_SITEKEY
+ENV GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+# @catalyst:auth-end
 
 RUN bun run build:standalone
 

@@ -33,6 +33,7 @@ const AUTH_FOLDERS_TO_DELETE = [
 ];
 
 const AUTH_FILES_TO_MODIFY = [
+  "Dockerfile",
   "src/app/(public)/layout.tsx",
   "src/components/bottom-navigation.tsx",
   "src/lib/config.ts",
