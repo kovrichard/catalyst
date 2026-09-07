@@ -1,9 +1,13 @@
 "use client";
 
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
-import { type RefObject, useState } from "react";
+import { type RefObject, useEffect, useState } from "react";
 import { usePublicConfig } from "@/lib/contexts/public-config-context";
 import { cn } from "@/lib/utils";
+
+const VERIFICATION_TIMEOUT_MS = 10_000;
+
+type Status = "pending" | "solved" | "interactive" | "unavailable";
 
 export default function TurnstileComponent({
   turnstileRef,
@@ -13,32 +17,43 @@ export default function TurnstileComponent({
   setValue: (token: string) => void;
 }>) {
   const publicConf = usePublicConfig();
-  const [isInteractive, setIsInteractive] = useState(false);
-  const [isUnavailable, setIsUnavailable] = useState(false);
+  const [status, setStatus] = useState<Status>("pending");
+
+  // A blocked script never reaches any widget callback, so the only reliable
+  // signal is that no token arrived while nothing was asked of the user.
+  useEffect(() => {
+    if (status !== "pending") {
+      return;
+    }
+
+    const timer = setTimeout(() => setStatus("unavailable"), VERIFICATION_TIMEOUT_MS);
+    return () => clearTimeout(timer);
+  }, [status]);
 
   if (!publicConf.turnstileSiteKey) {
     return null;
   }
 
   function acceptToken(token: string) {
-    setIsUnavailable(false);
+    setStatus("solved");
     setValue(token);
   }
 
-  function discardToken() {
+  function awaitNewToken() {
+    setStatus("pending");
     setValue("");
   }
 
   function reportUnavailable() {
-    setIsUnavailable(true);
+    setStatus("unavailable");
     setValue("");
   }
 
   function reportInteractive() {
-    setIsInteractive(true);
+    setStatus("interactive");
   }
 
-  const occupiesSpace = isInteractive || isUnavailable;
+  const occupiesSpace = status === "interactive" || status === "unavailable";
 
   return (
     <div
@@ -57,13 +72,12 @@ export default function TurnstileComponent({
             options={{ size: "flexible", appearance: "interaction-only" }}
             onSuccess={acceptToken}
             onBeforeInteractive={reportInteractive}
-            onExpire={discardToken}
+            onExpire={awaitNewToken}
             onError={reportUnavailable}
             onTimeout={reportUnavailable}
             onUnsupported={reportUnavailable}
-            scriptOptions={{ onError: reportUnavailable }}
           />
-          {isUnavailable ? (
+          {status === "unavailable" ? (
             <p className="text-destructive text-xs">
               We could not verify your browser. Disable your ad blocker or refresh the
               page to continue.
