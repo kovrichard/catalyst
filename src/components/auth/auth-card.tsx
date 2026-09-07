@@ -43,7 +43,7 @@ export default function AuthCard({
   const hasProviders = oauth || showPasskey;
 
   return (
-    <div className="mx-auto flex w-full max-w-sm flex-col gap-5 rounded-2xl border bg-card p-6">
+    <div className="mx-auto flex w-full max-w-xs flex-col gap-5 sm:max-w-sm sm:rounded-2xl sm:border sm:bg-card sm:p-6">
       <div className="flex flex-col gap-1 text-center">
         <h1 className="font-semibold text-xl tracking-tight">{title}</h1>
         {description ? (
