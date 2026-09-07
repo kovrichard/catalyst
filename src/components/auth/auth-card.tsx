@@ -1,21 +1,7 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
-import OAuthForm from "@/components/auth/oauth-form";
-import PasskeySignInButton from "@/components/auth/passkey-sign-in-button";
-import conf from "@/lib/config";
-
-function Divider() {
-  return (
-    <div className="relative">
-      <div className="absolute inset-0 flex items-center">
-        <span className="w-full border-t" />
-      </div>
-      <div className="relative flex justify-center text-xs">
-        <span className="bg-card px-2 text-muted-foreground">OR</span>
-      </div>
-    </div>
-  );
-}
+import { type ReactNode, Suspense } from "react";
+import { AuthProvidersSkeleton } from "@/components/auth/auth-card-skeleton";
+import AuthProviders from "@/components/auth/auth-providers";
 
 export default function AuthCard({
   title,
@@ -36,9 +22,7 @@ export default function AuthCard({
   showOAuth?: boolean;
   showPasskey?: boolean;
 }) {
-  const hasGoogle = Boolean(conf.googleId) && Boolean(conf.googleSecret);
-  const oauth = showOAuth && hasGoogle;
-  const hasProviders = oauth || showPasskey;
+  const providerCount = (showOAuth ? 1 : 0) + (showPasskey ? 1 : 0);
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col gap-5 rounded-2xl border bg-card p-6">
@@ -49,14 +33,10 @@ export default function AuthCard({
         ) : null}
       </div>
 
-      {hasProviders ? (
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-col gap-2">
-            {oauth ? <OAuthForm provider="google" /> : null}
-            {showPasskey ? <PasskeySignInButton /> : null}
-          </div>
-          <Divider />
-        </div>
+      {providerCount > 0 ? (
+        <Suspense fallback={<AuthProvidersSkeleton actions={providerCount} />}>
+          <AuthProviders showOAuth={showOAuth} showPasskey={showPasskey} />
+        </Suspense>
       ) : null}
 
       {children}
