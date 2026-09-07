@@ -63,27 +63,29 @@ export default function TurnstileComponent({
         occupiesSpace ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
       )}
     >
-      <div className="overflow-hidden">
-        <div className="pb-6">
-          <Turnstile
-            ref={turnstileRef}
-            className="w-full"
-            siteKey={publicConf.turnstileSiteKey}
-            options={{ size: "flexible", appearance: "interaction-only" }}
-            onSuccess={acceptToken}
-            onBeforeInteractive={reportInteractive}
-            onExpire={awaitNewToken}
-            onError={reportUnavailable}
-            onTimeout={reportUnavailable}
-            onUnsupported={reportUnavailable}
-          />
-          {status === "unavailable" ? (
-            <p className="text-destructive text-xs">
-              We could not verify your browser. Disable your ad blocker or refresh the
-              page to continue.
-            </p>
-          ) : null}
-        </div>
+      <div className="overflow-hidden [&>*:last-child]:pb-6">
+        <Turnstile
+          ref={turnstileRef}
+          className="w-full [&>div]:w-full"
+          // size:"flexible" makes Cloudflare's own widget fill its container, but
+          // appearance:"interaction-only" then pins the wrapper to fit-content. The
+          // library spreads `style` last, so this is what actually widens it.
+          style={{ width: "100%" }}
+          siteKey={publicConf.turnstileSiteKey}
+          options={{ size: "flexible", appearance: "interaction-only" }}
+          onSuccess={acceptToken}
+          onBeforeInteractive={reportInteractive}
+          onExpire={awaitNewToken}
+          onError={reportUnavailable}
+          onTimeout={reportUnavailable}
+          onUnsupported={reportUnavailable}
+        />
+        {status === "unavailable" ? (
+          <p className="text-destructive text-xs">
+            We could not verify your browser. Disable your ad blocker or refresh the page
+            to continue.
+          </p>
+        ) : null}
       </div>
     </div>
   );

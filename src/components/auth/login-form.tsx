@@ -69,7 +69,7 @@ export default function LoginForm() {
   const isLoading = isPending || isSubmitting || isTransitionPending;
 
   return (
-    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-2">
         <Label htmlFor={emailId}>Email</Label>
         <Input

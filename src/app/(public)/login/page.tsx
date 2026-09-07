@@ -41,8 +41,7 @@ async function RuntimeAuthCard() {
 
   return (
     <AuthCard
-      title="Welcome back"
-      description="Log in to pick up where you left off."
+      title="Sign in to Catalyst"
       ctaQuestion="First time here?"
       ctaText="Sign up"
       ctaLink="/register"

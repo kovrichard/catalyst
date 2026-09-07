@@ -21,7 +21,7 @@ export default function LastUsedIndicator({
     isLastUsed && (
       <span
         className={cn(
-          "pointer-events-none absolute -top-2 -right-2 rounded-md border border-primary bg-secondary px-2 py-1 font-semibold text-[10px] text-secondary-foreground uppercase leading-none tracking-wide",
+          "pointer-events-none absolute -top-2 -right-2 rounded-[6px] border border-primary bg-secondary px-2 py-1 font-semibold text-[10px] text-secondary-foreground uppercase leading-none tracking-wide",
           className
         )}
       >

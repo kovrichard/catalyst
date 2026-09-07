@@ -11,7 +11,7 @@ function Divider() {
         <span className="w-full border-t" />
       </div>
       <div className="relative flex justify-center text-xs">
-        <span className="bg-card px-2 text-muted-foreground">or</span>
+        <span className="bg-card px-2 text-muted-foreground">OR</span>
       </div>
     </div>
   );
@@ -28,7 +28,7 @@ export default function AuthCard({
   showPasskey = false,
 }: {
   title: string;
-  description: string;
+  description?: string;
   children: ReactNode;
   ctaQuestion?: string;
   ctaText?: string;
@@ -41,15 +41,17 @@ export default function AuthCard({
   const hasProviders = oauth || showPasskey;
 
   return (
-    <div className="mx-auto flex w-full max-w-sm flex-col gap-6 rounded-2xl border bg-card p-6">
+    <div className="mx-auto flex w-full max-w-sm flex-col gap-5 rounded-2xl border bg-card p-6">
       <div className="flex flex-col gap-1 text-center">
         <h1 className="font-semibold text-xl tracking-tight">{title}</h1>
-        <p className="text-muted-foreground text-sm">{description}</p>
+        {description ? (
+          <p className="text-muted-foreground text-sm">{description}</p>
+        ) : null}
       </div>
 
       {hasProviders ? (
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-2">
             {oauth ? <OAuthForm provider="google" /> : null}
             {showPasskey ? <PasskeySignInButton /> : null}
           </div>

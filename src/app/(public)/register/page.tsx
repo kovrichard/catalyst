@@ -42,8 +42,7 @@ async function RuntimeAuthCard() {
 
   return (
     <AuthCard
-      title="Create your account"
-      description="It takes about a minute."
+      title="Ship faster with Catalyst"
       ctaQuestion="Already have an account?"
       ctaText="Log in"
       ctaLink="/login"
