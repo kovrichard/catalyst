@@ -17,6 +17,7 @@ const AUTH_FILES_TO_DELETE = [
   "src/hooks/use-toast.tsx",
   "src/proxy.ts",
   "tests/turnstile.test.ts",
+  "tests/passkey-label.test.ts",
 ];
 
 const AUTH_FOLDERS_TO_DELETE = [

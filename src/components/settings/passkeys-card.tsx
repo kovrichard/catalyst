@@ -6,12 +6,44 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { passkey } from "@/lib/auth-client";
+import { formatTimeAgo } from "@/lib/utils";
 
 export type PasskeySummary = {
   id: string;
-  name?: string | null;
+  label: string;
   createdAt: Date;
 };
+
+// Ordered because these strings overlap: an iPhone reports "Mac" too, Edge and
+// Opera both report "Chrome", and every Chromium browser reports "Safari".
+const platformNames: [RegExp, string][] = [
+  [/iPhone|iPad/, "iOS"],
+  [/Android/, "Android"],
+  [/Mac/, "macOS"],
+  [/Windows/, "Windows"],
+  [/Linux/, "Linux"],
+];
+
+const browserNames: [RegExp, string][] = [
+  [/Edg/, "Edge"],
+  [/OPR/, "Opera"],
+  [/Chrome/, "Chrome"],
+  [/Firefox/, "Firefox"],
+  [/Safari/, "Safari"],
+];
+
+function firstMatch(names: [RegExp, string][], userAgent: string, fallback: string) {
+  return names.find(([pattern]) => pattern.test(userAgent))?.[1] ?? fallback;
+}
+
+// Used only when the authenticator reports no recognisable AAGUID — Apple zeroes
+// it under the default attestation, so those passkeys need a device label instead.
+export function deviceLabel(userAgent: string): string {
+  const browser = firstMatch(browserNames, userAgent, "Browser");
+  const platform = firstMatch(platformNames, userAgent, "this device");
+
+  return `${browser} on ${platform}`;
+}
 
 export default function PasskeysCard({ passkeys }: { passkeys: PasskeySummary[] }) {
   const router = useRouter();
@@ -19,9 +51,7 @@ export default function PasskeysCard({ passkeys }: { passkeys: PasskeySummary[] 
 
   async function addPasskey() {
     setIsWorking(true);
-    const result = await passkey.addPasskey({
-      name: `Passkey ${passkeys.length + 1}`,
-    });
+    const result = await passkey.addPasskey({ name: deviceLabel(navigator.userAgent) });
     setIsWorking(false);
 
     if (result?.error) {
@@ -63,15 +93,20 @@ export default function PasskeysCard({ passkeys }: { passkeys: PasskeySummary[] 
               key={entry.id}
               className="flex items-center justify-between gap-2 rounded-md border px-3 py-2"
             >
-              <span className="flex items-center gap-2 text-sm">
-                <KeyRound size={16} className="text-muted-foreground" />
-                {entry.name || "Passkey"}
+              <span className="flex flex-col gap-0.5">
+                <span className="flex items-center gap-2 text-sm">
+                  <KeyRound size={16} className="text-muted-foreground" />
+                  {entry.label}
+                </span>
+                <span className="pl-6 text-muted-foreground text-xs">
+                  added {formatTimeAgo(entry.createdAt)}
+                </span>
               </span>
               <Button
                 type="button"
                 variant="ghost"
                 size="icon"
-                aria-label={`Remove ${entry.name || "passkey"}`}
+                aria-label={`Remove ${entry.label}`}
                 disabled={isWorking}
                 onClick={() => removePasskey(entry.id)}
               >
