@@ -6,6 +6,7 @@ import Analytics from "@/components/analytics";
 import CookiePopup from "@/components/cookie-popup";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
+import { VersionChecker } from "@/components/version-checker";
 import conf from "@/lib/config";
 import { PublicConfigProvider } from "@/lib/contexts/public-config-context";
 import {
@@ -87,6 +88,7 @@ export default function RootLayout({
         <Providers>
           <PublicConfigProvider config={publicConf}>{children}</PublicConfigProvider>
           <Toaster />
+          <VersionChecker />
         </Providers>
         <CookiePopup />
       </body>
