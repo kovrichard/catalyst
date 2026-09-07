@@ -46,6 +46,7 @@ async function RuntimeAuthCard() {
       ctaQuestion="First time here?"
       ctaText="Sign up"
       ctaLink="/register"
+      showPasskey
     >
       <LoginForm />
     </AuthCard>

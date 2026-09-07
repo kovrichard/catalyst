@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useActionState, useId, useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import AuthSubmitButton from "@/components/auth/auth-submit-button";
-import PasskeySignInButton from "@/components/auth/passkey-sign-in-button";
 import PasswordInput from "@/components/auth/password-input";
 import TurnstileComponent from "@/components/auth/turnstile";
 import { Input } from "@/components/ui/input";
@@ -113,9 +112,6 @@ export default function LoginForm() {
           className="w-full"
           disabled={turnstileEnabled && !hasToken}
         />
-        <div className="pt-3">
-          <PasskeySignInButton />
-        </div>
       </div>
     </form>
   );
