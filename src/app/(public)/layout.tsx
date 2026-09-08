@@ -15,7 +15,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex w-full flex-1 flex-col">
+    <div className="dark flex w-full flex-1 flex-col text-foreground">
       <JsonLd data={organizationLd()} />
       <JsonLd data={webSiteLd()} />
       <header className="container flex w-full items-center justify-end gap-4 py-4">

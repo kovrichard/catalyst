@@ -77,7 +77,10 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={cn(inter.className, "flex min-h-svh min-w-80 flex-col justify-center")}
+        className={cn(
+          inter.className,
+          "flex min-h-svh min-w-[375px] flex-col justify-center"
+        )}
       >
         {process.env.NODE_ENV === "development" && process.env.REACT_SCAN === "true" && (
           <script
