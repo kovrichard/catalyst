@@ -8,8 +8,8 @@ const REPO_URL = "https://github.com/kovrichard/catalyst";
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-[calc(100svh-var(--spacing-header))] w-full items-center justify-center">
-      <div className="container flex animate-hero-reveal flex-col items-center gap-8 py-16 text-center will-change-[transform,opacity]">
+    <div className="relative flex h-full w-full animate-hero-zoom items-center justify-center will-change-[transform,opacity]">
+      <div className="container flex animate-hero-reveal flex-col items-center gap-8 text-center will-change-[transform,opacity]">
         <p
           className={`${mono.className} text-balance text-muted-foreground text-xs uppercase tracking-[0.2em]`}
         >
@@ -41,6 +41,6 @@ export function Hero() {
       >
         <ChevronDown className="size-6 motion-safe:animate-bounce" />
       </Link>
-    </section>
+    </div>
   );
 }

@@ -5,6 +5,11 @@ import { Hero } from "@/components/marketing/hero";
 import { HookChecklist } from "@/components/marketing/hook-checklist";
 import { McpServer } from "@/components/marketing/mcp-server";
 import { Pipeline } from "@/components/marketing/pipeline";
+import {
+  ScrollStage,
+  StageAnchor,
+  StageSlide,
+} from "@/components/marketing/scroll-stage";
 import { StarfieldBackground } from "@/components/marketing/starfield-background";
 import { logger } from "@/lib/logger";
 import { metaDescription, metaTitle, openGraph } from "@/lib/metadata";
@@ -29,9 +34,17 @@ export default function Home() {
   return (
     <>
       <StarfieldBackground />
-      <main className="flex flex-1 flex-col items-center overflow-x-hidden">
-        <Hero />
-        <Pipeline />
+      <main className="flex flex-1 flex-col items-center overflow-x-clip">
+        <ScrollStage runway="240svh">
+          {/* biome-ignore lint/correctness/useUniqueElementIds: deep-linkable page anchor targeted by href="#pipeline" */}
+          <StageAnchor id="pipeline" at="60svh" />
+          <StageSlide>
+            <Hero />
+          </StageSlide>
+          <StageSlide from="25svh" to="145svh">
+            <Pipeline />
+          </StageSlide>
+        </ScrollStage>
         <HookChecklist />
         <AgentSkills />
         <McpServer />

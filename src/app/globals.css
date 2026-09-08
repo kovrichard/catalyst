@@ -305,3 +305,61 @@
     animation: heroRevealFade 0.4s ease-out 0.55s both;
   }
 }
+
+/* Scroll zoom-forward: the hero flies past the camera as the page moves.
+   Driven by a scroll timeline so there is no listener and no JS. It sits on a
+   wrapper around .animate-hero-reveal, because both animate transform and the
+   later declaration would otherwise win outright instead of composing. */
+@keyframes heroZoom {
+  to {
+    opacity: 0;
+    transform: scale(2.2);
+    filter: blur(8px);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-hero-zoom {
+      animation: heroZoom linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 45vh;
+    }
+  }
+}
+
+/* Stage slides share one pinned box, so nothing travels vertically and two
+   slides can be on screen at once. Ranges are absolute scroll distances from
+   the top of the page, which only holds because the stage is the first thing
+   in the document. */
+@keyframes stageSlide {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+    filter: blur(10px);
+  }
+
+  30%,
+  70% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+    filter: blur(8px);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stage-slide {
+      animation: stageSlide linear both;
+      animation-timeline: scroll(root block);
+      animation-range: var(--stage-from) var(--stage-to);
+      will-change: transform, opacity;
+    }
+  }
+}
