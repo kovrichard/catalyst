@@ -1,4 +1,5 @@
 import { Eye, Filter, ListTree, ShieldCheck, Table2 } from "lucide-react";
+import { display } from "@/lib/fonts";
 import { mono } from "./fonts";
 
 const TOOLS = [
@@ -50,7 +51,9 @@ export function McpServer() {
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             api/mcp
           </p>
-          <h2 className="font-bold text-3xl tracking-tight md:text-4xl">
+          <h2
+            className={`${display.className} font-bold text-3xl tracking-tight md:text-4xl`}
+          >
             Your agent can query the running app.
           </h2>
           <p className="text-lg text-muted-foreground">

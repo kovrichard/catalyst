@@ -1,3 +1,4 @@
+import { display } from "@/lib/fonts";
 import { mono } from "./fonts";
 
 const STEPS = [
@@ -30,7 +31,9 @@ export function Pipeline() {
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             how it works
           </p>
-          <h2 className="font-bold text-3xl tracking-tight md:text-4xl">
+          <h2
+            className={`${display.className} font-bold text-3xl tracking-tight md:text-4xl`}
+          >
             A review loop that runs itself.
           </h2>
         </div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { display } from "@/lib/fonts";
 
 const meteorMask = {
   maskImage: "url(/meteor.svg)",
@@ -15,7 +16,7 @@ export default function BrandLink() {
   return (
     <Link
       href="/"
-      className="mr-auto flex items-center gap-2 whitespace-pre font-medium text-lg"
+      className={`${display.className} mr-auto flex items-center gap-2 whitespace-pre font-bold text-xl tracking-tight`}
     >
       <span
         aria-hidden="true"

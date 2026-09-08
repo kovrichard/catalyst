@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { display } from "@/lib/fonts";
 import { mono } from "./fonts";
 
 const REPO_URL = "https://github.com/kovrichard/catalyst";
@@ -68,7 +69,9 @@ export function AlsoIncluded() {
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             stock
           </p>
-          <h2 className="font-bold text-3xl tracking-tight md:text-4xl">
+          <h2
+            className={`${display.className} font-bold text-3xl tracking-tight md:text-4xl`}
+          >
             Everything else is already wired.
           </h2>
           <p className="text-lg text-muted-foreground">
@@ -102,7 +105,9 @@ export function FinalCta() {
     <section className="relative w-full overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-glow-cta" />
       <div className="container relative flex flex-col items-start gap-6 py-28">
-        <h2 className="max-w-2xl font-bold text-4xl tracking-tight md:text-5xl">
+        <h2
+          className={`${display.className} max-w-2xl font-bold text-4xl tracking-tight md:text-5xl`}
+        >
           Stop reviewing the small stuff.
         </h2>
         <p className="max-w-xl text-lg text-muted-foreground">

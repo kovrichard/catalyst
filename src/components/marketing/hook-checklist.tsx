@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { display } from "@/lib/fonts";
 import { mono } from "./fonts";
 
 const HOOKS = [
@@ -87,7 +88,9 @@ export function HookChecklist() {
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             the stop hook
           </p>
-          <h2 className="font-bold text-3xl tracking-tight md:text-4xl">
+          <h2
+            className={`${display.className} font-bold text-3xl tracking-tight md:text-4xl`}
+          >
             Seven checks between your agent and your review queue.
           </h2>
           <p className="text-lg text-muted-foreground">
