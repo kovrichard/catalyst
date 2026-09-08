@@ -18,7 +18,7 @@ export default function Layout({
     <div className="dark flex w-full flex-1 flex-col text-foreground">
       <JsonLd data={organizationLd()} />
       <JsonLd data={webSiteLd()} />
-      <header className="container flex w-full items-center justify-end gap-4 py-4">
+      <header className="container flex h-header w-full items-center justify-end gap-4">
         <BrandLink />
         {/* @catalyst:auth-start */}
         <Suspense fallback={<AuthNavSkeleton />}>
