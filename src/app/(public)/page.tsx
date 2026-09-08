@@ -5,6 +5,7 @@ import { Hero } from "@/components/marketing/hero";
 import { HookChecklist } from "@/components/marketing/hook-checklist";
 import { McpServer } from "@/components/marketing/mcp-server";
 import { Pipeline } from "@/components/marketing/pipeline";
+import { StarfieldBackground } from "@/components/marketing/starfield-background";
 import { logger } from "@/lib/logger";
 import { metaDescription, metaTitle, openGraph } from "@/lib/metadata";
 
@@ -26,14 +27,17 @@ export default function Home() {
   logger.info("Hello, Catalyst!");
 
   return (
-    <main className="flex flex-1 flex-col items-center overflow-x-hidden">
-      <Hero />
-      <Pipeline />
-      <HookChecklist />
-      <AgentSkills />
-      <McpServer />
-      <AlsoIncluded />
-      <FinalCta />
-    </main>
+    <>
+      <StarfieldBackground />
+      <main className="flex flex-1 flex-col items-center overflow-x-hidden">
+        <Hero />
+        <Pipeline />
+        <HookChecklist />
+        <AgentSkills />
+        <McpServer />
+        <AlsoIncluded />
+        <FinalCta />
+      </main>
+    </>
   );
 }
