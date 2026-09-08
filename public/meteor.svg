@@ -1,9 +1,5 @@
 <svg viewBox="26 24 1101 1101" xmlns="http://www.w3.org/2000/svg">
 <title>Catalyst</title>
-<style>
-.mark { fill: #0a0a0a; }
-@media (prefers-color-scheme: dark) { .mark { fill: #fafaf9; } }
-</style>
 <defs>
 <mask id="meteor" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254">
 <rect x="8" y="8" width="1238" height="1238" fill="#fff"/>
@@ -35,5 +31,5 @@
 </g>
 </mask>
 </defs>
-<rect class="mark" width="1254" height="1254" mask="url(#meteor)"/>
+<rect width="1254" height="1254" fill="#FAFAF9" mask="url(#meteor)"/>
 </svg>
