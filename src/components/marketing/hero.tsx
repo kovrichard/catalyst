@@ -2,6 +2,7 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { display } from "@/lib/fonts";
+import { meteorMask } from "@/lib/utils/meteor-mask";
 import { mono } from "./fonts";
 
 const REPO_URL = "https://github.com/kovrichard/catalyst";
@@ -10,6 +11,12 @@ export function Hero() {
   return (
     <div className="relative flex h-full w-full animate-hero-zoom items-center justify-center will-change-[transform,opacity]">
       <div className="container flex animate-hero-reveal flex-col items-center gap-8 text-center will-change-[transform,opacity]">
+        <span
+          aria-hidden="true"
+          className="size-20 shrink-0 bg-current"
+          style={meteorMask}
+        />
+
         <p
           className={`${mono.className} text-balance text-muted-foreground text-xs uppercase tracking-[0.2em]`}
         >
