@@ -19,5 +19,5 @@ jobs:
     - name: Deploy to Coolify
       if: vars.COOLIFY_WEBHOOK != ''
       run: |
-        curl --fail --request GET '${{ vars.COOLIFY_WEBHOOK }}' \
+        curl --fail --request POST '${{ vars.COOLIFY_WEBHOOK }}' \
           --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
