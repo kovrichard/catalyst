@@ -337,6 +337,7 @@
     opacity: 0;
     transform: scale(0.7);
     filter: blur(10px);
+    pointer-events: none;
   }
 
   30%,
@@ -344,12 +345,14 @@
     opacity: 1;
     transform: scale(1);
     filter: blur(0px);
+    pointer-events: auto;
   }
 
   100% {
     opacity: 0;
     transform: scale(2.2);
     filter: blur(8px);
+    pointer-events: none;
   }
 }
 
