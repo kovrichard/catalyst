@@ -11,9 +11,8 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { display } from "@/lib/fonts";
+import { REPO_URL } from "@/lib/repo";
 import { mono } from "./fonts";
-
-const REPO_URL = "https://github.com/kovrichard/catalyst";
 
 const STOCK = [
   {

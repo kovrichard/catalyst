@@ -2,10 +2,9 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { display } from "@/lib/fonts";
+import { REPO_URL } from "@/lib/repo";
 import { meteorMask } from "@/lib/utils/meteor-mask";
 import { mono } from "./fonts";
-
-const REPO_URL = "https://github.com/kovrichard/catalyst";
 
 export function Hero() {
   return (

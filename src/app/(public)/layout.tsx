@@ -1,6 +1,7 @@
 import type React from "react";
 import BrandLink from "@/components/brand-link";
 import CatalystBadge from "@/components/footer/catalyst-badge";
+import GithubStars from "@/components/github-stars";
 import { JsonLd, organizationLd, webSiteLd } from "@/components/marketing/json-ld";
 
 // @catalyst:auth-start
@@ -20,6 +21,7 @@ export default function Layout({
       <JsonLd data={webSiteLd()} />
       <header className="container flex h-header w-full items-center justify-end gap-4">
         <BrandLink />
+        <GithubStars />
         {/* @catalyst:auth-start */}
         <Suspense fallback={<AuthNavSkeleton />}>
           <AuthNav />
