@@ -79,6 +79,12 @@ export const auth = betterAuth({
     accountLinking: {
       enabled: true,
       trustedProviders: ["google"],
+      // @catalyst:email-start
+      // Without this, someone can register an unverified password account on a
+      // stranger's address and silently absorb their identity the moment that
+      // stranger first signs in with Google.
+      requireLocalEmailVerified: true,
+      // @catalyst:email-end
     },
   },
   // Signed session payload rides in a cookie so getSession answers without a
