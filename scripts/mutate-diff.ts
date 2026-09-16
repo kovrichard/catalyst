@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { Glob } from "bun";
-import strykerConfig from "../../stryker.config.mjs";
+import strykerConfig from "../stryker.config.mjs";
 
 const baseRef = process.argv[2] ?? "origin/main";
 

@@ -1,14 +1,48 @@
-.github
-.husky
-.next
-.vscode
-node_modules
-src/lib/prisma/generated
+# The Dockerfile COPYs an explicit allowlist, so nothing here reaches an image
+# either way. This keeps the context the daemon receives small, and keeps
+# secrets off it entirely.
+
+# Secrets and local credentials
 .env*
+certificates
+
+# Dependencies and build output
+node_modules
+.next
+src/lib/prisma/generated
+tsconfig.tsbuildinfo
+
+# Tests, mutation output and reports
+tests
+reports
+coverage
+.stryker-tmp
+
+# Repo tooling that never runs in an image
+scripts
+.agents
+.opencode
+.claude
+.codex
+.cursor
+.devcontainer
+.husky
+.github
+.vscode
+
+# Repo metadata and config the image never reads
+.git
 .gitattributes
 .gitignore
 biome.json
+knip.json
+klint.yaml
 docker-compose.yml
 Dockerfile
 Makefile
+design-system
+docs
+AGENTS.md
+CLAUDE.md
 README.md
+.DS_Store

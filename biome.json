@@ -9,7 +9,6 @@
     "ignoreUnknown": false,
     "includes": [
       ".agents/hooks/**",
-      ".agents/scripts/**",
       ".opencode/plugins/**",
       "src/**",
       "tests/**",
@@ -192,12 +191,7 @@
       }
     },
     {
-      "includes": [
-        ".agents/hooks/**",
-        ".agents/scripts/**",
-        ".opencode/plugins/**",
-        "scripts/**"
-      ],
+      "includes": [".agents/hooks/**", ".opencode/plugins/**", "scripts/**"],
       "linter": {
         "rules": {
           "style": {
