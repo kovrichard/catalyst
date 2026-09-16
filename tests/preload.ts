@@ -42,4 +42,5 @@ const mockFontLoader = () => ({ className: "mock-font", variable: "--font-mock" 
 void mock.module("next/font/google", () => ({
   Inter: mockFontLoader,
   JetBrains_Mono: mockFontLoader,
+  Space_Grotesk: mockFontLoader,
 }));
