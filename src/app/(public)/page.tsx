@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { FinalCta } from "@/components/marketing/also-included";
 import { ClosedLoop } from "@/components/marketing/closed-loop";
+import { FinalCta } from "@/components/marketing/final-cta";
 import { Hero } from "@/components/marketing/hero";
 import { LeanStart } from "@/components/marketing/lean-start";
 import { McpServer } from "@/components/marketing/mcp-server";

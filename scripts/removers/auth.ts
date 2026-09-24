@@ -34,6 +34,7 @@ const AUTH_FILES_TO_MODIFY = [
   "Dockerfile",
   "src/app/(public)/layout.tsx",
   "src/components/bottom-navigation.tsx",
+  "src/components/footer/site-footer.tsx",
   "src/lib/config.ts",
   "src/lib/public-config.ts",
   "src/lib/utils.ts",

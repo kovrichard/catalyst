@@ -1,4 +1,5 @@
 import { display } from "@/lib/fonts";
+import { CommandLine } from "./command-line";
 import { mono } from "./fonts";
 import { StoryBeat } from "./story-beat";
 
@@ -49,17 +50,6 @@ function FeatureList() {
   );
 }
 
-function ConfigureCommand() {
-  return (
-    <p
-      className={`${mono.className} w-fit shrink-0 rounded-lg border bg-background/70 px-5 py-3 text-foreground text-sm`}
-    >
-      <span className="pr-3 text-muted-foreground/60">$</span>
-      bun run configure
-    </p>
-  );
-}
-
 export function LeanStart() {
   return (
     // biome-ignore lint/correctness/useUniqueElementIds: deep-linkable page anchor
@@ -82,7 +72,7 @@ export function LeanStart() {
           one never breaks another.
         </>
       }
-      aside={<ConfigureCommand />}
+      aside={<CommandLine command="bun run configure" />}
       artifact={<FeatureList />}
       closing={
         <>

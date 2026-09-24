@@ -1,6 +1,6 @@
 import type React from "react";
 import BrandLink from "@/components/brand-link";
-import CatalystBadge from "@/components/footer/catalyst-badge";
+import SiteFooter from "@/components/footer/site-footer";
 import GithubStars from "@/components/github-stars";
 import { JsonLd, organizationLd, webSiteLd } from "@/components/marketing/json-ld";
 
@@ -29,9 +29,7 @@ export default function Layout({
         {/* @catalyst:auth-end */}
       </header>
       {children}
-      <footer className="container flex w-full justify-start py-4">
-        <CatalystBadge />
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

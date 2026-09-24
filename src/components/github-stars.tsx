@@ -17,7 +17,11 @@ function GithubMark() {
   );
 }
 
-export default async function GithubStars() {
+export default async function GithubStars({
+  className = "hidden sm:flex",
+}: {
+  className?: string;
+}) {
   const stars = await getRepoStars();
 
   return (
@@ -25,7 +29,7 @@ export default async function GithubStars() {
       href={REPO_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className="hidden items-center gap-2 rounded-md border px-3 py-1.5 font-medium text-sm transition-colors hover:bg-accent sm:flex"
+      className={`items-center gap-2 rounded-md border px-3 py-1.5 font-medium text-sm transition-colors hover:bg-accent ${className}`}
     >
       <GithubMark />
       {stars === null ? (

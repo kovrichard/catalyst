@@ -99,6 +99,9 @@ export function Transcript({ label, lines }: { label: string; lines: TranscriptL
   );
 }
 
+export const BEAT_HEADLINE =
+  "max-w-4xl text-balance font-bold text-[clamp(2rem,5.5vw,4rem)] leading-[1.05] tracking-tight";
+
 const LEAD = "text-balance text-lg text-muted-foreground leading-relaxed";
 
 export function StoryBeat({
@@ -118,13 +121,7 @@ export function StoryBeat({
   wide?: boolean;
   aside?: ReactNode;
 }) {
-  const title = (
-    <h2
-      className={`${display.className} max-w-4xl text-balance font-bold text-[clamp(2rem,5.5vw,4rem)] leading-[1.05] tracking-tight`}
-    >
-      {headline}
-    </h2>
-  );
+  const title = <h2 className={`${display.className} ${BEAT_HEADLINE}`}>{headline}</h2>;
   const wideLead = <p className={`max-w-2xl ${LEAD}`}>{lead}</p>;
 
   return (
