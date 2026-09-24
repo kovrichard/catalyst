@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { display } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 import { mono } from "./fonts";
 
 export type TranscriptLine =
@@ -29,10 +30,10 @@ function Verdict({
   const style = VERDICT_STYLE[kind];
 
   return (
-    <li className={`col-start-2 flex gap-4 border-l py-1 pl-4 ${style.line}`}>
+    <li className={cn("col-start-2 flex gap-4 border-l py-1 pl-4", style.line)}>
       <span aria-hidden="true">{style.mark}</span>
       <span className="flex flex-col sm:flex-row sm:gap-4">
-        {tool ? <span className={`min-w-[6ch] ${style.tool}`}>{tool}</span> : null}
+        {tool ? <span className={cn("min-w-[6ch]", style.tool)}>{tool}</span> : null}
         <span>{children}</span>
       </span>
     </li>
@@ -89,7 +90,10 @@ export function Transcript({ label, lines }: { label: string; lines: TranscriptL
   return (
     <ol
       aria-label={label}
-      className={`${mono.className} grid grid-cols-[3rem_1fr] gap-x-4 overflow-x-auto rounded-lg border bg-background/70 p-4 text-[13px] leading-6 sm:grid-cols-[4.5rem_1fr] sm:p-8 sm:text-sm`}
+      className={cn(
+        mono.className,
+        "grid grid-cols-[3rem_1fr] gap-x-4 overflow-x-auto rounded-lg border bg-background/70 p-4 text-[13px] leading-6 sm:grid-cols-[4.5rem_1fr] sm:p-8 sm:text-sm"
+      )}
     >
       {lines.map((line, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: static script that never reorders, and repeated notes share text
@@ -121,8 +125,8 @@ export function StoryBeat({
   wide?: boolean;
   aside?: ReactNode;
 }) {
-  const title = <h2 className={`${display.className} ${BEAT_HEADLINE}`}>{headline}</h2>;
-  const wideLead = <p className={`max-w-2xl ${LEAD}`}>{lead}</p>;
+  const title = <h2 className={cn(display.className, BEAT_HEADLINE)}>{headline}</h2>;
+  const wideLead = <p className={cn("max-w-2xl", LEAD)}>{lead}</p>;
 
   return (
     <section id={id} className="w-full bg-muted/20">
@@ -149,14 +153,17 @@ export function StoryBeat({
           <>
             {title}
             <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
-              <p className={`max-w-md lg:col-span-4 lg:pt-8 ${LEAD}`}>{lead}</p>
+              <p className={cn("max-w-md lg:col-span-4 lg:pt-8", LEAD)}>{lead}</p>
               <figure className="lg:col-span-8">{artifact}</figure>
             </div>
           </>
         )}
 
         <p
-          className={`${display.className} max-w-3xl text-balance pt-8 font-medium text-2xl leading-snug tracking-tight md:text-3xl`}
+          className={cn(
+            display.className,
+            "max-w-3xl text-balance pt-8 font-medium text-2xl leading-snug tracking-tight md:text-3xl"
+          )}
         >
           {closing}
         </p>

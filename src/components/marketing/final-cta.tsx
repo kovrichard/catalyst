@@ -1,15 +1,16 @@
 import { display } from "@/lib/fonts";
 import { REPO_URL } from "@/lib/repo";
+import { cn } from "@/lib/utils";
 import { CommandLine } from "./command-line";
 import { StarfieldBackground } from "./starfield-background";
 import { BEAT_HEADLINE } from "./story-beat";
 
 export function FinalCta() {
   return (
-    <section className="relative z-10 w-full bg-space [clip-path:inset(0)] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-border">
+    <section className="relative z-10 w-full bg-space [clip-path:inset(0)] before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-border after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-border">
       <StarfieldBackground variant="reveal" />
       <div className="container flex flex-col items-center gap-8 py-32 text-center">
-        <h2 className={`${display.className} ${BEAT_HEADLINE}`}>
+        <h2 className={cn(display.className, BEAT_HEADLINE)}>
           Now you're shipping faster.
           <br />
           <span className="text-muted-foreground">For real this time.</span>

@@ -105,6 +105,9 @@ arch:
     - pattern: "radix-ui"
       in: ["src/**", "!src/components/ui/**"]
       message: "Import the wrapped component from @/components/ui — raw radix-ui primitives belong only in src/components/ui, so the app keeps one UI vocabulary."
+    - pattern: 're:className=\{\s*`'
+      in: app-ui
+      message: "Compose class names with cn() from @/lib/utils instead of a template literal. cn resolves conflicting Tailwind classes, so a className passed in actually overrides the defaults."
 
   maxLines:
     - limit: 900

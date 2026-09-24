@@ -1,4 +1,5 @@
 import { display } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 import { CommandLine } from "./command-line";
 import { mono } from "./fonts";
 import { StoryBeat } from "./story-beat";
@@ -19,11 +20,14 @@ const CORE = ["Next.js", "Tailwind", "shadcn/ui", "Biome", "Bun"];
 function FeatureList() {
   return (
     <div className="flex flex-col items-center gap-8 text-center">
-      <p className={`${mono.className} text-muted-foreground/60 text-xs`}>
+      <p className={cn(mono.className, "text-muted-foreground/60 text-xs")}>
         after bun run configure
       </p>
       <ul
-        className={`${display.className} max-w-6xl text-balance text-center font-bold text-[clamp(2rem,6vw,4.5rem)] leading-[1.1] tracking-tight`}
+        className={cn(
+          display.className,
+          "max-w-6xl text-balance text-center font-bold text-[clamp(2rem,6vw,4.5rem)] leading-[1.1] tracking-tight"
+        )}
       >
         {REMOVABLE.map((feature) => (
           <li key={feature.name} className="mx-4 inline-block">

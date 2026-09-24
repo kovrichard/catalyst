@@ -1,4 +1,5 @@
 import { display } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 import { mono } from "./fonts";
 import { StoryBeat } from "./story-beat";
 
@@ -95,7 +96,10 @@ function Gate({
         className="absolute top-1/2 left-1/2 h-px w-10 -translate-x-1/2 bg-foreground/60 lg:static lg:h-10 lg:w-px lg:translate-x-0"
       />
       <span
-        className={`row-start-1 flex flex-col lg:absolute lg:inset-x-2 lg:top-[calc(50%+1.75rem)] lg:p-0 lg:text-center ${narrowSide}`}
+        className={cn(
+          "row-start-1 flex flex-col lg:absolute lg:inset-x-2 lg:top-[calc(50%+1.75rem)] lg:p-0 lg:text-center",
+          narrowSide
+        )}
       >
         <span className="font-medium text-foreground/90 text-sm">{title}</span>
         <span className="text-muted-foreground text-xs">{detail}</span>
@@ -115,8 +119,8 @@ function YourModels() {
         aria-hidden="true"
         className="absolute top-1/2 -left-2 hidden -translate-y-1/2 border-y-[5px] border-y-transparent border-l-[8px] border-l-foreground/60 lg:block"
       />
-      <p className={`${display.className} font-semibold text-lg`}>Your models</p>
-      <p className={`${mono.className} text-background/60 text-xs`}>
+      <p className={cn(display.className, "font-semibold text-lg")}>Your models</p>
+      <p className={cn(mono.className, "text-background/60 text-xs")}>
         src/lib/mcp/registry.ts
       </p>
     </div>

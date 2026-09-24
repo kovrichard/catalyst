@@ -1,6 +1,7 @@
 import { Star } from "lucide-react";
 import Link from "next/link";
 import { formatStarCount, getRepoStars, REPO_URL } from "@/lib/repo";
+import { cn } from "@/lib/utils";
 
 function GithubMark() {
   return (
@@ -29,7 +30,10 @@ export default async function GithubStars({
       href={REPO_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`items-center gap-2 rounded-md border px-4 py-2 font-medium text-sm transition-colors hover:bg-accent ${className}`}
+      className={cn(
+        "items-center gap-2 rounded-md border px-4 py-2 font-medium text-sm transition-colors hover:bg-accent",
+        className
+      )}
     >
       <GithubMark />
       {stars === null ? (

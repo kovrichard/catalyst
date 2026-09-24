@@ -1,12 +1,16 @@
 import Link from "next/link";
 import { display } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 import { meteorMask } from "@/lib/utils/meteor-mask";
 
 export default function BrandLink() {
   return (
     <Link
       href="/"
-      className={`${display.className} mr-auto flex items-center gap-2 whitespace-pre font-bold text-xl tracking-tight`}
+      className={cn(
+        display.className,
+        "mr-auto flex items-center gap-2 whitespace-pre font-bold text-xl tracking-tight"
+      )}
     >
       <span
         aria-hidden="true"

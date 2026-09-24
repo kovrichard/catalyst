@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { display } from "@/lib/fonts";
 import { REPO_URL } from "@/lib/repo";
+import { cn } from "@/lib/utils";
 import { meteorMask } from "@/lib/utils/meteor-mask";
 import { mono } from "./fonts";
 
@@ -17,13 +18,19 @@ export function Hero() {
         />
 
         <p
-          className={`${mono.className} text-balance text-muted-foreground text-xs uppercase tracking-[0.2em]`}
+          className={cn(
+            mono.className,
+            "text-balance text-muted-foreground text-xs uppercase tracking-[0.2em]"
+          )}
         >
           The Next.js starter for building with AI
         </p>
 
         <h1
-          className={`${display.className} max-w-3xl text-balance font-bold text-[clamp(2rem,8.2vw,3.75rem)] leading-[1.05] tracking-tight lg:text-7xl`}
+          className={cn(
+            display.className,
+            "max-w-3xl text-balance font-bold text-[clamp(2rem,8.2vw,3.75rem)] leading-[1.05] tracking-tight lg:text-7xl"
+          )}
         >
           Build your product.
           <br />
