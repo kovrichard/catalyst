@@ -1,35 +1,41 @@
-# <img src="src/app/icon.svg" alt="Catalyst Starter Kit" width="28" height="28" /> Catalyst Starter Kit
+# <img src="src/app/icon.svg" alt="" width="28" height="28" /> Catalyst
 
 ![GitHub Workflow Status](https://github.com/kovrichard/catalyst/actions/workflows/build.yml/badge.svg)
 
-This repository provides a powerful starter kit for building modern web applications using the following stack:
-
-- [Bun.js](https://bun.sh): A fast JavaScript runtime for modern web applications.
-- [Prisma](https://www.prisma.io): A next-generation ORM for TypeScript and JavaScript that simplifies database access.
-- [Next.js](https://nextjs.org): A full-stack React framework for building server-side rendered applications.
-- [Tailwind CSS](https://tailwindcss.com): A utility-first CSS framework for building responsive designs.
-- [shadcn/ui](https://ui.shadcn.com): A collection of beautifully designed UI components built with Tailwind CSS.
-- [tRPC](https://trpc.io): End-to-end typesafe APIs written in TypeScript.
-- [Husky](https://typicode.github.io/husky/): Git hooks that help to enforce coding standards by running scripts during the commit process.
-- [Biome](https://biomejs.dev): A toolchain for linting, formatting, and other code quality tasks.
-- [Better Auth](https://www.better-auth.com): A comprehensive, framework-agnostic authentication library for TypeScript.
-- [Model Context Protocol](https://modelcontextprotocol.io): A read-only MCP server so external agents can query your hosted database with an API key.
-- [Stripe](https://stripe.com): A payment processing platform for online businesses.
-- [Zod](https://zod.dev): TypeScript-first schema validation with static type inference.
-- [Winston](https://github.com/winstonjs/winston): A logger for just about everything.
-- [Amazon S3](https://aws.amazon.com/s3/): Object storage for user uploads, served through signed CloudFront URLs.
-- [Amazon SES](https://aws.amazon.com/ses/): A reliable, scalable, and cost-effective email service.
-- [React Email](https://react.email): A library for building responsive HTML emails using React.
-- [Google Analytics](https://analytics.google.com): You know what it is.
-- [Google Tag Manager](https://tagmanager.google.com): For fine-grained tracking and analytics.
-- [Docker](https://www.docker.com): In case you need to containerize your application.
-- [GitHub Actions](https://github.com/features/actions): For continuous integration and deployment.
-- [Redis](https://redis.io): A fast, open-source, in-memory data structure store.
-- [pgBouncer](https://www.pgbouncer.org): A lightweight connection pooler for PostgreSQL.
-
-It also contains an example [GitHub Actions workflow](/.github/workflows/build.yml) for continuous integration and deployment. The workflow installs the dependencies, lints the code, and builds the project.
+Build your product, not your setup. The Next.js starter where your agent reviews itself and your
+app speaks MCP from day one.
 
 https://github.com/user-attachments/assets/b9d199c8-50ea-42f1-8d9f-d833b95aa91f
+
+## Why Catalyst
+
+**Your agent checks its own work.** Eight checks run the moment your agent stops: Biome, tsc,
+knip, jscpd, klint, madge, line endings, and secretlint. A failure goes back to the agent with the
+reason attached, so you review a green diff. The same checks run again before every commit and in
+CI.
+
+**Architecture as code.** klint turns the rules in AGENTS.md into build failures. Prisma outside
+the DAO, raw radix-ui, or a template-literal className fails the check instead of waiting in
+review.
+
+**One setup, every agent.** AGENTS.md, the hooks, and the skills work in Claude Code, Cursor,
+Codex, and OpenCode.
+
+**Agent-ready from day one.** A read-only MCP server at `/api/mcp` with API keys, per-key rate
+limits, user scoping, and a field allowlist. You list models, Catalyst handles the rest.
+
+**Keep only what you need.** `bun run configure` removes auth, the database, email, MCP, Redis,
+storage, Stripe, or tRPC cleanly.
+
+## Stack
+
+[Next.js](https://nextjs.org) · [Bun](https://bun.sh) · [Prisma](https://www.prisma.io) ·
+[tRPC](https://trpc.io) · [Tailwind CSS](https://tailwindcss.com) · [shadcn/ui](https://ui.shadcn.com) ·
+[Better Auth](https://www.better-auth.com) · [Stripe](https://stripe.com) · [Zod](https://zod.dev) ·
+[Winston](https://github.com/winstonjs/winston) · [Amazon S3](https://aws.amazon.com/s3/) ·
+[Amazon SES](https://aws.amazon.com/ses/) · [React Email](https://react.email) ·
+[Redis](https://redis.io) · [pgBouncer](https://www.pgbouncer.org) · [Docker](https://www.docker.com) ·
+[GitHub Actions](https://github.com/features/actions)
 
 ## Getting Started
 
@@ -52,6 +58,13 @@ powershell -c "irm bun.sh/install.ps1 | iex"
 Or if you prefer, you can use other package managers like npm, yarn, or pnpm.
 
 ### Development
+
+Install the dependencies, then remove the features you don't need:
+
+```bash
+bun install
+bun run configure
+```
 
 Copy the [`.env.sample`](.env.sample) file to `.env` to set up the environment variables. Then, run the development server:
 
