@@ -1,6 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
+import { display } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
+
+const METEOR_TAIL =
+  "M0 6270 l0 -6270 6270 0 6270 0 0 6270 0 6270 -6270 0 -6270 0 0 -6270z m11450 4424 c-47 -30 -119 -77 -160 -103 -201 -131 -400 -261 -655 -429 -814 -538 -1053 -694 -1340 -874 -529 -330 -941 -556 -1588 -870 -385 -186 -937 -461 -1035 -514 -328 -180 -518 -304 -631 -410 -109 -102 -129 -163 -68 -208 26 -19 42 -21 160 -21 116 0 147 4 262 34 311 80 638 212 1920 776 500 220 573 251 850 369 148 63 271 114 272 112 2 -2 -70 -47 -159 -101 -500 -302 -936 -566 -1028 -623 -394 -245 -498 -311 -682 -434 -458 -306 -630 -478 -692 -687 -52 -177 18 -343 153 -365 162 -26 437 127 1206 667 266 187 389 274 810 574 645 458 1331 936 1300 906 -24 -24 -252 -219 -496 -423 -95 -80 -230 -194 -299 -254 -69 -59 -167 -145 -219 -190 -519 -446 -957 -851 -1430 -1320 -902 -895 -1419 -1534 -1836 -2271 -149 -261 -265 -416 -441 -585 -332 -319 -785 -533 -1289 -606 -163 -24 -468 -24 -622 0 -239 37 -448 103 -648 204 -681 346 -1056 969 -1058 1752 0 204 18 353 68 545 172 667 570 1097 1415 1524 225 114 421 204 850 391 484 210 1016 449 1410 633 1275 594 3191 1533 4350 2130 228 117 615 315 860 440 245 124 470 239 500 256 88 49 82 35 -10 -25z";
+const METEOR_HEAD =
+  "M4840 7176 c-657 -224 -1219 -530 -1608 -876 -300 -266 -513 -621 -587 -981 -197 -958 514 -1873 1531 -1970 221 -21 493 9 694 77 525 178 938 575 1089 1048 18 54 30 101 27 103 -2 2 -26 -37 -52 -87 -129 -244 -373 -493 -660 -673 -155 -97 -383 -203 -562 -262 -67 -21 -78 -13 -20 16 134 68 355 251 468 387 169 204 267 396 332 647 32 126 33 136 32 320 -1 178 -3 197 -31 305 -99 375 -314 645 -648 813 -500 250 -1098 121 -1577 -341 -139 -133 -241 -264 -375 -478 -21 -33 5 49 48 154 83 205 228 428 410 635 307 349 796 709 1527 1126 89 51 162 95 162 97 0 8 -17 3 -200 -60z";
+
+function MeteorMark() {
+  const maskId = useId();
+
+  return (
+    <svg viewBox="26 24 1101 1101" aria-hidden="true" className="size-5 shrink-0">
+      <defs>
+        <mask
+          id={maskId}
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="1254"
+          height="1254"
+        >
+          <rect x="8" y="8" width="1238" height="1238" fill="#fff" />
+          <g
+            transform="translate(1254,0) scale(-1,1) translate(0,1254) scale(0.1,-0.1)"
+            fill="#000"
+            stroke="#000"
+            strokeWidth="24"
+          >
+            <path d={METEOR_TAIL} />
+            <path d={METEOR_HEAD} />
+          </g>
+        </mask>
+      </defs>
+      <rect width="1254" height="1254" fill="currentColor" mask={`url(#${maskId})`} />
+    </svg>
+  );
+}
 
 export default function CatalystBadge() {
   const [source, setSource] = useState("");
@@ -18,17 +56,15 @@ export default function CatalystBadge() {
       href={`https://catalyst.konvert7.com/?${queryParams}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-2 rounded border bg-card px-2 py-1 text-foreground text-sm shadow-md transition-colors hover:bg-input/50 dark:bg-input"
+      className="inline-flex items-center gap-2 rounded-md border bg-card px-2 py-1 text-muted-foreground text-sm transition-colors hover:text-foreground"
     >
       <span>Made with</span>
-      {/** biome-ignore lint/performance/noImgElement: Vercel bypass */}
-      <img
-        src="https://catalyst.konvert7.com/icon.svg"
-        alt="Catalyst"
-        width={20}
-        height={20}
-      />
-      <span className="font-semibold">Catalyst</span>
+      <span className="flex items-center gap-1 text-foreground">
+        <MeteorMark />
+        <span className={cn(display.className, "font-bold tracking-tight")}>
+          Catalyst
+        </span>
+      </span>
     </a>
   );
 }
