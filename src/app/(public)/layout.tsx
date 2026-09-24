@@ -1,6 +1,5 @@
 import type React from "react";
 import BrandLink from "@/components/brand-link";
-import SiteFooter from "@/components/footer/site-footer";
 import GithubStars from "@/components/github-stars";
 import { JsonLd, organizationLd, webSiteLd } from "@/components/marketing/json-ld";
 
@@ -29,7 +28,6 @@ export default function Layout({
         {/* @catalyst:auth-end */}
       </header>
       {children}
-      <SiteFooter />
     </div>
   );
 }

@@ -20,11 +20,11 @@ function SitemapLink({ href, children }: { href: string; children: ReactNode }) 
   );
 }
 
-export default async function SiteFooter() {
+export default async function SiteFooter({ className = "" }: { className?: string }) {
   const year = await currentYear();
 
   return (
-    <footer className="w-full border-t">
+    <footer className={`w-full ${className}`}>
       <div className="container flex flex-col gap-16 py-16">
         <div className="flex items-start justify-between gap-8">
           <div className="flex min-w-0 flex-col items-start gap-4">

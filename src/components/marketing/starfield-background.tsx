@@ -28,6 +28,7 @@ const BOOST_HALF_LIFE = 0.28;
 const TRAIL_FRAMES = 2.6;
 const MIN_Z = 0.06;
 const SPAWN_FADE = 3;
+const HERO_FADE_SCREENS = 1.5;
 
 const STAR_COLORS: readonly Rgb[] = [
   [255, 255, 255],
@@ -42,6 +43,28 @@ const clamp = (value: number) => Math.max(0, Math.min(1, value));
 const rgba = ([r, g, b]: Rgb, alpha: number) => `rgba(${r}, ${g}, ${b}, ${alpha})`;
 
 const pickWhiteLeaningColor = () => Math.floor(Math.random() ** 2 * STAR_COLORS.length);
+
+function heroVisibility() {
+  return clamp(1 - window.scrollY / (window.innerHeight * HERO_FADE_SCREENS));
+}
+
+function isOnScreen(element: Element | null) {
+  if (!element) {
+    return false;
+  }
+  const { top, bottom } = element.getBoundingClientRect();
+  return bottom > 0 && top < window.innerHeight;
+}
+
+type Variant = "hero" | "reveal";
+
+const VARIANTS: Record<
+  Variant,
+  { boost: number; visibility: (host: Element | null) => number }
+> = {
+  hero: { boost: 1, visibility: heroVisibility },
+  reveal: { boost: 0, visibility: (host) => (isOnScreen(host) ? 1 : 0) },
+};
 
 function spawn(star: Star, z: number) {
   star.x = Math.random() * 2 - 1;
@@ -153,7 +176,27 @@ function drawStar(
   return isOffscreen(x, y, view);
 }
 
-export function StarfieldBackground() {
+function advanceStars(
+  ctx: CanvasRenderingContext2D,
+  stars: Star[],
+  view: Viewport,
+  sprites: HTMLCanvasElement[],
+  step: number,
+  trail: number
+) {
+  ctx.lineCap = "round";
+
+  for (const star of stars) {
+    star.z -= step;
+    const gone = drawStar(ctx, star, view, sprites[star.color], trail);
+
+    if (star.z <= MIN_Z || gone) {
+      spawn(star, 1);
+    }
+  }
+}
+
+export function StarfieldBackground({ variant = "hero" }: { variant?: Variant }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -165,6 +208,8 @@ export function StarfieldBackground() {
     }
 
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const behaviour = VARIANTS[variant];
+    const host = canvas.parentElement?.parentElement ?? null;
     const stars = createStars();
     const sprites = STAR_COLORS.map(createGlowSprite);
 
@@ -173,26 +218,29 @@ export function StarfieldBackground() {
     let lastScrollY = window.scrollY;
     let boost = 0;
 
+    function syncVisibility() {
+      const visibility = behaviour.visibility(host);
+      if (canvas) {
+        canvas.style.opacity = String(visibility);
+      }
+      return visibility;
+    }
+
     function render(elapsed: number) {
       if (!canvas || !ctx) {
         return;
       }
 
+      if (syncVisibility() === 0) {
+        return;
+      }
+
       const view = fitCanvas(canvas, ctx);
-      const speed = motion.matches ? 0 : DRIFT_SPEED + boost;
+      const speed = motion.matches ? 0 : DRIFT_SPEED + boost * behaviour.boost;
       const step = speed * elapsed;
       const trail = step * TRAIL_FRAMES;
 
-      ctx.lineCap = "round";
-
-      for (const star of stars) {
-        star.z -= step;
-        const gone = drawStar(ctx, star, view, sprites[star.color], trail);
-
-        if (star.z <= MIN_Z || gone) {
-          spawn(star, 1);
-        }
-      }
+      advanceStars(ctx, stars, view, sprites, step, trail);
 
       ctx.globalAlpha = 1;
     }
@@ -228,6 +276,7 @@ export function StarfieldBackground() {
       const travelled = Math.abs(window.scrollY - lastScrollY);
       lastScrollY = window.scrollY;
       boost = Math.min(MAX_BOOST, boost + travelled * BOOST_PER_PIXEL);
+      syncVisibility();
     }
 
     function syncToVisibility() {
@@ -251,18 +300,11 @@ export function StarfieldBackground() {
       document.removeEventListener("visibilitychange", syncToVisibility);
       motion.removeEventListener("change", start);
     };
-  }, []);
+  }, [variant]);
 
   return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 bg-[#080a0f]"
-    >
-      <canvas
-        ref={canvasRef}
-        tabIndex={-1}
-        className="h-full w-full animate-starfield-fade"
-      />
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 bg-space">
+      <canvas ref={canvasRef} tabIndex={-1} className="h-full w-full" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(8,10,15,0.8),transparent_75%)]" />
     </div>
   );

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import SiteFooter from "@/components/footer/site-footer";
 import { ClosedLoop } from "@/components/marketing/closed-loop";
 import { FinalCta } from "@/components/marketing/final-cta";
 import { Hero } from "@/components/marketing/hero";
@@ -41,8 +42,11 @@ export default function Home() {
         <ShipLoop />
         <McpServer />
         <LeanStart />
-        <FinalCta />
       </main>
+      <div className="relative">
+        <FinalCta />
+        <SiteFooter className="sticky bottom-0" />
+      </div>
     </>
   );
 }
