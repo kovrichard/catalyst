@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { AgentSkills } from "@/components/marketing/agent-skills";
 import { FinalCta } from "@/components/marketing/also-included";
 import { ClosedLoop } from "@/components/marketing/closed-loop";
 import { Hero } from "@/components/marketing/hero";
-import { HookChecklist } from "@/components/marketing/hook-checklist";
 import { LeanStart } from "@/components/marketing/lean-start";
 import { McpServer } from "@/components/marketing/mcp-server";
 import { ReviewLoop } from "@/components/marketing/review-loop";
@@ -43,8 +41,6 @@ export default function Home() {
         <ShipLoop />
         <McpServer />
         <LeanStart />
-        <HookChecklist />
-        <AgentSkills />
         <FinalCta />
       </main>
     </>
