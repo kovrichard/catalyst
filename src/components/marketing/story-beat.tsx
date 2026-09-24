@@ -125,7 +125,7 @@ export function StoryBeat({
   const wideLead = <p className={`max-w-2xl ${LEAD}`}>{lead}</p>;
 
   return (
-    <section id={id} className="w-full border-b bg-muted/20">
+    <section id={id} className="w-full bg-muted/20">
       <div className="container flex flex-col gap-16 py-28 lg:gap-20 lg:py-36">
         {wide ? (
           <>
@@ -156,7 +156,7 @@ export function StoryBeat({
         )}
 
         <p
-          className={`${display.className} max-w-3xl text-balance border-t pt-10 font-medium text-2xl leading-snug tracking-tight md:text-3xl`}
+          className={`${display.className} max-w-3xl text-balance pt-10 font-medium text-2xl leading-snug tracking-tight md:text-3xl`}
         >
           {closing}
         </p>
