@@ -41,8 +41,8 @@ export function Hero() {
       </div>
 
       <Link
-        href="#pipeline"
-        aria-label="Skip to what Catalyst includes"
+        href="#review-loop"
+        aria-label="Skip past the intro"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-hero-caret text-muted-foreground transition-colors hover:text-foreground"
       >
         <ChevronDown className="size-6 motion-safe:animate-bounce" />
