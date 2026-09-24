@@ -318,51 +318,24 @@
   }
 }
 
+@keyframes starfieldFade {
+  to {
+    opacity: 0;
+  }
+}
+
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
     .animate-hero-zoom {
       animation: heroZoom linear both;
       animation-timeline: scroll(root block);
-      animation-range: 0 45vh;
+      animation-range: 0 100vh;
     }
   }
-}
 
-/* Stage slides share one pinned box, so nothing travels vertically and two
-   slides can be on screen at once. Ranges are absolute scroll distances from
-   the top of the page, which only holds because the stage is the first thing
-   in the document. */
-@keyframes stageSlide {
-  0% {
-    opacity: 0;
-    transform: scale(0.7);
-    filter: blur(10px);
-    pointer-events: none;
-  }
-
-  30%,
-  70% {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0px);
-    pointer-events: auto;
-  }
-
-  100% {
-    opacity: 0;
-    transform: scale(2.2);
-    filter: blur(8px);
-    pointer-events: none;
-  }
-}
-
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .stage-slide {
-      animation: stageSlide linear both;
-      animation-timeline: scroll(root block);
-      animation-range: var(--stage-from) var(--stage-to);
-      will-change: transform, opacity;
-    }
+  .animate-starfield-fade {
+    animation: starfieldFade linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 150vh;
   }
 }

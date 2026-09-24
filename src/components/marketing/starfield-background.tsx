@@ -258,7 +258,11 @@ export function StarfieldBackground() {
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 -z-10 bg-[#080a0f]"
     >
-      <canvas ref={canvasRef} tabIndex={-1} className="h-full w-full" />
+      <canvas
+        ref={canvasRef}
+        tabIndex={-1}
+        className="h-full w-full animate-starfield-fade"
+      />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(8,10,15,0.8),transparent_75%)]" />
     </div>
   );
