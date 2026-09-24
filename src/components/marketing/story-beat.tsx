@@ -108,6 +108,7 @@ export function StoryBeat({
   artifact,
   closing,
   wide = false,
+  aside,
 }: {
   id: string;
   headline: ReactNode;
@@ -115,26 +116,46 @@ export function StoryBeat({
   artifact: ReactNode;
   closing: ReactNode;
   wide?: boolean;
+  aside?: ReactNode;
 }) {
+  const title = (
+    <h2
+      className={`${display.className} max-w-4xl text-balance font-bold text-[clamp(2rem,5.5vw,4rem)] leading-[1.05] tracking-tight`}
+    >
+      {headline}
+    </h2>
+  );
+  const wideLead = <p className={`max-w-2xl ${LEAD}`}>{lead}</p>;
+
   return (
     <section id={id} className="w-full border-b bg-muted/20">
       <div className="container flex flex-col gap-16 py-28 lg:gap-20 lg:py-36">
-        <h2
-          className={`${display.className} max-w-4xl text-balance font-bold text-[clamp(2rem,5.5vw,4rem)] leading-[1.05] tracking-tight`}
-        >
-          {headline}
-        </h2>
-
         {wide ? (
           <>
-            <p className={`max-w-2xl ${LEAD}`}>{lead}</p>
+            {aside ? (
+              <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:gap-0">
+                <div className="flex flex-col gap-16 lg:max-w-2xl lg:gap-20">
+                  {title}
+                  {wideLead}
+                </div>
+                <div className="flex flex-1 justify-center">{aside}</div>
+              </div>
+            ) : (
+              <>
+                {title}
+                {wideLead}
+              </>
+            )}
             <figure className="w-full">{artifact}</figure>
           </>
         ) : (
-          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
-            <p className={`max-w-md lg:col-span-4 lg:pt-8 ${LEAD}`}>{lead}</p>
-            <figure className="lg:col-span-8">{artifact}</figure>
-          </div>
+          <>
+            {title}
+            <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
+              <p className={`max-w-md lg:col-span-4 lg:pt-8 ${LEAD}`}>{lead}</p>
+              <figure className="lg:col-span-8">{artifact}</figure>
+            </div>
+          </>
         )}
 
         <p
