@@ -1,4 +1,4 @@
-import { StoryBeat, type TranscriptLine } from "./story-beat";
+import { StoryBeat, Transcript, type TranscriptLine } from "./story-beat";
 
 const TRANSCRIPT: TranscriptLine[] = [
   { kind: "you", text: "Ship it to stage." },
@@ -24,8 +24,9 @@ export function ShipLoop() {
       id="ship-loop"
       headline="Finished code isn't finished until it runs."
       lead="Push to stage and the agent follows the commit through CI and the deploy to the live URL. Then it opens the page and takes a screenshot. It never opens the PR into main. What reaches production is up to you."
-      transcriptLabel="The agent following a deploy to stage"
-      transcript={TRANSCRIPT}
+      artifact={
+        <Transcript label="The agent following a deploy to stage" lines={TRANSCRIPT} />
+      }
       closing={
         <>
           <span className="text-muted-foreground">The agent proves it works.</span> You

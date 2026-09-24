@@ -40,9 +40,9 @@ export default function Home() {
         <ReviewLoop />
         <ClosedLoop />
         <ShipLoop />
+        <McpServer />
         <HookChecklist />
         <AgentSkills />
-        <McpServer />
         <AlsoIncluded />
         <FinalCta />
       </main>

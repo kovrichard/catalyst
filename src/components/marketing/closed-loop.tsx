@@ -1,4 +1,4 @@
-import { StoryBeat, type TranscriptLine } from "./story-beat";
+import { StoryBeat, Transcript, type TranscriptLine } from "./story-beat";
 
 const TRANSCRIPT: TranscriptLine[] = [
   { kind: "you", text: 'Add a "last shipped" column to the projects table.' },
@@ -44,8 +44,7 @@ export function ClosedLoop() {
       id="closed-loop"
       headline="Your agent reviews itself now."
       lead="Eight checks run the moment your agent stops. Any failure goes back to the agent with the reason attached. It fixes the code and runs again. You see the diff once everything is green."
-      transcriptLabel="The same session with Catalyst"
-      transcript={TRANSCRIPT}
+      artifact={<Transcript label="The same session with Catalyst" lines={TRANSCRIPT} />}
       closing="Your review starts at working code."
     />
   );

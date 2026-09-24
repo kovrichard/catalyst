@@ -1,4 +1,4 @@
-import { StoryBeat, type TranscriptLine } from "./story-beat";
+import { StoryBeat, Transcript, type TranscriptLine } from "./story-beat";
 
 const TRANSCRIPT: TranscriptLine[] = [
   { kind: "you", text: 'Add a "last shipped" column to the projects table.' },
@@ -27,8 +27,7 @@ export function ReviewLoop() {
         </>
       }
       lead="Every turn ends with you reading a diff for mistakes a linter should have caught. By the next prompt, the agent has forgotten them."
-      transcriptLabel="A typical agent session"
-      transcript={TRANSCRIPT}
+      artifact={<Transcript label="A typical agent session" lines={TRANSCRIPT} />}
       closing={
         <>
           <span className="text-muted-foreground">

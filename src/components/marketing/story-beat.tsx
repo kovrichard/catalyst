@@ -85,7 +85,7 @@ function Line({ line }: { line: TranscriptLine }) {
   );
 }
 
-function Transcript({ label, lines }: { label: string; lines: TranscriptLine[] }) {
+export function Transcript({ label, lines }: { label: string; lines: TranscriptLine[] }) {
   return (
     <ol
       aria-label={label}
@@ -99,20 +99,22 @@ function Transcript({ label, lines }: { label: string; lines: TranscriptLine[] }
   );
 }
 
+const LEAD = "text-balance text-lg text-muted-foreground leading-relaxed";
+
 export function StoryBeat({
   id,
   headline,
   lead,
-  transcriptLabel,
-  transcript,
+  artifact,
   closing,
+  wide = false,
 }: {
   id: string;
   headline: ReactNode;
-  lead: string;
-  transcriptLabel: string;
-  transcript: TranscriptLine[];
+  lead: ReactNode;
+  artifact: ReactNode;
   closing: ReactNode;
+  wide?: boolean;
 }) {
   return (
     <section id={id} className="w-full border-b bg-muted/20">
@@ -123,15 +125,17 @@ export function StoryBeat({
           {headline}
         </h2>
 
-        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
-          <p className="max-w-md text-balance text-lg text-muted-foreground leading-relaxed lg:col-span-4 lg:pt-8">
-            {lead}
-          </p>
-
-          <figure className="lg:col-span-8">
-            <Transcript label={transcriptLabel} lines={transcript} />
-          </figure>
-        </div>
+        {wide ? (
+          <>
+            <p className={`max-w-2xl ${LEAD}`}>{lead}</p>
+            <figure className="w-full">{artifact}</figure>
+          </>
+        ) : (
+          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
+            <p className={`max-w-md lg:col-span-4 lg:pt-8 ${LEAD}`}>{lead}</p>
+            <figure className="lg:col-span-8">{artifact}</figure>
+          </div>
+        )}
 
         <p
           className={`${display.className} max-w-3xl text-balance border-t pt-10 font-medium text-2xl leading-snug tracking-tight md:text-3xl`}
