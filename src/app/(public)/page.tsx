@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { AgentSkills } from "@/components/marketing/agent-skills";
 import { AlsoIncluded, FinalCta } from "@/components/marketing/also-included";
+import { ClosedLoop } from "@/components/marketing/closed-loop";
 import { Hero } from "@/components/marketing/hero";
 import { HookChecklist } from "@/components/marketing/hook-checklist";
 import { McpServer } from "@/components/marketing/mcp-server";
-import { Pipeline } from "@/components/marketing/pipeline";
 import { ReviewLoop } from "@/components/marketing/review-loop";
 import { StarfieldBackground } from "@/components/marketing/starfield-background";
 import { logger } from "@/lib/logger";
@@ -37,7 +37,7 @@ export default function Home() {
           </div>
         </section>
         <ReviewLoop />
-        <Pipeline />
+        <ClosedLoop />
         <HookChecklist />
         <AgentSkills />
         <McpServer />
