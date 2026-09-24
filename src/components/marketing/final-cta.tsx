@@ -7,7 +7,7 @@ export function FinalCta() {
   return (
     <section className="relative w-full overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-glow-cta" />
-      <div className="container relative flex flex-col items-center gap-10 py-32 text-center lg:py-40">
+      <div className="container relative flex flex-col items-center gap-8 py-32 text-center">
         <h2 className={`${display.className} ${BEAT_HEADLINE}`}>
           Now you're shipping faster.
           <br />

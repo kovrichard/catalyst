@@ -22,7 +22,7 @@ function WideMerge() {
       aria-hidden="true"
       viewBox="0 0 48 108"
       preserveAspectRatio="none"
-      className="ml-3 hidden h-[108px] w-12 text-foreground/25 lg:block"
+      className="ml-4 hidden h-[108px] w-12 text-foreground/25 lg:block"
     >
       {WIDE_CLIENT_CENTERS.map((y) => (
         <path
@@ -85,7 +85,7 @@ function Gate({
     side === "right" ? "col-start-2 pl-8 text-left" : "col-start-1 pr-8 text-right";
 
   return (
-    <li className="relative grid w-full grid-cols-2 items-center py-5 lg:flex lg:h-36 lg:w-auto lg:flex-1 lg:flex-col lg:justify-center lg:p-0">
+    <li className="relative grid w-full grid-cols-2 items-center py-4 lg:flex lg:h-36 lg:w-auto lg:flex-1 lg:flex-col lg:justify-center lg:p-0">
       <span
         aria-hidden="true"
         className="absolute inset-y-0 left-1/2 w-px bg-foreground/25 lg:inset-x-0 lg:top-1/2 lg:bottom-auto lg:h-px lg:w-auto"
@@ -106,7 +106,7 @@ function Gate({
 
 function YourModels() {
   return (
-    <div className="relative w-52 shrink-0 rounded-lg bg-foreground px-6 py-5 text-center text-background lg:text-left">
+    <div className="relative w-52 shrink-0 rounded-lg bg-foreground px-8 py-4 text-center text-background lg:text-left">
       <span
         aria-hidden="true"
         className="absolute -top-2 left-1/2 -translate-x-1/2 border-x-[5px] border-x-transparent border-t-[8px] border-t-foreground/60 lg:hidden"

@@ -18,7 +18,7 @@ export default function CatalystBadge() {
       href={`https://catalyst.konvert7.com/?${queryParams}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-1.5 rounded border bg-card px-2 py-1 text-foreground text-sm shadow-md transition-colors hover:bg-input/50 dark:bg-input"
+      className="flex items-center gap-2 rounded border bg-card px-2 py-1 text-foreground text-sm shadow-md transition-colors hover:bg-input/50 dark:bg-input"
     >
       <span>Made with</span>
       {/** biome-ignore lint/performance/noImgElement: Vercel bypass */}

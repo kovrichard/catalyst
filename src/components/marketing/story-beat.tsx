@@ -29,9 +29,9 @@ function Verdict({
   const style = VERDICT_STYLE[kind];
 
   return (
-    <li className={`col-start-2 flex gap-3 border-l py-1 pl-4 ${style.line}`}>
+    <li className={`col-start-2 flex gap-4 border-l py-1 pl-4 ${style.line}`}>
       <span aria-hidden="true">{style.mark}</span>
-      <span className="flex flex-col sm:flex-row sm:gap-3">
+      <span className="flex flex-col sm:flex-row sm:gap-4">
         {tool ? <span className={`min-w-[6ch] ${style.tool}`}>{tool}</span> : null}
         <span>{children}</span>
       </span>
@@ -89,7 +89,7 @@ export function Transcript({ label, lines }: { label: string; lines: TranscriptL
   return (
     <ol
       aria-label={label}
-      className={`${mono.className} grid grid-cols-[3rem_1fr] gap-x-3 overflow-x-auto rounded-lg border bg-background/70 p-4 text-[13px] leading-6 sm:grid-cols-[4.5rem_1fr] sm:gap-x-4 sm:p-8 sm:text-sm`}
+      className={`${mono.className} grid grid-cols-[3rem_1fr] gap-x-4 overflow-x-auto rounded-lg border bg-background/70 p-4 text-[13px] leading-6 sm:grid-cols-[4.5rem_1fr] sm:p-8 sm:text-sm`}
     >
       {lines.map((line, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: static script that never reorders, and repeated notes share text
@@ -126,12 +126,12 @@ export function StoryBeat({
 
   return (
     <section id={id} className="w-full bg-muted/20">
-      <div className="container flex flex-col gap-16 py-28 lg:gap-20 lg:py-36">
+      <div className="container flex flex-col gap-16 py-32">
         {wide ? (
           <>
             {aside ? (
               <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:gap-0">
-                <div className="flex flex-col gap-16 lg:max-w-2xl lg:gap-20">
+                <div className="flex flex-col gap-16 lg:max-w-2xl">
                   {title}
                   {wideLead}
                 </div>
@@ -148,7 +148,7 @@ export function StoryBeat({
         ) : (
           <>
             {title}
-            <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-12 lg:gap-16">
               <p className={`max-w-md lg:col-span-4 lg:pt-8 ${LEAD}`}>{lead}</p>
               <figure className="lg:col-span-8">{artifact}</figure>
             </div>
@@ -156,7 +156,7 @@ export function StoryBeat({
         )}
 
         <p
-          className={`${display.className} max-w-3xl text-balance pt-10 font-medium text-2xl leading-snug tracking-tight md:text-3xl`}
+          className={`${display.className} max-w-3xl text-balance pt-8 font-medium text-2xl leading-snug tracking-tight md:text-3xl`}
         >
           {closing}
         </p>

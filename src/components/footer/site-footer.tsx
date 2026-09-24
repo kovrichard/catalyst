@@ -25,9 +25,9 @@ export default async function SiteFooter() {
 
   return (
     <footer className="w-full border-t">
-      <div className="container flex flex-col gap-12 py-12">
-        <div className="flex items-start justify-between gap-6">
-          <div className="flex min-w-0 flex-col items-start gap-3">
+      <div className="container flex flex-col gap-16 py-16">
+        <div className="flex items-start justify-between gap-8">
+          <div className="flex min-w-0 flex-col items-start gap-4">
             <BrandLink />
             <p
               className={`${mono.className} text-muted-foreground text-xs uppercase tracking-[0.2em]`}
@@ -37,15 +37,15 @@ export default async function SiteFooter() {
           </div>
           <GithubStars className="flex shrink-0" />
         </div>
-        <div className="flex flex-col gap-6 text-muted-foreground text-sm sm:grid sm:grid-cols-3 sm:items-center">
-          <nav aria-label="Sitemap" className="flex flex-wrap gap-x-6 gap-y-2">
+        <div className="flex flex-col gap-8 text-muted-foreground text-sm sm:grid sm:grid-cols-3 sm:items-center">
+          <nav aria-label="Sitemap" className="flex flex-wrap gap-x-8 gap-y-2">
             {/* @catalyst:auth-start */}
             <SitemapLink href="/login">Log in</SitemapLink>
             <SitemapLink href="/register">Register</SitemapLink>
             {/* @catalyst:auth-end */}
             <SitemapLink href="/privacy-policy">Privacy policy</SitemapLink>
           </nav>
-          <div className="flex items-center justify-between gap-6 sm:contents">
+          <div className="flex items-center justify-between gap-8 sm:contents">
             <p className="sm:text-center">© {year} Konvert7</p>
             <div className="sm:justify-self-end">
               <CatalystBadge />

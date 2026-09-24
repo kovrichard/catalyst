@@ -23,10 +23,10 @@ function FeatureList() {
         after bun run configure
       </p>
       <ul
-        className={`${display.className} flex flex-wrap justify-center gap-x-6 gap-y-1 font-bold text-[clamp(2rem,6vw,4.5rem)] leading-[1.1] tracking-tight sm:gap-x-10`}
+        className={`${display.className} max-w-6xl text-balance text-center font-bold text-[clamp(2rem,6vw,4.5rem)] leading-[1.1] tracking-tight`}
       >
         {REMOVABLE.map((feature) => (
-          <li key={feature.name}>
+          <li key={feature.name} className="mx-4 inline-block">
             {feature.removed ? (
               <del className="text-muted-foreground/30 decoration-2">{feature.name}</del>
             ) : (

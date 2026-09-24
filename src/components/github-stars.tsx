@@ -29,7 +29,7 @@ export default async function GithubStars({
       href={REPO_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`items-center gap-2 rounded-md border px-3 py-1.5 font-medium text-sm transition-colors hover:bg-accent ${className}`}
+      className={`items-center gap-2 rounded-md border px-4 py-2 font-medium text-sm transition-colors hover:bg-accent ${className}`}
     >
       <GithubMark />
       {stars === null ? (
