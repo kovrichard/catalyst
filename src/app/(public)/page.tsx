@@ -6,6 +6,7 @@ import { Hero } from "@/components/marketing/hero";
 import { HookChecklist } from "@/components/marketing/hook-checklist";
 import { McpServer } from "@/components/marketing/mcp-server";
 import { ReviewLoop } from "@/components/marketing/review-loop";
+import { ShipLoop } from "@/components/marketing/ship-loop";
 import { StarfieldBackground } from "@/components/marketing/starfield-background";
 import { logger } from "@/lib/logger";
 import { metaDescription, metaTitle, openGraph } from "@/lib/metadata";
@@ -38,6 +39,7 @@ export default function Home() {
         </section>
         <ReviewLoop />
         <ClosedLoop />
+        <ShipLoop />
         <HookChecklist />
         <AgentSkills />
         <McpServer />

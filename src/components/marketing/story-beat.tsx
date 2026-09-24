@@ -6,7 +6,38 @@ export type TranscriptLine =
   | { kind: "you" | "agent"; text: string }
   | { kind: "note"; text: string }
   | { kind: "miss"; text: string; tool?: string }
-  | { kind: "pass"; checks: string[] };
+  | { kind: "pass"; checks: string[]; tool?: string };
+
+const VERDICT_STYLE = {
+  miss: { mark: "✗", line: "border-red-400/40 text-red-300/90", tool: "text-red-300/50" },
+  pass: {
+    mark: "✓",
+    line: "border-emerald-400/50 text-emerald-300",
+    tool: "text-emerald-300/50",
+  },
+};
+
+function Verdict({
+  kind,
+  tool,
+  children,
+}: {
+  kind: keyof typeof VERDICT_STYLE;
+  tool?: string;
+  children: ReactNode;
+}) {
+  const style = VERDICT_STYLE[kind];
+
+  return (
+    <li className={`col-start-2 flex gap-3 border-l py-1 pl-4 ${style.line}`}>
+      <span aria-hidden="true">{style.mark}</span>
+      <span className="flex flex-col sm:flex-row sm:gap-3">
+        {tool ? <span className={`min-w-[6ch] ${style.tool}`}>{tool}</span> : null}
+        <span>{children}</span>
+      </span>
+    </li>
+  );
+}
 
 function Line({ line }: { line: TranscriptLine }) {
   if (line.kind === "note") {
@@ -19,22 +50,15 @@ function Line({ line }: { line: TranscriptLine }) {
 
   if (line.kind === "miss") {
     return (
-      <li className="col-start-2 flex gap-3 border-red-400/40 border-l py-1 pl-4 text-red-300/90">
-        <span aria-hidden="true">✗</span>
-        <span className="flex flex-col sm:flex-row sm:gap-3">
-          {line.tool ? (
-            <span className="min-w-[5ch] text-red-300/50">{line.tool}</span>
-          ) : null}
-          <span>{line.text}</span>
-        </span>
-      </li>
+      <Verdict kind="miss" tool={line.tool}>
+        {line.text}
+      </Verdict>
     );
   }
 
   if (line.kind === "pass") {
     return (
-      <li className="col-start-2 flex gap-3 border-emerald-400/50 border-l py-1 pl-4 text-emerald-300">
-        <span aria-hidden="true">✓</span>
+      <Verdict kind="pass" tool={line.tool}>
         <span className="flex flex-wrap gap-x-2">
           {line.checks.map((check, i) => (
             <span key={check}>
@@ -45,7 +69,7 @@ function Line({ line }: { line: TranscriptLine }) {
             </span>
           ))}
         </span>
-      </li>
+      </Verdict>
     );
   }
 
