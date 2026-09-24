@@ -5,10 +5,20 @@ export const robotsPolicy: Metadata["robots"] = conf.isProductionEnvironment
   ? "index, follow"
   : "noindex, nofollow";
 
-export const metaTitle = "Catalyst - Agentic Next.js Boilerplate";
+export const metaTitle = "Catalyst - The Next.js Starter for Building with AI";
 export const metaDescription =
-  "Catalyst is a Next.js starter kit that helps you build modern web applications faster and easier than ever before.";
+  "Build your product, not your setup. The Next.js starter where your agent reviews itself and your app speaks MCP from day one.";
 export const siteUrl = "https://catalyst.konvert7.com";
+
+// metadataBase freezes into the prerendered shell, so it must resolve at build time.
+// ENVIRONMENT is a Docker build ARG; SCHEME/AUTHORITY only arrive at runtime. Add your
+// own deploy targets here so each one advertises its own origin.
+const buildTimeOriginByEnvironment: Record<string, string> = {
+  production: siteUrl,
+};
+
+export const deployUrl =
+  buildTimeOriginByEnvironment[conf.environment] ?? "http://localhost:3000";
 
 export const openGraph: Metadata["openGraph"] = {
   title: metaTitle,

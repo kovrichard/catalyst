@@ -10,11 +10,11 @@ import { VersionChecker } from "@/components/version-checker";
 import conf from "@/lib/config";
 import { PublicConfigProvider } from "@/lib/contexts/public-config-context";
 import {
+  deployUrl,
   metaDescription,
   metaTitle,
   openGraph,
   robotsPolicy,
-  siteUrl,
 } from "@/lib/metadata";
 import publicConf from "@/lib/public-config";
 import { cn } from "@/lib/utils";
@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(deployUrl),
   title: metaTitle,
   description: metaDescription,
   icons: {
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   robots: robotsPolicy,
   openGraph: {
     ...openGraph,
-    url: siteUrl,
+    url: "/",
   },
   twitter: {
     // creator: "@",

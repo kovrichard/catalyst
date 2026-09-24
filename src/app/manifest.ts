@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
+import { metaDescription } from "@/lib/metadata";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Catalyst - Next.js Starter Kit",
     short_name: "Catalyst",
-    description:
-      "Catalyst is a Next.js starter kit that helps you build modern web applications faster and easier than ever before.",
+    description: metaDescription,
     start_url: "/",
     display: "standalone",
     icons: [
