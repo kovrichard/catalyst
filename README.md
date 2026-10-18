@@ -9,8 +9,8 @@ https://github.com/user-attachments/assets/b9d199c8-50ea-42f1-8d9f-d833b95aa91f
 
 ## Why Catalyst
 
-**Your agent checks its own work.** Eight checks run the moment your agent stops: Biome, tsc,
-knip, jscpd, klint, madge, line endings, and secretlint. A failure goes back to the agent with the
+**Your agent checks its own work.** Nine checks run the moment your agent stops: Biome, tsc,
+knip, jscpd, klint, madge, line endings, secretlint, and lockfile sync. A failure goes back to the agent with the
 reason attached, so you review a green diff. The same checks run again before every commit and in
 CI.
 

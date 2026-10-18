@@ -61,6 +61,9 @@ jobs:
     - name: Secretlint
       run: bun run secretlint
 
+    - name: Lockfile in sync
+      run: bun run lock:check
+
     - name: Tests
       run: bun run test
 

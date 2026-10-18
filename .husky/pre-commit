@@ -8,3 +8,4 @@ bun run klint
 bun run madge
 bun run lf
 bun run secretlint
+bun run lock:check

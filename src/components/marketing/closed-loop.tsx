@@ -3,7 +3,7 @@ import { StoryBeat, Transcript, type TranscriptLine } from "./story-beat";
 const TRANSCRIPT: TranscriptLine[] = [
   { kind: "you", text: 'Add a "last shipped" column to the projects table.' },
   { kind: "agent", text: "Done. Added the column, the query, and the UI." },
-  { kind: "note", text: "stop hook: 8 checks" },
+  { kind: "note", text: "stop hook: 9 checks" },
   {
     kind: "miss",
     tool: "klint",
@@ -20,7 +20,7 @@ const TRANSCRIPT: TranscriptLine[] = [
     kind: "agent",
     text: "Moving the query to src/lib/dao/projects.ts, adding shippedAt to the Project model, removing the copy.",
   },
-  { kind: "note", text: "stop hook: 8 checks" },
+  { kind: "note", text: "stop hook: 9 checks" },
   {
     kind: "pass",
     checks: [
@@ -32,6 +32,7 @@ const TRANSCRIPT: TranscriptLine[] = [
       "madge",
       "lf",
       "secretlint",
+      "lock:check",
     ],
   },
   { kind: "note", text: "you open the diff. nothing to fix." },
@@ -43,7 +44,7 @@ export function ClosedLoop() {
     <StoryBeat
       id="closed-loop"
       headline="Your agent reviews itself now."
-      lead="Eight checks run the moment your agent stops. Any failure goes back to the agent with the reason attached. It fixes the code and runs again. You see the diff once everything is green."
+      lead="Nine checks run the moment your agent stops. Any failure goes back to the agent with the reason attached. It fixes the code and runs again. You see the diff once everything is green."
       artifact={<Transcript label="The same session with Catalyst" lines={TRANSCRIPT} />}
       closing="Your review starts at working code."
     />
