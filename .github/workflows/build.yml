@@ -64,6 +64,9 @@ jobs:
     - name: Lockfile in sync
       run: bun run lock:check
 
+    - name: Exact dependency versions
+      run: bun run exact-versions
+
     - name: Tests
       run: bun run test
 
