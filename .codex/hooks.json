@@ -73,6 +73,14 @@
             "command": "bun .agents/hooks/lock-check.ts --codex"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun .agents/hooks/exact-versions.ts --codex"
+          }
+        ]
       }
     ]
   }

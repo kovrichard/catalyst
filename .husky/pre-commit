@@ -9,3 +9,4 @@ bun run madge
 bun run lf
 bun run secretlint
 bun run lock:check
+bun run exact-versions

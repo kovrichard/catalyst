@@ -10,7 +10,8 @@
       { "command": "bun .agents/hooks/madge.ts" },
       { "command": "bun .agents/hooks/lf.ts" },
       { "command": "bun .agents/hooks/secretlint.ts" },
-      { "command": "bun .agents/hooks/lock-check.ts" }
+      { "command": "bun .agents/hooks/lock-check.ts" },
+      { "command": "bun .agents/hooks/exact-versions.ts" }
     ]
   }
 }
