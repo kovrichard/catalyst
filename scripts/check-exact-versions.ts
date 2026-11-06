@@ -29,9 +29,11 @@ export function nonExactVersions(manifest: Manifest): NonExactVersion[] {
 }
 
 function trackedManifests(): string[] {
-  const listed = spawnSync("git", ["ls-files", "package.json", "**/package.json"], {
-    encoding: "utf8",
-  });
+  const listed = spawnSync(
+    "git", // NOSONAR: dev and CI gate script, no untrusted input reaches PATH
+    ["ls-files", "package.json", "**/package.json"],
+    { encoding: "utf8" }
+  );
   if (listed.status !== 0) {
     process.stderr.write(listed.stderr || "git ls-files failed\n");
     process.exit(1);
