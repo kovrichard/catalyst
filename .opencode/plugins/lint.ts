@@ -12,6 +12,7 @@ export const LintPlugin: Plugin = async ({ $ }) => {
       await $`bun run lf`;
       await $`bun run secretlint`;
       await $`bun run lock:check`;
+      await $`bun run exact-versions`;
     },
   };
 };

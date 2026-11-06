@@ -12,7 +12,8 @@
           { "type": "command", "command": "bun .agents/hooks/madge.ts" },
           { "type": "command", "command": "bun .agents/hooks/lf.ts" },
           { "type": "command", "command": "bun .agents/hooks/secretlint.ts" },
-          { "type": "command", "command": "bun .agents/hooks/lock-check.ts" }
+          { "type": "command", "command": "bun .agents/hooks/lock-check.ts" },
+          { "type": "command", "command": "bun .agents/hooks/exact-versions.ts" }
         ]
       }
     ]
@@ -33,6 +34,7 @@
       "Bash(bun run madge:*)",
       "Bash(bun run lf:*)",
       "Bash(bun run lock:check:*)",
+      "Bash(bun run exact-versions:*)",
       "Bash(bun run test:*)",
       "Bash(bun run build:*)",
       "Bash(bun test:*)",
