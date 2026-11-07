@@ -49,6 +49,10 @@ export function requireEnv(name: string): string {
   return value as string;
 }
 
+function branchForEnv(env: string): string {
+  return env === "production" ? "main" : "stage";
+}
+
 const KNOWN_FLAGS = new Set(["--sha", "--branch", "--env", "--ci-workflow", "--no-ci"]);
 
 export function parseArgs(): ShipArgs {
@@ -69,10 +73,11 @@ export function parseArgs(): ShipArgs {
     extra[key.slice(2)] = arg.slice(arg.indexOf("=") + 1);
   }
   const positionalSha = argv.find((a) => !a.startsWith("--"));
+  const env = get("--env") ?? "stage";
   return {
     sha: get("--sha") ?? positionalSha ?? sh("git rev-parse HEAD"),
-    branch: get("--branch") ?? "stage",
-    env: get("--env") ?? "stage",
+    branch: get("--branch") ?? branchForEnv(env),
+    env,
     ciWorkflow: get("--ci-workflow") ?? "build",
     skipCi: argv.includes("--no-ci"),
     extra,
