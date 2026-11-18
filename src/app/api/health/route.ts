@@ -5,9 +5,11 @@ import { logger } from "@/lib/logger";
 async function readDatabaseStatus(): Promise<"ok" | "unreachable"> {
   try {
     await pingDatabase();
+
     return "ok";
   } catch (error) {
     logger.error(`Health check could not reach the database: ${String(error)}`);
+
     return "unreachable";
   }
 }

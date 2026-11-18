@@ -25,5 +25,6 @@ export async function createStripeCustomer(user: User): Promise<Stripe.Customer>
       env: conf.environment,
     },
   });
+
   return customer;
 }

@@ -9,6 +9,7 @@ function withFakeProject(
   run: () => void
 ): void {
   const dir = mkdtempSync(join(tmpdir(), "catalyst-pkg-scripts-"));
+
   if (packageJson !== null) {
     const content =
       typeof packageJson === "string"
@@ -16,8 +17,10 @@ function withFakeProject(
         : JSON.stringify(packageJson, null, 2);
     writeFileSync(join(dir, "package.json"), content, "utf-8");
   }
+
   const previousCwd = process.cwd();
   process.chdir(dir);
+
   try {
     run();
   } finally {

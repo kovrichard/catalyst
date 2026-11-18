@@ -51,6 +51,7 @@ function toExposedModel(table: string): ExposedModel {
       `Unknown table "${table}". Available tables: ${exposedTables().join(", ")}.`
     );
   }
+
   return model;
 }
 

@@ -9,6 +9,7 @@ export async function POST(req: Request) {
     ensure(stripe, "Stripe is not configured");
   } catch (err) {
     logger.error(err);
+
     return new Response("Not implemented", { status: 501 });
   }
 

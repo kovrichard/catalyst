@@ -41,9 +41,11 @@ function rewriteDeep<T>(value: T, toReference: (name: string) => string): T {
   if (typeof value === "string") {
     return inlineDefaults(value, toReference) as T;
   }
+
   if (Array.isArray(value)) {
     return value.map((item) => rewriteDeep(item, toReference)) as T;
   }
+
   if (value && typeof value === "object") {
     return Object.fromEntries(
       Object.entries(value).map(([key, nested]) => [
@@ -52,6 +54,7 @@ function rewriteDeep<T>(value: T, toReference: (name: string) => string): T {
       ])
     ) as T;
   }
+
   return value;
 }
 

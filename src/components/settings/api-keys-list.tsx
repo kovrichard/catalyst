@@ -21,6 +21,7 @@ function lastUsedLabel(apiKey: ApiKeySummary) {
   if (!apiKey.lastRequest) {
     return "never used";
   }
+
   return `last used ${formatTimeAgo(apiKey.lastRequest)}`;
 }
 

@@ -38,6 +38,7 @@ function trackedManifests(): string[] {
     process.stderr.write(listed.stderr || "git ls-files failed\n");
     process.exit(1);
   }
+
   return listed.stdout.split("\n").filter(Boolean);
 }
 
@@ -60,6 +61,7 @@ if (import.meta.main) {
     process.stdout.write("Every dependency in every package.json is pinned exactly.\n");
     process.exit(0);
   }
+
   process.stderr.write(
     `Dependencies without an exact version:\n${offenders.join("\n")}\n` +
       "Pin each to the version bun.lock resolves (bun add --exact <name>@<version>).\n"

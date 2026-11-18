@@ -21,6 +21,7 @@ export default function PasswordForm({ hasPassword }: { hasPassword?: boolean })
     if (!hasPassword) {
       return updatePasswordSchema;
     }
+
     return updatePasswordSchema.refine(
       (data) => {
         return (

@@ -4,6 +4,7 @@ type Json = Record<string, unknown>;
 
 export function JsonLd({ data }: { data: Json }) {
   const json = JSON.stringify(data).replaceAll("<", "\\u003c");
+
   return (
     // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD must be raw script content; the payload is serialized here with < escaped
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json }} />
@@ -58,6 +59,7 @@ export function faqPageLd(items: { question: string; answer: string }[]): Json {
 
 export function breadcrumbLd(items: { name: string; path: string }[]): Json {
   const trail = [{ name: "Home", path: "/" }, ...items];
+
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

@@ -26,6 +26,7 @@ export default function CookiePopup() {
   const updateConsent = (consent: Consent) => {
     localStorage.setItem("ga-consent", consent);
     localStorage.setItem("clarity-consent", consent);
+
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("consent", "update", {
         ad_storage: consent,

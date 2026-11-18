@@ -103,33 +103,42 @@ const features: Feature[] = [
 
 async function showSummary(options: ConfigOptions): Promise<void> {
   const removals: string[] = [];
+
   if (options.removeStripe) {
     removals.push("Stripe");
   }
+
   if (options.removeDatabase) {
     removals.push("Database");
   }
+
   if (options.removeRedis) {
     removals.push("Redis");
   }
+
   if (options.removeAuth) {
     removals.push("Auth");
   }
+
   if (options.removeTrpc) {
     removals.push("tRPC");
   }
+
   if (options.removeEmail) {
     removals.push("Email");
   }
+
   if (options.removeMcp) {
     removals.push("MCP");
   }
+
   if (options.removeStorage) {
     removals.push("Storage");
   }
 
   if (removals.length === 0) {
     console.log("\nNo features selected for removal.");
+
     return;
   }
 
@@ -150,24 +159,31 @@ async function executeRemovals(options: ConfigOptions): Promise<void> {
   if (options.removeStripe) {
     await removeStripe(dryRun);
   }
+
   if (options.removeDatabase) {
     await removeDatabase(dryRun);
   }
+
   if (options.removeRedis) {
     await removeRedis(dryRun);
   }
+
   if (options.removeAuth) {
     await removeAuth(dryRun);
   }
+
   if (options.removeTrpc) {
     await removeTrpc(dryRun);
   }
+
   if (options.removeEmail) {
     await removeEmail(dryRun);
   }
+
   if (options.removeMcp) {
     await removeMcp(dryRun);
   }
+
   if (options.removeStorage) {
     await removeStorage(dryRun);
   }
@@ -205,6 +221,7 @@ async function interactiveMode(dryRun = false): Promise<void> {
 
   if (!response?.features?.length) {
     console.log("\nNo features selected. Keeping all features.");
+
     return;
   }
 
@@ -248,6 +265,7 @@ function applyRemoveList(entries: string[], options: ConfigOptions): void {
       console.error(`Available features: ${featureFlagList()}`);
       process.exit(1);
     }
+
     options[key] = true;
   }
 }

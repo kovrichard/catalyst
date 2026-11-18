@@ -28,6 +28,7 @@ export async function signInUser(
 
   if (!parsed.success) {
     const firstError = parsed.error.issues[0];
+
     return {
       message: "Validation failed",
       description: firstError?.message ?? "Invalid input. Please check your data.",
@@ -61,6 +62,7 @@ export async function signInUser(
     // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   } catch (error: any) {
     logger.error(error);
+
     return {
       message: "Failed to sign in",
       description: "Email or password is incorrect.",
@@ -78,6 +80,7 @@ export async function registerUser(
 
   if (!parsed.success) {
     const firstError = parsed.error.issues[0];
+
     return {
       message: "Validation failed",
       description: firstError?.message ?? "Invalid input. Please check your data.",
@@ -112,6 +115,7 @@ export async function registerUser(
     // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
   } catch (error: any) {
     logger.error(error);
+
     return {
       message: "Registration failed",
       description: "Unable to complete registration. Please try again.",
@@ -122,6 +126,7 @@ export async function registerUser(
 
 export async function setUserPassword(password: string): Promise<FormState> {
   const sessionHeaders = await headers();
+
   try {
     await auth.api.setPassword({
       body: {
@@ -163,6 +168,7 @@ export async function requestPasswordReset(email: string): Promise<FormState> {
     };
   } catch (e) {
     logger.error(e);
+
     return {
       message: "Failed to request password reset",
       description: "Something went wrong. Please try again.",

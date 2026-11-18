@@ -17,6 +17,7 @@ export async function createUploadUrls(count: number): Promise<UploadTarget[]> {
     Array.from({ length: count }).map(async () => {
       const key = userFileKey(userId, randomUUID());
       const url = await generatePresignedUploadUrl(key);
+
       return url ? { key, url } : null;
     })
   );

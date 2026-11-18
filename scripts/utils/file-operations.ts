@@ -23,6 +23,7 @@ export function deleteFile(filePath: string, dryRun = false): OperationResult {
 
   try {
     unlinkSync(fullPath);
+
     return {
       success: true,
       message: `Deleted: ${filePath}`,
@@ -56,6 +57,7 @@ export function deleteDirectory(dirPath: string, dryRun = false): OperationResul
 
   try {
     rmSync(fullPath, { recursive: true, force: true });
+
     return {
       success: true,
       message: `Deleted directory: ${dirPath}`,

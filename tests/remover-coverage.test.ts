@@ -24,16 +24,19 @@ function listBracket(source: string, suffix: string): string[] {
   if (!match) {
     return [];
   }
+
   return [...match[1].matchAll(/"([^"]+)"/g)].map((entry) => entry[1]);
 }
 
 async function scan(patterns: string[]): Promise<string[]> {
   const found: string[] = [];
+
   for (const pattern of patterns) {
     for await (const file of new Bun.Glob(pattern).scan(".")) {
       found.push(file);
     }
   }
+
   return found;
 }
 
@@ -43,6 +46,7 @@ const removers: Remover[] = (await scan([REMOVER_GLOB]))
     const source = readFileSync(file, "utf-8");
     const featureName = FEATURE_NAME.exec(source)?.[1] ?? "";
     const markerName = MARKER_NAME.exec(source)?.[1];
+
     return {
       file,
       featureName,
@@ -65,6 +69,7 @@ function unique(values: string[]): string[] {
 
 function markersIn(file: string): string[] {
   const text = readFileSync(file, "utf-8");
+
   return [...text.matchAll(MARKER)].map((match) => match[1]);
 }
 
@@ -92,10 +97,12 @@ describe("remover coverage", () => {
       if (!owner) {
         return false;
       }
+
       const stripped = owner.filesToModify.includes(file);
       const deleted = owner.removedPaths.some(
         (path) => file === path || file.startsWith(`${path}/`)
       );
+
       return !stripped && !deleted;
     });
     expect(unique(missed.map((use) => `${use.feature}:${use.file}`))).toEqual([]);

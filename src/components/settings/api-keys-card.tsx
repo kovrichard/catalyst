@@ -27,6 +27,7 @@ export default function ApiKeysCard({ children }: { children: ReactNode }) {
     if (!createState.key) {
       return;
     }
+
     setRevealedKey(createState.key);
     formRef.current?.reset();
   }, [createState.key]);

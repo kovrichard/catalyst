@@ -9,6 +9,7 @@ const DIFF_HUNK_HEADER = /^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@/;
 
 function mutatePatterns(): string[] {
   const patterns = strykerConfig.mutate ?? [];
+
   return patterns.filter((pattern): pattern is string => typeof pattern === "string");
 }
 
@@ -17,6 +18,7 @@ type MutateFilter = { includes: Glob[]; excludes: Glob[] };
 function mutateFilter(globPatterns: string[]): MutateFilter {
   const includes: Glob[] = [];
   const excludes: Glob[] = [];
+
   for (const pattern of globPatterns) {
     if (pattern.startsWith("!")) {
       excludes.push(new Glob(pattern.slice(1)));
@@ -24,6 +26,7 @@ function mutateFilter(globPatterns: string[]): MutateFilter {
       includes.push(new Glob(pattern));
     }
   }
+
   return { includes, excludes };
 }
 
@@ -31,6 +34,7 @@ function isMutatable(path: string, filter: MutateFilter): boolean {
   if (filter.excludes.some((glob) => glob.match(path))) {
     return false;
   }
+
   return filter.includes.some((glob) => glob.match(path));
 }
 
@@ -44,6 +48,7 @@ function diffAgainstBase(): string {
     process.stderr.write(r.stderr || `git diff against ${baseRef} failed\n`);
     process.exit(1);
   }
+
   return r.stdout;
 }
 
@@ -84,6 +89,7 @@ function runStryker(mutateRanges: string[]): number {
   const r = spawnSync("bunx", ["stryker", "run", "--mutate", mutateRanges.join(",")], {
     stdio: "inherit",
   });
+
   return r.status ?? 1;
 }
 

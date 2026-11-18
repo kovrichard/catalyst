@@ -35,9 +35,11 @@ function readSidebarCookie(): boolean | undefined {
   if (typeof document === "undefined") {
     return;
   }
+
   const match = new RegExp(
     String.raw`(?:^|;\s*)${SIDEBAR_COOKIE_NAME}=(true|false)`
   ).exec(document.cookie);
+
   return match ? match[1] === "true" : undefined;
 }
 
@@ -93,6 +95,7 @@ function SidebarProvider({
   const setOpen = React.useCallback(
     (value: boolean | ((value: boolean) => boolean)) => {
       const openState = typeof value === "function" ? value(open) : value;
+
       if (setOpenProp) {
         setOpenProp(openState);
       } else {
@@ -123,6 +126,7 @@ function SidebarProvider({
     };
 
     window.addEventListener("keydown", handleKeyDown);
+
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [toggleSidebar]);
 

@@ -46,6 +46,7 @@ export function requireEnv(name: string): string {
       `Missing ${name}. Add it to .env (gitignored, auto-loaded by bun) or export it.`
     );
   }
+
   return value as string;
 }
 
@@ -59,21 +60,27 @@ export function parseArgs(): ShipArgs {
   const argv = process.argv.slice(2);
   const get = (flag: string) => {
     const hit = argv.find((a) => a.startsWith(`${flag}=`));
+
     return hit ? hit.slice(flag.length + 1) : undefined;
   };
   const extra: Record<string, string> = {};
+
   for (const arg of argv) {
     if (!arg.startsWith("--") || !arg.includes("=")) {
       continue;
     }
+
     const key = arg.slice(0, arg.indexOf("="));
     if (KNOWN_FLAGS.has(key)) {
       continue;
     }
+
     extra[key.slice(2)] = arg.slice(arg.indexOf("=") + 1);
   }
+
   const positionalSha = argv.find((a) => !a.startsWith("--"));
   const env = get("--env") ?? "stage";
+
   return {
     sha: get("--sha") ?? positionalSha ?? sh("git rev-parse HEAD"),
     branch: get("--branch") ?? branchForEnv(env),
@@ -104,6 +111,7 @@ export function parseJson<T>(raw: string, source: string): T {
 // workflow for the same commit wins the lookup and gets mistaken for CI.
 async function waitForCi(sha: string, branch: string, workflow: string): Promise<void> {
   const deadline = Date.now() + CI_TIMEOUT_MS;
+
   while (Date.now() < deadline) {
     const runs = parseJson<CiRun[]>(
       sh(
@@ -120,10 +128,13 @@ async function waitForCi(sha: string, branch: string, workflow: string): Promise
       fail(`GitHub CI concluded "${run.conclusion}" (run ${run.databaseId})`);
     } else {
       log("ci", `success (run ${run.databaseId})`);
+
       return;
     }
+
     await sleep(POLL_MS);
   }
+
   fail("Timed out waiting for GitHub CI");
 }
 
@@ -141,6 +152,7 @@ export async function runShip(provider: ShipProvider): Promise<void> {
   }
 
   const deadline = Date.now() + DEPLOY_TIMEOUT_MS;
+
   while (Date.now() < deadline) {
     const status = await provider.checkDeploy(args.sha, args);
     if (status.state === "pending") {
@@ -148,15 +160,19 @@ export async function runShip(provider: ShipProvider): Promise<void> {
       await sleep(POLL_MS);
       continue;
     }
+
     if (status.state === "failed") {
       fail(status.detail);
     }
+
     log("deploy", "success");
     log("done", `${args.env} is serving ${args.sha.slice(0, 7)} — deploy successful`);
     console.log(
       JSON.stringify({ ok: true, provider: provider.name, sha: args.sha, ...status.meta })
     );
+
     return;
   }
+
   fail(`Timed out waiting for ${provider.name} deploy`);
 }

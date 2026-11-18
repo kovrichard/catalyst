@@ -48,6 +48,7 @@ export async function createApiKey(
     };
   } catch (error) {
     logger.error(`Failed to create API key: ${error}`);
+
     return failure("The key could not be created. Please try again.");
   }
 }
@@ -69,6 +70,7 @@ export async function revokeApiKey(keyId: string): Promise<FormState> {
     };
   } catch (error) {
     logger.error(`Failed to revoke API key ${keyId}: ${error}`);
+
     return failure("The key could not be revoked. Please try again.");
   }
 }

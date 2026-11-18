@@ -19,10 +19,12 @@ export default function PasswordResetForm({ token }: { token: string }) {
     const confirmPassword = formData.get("confirm-password") as string;
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
+
       return;
     }
 
     setIsPending(true);
+
     try {
       await resetPassword(
         { newPassword: password, token },

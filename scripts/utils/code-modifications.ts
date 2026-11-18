@@ -23,6 +23,7 @@ function removeCodeBetweenMarkers(
       if (insideMarker) {
         unclosedMarker = true; // Nested start marker
       }
+
       insideMarker = true;
       markerFound = true;
       continue;
@@ -57,6 +58,7 @@ function removeCodeBetweenMarkers(
     .replace(/\n{3,}/g, "\n\n")
     .replace(/([{([])\s*\n\s*\n/g, "$1\n")
     .replace(/\n\s*\n(\s*[)\]}])/g, "\n$1");
+
   return { result: collapsed };
 }
 
@@ -106,6 +108,7 @@ export function removeMarkedCode(
     }
 
     writeFileSync(fullPath, modifiedContent.result, "utf-8");
+
     return {
       success: true,
       message: `Removed marked code from ${filePath}`,

@@ -68,10 +68,12 @@ export function removePackageJsonScripts(
   const indentMatch = LEADING_INDENT.exec(raw);
   const indent = indentMatch?.[1] ?? "  ";
   let parsed: { scripts?: Record<string, string> };
+
   try {
     parsed = JSON.parse(raw);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
+
     return failEveryScript(
       scriptNames,
       (name) => `Failed to parse package.json while removing script "${name}": ${message}`

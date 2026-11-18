@@ -130,6 +130,7 @@ export const auth = betterAuth({
             customer = await createStripeCustomer(user);
             logger.debug(`Saving customer id ${customer.id} to user ${user.id}`);
           }
+
           // @catalyst:stripe-end
 
           // Add custom fields to the user here

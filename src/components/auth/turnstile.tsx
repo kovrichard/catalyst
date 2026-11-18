@@ -27,6 +27,7 @@ export default function TurnstileComponent({
     }
 
     const timer = setTimeout(() => setStatus("unavailable"), VERIFICATION_TIMEOUT_MS);
+
     return () => clearTimeout(timer);
   }, [status]);
 

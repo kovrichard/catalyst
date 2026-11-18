@@ -30,12 +30,14 @@ createTRPCOptionsProxy({
 
 export function HydrateClient({ children }: { children: ReactNode }) {
   const queryClient = getQueryClient();
+
   return <HydrationBoundary state={dehydrate(queryClient)}>{children}</HydrationBoundary>;
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
 export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(queryOptions: T) {
   const queryClient = getQueryClient();
+
   if (queryOptions.queryKey[1]?.type === "infinite") {
     // biome-ignore lint/suspicious/noExplicitAny: TODO: Need further investigation
     void queryClient.prefetchInfiniteQuery(queryOptions as any);

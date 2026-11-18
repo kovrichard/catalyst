@@ -44,14 +44,17 @@ function clampLimit(limit: number | undefined): number {
   if (limit === undefined) {
     return defaultLimit;
   }
+
   return Math.min(maxLimit, Math.max(minLimit, Math.trunc(limit)));
 }
 
 function buildSelect(model: ExposedModel): Record<string, true> {
   const select: Record<string, true> = {};
+
   for (const field of Object.keys(modelSpec(model).fields)) {
     select[field] = true;
   }
+
   return select;
 }
 
@@ -70,6 +73,7 @@ function coerceValue(
       `Filter on "${field}" needs an ISO date, received "${String(value)}".`
     );
   }
+
   return parsed;
 }
 

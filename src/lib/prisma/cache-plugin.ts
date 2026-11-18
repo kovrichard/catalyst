@@ -161,9 +161,11 @@ class RedisCacheHandler {
     if (this.globalActions.includes(operation as CachedAction)) {
       return { type: "cached", operation: operation as CachedAction };
     }
+
     if (this.globalInvalidations.includes(operation as MutatingAction)) {
       return { type: "mutating", operation: operation as MutatingAction };
     }
+
     return { type: "unknown", operation: "unknown" };
   }
 
@@ -176,6 +178,7 @@ class RedisCacheHandler {
       return await redis.get(cacheKey);
     } catch {
       logger.warn(`Failed to get cache key: ${cacheKey}, falling back to database`);
+
       return null;
     }
   }
@@ -185,6 +188,7 @@ class RedisCacheHandler {
       return JSON.parse(cached);
     } catch {
       logger.warn(`Invalid cached data for key: ${cacheKey}, falling back to database`);
+
       if (isRedisConnected(redis)) {
         try {
           await redis.del(cacheKey);
@@ -192,6 +196,7 @@ class RedisCacheHandler {
           logger.warn(`Failed to delete invalid cache key: ${cacheKey}`);
         }
       }
+
       throw new Error("Invalid cached data");
     }
   }
@@ -200,6 +205,7 @@ class RedisCacheHandler {
     if (!isRedisConnected(redis)) {
       return;
     }
+
     try {
       await redis.set(cacheKey, JSON.stringify(value), "EX", this.ttlSeconds);
     } catch {
@@ -211,6 +217,7 @@ class RedisCacheHandler {
     if (!isRedisConnected(redis)) {
       return;
     }
+
     const deleteResults = await Promise.allSettled(
       Array.from(keys).map((cacheKey) => redis.del(cacheKey))
     );
@@ -257,6 +264,7 @@ class RedisCacheHandler {
       do {
         const result = await redis.scan(cursor, "MATCH", pattern, "COUNT", 100);
         cursor = result[0];
+
         for (const key of result[1]) {
           cacheKeys.add(key);
         }
@@ -289,6 +297,7 @@ class RedisCacheHandler {
 
     if (cached) {
       logger.debug(`Redis cache HIT for key: ${cacheKey}`);
+
       try {
         return await this.parseCachedValue(cached, cacheKey);
       } catch {
@@ -353,6 +362,7 @@ class RedisCacheHandler {
 
     if (!isRedisConnected(redis)) {
       logger.debug("Redis not configured, falling back to database");
+
       return query(args);
     }
 

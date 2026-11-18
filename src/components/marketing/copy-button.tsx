@@ -13,7 +13,9 @@ export function CopyButton({ text }: { text: string }) {
     if (!copied) {
       return;
     }
+
     const timer = setTimeout(() => setCopied(false), CONFIRMATION_MS);
+
     return () => clearTimeout(timer);
   }, [copied]);
 

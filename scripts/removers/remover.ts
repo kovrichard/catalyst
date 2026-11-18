@@ -36,6 +36,7 @@ export class Remover {
     } = this.config;
 
     console.log(`Removing ${featureName} integration...`);
+
     if (dryRun) {
       console.log("(DRY RUN - no files will be modified)\n");
     }

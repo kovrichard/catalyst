@@ -27,19 +27,23 @@ function isNoindexed(robots: Metadata["robots"]): boolean {
   if (typeof robots === "string") {
     return robots.includes("noindex");
   }
+
   if (robots && typeof robots === "object" && "index" in robots) {
     return robots.index === false;
   }
+
   return false;
 }
 
 async function publicPages(): Promise<string[]> {
   const files: string[] = [];
+
   for (const glob of PUBLIC_ROUTE_GLOBS) {
     for await (const file of new Bun.Glob(glob).scan(".")) {
       files.push(file);
     }
   }
+
   return files.sort(comparePaths);
 }
 
@@ -50,6 +54,7 @@ const pages = (
       const { metadata } = (await import(`${process.cwd()}/${file}`)) as {
         metadata?: Metadata;
       };
+
       return {
         file,
         title: metadata?.title,
