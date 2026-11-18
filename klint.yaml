@@ -1,21 +1,21 @@
-$schema: https://raw.githubusercontent.com/konvert7/klint/refs/tags/v0.33.0/klint.schema.json
+$schema: https://raw.githubusercontent.com/konvert7/klint/refs/tags/v1.8.0/klint.schema.json
 include: ["src", "scripts", "tests", "emails", "!node_modules/**", "!src/lib/prisma/generated/**"]
-plugins: [sonar]
 rules:
-  no-unguarded-json-parse:
-    severity: error
-    include: ["src/**", "scripts/**"]
-  no-sync-in-async: error
-  no-floating-promise: error
-  no-misused-promises: error
-  no-date-equality: error
-  no-optional-chain-on-non-nullable: error
-  no-object-in-template: error
-  no-nested-template-literals: error
-  no-consecutive-array-push: error
-  no-string-match: error
-  no-async-predicate: error
-  sonar/prefer-string-raw: off
+  recommended: true
+  core:
+    no-unguarded-json-parse:
+      severity: error
+      include: ["src/**", "scripts/**"]
+    no-sync-in-async: error
+    no-nested-template-literals: error
+    no-consecutive-array-push: error
+    no-string-match: error
+    no-async-predicate: error
+  sonar:
+    prefer-string-raw: off
+  experimental:
+    no-floating-promise: error
+    no-date-equality: error
 
 arch:
   layers:
