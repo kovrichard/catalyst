@@ -14,7 +14,9 @@ rules:
     blank-line-before-control-flow: error
     blank-line-after-block: error
     cognitive-complexity: {error: 14}
-    function-length: {warn: 60, error: 80, skipBlankLines: true}
+    function-length:
+      - {warn: 60, error: 80, skipBlankLines: true}
+      - {error: 200, skipBlankLines: true, include: ["tests/**"]}
   sonar:
     prefer-string-raw: off
   experimental:
