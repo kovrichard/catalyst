@@ -11,6 +11,9 @@ rules:
     no-consecutive-array-push: error
     no-string-match: error
     no-async-predicate: error
+    blank-line-before-control-flow: error
+    blank-line-after-block: error
+    cognitive-complexity: error
   sonar:
     prefer-string-raw: off
   experimental:
