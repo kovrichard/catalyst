@@ -13,7 +13,8 @@ rules:
     no-async-predicate: error
     blank-line-before-control-flow: error
     blank-line-after-block: error
-    cognitive-complexity: error
+    cognitive-complexity: {error: 14}
+    function-length: {warn: 60, error: 80, skipBlankLines: true}
   sonar:
     prefer-string-raw: off
   experimental:
@@ -113,8 +114,8 @@ arch:
       message: "Compose class names with cn() from @/lib/utils instead of a template literal. cn resolves conflicting Tailwind classes, so a className passed in actually overrides the defaults."
 
   maxLines:
-    - limit: 900
-      in: ["src/**", "scripts/**"]
+    - limit: 600
+      in: ["src/**", "scripts/**", "!src/components/ui/**"]
       message: "File too long — split it into focused modules."
   maxCommentDensity:
     - limit: 15

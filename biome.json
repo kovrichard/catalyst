@@ -39,10 +39,6 @@
     "rules": {
       "preset": "recommended",
       "complexity": {
-        "noExcessiveCognitiveComplexity": {
-          "level": "error",
-          "options": { "maxAllowedComplexity": 14 }
-        },
         "noExcessiveNestedTestSuites": "error",
         "noImplicitCoercions": "error",
         "noUselessCatchBinding": "error",
