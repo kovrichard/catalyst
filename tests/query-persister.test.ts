@@ -11,6 +11,7 @@ await mock.module("idb-keyval", () => ({
   },
   get: async (key: IDBValidKey) => {
     calls.push({ op: "get", key });
+
     return store.get(key);
   },
   del: async (key: IDBValidKey) => {

@@ -9,6 +9,7 @@ function shouldDehydrateOf(client: QueryClient): DehydratePredicate {
   if (!predicate) {
     throw new Error("makeQueryClient did not configure shouldDehydrateQuery");
   }
+
   return predicate as DehydratePredicate;
 }
 
@@ -22,9 +23,11 @@ function settledQuery(
   if (!query) {
     throw new Error(`query ${key.join("/")} was not cached`);
   }
+
   if (meta) {
     query.setOptions({ ...query.options, meta });
   }
+
   return query as Query;
 }
 

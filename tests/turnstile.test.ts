@@ -25,6 +25,7 @@ describe("verifyTurnstile", () => {
     let called = false;
     stubFetch(async () => {
       called = true;
+
       return jsonResponse({ success: true });
     });
 
@@ -36,6 +37,7 @@ describe("verifyTurnstile", () => {
     let called = false;
     stubFetch(async () => {
       called = true;
+
       return jsonResponse({ success: true });
     });
 
@@ -91,6 +93,7 @@ describe("verifyTurnstile", () => {
       seenMethod = String(init?.method);
       seenBody = String(init?.body);
       seenHeaders = (init?.headers ?? {}) as Record<string, string>;
+
       return jsonResponse({ success: true });
     });
 

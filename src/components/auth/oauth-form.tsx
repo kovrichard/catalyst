@@ -18,6 +18,7 @@ export default function OAuthForm({ provider }: { provider: string }) {
     const clearPendingOnRestore = () => setIsPending(false);
 
     window.addEventListener("pageshow", clearPendingOnRestore);
+
     return () => window.removeEventListener("pageshow", clearPendingOnRestore);
   }, []);
 

@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 async function currentYear() {
   "use cache";
   cacheLife("days");
+
   return new Date().getFullYear();
 }
 

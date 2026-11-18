@@ -25,5 +25,6 @@ export function useCommandPalette(): CommandPaletteState {
   if (!context) {
     throw new Error("useCommandPalette requires a CommandPaletteProvider");
   }
+
   return context;
 }

@@ -49,11 +49,13 @@ function Modal({ children, ...props }: React.ComponentProps<typeof Dialog>) {
 
 function ModalTrigger(props: React.ComponentProps<typeof DialogTrigger>) {
   const Trigger = useModalIsMobile() ? DrawerTrigger : DialogTrigger;
+
   return <Trigger {...props} />;
 }
 
 function ModalClose(props: React.ComponentProps<typeof DialogClose>) {
   const Close = useModalIsMobile() ? DrawerClose : DialogClose;
+
   return <Close {...props} />;
 }
 
@@ -81,21 +83,25 @@ function ModalContent({
 
 function ModalHeader(props: React.ComponentProps<typeof DialogHeader>) {
   const Header = useModalIsMobile() ? DrawerHeader : DialogHeader;
+
   return <Header {...props} />;
 }
 
 function ModalFooter(props: React.ComponentProps<typeof DialogFooter>) {
   const Footer = useModalIsMobile() ? DrawerFooter : DialogFooter;
+
   return <Footer {...props} />;
 }
 
 function ModalTitle(props: React.ComponentProps<typeof DialogTitle>) {
   const Title = useModalIsMobile() ? DrawerTitle : DialogTitle;
+
   return <Title {...props} />;
 }
 
 function ModalDescription(props: React.ComponentProps<typeof DialogDescription>) {
   const Description = useModalIsMobile() ? DrawerDescription : DialogDescription;
+
   return <Description {...props} />;
 }
 

@@ -87,17 +87,20 @@ export function modelForTable(table: string): ExposedModel | undefined {
 
 export function filterableFields(model: ExposedModel): string[] {
   const { fields } = modelSpec(model);
+
   return Object.keys(fields).filter((field) => fields[field]?.filterable === true);
 }
 
 export function sortableFields(model: ExposedModel): string[] {
   const { fields } = modelSpec(model);
+
   return Object.keys(fields).filter((field) => fields[field]?.sortable === true);
 }
 
 export function listTables() {
   return exposedModels().map((model) => {
     const spec = modelSpec(model);
+
     return {
       table: spec.table,
       description: spec.description,

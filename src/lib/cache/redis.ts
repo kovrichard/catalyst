@@ -35,6 +35,7 @@ export function getRedisClient(): Redis | null {
 
 export function isRedisConnected(redisClient: Redis | null): redisClient is Redis {
   logger.debug(`Redis status: '${redisClient?.status}'`);
+
   return (
     redisClient !== null &&
     (redisClient.status === "wait" || redisClient.status === "ready")

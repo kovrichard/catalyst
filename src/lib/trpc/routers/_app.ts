@@ -14,6 +14,7 @@ export const appRouter = createTRPCRouter({
   // @catalyst:auth-start
   billingPortal: protectedProcedure.query(async (opts) => {
     const _user = opts.ctx.user;
+
     // @catalyst:stripe-start
     // return createStripeBillingPortalUrl("");
     // @catalyst:stripe-end

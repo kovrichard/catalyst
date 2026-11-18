@@ -52,7 +52,9 @@ function isOnScreen(element: Element | null) {
   if (!element) {
     return false;
   }
+
   const { top, bottom } = element.getBoundingClientRect();
+
   return bottom > 0 && top < window.innerHeight;
 }
 
@@ -79,6 +81,7 @@ function createStars(): Star[] {
   return Array.from({ length: STAR_COUNT }, () => {
     const star = { x: 0, y: 0, z: 1, size: 1, brightness: 1, color: 0 };
     spawn(star, Math.random() * 0.94 + MIN_Z);
+
     return star;
   });
 }
@@ -135,6 +138,7 @@ function projectY(star: Star, view: Viewport, z: number) {
 
 function isOffscreen(x: number, y: number, view: Viewport) {
   const margin = 80;
+
   return (
     x < -margin || y < -margin || x > view.width + margin || y > view.height + margin
   );
@@ -220,9 +224,11 @@ export function StarfieldBackground({ variant = "hero" }: { variant?: Variant })
 
     function syncVisibility() {
       const visibility = behaviour.visibility(host);
+
       if (canvas) {
         canvas.style.opacity = String(visibility);
       }
+
       return visibility;
     }
 
@@ -254,6 +260,7 @@ export function StarfieldBackground({ variant = "hero" }: { variant?: Variant })
 
       if (motion.matches) {
         frame = 0;
+
         return;
       }
 

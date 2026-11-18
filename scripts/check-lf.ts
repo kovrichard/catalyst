@@ -10,11 +10,13 @@ function listTrackedFilesWithEol(): string[] {
     process.stderr.write(r.stderr || "git ls-files --eol failed\n");
     process.exit(1);
   }
+
   return r.stdout.split("\n").filter(Boolean);
 }
 
 export function hasCarriageReturn(eolLine: string): boolean {
   const [index, worktree] = eolLine.split(WHITESPACE);
+
   return CRLF_OR_MIXED.test(index) || CRLF_OR_MIXED.test(worktree);
 }
 
@@ -33,7 +35,9 @@ function convertToLf(path: string): boolean {
   if (isBinary(contents)) {
     return false;
   }
+
   writeFileSync(path, contents.toString("utf8").replaceAll("\r\n", "\n"), "utf8");
+
   return true;
 }
 
@@ -49,9 +53,11 @@ function fixAndExit(offenders: string[]): never {
   const skipped = offenders.filter((path) => !convertToLf(path));
   const converted = offenders.length - skipped.length;
   process.stdout.write(`Converted ${converted} file(s) to LF.\n`);
+
   if (skipped.length === 0) {
     process.exit(0);
   }
+
   process.stderr.write(`Skipped binary file(s):\n${skipped.join("\n")}\n`);
   process.exit(1);
 }
@@ -67,5 +73,6 @@ if (import.meta.main) {
   if (process.argv.includes("--fix")) {
     fixAndExit(offenders);
   }
+
   reportAndExit(offenders);
 }

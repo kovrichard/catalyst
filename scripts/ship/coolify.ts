@@ -47,6 +47,7 @@ async function coolify(path: string): Promise<unknown> {
   if (!res.ok) {
     fail(`Coolify API ${path} → ${res.status} ${res.statusText}`);
   }
+
   return res.json();
 }
 
@@ -54,7 +55,9 @@ function appUuidFor(args: ShipArgs): string {
   if (args.extra.app) {
     return args.extra.app;
   }
+
   const scoped = process.env[`COOLIFY_APP_UUID_${args.env.toUpperCase()}`];
+
   return scoped ?? requireEnv("COOLIFY_APP_UUID");
 }
 
@@ -64,8 +67,10 @@ function toDeploymentRecords(payload: unknown): DeploymentRecord[] {
   if (Array.isArray(payload)) {
     return payload as DeploymentRecord[];
   }
+
   const container = (payload ?? {}) as { deployments?: unknown; data?: unknown };
   const list = container.deployments ?? container.data;
+
   return Array.isArray(list) ? (list as DeploymentRecord[]) : [];
 }
 
@@ -79,6 +84,7 @@ function deployRunFor(sha: string, branch: string): DeployRun | undefined {
     ),
     `"gh run list --workflow ${DEPLOY_WORKFLOW}" output`
   );
+
   return runs.find((run) => run.headSha.startsWith(sha) || sha.startsWith(run.headSha));
 }
 
@@ -101,12 +107,14 @@ const coolifyProvider: ShipProvider = {
         detail: `no ${DEPLOY_WORKFLOW} run for ${sha.slice(0, 7)} yet…`,
       };
     }
+
     if (run.status !== "completed") {
       return {
         state: "pending",
         detail: `${DEPLOY_WORKFLOW} run ${run.databaseId} ${run.status}…`,
       };
     }
+
     if (run.conclusion !== "success") {
       return {
         state: "failed",
@@ -130,12 +138,14 @@ const coolifyProvider: ShipProvider = {
         detail: "webhook accepted, waiting for Coolify to register the deployment…",
       };
     }
+
     if (TERMINAL_FAILURES.has(deployment.status)) {
       return {
         state: "failed",
         detail: `Coolify deployment status="${deployment.status}" (deployment ${deployment.deployment_uuid})`,
       };
     }
+
     if (deployment.status !== SUCCESS) {
       return { state: "pending", detail: `${deployment.status}…` };
     }

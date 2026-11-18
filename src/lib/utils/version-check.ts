@@ -14,5 +14,6 @@ export function shouldPromptReload({
   if (alreadyPrompted || !loadedVersion || !servedVersion) {
     return false;
   }
+
   return loadedVersion !== servedVersion;
 }

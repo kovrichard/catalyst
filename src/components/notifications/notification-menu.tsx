@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 // Shared by the count and the list so one request reads the table once.
 const notificationsForUser = cache(async () => {
   const userId = await getUserIdFromSession();
+
   return getNotifications(userId);
 });
 

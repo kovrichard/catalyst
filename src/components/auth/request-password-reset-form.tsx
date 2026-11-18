@@ -18,6 +18,7 @@ export default function RequestPasswordResetForm() {
     const email = formData.get("email") as string;
 
     setIsPending(true);
+
     try {
       const result = await requestPasswordReset(email);
       if (result.success) {

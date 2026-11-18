@@ -58,6 +58,7 @@ export default function PasskeysCard({ passkeys }: { passkeys: PasskeySummary[] 
       toast("Could not add a passkey", {
         description: "The request was dismissed or the device is not supported.",
       });
+
       return;
     }
 
@@ -72,6 +73,7 @@ export default function PasskeysCard({ passkeys }: { passkeys: PasskeySummary[] 
 
     if (result?.error) {
       toast("Could not remove the passkey", { description: "Please try again." });
+
       return;
     }
 

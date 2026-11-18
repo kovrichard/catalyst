@@ -24,6 +24,7 @@ type VerifyApiKeyError = {
 
 function bearerTokenFromRequest(request: Request): string | undefined {
   const [scheme, token] = request.headers.get("Authorization")?.split(" ") ?? [];
+
   return scheme?.toLowerCase() === "bearer" ? token : undefined;
 }
 
@@ -89,6 +90,7 @@ export async function authenticateMcpRequest(request: Request): Promise<McpAuthO
     };
   } catch (error) {
     logger.error(`MCP token verification failed: ${error}`);
+
     return { kind: "unauthenticated" };
   }
 }

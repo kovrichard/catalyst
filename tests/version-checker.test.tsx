@@ -35,9 +35,11 @@ beforeEach(() => {
   failRequest = false;
   globalThis.fetch = (async () => {
     requestCount += 1;
+
     if (failRequest) {
       throw new Error("offline");
     }
+
     return {
       ok: true,
       json: async () => ({ version: servedVersion }),

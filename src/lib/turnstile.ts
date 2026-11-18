@@ -39,6 +39,7 @@ export async function verifyTurnstile(response?: string): Promise<boolean> {
     return verifyJson?.success === true;
   } catch (error) {
     logger.error("Turnstile verification error", error);
+
     return false;
   }
 }

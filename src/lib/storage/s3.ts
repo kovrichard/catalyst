@@ -44,11 +44,13 @@ export async function getObjectBytes(key: string): Promise<Buffer | null> {
     if (!response.Body) {
       return null;
     }
+
     return Buffer.from(await response.Body.transformToByteArray());
   } catch (error) {
     if (isMissingObject(error)) {
       return null;
     }
+
     throw error;
   }
 }
@@ -63,11 +65,13 @@ export async function getObjectSize(key: string): Promise<number | null> {
     const response = await client.send(
       new HeadObjectCommand({ Bucket: conf.s3Bucket, Key: key })
     );
+
     return response.ContentLength ?? null;
   } catch (error) {
     if (isMissingObject(error)) {
       return null;
     }
+
     throw error;
   }
 }
@@ -127,6 +131,7 @@ export async function generatePresignedUploadUrl(
   }
 
   const command = new PutObjectCommand({ Bucket: conf.s3Bucket, Key: key });
+
   return presignUrl(client, command, { expiresIn: expiresInSeconds });
 }
 
@@ -160,5 +165,6 @@ function failLoudlyOn(errors: { Key?: string; Message?: string }[] | undefined) 
 
 function isMissingObject(error: unknown): boolean {
   const name = error instanceof Error ? error.name : "";
+
   return name === "NoSuchKey" || name === "NotFound";
 }

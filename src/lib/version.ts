@@ -21,5 +21,6 @@ function readBuildId(): string {
 
 export function getAppVersion(): string {
   cachedVersion ??= readBuildId();
+
   return cachedVersion;
 }

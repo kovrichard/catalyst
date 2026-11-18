@@ -4,6 +4,7 @@ import type { OperationResult } from "../types/operation-result";
 export function uninstallPackage(packageName: string, dryRun = false): OperationResult {
   if (dryRun) {
     console.log(`Would uninstall ${packageName}`);
+
     return {
       success: true,
       message: `Would uninstall ${packageName}`,
@@ -22,6 +23,7 @@ export function uninstallPackage(packageName: string, dryRun = false): Operation
   if (result.error) {
     const errorMessage = result.error.message || String(result.error);
     console.error(`Failed to uninstall ${packageName}: ${errorMessage}`);
+
     return {
       success: false,
       message: `Failed to uninstall ${packageName}: ${errorMessage}`,
@@ -31,6 +33,7 @@ export function uninstallPackage(packageName: string, dryRun = false): Operation
   if (result.status !== 0) {
     const errorMessage = `Process exited with code ${result.status}`;
     console.error(`Failed to uninstall ${packageName}: ${errorMessage}`);
+
     return {
       success: false,
       message: `Failed to uninstall ${packageName}: ${errorMessage}`,

@@ -20,6 +20,7 @@ async function fetchSessionUser(): Promise<SessionUser | null> {
   }
 
   const { id, name, email, image, emailVerified } = session.user;
+
   return { id, name, email, image: image ?? null, emailVerified };
 }
 
@@ -37,6 +38,7 @@ export async function getUserFromSession(): Promise<SessionUser> {
 
 export async function getUserIdFromSession(): Promise<string> {
   const { id } = await getUserFromSession();
+
   return id;
 }
 

@@ -13,6 +13,7 @@ function withTempFile(content: string, run: (relPath: string) => void): void {
   writeFileSync(fullPath, content, "utf-8");
   const previousCwd = process.cwd();
   process.chdir(dir);
+
   try {
     run("subject.ts");
   } finally {

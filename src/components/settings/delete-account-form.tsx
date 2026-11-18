@@ -32,6 +32,7 @@ export default function DeleteAccountForm() {
 
   function handleOpenChange(nextOpen: boolean) {
     setOpen(nextOpen);
+
     if (!nextOpen) {
       setConfirmText("");
     }

@@ -46,10 +46,12 @@ export function CommandPalette({ children }: { children?: React.ReactNode }) {
       if (!isPaletteShortcut(event)) {
         return;
       }
+
       event.preventDefault();
       setOpen(!open);
     };
     document.addEventListener("keydown", onKeyDown);
+
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open, setOpen]);
 

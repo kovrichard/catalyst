@@ -28,11 +28,13 @@ function routeOf(file: string): string {
 
 async function publicPages(): Promise<{ file: string; route: string }[]> {
   const files: string[] = [];
+
   for (const glob of PUBLIC_ROUTE_GLOBS) {
     for await (const file of new Bun.Glob(glob).scan(".")) {
       files.push(file);
     }
   }
+
   return files.sort(comparePaths).map((file) => ({ file, route: routeOf(file) }));
 }
 

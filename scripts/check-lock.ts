@@ -7,6 +7,7 @@ function regenerateLockfile(): string | undefined {
   const r = spawnSync("bun", ["install", "--lockfile-only", "--ignore-scripts"], {
     encoding: "utf8",
   });
+
   return r.status === 0 ? undefined : r.stderr || "bun install --lockfile-only failed\n";
 }
 
@@ -23,6 +24,7 @@ function regenerateThenRestore(original: string): {
 
 function linesOnlyIn(text: string, other: string): string[] {
   const otherLines = new Set(other.split("\n"));
+
   return text.split("\n").filter((line) => !otherLines.has(line));
 }
 

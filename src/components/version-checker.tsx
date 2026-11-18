@@ -13,7 +13,9 @@ async function fetchServedVersion(signal: AbortSignal): Promise<string | null> {
     if (!response.ok) {
       return null;
     }
+
     const data = (await response.json()) as { version?: string };
+
     return data.version ?? null;
   } catch {
     return null;
@@ -35,6 +37,7 @@ export function VersionChecker() {
 
       if (!loadedVersion.current) {
         loadedVersion.current = servedVersion;
+
         return;
       }
 

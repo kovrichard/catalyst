@@ -22,6 +22,7 @@ function useShortcutLabel(): string {
   useEffect(() => {
     setLabel(isApplePlatform() ? "⌘K" : "Ctrl K");
   }, []);
+
   return label;
 }
 

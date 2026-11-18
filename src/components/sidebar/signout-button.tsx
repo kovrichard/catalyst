@@ -16,6 +16,7 @@ export function SignOut({ buttonText }: Readonly<{ buttonText: string }>) {
 
   const handleSignOut = async () => {
     setIsLoading(true);
+
     try {
       // @catalyst:trpc-start
       await del(QUERY_CACHE_KEY);

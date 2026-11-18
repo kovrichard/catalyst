@@ -23,10 +23,12 @@ function getQueryClient() {
     // Server: always make a new query client
     return makeQueryClient();
   }
+
   // Browser: reuse the client across renders. Remaking it when React suspends
   // during the initial render would throw away the cache — a suspense boundary
   // below this call would make the reuse unnecessary.
   browserQueryClient ??= makeQueryClient();
+
   return browserQueryClient;
 }
 function getUrl() {
@@ -34,11 +36,14 @@ function getUrl() {
     if (typeof window !== "undefined") {
       return "";
     }
+
     if (process.env.VERCEL_URL) {
       return `https://${process.env.VERCEL_URL}`;
     }
+
     return "http://localhost:3000";
   })();
+
   return `${base}/api/trpc`;
 }
 export function TRPCReactProvider(
@@ -60,6 +65,7 @@ export function TRPCReactProvider(
       ],
     })
   );
+
   return (
     <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
       <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>

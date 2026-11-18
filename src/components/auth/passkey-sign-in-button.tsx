@@ -61,6 +61,7 @@ export default function PasskeySignInButton() {
         description: "No passkey was used, or it is not registered to this account.",
       });
       setIsPending(false);
+
       return;
     }
 

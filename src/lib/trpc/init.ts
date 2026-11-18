@@ -11,6 +11,7 @@ import { getOptionalUser } from "@/lib/session";
 export const createTRPCContext = cache(async () => {
   // @catalyst:auth-start
   const user = await getOptionalUser();
+
   // @catalyst:auth-end
   /**
    * @see: https://trpc.io/docs/server/context
@@ -43,6 +44,7 @@ export const protectedProcedure = t.procedure.use(function isAuthed(opts) {
       code: "UNAUTHORIZED",
     });
   }
+
   return opts.next({
     ctx: {
       user: opts.ctx.user,
